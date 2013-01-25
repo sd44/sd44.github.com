@@ -9,3 +9,9 @@ article {
         color : $sol_yellow;
     }
 }
+
+#content article .cloud li{
+  display: inline;
+  list-style: none outside none;
+  padding: 0 4px;
+}
