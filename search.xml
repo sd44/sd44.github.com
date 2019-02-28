@@ -1226,11 +1226,11 @@
       
         <tags>
             
-            <tag> 摄影 </tag>
-            
             <tag> Werner </tag>
             
             <tag> Bischof </tag>
+            
+            <tag> 摄影 </tag>
             
         </tags>
       
@@ -1284,9 +1284,9 @@
       
         <tags>
             
-            <tag> Arbus </tag>
-            
             <tag> 摄影 </tag>
+            
+            <tag> Arbus </tag>
             
         </tags>
       
@@ -1327,9 +1327,9 @@
     
     
     <entry>
-      <title>Categories</title>
-      <link href="/categories/index.html"/>
-      <url>/categories/index.html</url>
+      <title>Tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
@@ -1338,9 +1338,9 @@
     
     
     <entry>
-      <title>Tags</title>
-      <link href="/tags/index.html"/>
-      <url>/tags/index.html</url>
+      <title>Categories</title>
+      <link href="/categories/index.html"/>
+      <url>/categories/index.html</url>
       
         <content type="html"><![CDATA[]]></content>
       
