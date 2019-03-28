@@ -243,7 +243,7 @@ div.copyrightboxnote {text-align: left ; font-size: 60%}
 span.lettrine { font-size: 4ex ; float: left ; }
 span.lettrinetext { font-variant: small-caps ; }
 
-/* ulem and soul packages: */
+/* ulem, soul, umoline packages: */
 span.uline {
     text-decoration: underline ;
     text-decoration-skip: auto ;
@@ -263,6 +263,11 @@ span.uwave {
 
 span.sout {
     text-decoration: line-through ;
+}
+
+span.oline {
+    text-decoration: overline ;
+    text-decoration-skip: auto ;
 }
 
 span.xout {
@@ -393,6 +398,7 @@ div.titlepage {
 
 div.marginblock, div.marginparblock {
     max-width:50%;
+    min-width: 10em; /* room for caption */
     float:right;
     text-align:left;
     margin: 1ex 0.5em 1ex 1em ;
@@ -448,12 +454,12 @@ div.titlepage div.mpfootnotes {
     border-top: none ;
 }
 
-ol {
+ul, ol {
   margin: 1ex 1em 1ex 0em;
   line-height: 1.2;
 }
 
-ul, body dir, body menu {
+body dir, body menu {
   margin: 3ex 1em 3ex 0em;
   line-height: 1.2;
 }
@@ -665,7 +671,7 @@ div.wpminipage { border: 1px solid green ; margin: .5ex ; padding: .5ex ;}
 
 .mdframed p { padding: 0ex .5em 0ex .5em ; }
 
-.mdframed dl { padding: 0ex .5em 0ex .5em ; }
+.mdframed dl { padding: 1ex .5em 0ex .5em ; }
 
 .mdframedtitle {
     padding: .5ex 0pt 0pt 0pt ;
@@ -725,18 +731,53 @@ div.wpminipage { border: 1px solid green ; margin: .5ex ; padding: .5ex ;}
 
 .framedtitle p { padding: .3em }
 
+/* For the niceframe package: */
+
+div.niceframe, div.curlyframe, div.artdecoframe, div.generalframe {
+    padding: 1ex ;
+    margin: 2ex auto ;
+    border-radius: 2ex ;
+}
+
+div.niceframe {
+    border: 6px groove black ;
+}
+
+div.curlyframe {
+    border-left: 3px dotted black ;
+    border-right: 3px dotted black ;
+    border-radius: 6ex ;
+}
+
+div.artdecoframe {
+    border-left: 10px double black ;
+    border-right: 10px double black ;
+    border-radius: 6ex ;
+}
+
+div.generalframe {
+    border: 6px groove black ;
+}
+
 dl {
   margin: 1ex 2em 1ex 0em;
   line-height: 1.3;
 }
 
 dl dt {
-    margin-top: 1ex;
-    margin-left: 1em ;
+    display: block ;
+    float:left ;
     font-weight: bold;
+    padding-right: 1em ;
 }
 
+dl dd { display: block ; }
+
+dl dd:after { content: "" ; display: block ; clear: both }
+
 dl dd p { margin-top: 0em; }
+
+dd ul, dd ol, dd dl { clear: both ; padding-top: 1ex }
 
 nav {
     font-family: "URW Classico", Optima, "Linux Biolinum O",
@@ -963,8 +1004,13 @@ td.tdb , td.tdbrule , td.tdB , td.tdBrule
 .tnotes {
     margin: 0ex 5% 1ex 5% ;
     padding: 0.5ex 1em 0.5ex 1em;
-    font-size:.85em;
+    font-size:.80em;
     text-align: left ;
+}
+
+.minipage .tnotes {
+    margin: 0pt ;
+    padding: 0pt ;
 }
 
 .tnotes dl dt p {margin-bottom:0px;}
@@ -1200,6 +1246,19 @@ span.alg2elinenumber{
 /* Used for algorithmicx: */
 span.floatright { float: right ; }
 
+/* keyfloat and tocdata: */
+.floatnotes {
+    margin: 0ex 5% 0ex 5% ;
+    padding: 0ex 1em 0ex 1em ;
+    font-size:.80em ;
+    text-align: left ;
+}
+
+.authorartist{
+    font-size:.70em ;
+    font-style: italic;
+}
+
 /* Native LaTeX theorems: */
 
 .theoremcontents { font-style: italic; margin-top: 3ex ; margin-bottom: 3ex ; }
@@ -1271,6 +1330,24 @@ div.amsthmproof
 }
 
 span.amsthmnoteremark {}
+
+/* For the notes package: */
+div.notesimportantnote, div.noteswarningnote, div.notesinformationnote {
+    clear: both ;
+    margin: 2ex 2em 2ex 2em ;
+    border: 1px solid silver ;
+}
+
+div.notesicon {
+    float:left ;
+    display: inline-block ;
+    background: gold ;
+    padding: 0ex 1em 0ex 1em ;
+    margin-right: 1em ;
+    font-weight: bold ;
+}
+
+div.notescontents { font-style: italic }
 
 /*
 For CSS LaTeX and related logos:

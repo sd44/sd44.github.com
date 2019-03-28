@@ -132,6 +132,8 @@ div.figurecaption , .lstlisting {
 
 .tnotes {
     background: #fffcf5 ;
+    border-top: 1px solid silver ;
+    border-bottom: 1px solid silver ;
 }
 
 .theorem {
