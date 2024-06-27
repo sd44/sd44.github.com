@@ -1,0 +1,5699 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—市场经济过渡时期 1978-1992</title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-247"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... chapter 市场经济过渡时期 1978--1992 ......
+-->
+<h3 id="autosec-249"><span class="sectionnumber">第十二章&nbsp;&#x2003;</span>市场经济过渡时期 1978–1992</h3>
+<a id="main-autopage-249"></a>
+<a id="main-autofile-14"></a>
+
+<a id="chap:1978"></a>
+<!--
+...... section 时代背景......
+-->
+<h4 id="autosec-251"><span class="sectionnumber">12.1&#x2003;</span>时代背景</h4>
+<a id="main-autopage-251"></a>
+
+
+
+<p>
+1976 年，毛泽东逝世，党和国家粉碎了四人帮。
+</p>
+
+<p>
+据世界银行数据<sup>1</sup>，1978 年的中国 GDP 总值仅为 1490 亿美元，人均 GDP（现价美元）156 美元，在世界银行所统计的全球 130 多个国家和地区中，排名倒数第四，仅高于尼泊尔、几内亚比绍共和国、布隆迪三国。本时间段党和国家的改革都
+基于这一“国穷民弱”大背景。不管是保守派还是自由派的领导人，都面对一个新时代，只能摸着石头过河，试错是无法避免的; 绝大部分人也都认为应当否定阶级斗争为纲，增进民主、尊重价值规律、减轻中央财政负担、引入市场机制、加快经济建设。但
+调整幅度多大多小、多块多慢是保守派和自由派的分歧所在。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-252"></a>
+
+<p>
+<sup>1</sup>&nbsp;<a href="https://data.worldbank.org.cn" target="_blank" >https://data.worldbank.org.cn</a>
+</p>
+
+
+
+</div>
+<!--
+...... section 整体意识形态转变......
+-->
+<h4 id="autosec-253"><span class="sectionnumber">12.2&#x2003;</span>整体意识形态转变</h4>
+<a id="main-autopage-253"></a>
+
+
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 1978 年 4 月 5 日，中共中央批转公安部《关于全部摘掉“右派”分子帽子的请示报告》
+                                                                               ，“到 1981 年，在全面复查的基础上，对错划右派的改正和落实政策工作全部完成。全国共改正错划右派 54 万人，占原划右派总
+数的 98%”<a href="https://www.dswxyjy.org.cn/n/2013/0125/c244520-20323571.html" target="_blank" >https://www.dswxyjy.org.cn/n/2013/0125/c244520-20323571.html</a>。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 1978 年 5 月 11 日，《光明日报》发表胡福明的文章——《实践是检验真理的唯一标准》，新华社转发。次日《人民日报》和《解放军报》同时转载，拉开了全国范围内极左路线失势的序幕，华国锋“两个凡是”倒台。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 1978 年 11 月 10 日–12 月 15 日，中央工作会议在北京召开，原定议题讨论经济。陈云在东北组率先提出系统解决历史遗留问题，平凡一系列重大冤假错案（
+                                                                                                                   “到 1982 年底，约有 300 多万名干部得到平反。
+                                                                                                                                              ”）；邓小平
+提出“再不实行改革，我们的现代化事业和社会主义事业就会被葬送”
+                              。1978 年 12 月 13 日，邓小平总结发言《解放思想，实事求是，团结一致向前看》
+                                                                         ，提到反官僚主义、加强责任制、
+                                                                                       “允许一部分地区、一部分企业、一部分工人农民，由于辛勤努力成绩大
+而收入先多一些，生活先好起来”，同时对落后地区和人民给以有力支持等等。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 1978 年 12 月 18 日至 22 日，中共十一届三中全会在北京召开，继承了几天前的中央工作会议精神，另外“邓小平实际上已成为中央领导集体的核心”
+                                                                                                              。本次会议是纠正极左路线、发展市场经济的一个重要转折点，全
+党工作重点转移到社会主义现代化建设上来。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 1981 年 6 月 27 日至 29 日，中共十一届六中全会在北京召开，会议一致通过《<b> 关于建国以来党的若干历史问题的决议 </b>》
+                                                                                                         ，由党和政府系统梳理总结了这段历史，论述功过，极左势力下台。延续并发展了 1956
+年 9 月党的第八次全国代表大会的论断，提出“在社会主义改造基本完成以后，我国所要解决的主要矛盾，是 <b> 人民日益增长的物质文化需要同落后的社会生产之间的矛盾 </b>⋯⋯在剥削阶级作为阶级消灭以后，<b> 阶级斗争已经不是主要矛盾 </b>。
+由于国内的因素和国际的影响，阶级斗争还将在一定范围内长期存在，在某种条件下还有可能激化。”
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">6.</span> 1981 年 9 月 30 日，叶剑英继承和发展了毛泽东、周恩来所提出的“一纲四目”
+                                                                            ，进一步阐明关于台湾回归祖国，实现和平统一的 9 条方针政策，提出“(3) 国家实现统一后，台湾可作为特别行政区，享有高度的自治
+权，并可保留军队。中央政府不干预台湾地方事务。(4) 台湾现行社会、经济制度不变，生活方式不变，同外国的经济、文化关系不变。
+                                                             ”1982 年，邓小平就叶剑英谈话指出，这实际上就是“一个国家，两种制度”
+                                                                                                 。“一国两制”随后也成为香港、澳门回归中
+国的重要指导思想。邓小平在港澳回归问题上立场坚定，行动较为果决。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">7.</span> 1982 年 1 月 25 日，农历正月初一，陈云约请国家计委负责人座谈，强调计划经济为主、市场经济为辅。保守派暂居自由派上风。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">8.</span> 1982 年 9 月 1 日，邓小平在中共第十二次全国人民代表大会开幕式上致开幕词，首次提出“<b> 有中国特色的社会主义 </b>”，开创了全面转向 <b> 社会主义现代化建设 </b> 的新局面。
+</p>
+<blockquote>
+<p>
+我们的现代化建设，必须从中国的实际出发。无论是革命还是建设，都要注意学习和借鉴外国经验。但是，照抄照搬别国经验、别国模式，从来不能得到成功。这方面我们有过不少教训。把马克思主义的普遍真理同我国的具体实际结合起来，走自己的道路，
+建设有中国特色的社会主义，这就是我们总结长期历史经验得出的基本结论。
+</p>
+<p>
+八十年代是我们党和国家历史发展上的重要年代。加紧社会主义现代化建设，争取实现包括台湾在内的祖国统一，反对霸权主义、维护世界和平，是我国人民在八十年代的三大任务。这三大任务中，<b> 核心是经济建设 </b>，它是解决国际国内问题的基础。
+<sup>2</sup><a id="main-autopage-254"></a>
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">9.</span> 1982 年，黄克诚向陈云提出“要把经济搞活，不能再像过去那样搞死，但 <b> 搞活不能没有秩序 </b>。这就好比一只鸟，不能捏在手里，捏在手里它就死了，要让它飞。但要让它在笼子里飞，否则它就飞跑了。
+                                                                                                                                       ”陈云
+在之后两三个月里反复引用了黄克诚的谈话，并且加以补充：“搞活经济是对的，但必须 <b> 在计划的指导下 </b> 搞活。”后被称为“<b> 鸟笼经济 </b>”
+                                                                               <sup>[<a href="17.html#LWR-ht-cite.0@chenyunjihua">76</a>]</sup>，此鸟笼与我们当前的
+“<b> 腾笼换鸟 </b>”完全不同。陈云此时的“笼子”强调的是计划经济的约束，我们今天的笼子强调的是经济实体或空间生产。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">10.</span> 1983 年 10 月党的第十二届中央委员会第二次全体会议通过了关于整党的决定，邓小平在会上讲话，强调整党不能走过场，要清理“三种人”
+                                                                                                      （指在“文革”中追随林彪、江青反革命集团造反起家的人；帮派思想严重
+的人；打砸抢分子）。1984 年 6 月 30 日，中共中央整党工作指导委员会发出第 9 号通知，强调进行彻底否定“文革”的教育。<sup>3</sup>
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">11.</span> 1984 年 10 月 20 日，中共第十二届三中全会通过重要纲领性文件《中共中央关于经济体制改革的决定》
+                                                                                        。《决定》中指出“改革计划体制，首先要突破把计划经济同商品经济对立起来的传统观念，明确认识社会主义计
+划经济必须自觉依据和运用价值规律，是 <b> 在公有制基础上的有计划的商品经济 </b>。⋯⋯就总体说，我国实行的是计划经济，即有计划的商品经济⋯⋯改革过分集中的价格管理体制，逐步缩小国家统一定价的范围，适当扩大有一定幅度的浮动价格和
+自由价格的范围。”此外《决定》还涉及城市重点转移、价格改革、政企职责界定等。本文对于这些内容的探讨将分别放在下述相关章节。
+</p>
+<p>
+张曙光评价
+</p>
+<blockquote>
+<p>
+<b> 这样，“有计划的商品经济”代替了“计划经济为主，市场经济为辅”。成为中国经济体制改革的目标模式。</b>
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">12.</span> 1986 年 9 月 28 日，中共十二届六中全会通过《中共中央关于社会主义精神文明建设指导方针的决议》。《决议》中指出：
+</p>
+<blockquote>
+<p>
+我国社会主义现代化建设的总体布局是：<b> 以经济建设为中心 </b>，<b> 坚定不移 </b> 地进行经济体制改革，<b> 坚定不移 </b> 地进行政治体制改革，<b> 坚定不移 </b> 地加强精神文明建设，并且使这几个方面互相配合，互相促进。<sup>4</sup><a
+id="main-autopage-256"></a>
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">13.</span> 1987 年 10 月 25 日，赵紫阳在中共第十三次代表大会报告《沿着有中国特色的社会主义道路前进》中提出
+</p>
+<blockquote>
+<p>
+<b> 社会主义初级阶段 </b> 不是泛指任何国家进入社会主义都会经历的起始阶段，而是特指我国生产力落后、商品经济不发达条件下建设社会主义必然要经历的特定阶段。即从 1956 年社会主义改造基本完成到 21 世纪中叶社会主义现代化基本实现的整个
+历史阶段。
+</p>
+<p>
+我国正处在社会主义的初级阶段。这个论断，包括两层含义。第一，我国社会已经是社会主义社会。我们必须坚持而不能离开社会主义。第二，我国的社会主义社会还处在初级阶段。我们必须从这个实际出发，而不能超越这个阶段。在近代中国的具体历史
+条件下，不承认中国人民可以不经过资本主义充分发展阶段而走上社会主义道路，是 <b> 革命发展问题上的机械论 </b>，是右倾错误的重要认识根源；<b> 以为不经过生产力的巨大发展就可以越过社会主义初级阶段，是革命发展问题上的空想论 </b>，是
+“左”倾错误的重要认识根源。
+</p>
+<p>
+……
+</p>
+<p>
+新的经济运行机制，总体上来说应当是“<b> 国家调节市场，市场引导企业 </b>”的机制。国家运用经济手段、法律手段和必要的行政手段，调节市场供求关系，创造适宜的经济和社会环境，以此引导企业正确地进行经营决策。
+</p>
+</blockquote>
+<p>
+据赵紫阳回忆，他作报告时，陈云中途退席。严立贤就此报告中的“<b> 政府调控市场，市场引导企业 </b>”写到
+</p>
+<blockquote>
+<p>
+在十二届三中全会，只是强调国家计划必须依据价值规律，而在这里，<b> 国家计划必须通过市场来实现 </b>，也即只能通过市场把企业引导到国家计划上来。这样，<b> 指令性计划必然要退居次要位置 </b>，整个经济体制因此向市场经济迈进了一大步。
+<sup>5</sup><a id="main-autopage-258"></a>
+</p>
+</blockquote>
+<p>
+在马克思所作的科学共产主义重要纲领性文献《哥达纲领批判》中，将共产主义分为共产主义初级阶段（即社会主义）和共产主义高级阶段，初级阶段是向高级阶段的过渡期。“社会主义初级阶段”其实并不如报告中所说“已经进入社会主义社会”。它不是
+“共产主义初级阶段”——社会主义，而是相较社会主义阶段带有更多更多资产阶级法权的“前社会主义阶段”或“后资本主义阶段”。
+</p>
+<p>
+事实上，不管苏联或者中国如何左或如何宣称，都始终都未曾脱离国家资本主义为主体的范畴，列宁在战时共产主义失败后对此具有较为清醒认识。在社会主义国家阵营的实践中，马恩历史唯物主义中所说的 <b>“物质生活条件、生产关系和交换关系的发
+展程度”确实是无法跨越的卡夫丁峡谷。</b>
+</p>
+<p>
+赵紫阳本次大会报告上提出 <b>“一个中心”——以经济建设为中心，将坚持四项基本原则和坚持改革开放列为两个基本点。</b> 据赵紫阳《改革历程》记载，邓力群、胡乔木、王忍之等保守派在中共十三大之前对“一个中心，两个基本点”意见较大，他们
+认为应当坚持“四项基本原则为纲，改革开放为目”。此时自由派居保守派上风。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">14.</span> 1988 年 9 月 26 日至 30 日，中共十三届三中全会召开，
+                                                                     “会议批准了中央政治局向这次全会提出的 <b> 治理经济环境、整顿经济秩序、全面深化改革 </b> 的指导方针和政策、措施。⋯⋯<b> 治理经济环境，主要是
+压缩社会总需求，抑制通货膨胀和信贷。整顿经济秩序，就是要整顿目前经济生活中特别是流通领域中出现的各种混乱现象。</b> ”<sup>6</sup>
+</p>
+<p>
+试图使计划轨快速并向市场轨的价格改革失败，保守派势力相较之前有所增强，自由派势力受到暂时抑制。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">15.</span> 1992 年 1、2 月，邓小平南巡讲话。1992 年 6 月 9 日江泽民在中央党校省部级干部进修班上作《深刻领会和全面落实邓小平同志的重要谈话精神，把经济建设和改革开放搞得更快更好》的讲话，提出当前在建立新经
+济体制问题的认识上目前有三种提法——“<b> 计划与市场结合的社会主义商品经济体制 </b>”、“<b> 社会主义有计划的市场经济体制 </b>”和“<b> 社会主义的市场经济体制 </b>”。“我个人的看法，比较倾向于使用‘<b> 社会主义市场经济体制 </b>’
+这个提法”。10 月 12 日中共十四大上，江泽民明确提出：中国经济体制的改革目标是建立 <b> 社会主义市场经济体制 </b>，加快经济改革步伐。本次大会如期撤消了中共中央顾问委员会。
+</p>
+</li>
+</ul>
+
+<p>
+中国从此进入社会主义市场经济时期。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-259"></a>
+
+<p>
+<sup>2</sup>&nbsp;<a href="http://cpc.people.com.cn/GB/64162/64168/64565/65448/4429495.html" target="_blank" >http://cpc.people.com.cn/GB/64162/64168/64565/65448/4429495.html</a>
+</p>
+
+<p>
+<sup>3</sup>&nbsp;<a href="http://l.zhuixue.net/jindai/89487.html" target="_blank" >http://l.zhuixue.net/jindai/89487.html</a>
+</p>
+
+<p>
+<sup>4</sup>&nbsp;<a href="http://cpc.people.com.cn/GB/64162/64168/64565/65381/4429515.html" target="_blank" >http://cpc.people.com.cn/GB/64162/64168/64565/65381/4429515.html</a>
+</p>
+
+<p>
+<sup>5</sup>&nbsp;<a href="http://jds.cass.cn/ztyj/jjs/201605/t20160506_3324987.shtml" target="_blank" >http://jds.cass.cn/ztyj/jjs/201605/t20160506_3324987.shtml</a>
+</p>
+
+<p>
+<sup>6</sup>&nbsp;<a href="http://cpc.people.com.cn/GB/64162/64165/70293/70319/4857100.html" target="_blank" >http://cpc.people.com.cn/GB/64162/64165/70293/70319/4857100.html</a>
+</p>
+
+
+
+</div>
+<!--
+...... section 领导制度改革......
+-->
+<h4 id="autosec-260"><span class="sectionnumber">12.3&#x2003;</span>领导制度改革</h4>
+<a id="main-autopage-260"></a>
+
+
+
+<p>
+1980 年 8 月 18 日，邓小平在中共中央政治局扩大会议上作了《党和国家领导制度的改革》的讲话。“陈云同志提出，我们选干部，要注意德才兼备。所谓德，最主要的，就是坚持社会主义道路和党的领导。在这个前提下，干部队伍要 <b> 年轻化、知识化、
+专业化 </b>，并且要把对于这种干部的提拔使用制度化。这些意见讲得好。”，要求 <b> 废除干部领导职务终身制，建立退休制度 </b> 和发扬“社会主义民主制度和党的民主集中制”。<a
+href="http://news.12371.cn/2017/03/09/ARTI1489054449475294.shtml" target="_blank" >http://news.12371.cn/2017/03/09/ARTI1489054449475294.shtml</a>
+</p>
+<blockquote>
+
+<p>
+本次会议对中国政治体制中的“官僚主义”、“权力过分集中”的弊端进行了严厉批判，将部分过往的政治内容划为封建专制主义，首次提出“改革党和国家领导制度及其他制度”的问题。这篇讲话，后来被中共十三大认为是“中国政治体制改革的纲领性文
+献”，也被党内外的主流研究者们奉为研究邓小平政治体制改革思想的经典。<sup>7</sup><a id="main-autopage-261"></a>
+</p>
+</blockquote>
+
+<p>
+1982 年 1 月 13 日，邓小平在中共中央政治局会议上作了《精简机构是一场革命》的重要讲话，贯彻和加强了领导制度改革。此后各级机关进行了大规模精简、建立干部离退休制度等。1985 年到 1987 年，中国人民解放军也裁军百万。
+</p>
+
+<p>
+1982 年 12 月 4 日全国人大五届五次会议通过并施行的《中华人民共和国宪法》规定全国人大委员长、副委员长，中国人民共和国主席、副主席，国务院总理、副总理、国务委员，最高人民法院院长，最高人民检察院院长连续连任不得超过两届。彭真在本次
+大会所作宪法修改草案报告中就此项规定说，“这就取消了实际上存在的 <b> 领导职务的终身制 </b>。”
+</p>
+
+<p>
+1982 年 9 月召开的中共十二大会议上通过了 1982 年版的《中国共产党章程》<sup>8</sup>，决定设立中央和地方各级顾问委员会。有相当资历和成绩的老党员、老人进入顾问委员会；中顾委接受中央委员会的领导，但具有建议、协调、监督、宣传等权利。
+</p>
+
+<p>
+笔者认为设立中顾委的本意明确，确实如邓小平在 9 月 13 日举行的中顾委第一次会议上所说
+</p>
+<blockquote>
+
+<p>
+中央顾问委员会是个新东西，是根据中国共产党的实际情况建立的，是解决党的中央领导机构新老交替的一种组织形式。目的是使中央委员会年轻化，同时让一些老同志在退出第一线之后继续发挥一定的作用。……是一种过渡性质的组织形式。
+<sup>9</sup><a id="main-autopage-262"></a>
+</p>
+</blockquote>
+
+<p>
+中顾委和地方顾问委员会的委员人选富有流动性，老顾问委员定期批量退休，部分较老的一线官员再退出一线增补进来，并且这种流动性与日俱增。1986 年 10 月，彭真、邓颖超、徐向前、聂荣臻 <b> 四老“全退”</b>，不再担任任何职务。邓小平、陈云、
+李先念 <b> 三老“半退 </b>”
+                  ，仍担任一定职务。1989 年 9 月，邓小平明确提出十四大以后不再设立顾问委员会。1992 年 10 月 18 日，中共第十四次全国代表大会通过了关于中央顾问委员会工作报告的决议，大会同意不再设立中央顾问委员会。中顾委完
+成了它的历史使命。
+</p>
+
+<p>
+就政治利益而言，在邓小平 1978 年事实上成为核心领导人之际，仍有一些与他相近资历却未必意见一致的老人。邓小平通过扶持对经济开放持激进态度的年轻领导班子，制衡拥有超然权力的幕后老人——尤其是希望放缓改革开放步伐的保守派老人。老人政
+治具有相当弊端，个人威权较大，给予民主的空间少，容易因循守旧、权欲过强，人治为上。拥有极大魄力的邓小平试图革除这一弊端，通过中顾委改革，政坛老人的影响力和权力逐步减弱，但是在现实实践上，邓小平最终仍成为实际上的“一个婆婆”
+                                                                                                              ，为
+其执政思想方针的贯彻实施打下坚实基础。
+</p>
+
+<p>
+笔者简单认为，就“民主集中制”方面，一个良好的中国“民主集中制”因中国历史和现实问题必然不能照搬西方口头宣传唬烂的那一套“三权分立”
+                                                                 ，诸侯蜂起时往往是最多战乱、人民最为痛苦无望时。就如何在保障集中制为主的基础上加强民主和法治成
+分，邓小平前行了几大步，大力推动党和领导制度改革，废除领导干部终身制，功绩不能抹杀。虽未探索出最终的道路，但也不能过于苛求。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-263"></a>
+
+<p>
+<sup>7</sup>&nbsp;<a href="http://www.yhcqw.com/33/9626.html" target="_blank" >http://www.yhcqw.com/33/9626.html</a>
+</p>
+
+
+<p>
+<sup>8</sup>&nbsp;<a href="http://guoqing.china.com.cn/2012-09/05/content_26433894.htm" target="_blank" >http://guoqing.china.com.cn/2012-09/05/content_26433894.htm</a>
+</p>
+
+
+<p>
+<sup>9</sup>&nbsp;<a href="http://www.qstheory.cn/books/2016-08/31/c_1119485398_2.htm" target="_blank" >http://www.qstheory.cn/books/2016-08/31/c_1119485398_2.htm</a>
+</p>
+
+
+
+</div>
+<!--
+...... section 计划经济与市场经济的分歧......
+-->
+<h4 id="autosec-264"><span class="sectionnumber">12.4&#x2003;</span>计划经济与市场经济的分歧</h4>
+<a id="main-autopage-264"></a>
+
+
+
+<p>
+这一阶段我党高层领导人均认为要纠极左并且发展经济，但就计划和市场两者占比多少存有分歧。
+</p>
+
+<p>
+以邓小平为代表的自由派倡导更积极全面的改革开放，以经济建设为中心。两任中共中央总书记胡耀邦、赵紫阳都属于自由派，笔者认为两位“年轻人”均是被拔苗助长的改开急先锋，用以应对“老人政治”中的保守派。
+</p>
+
+<p>
+以陈云为代表的保守派倡导有计划的市场经济，支持改革开放，但改革开放的步伐应该慢一些。前台人物可能是姚依林、李鹏？
+</p>
+<blockquote>
+
+<p>
+1977 年 7 月 26 日，中共中央政治局听取和讨论国家计委《关于引进新技术和进口成套设备规划的请示报告》。报告说，今后 8 年，除抓紧把 1973 年批准的 43 亿美元进口方案（即“四三方案”）中的在建项目尽快建成投产外，再进口一批成套设备、单机和
+技术专利，总额为 65 亿美元。<a id="main-autopage-265"></a><sup>[<a href="17.html#LWR-ht-cite.0@yangyuejin">77</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+中央较为乐观，会上就开始加码进口计划，并在之后掀起出国考察热，希望利用西方资本危机时机，大力引进进口设备。在 1978 年 7 月 6 日至 9 月 9 日召开的国务院务虚会过程中，陈云曾提出“务虚会是否多开几天，听听反对派的意见，可能有些同志有不
+同意见”。但务虚会最终结论仍是膨胀到“8 年基本建设投资从原设想的 4000 亿元增加到 5000 亿元。10 年引进 800 亿美元，最近三、四年先安排三四百亿美元。”
+</p>
+<blockquote>
+
+<p>
+仅 1978 年，中国实际签约的引进项目总额为 78 亿美元。这比 1950–1977 年 28 年引进项目总额的 65 亿元多出 13 亿美元。这些项目引进所需资金，大多都依赖外债，且外债规模远远超出当时国家的还债能力。此外，由于对引进项目的要求过急，没有经过
+认真的调查研究和可行性论证，具有很大的随意性，比如 1978 年 12 月最后 10 天就签订 31 亿美元的协议，因而在实际过程中，有些项目难于建成和正常运转，造成了一定程度的浪费。<a id="main-autopage-266"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@yangyuejin">77</a>]</sup>
+</p>
+
+<p>
+“洋跃进”造成了农业和工业、轻工业和重工业、电力交通和大型设备、投资和消费等比例失调。
+</p>
+
+<p>
+1979 年 3、4 月，针对比例失调，提出对整个国民经济实行“调整、改革、整顿、提高”的新八字方针，决定从 1979 年起用三年时间，认真搞好调整，同时进行改革、整顿、提高的工作，这是全党的中心任务。
+                                                                                                    “国民经济调整第一次决策的关键人物是陈云，
+陈云的意见得到邓小平、李先念的支持。”<sup>10</sup>
+</p>
+
+<p>
+1979 年底，基本建设的总规模不仅没有压下来，相反财政收支逆差 170.7 亿元，出现建国以来最大的赤字；外贸出口虽然比上年有所增加，但进口增加更多，逆差 20 亿美元。到 1980 年底，财政、外贸继续保持巨额赤字，迫使两年增发货币 130 亿元，造
+成物价大幅上涨。  <sup>[<a href="17.html#LWR-ht-cite.0@chenyunjihua">76</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+1980 年 5、6 月讨论制定六五计划时，陈云提出确保财政平衡、信贷平衡，为此可放缓经济增速，大大压缩基建规模、预防财政赤字、通货膨胀。
+</p>
+
+<p>
+邓小平支持大力开放经济特区、吸引外资。陈云对沿海地区资本和外资投机保持警惕，认为资本的唯一目的是超额利润，担心不良后果；希望任用的沿海地区领导更为思想坚定而不是“头脑灵活”
+                                                                                     ，但没有成功。赵紫阳认为陈云在 1981、1982 年打击沿海地
+区经济领域犯罪时有扩大化错误，有碍于改革开放进程。
+</p>
+
+<p>
+1984 年因经济发展速度过快、信贷发放过猛、过多，基建规模过大，导致通货膨胀。陈云支持大缩基建和财政赤字；胡耀邦对产值和经济发展速度不是一般乐观，漠视财政赤字和通货膨胀；赵紫阳支持较为柔和的软着陆。
+</p>
+
+<p>
+据赵紫阳，1987 年 10 月 25 日，赵紫阳在中共十三大作《沿着有中国特色的社会主义道路前进》的大会报告时，陈云离席。看赵的前后文，可能是赵在报告中提到“<b> 政府调控市场，市场引导企业 </b>”时。
+</p>
+
+<p>
+1988 年 1 月，在严重通货膨胀的态势下，赵紫阳希望沿海发展更快些，进口国外原料，利用国内劳动力密集和劳动力成本低的优势，在发达国家转向知识、技术和资本密集型生产的形势下发展出口；姚依林、李鹏担心会给全国经济过热带来影响和地缘经济
+发展不平衡；陈云等老人担心进口国外原料后向国外半成品、成品出口是否能够通畅流通。就今天看来，在邓小平支持下的赵紫阳这一举措是积极正面的，并为今日中国成为当今世界工厂奠定了基调，功不可没。
+</p>
+<blockquote>
+
+<p>
+1988 年 5 月 18 日，姚依林到陈云处，通报赵紫阳主持的中央政治局常委会对价格、工资改革的意见。姚依林说：我们设想，从明年开始，每年价格上涨百分之十，连涨五年。每年人均收入增加百分之十一、十二、十三、十四，算四笔账。陈云问：你看可以
+<b> 理顺价格 </b>? 姚依林答：我讲初步理顺，用五年时间。陈又问：物价连涨五年，情况会有什么变化? 姚答：<b> 价格总水平提高百分之六十到八十，工资增加百分之百。</b> 陈云表示怀疑，说：
+                                                                                                   “物价每年上涨百分之十，连涨五年，我打个很大问号。
+                                                                                                                           ”
+姚依林说：这条路是否走得通，我也没有把握。陈云进一步点出：问题是，物价连续上涨百分之十，影响的面很大。如果把这个计划公布于众，赵紫阳 <b> 敢讲不敢讲 </b>? 姚依林：那非讲不可。陈云又谈到物价上涨后 <b> 不拿工资的农民怎么办 </b>，
+并说：根本问题是农民从土地转出来，拿工资，比当农民好得多。但这个事很不容易。<b> 我们有生之年，农业过不了关。</b>1984 年粮食丰收，有些人头脑发热。我说，万元户没有那么多，无粮则乱。当时，有些人不相信。这次谈的是一个牵动整个国计
+民生大局的问题，因此谈了两个多小时才结束。<sup>11</sup><a id="main-autopage-267"></a>
+</p>
+</blockquote>
+
+<p>
+                                                         。提出今后经济体制的改革，用几年时间进行 <b> 价格改革，相应地增加职工工资 </b>，认为这是解决走向市场经济，结束两种体制并
+赵在《改革历程》中，也有提到“1988 年 5 月我在政治局会议上作了一个报告，题目是《建立社会主义商品经济新秩序》
+存、价格双轨制的一个关键性战役。”他认为当时提议有些简单，应该辅以 <b> 加强企业管理 </b> 的措施⋯⋯
+</p>
+
+<p>
+赵对经济的认知水平，一言难尽⋯⋯真要实施了，到时怕不是全民抢货囤货，商品价格暴涨，市场混乱程度绝不会亚于 7 月份之后的抢购风潮。
+</p>
+
+<p>
+赵将 1988 年、1989 年严重通货膨胀的问题归于邓小平为解决双轨制并轨，大幅放开市场价格的“价格闯关”：
+</p>
+<blockquote>
+
+<p>
+1988 年出现的物价上涨 18.5% 的严重通货膨胀，问题既不出在信贷的失控，也不是出在基建规模过大，这两项都没有超过原“软着陆”方针下所规定的指标。主要问题是出在 <b> 储蓄存款大量下降 </b>……现在回过头来看，如果我们不采取上述的思路
+和做法，而是继续实行调放结合的方针，如果说感到过去步子太小了，可以把物价放开的步子迈得更大一些，更快一些。同时借鉴一些国家的成功经验，使银行利息高于物价上涨指数，实行 <b> 保值储蓄 </b>，1988 年严重的通货膨胀是可以避免的。<a
+id="main-autopage-268"></a><sup>[<a href="17.html#LWR-ht-cite.0@gaigelicheng">78</a>]129</sup>
+</p>
+</blockquote>
+
+<p>
+鄢一龙和胡鞍钢引用刘国光主编《中国十个五年计划研究报告》中的数据：
+</p>
+<blockquote>
+
+<p>
+（1986-1990“七五”计划期间）继续推行 1984 年开始的经济过热政策，信贷资金运用增加达到 10686 亿元，货币投放量达到 1657 亿元，均大幅度超过计划指标（分别为 5745 亿元、1000 亿元）(笔者注：也明显高于经济增长。)<a
+id="main-autopage-269"></a><sup>[<a href="17.html#LWR-ht-cite.0@shiyiwu">62</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+笔者认为，赵的说法明显站不住脚，保值储蓄如何能够与通膨、基建、价改、贷款利率、中央财政负担等方面割裂开来单独实现呢？同期陈云、李鹏、姚依林的担心是正确的。
+</p>
+
+<p>
+1988 年因价格闯关彻底失败，保守派势力处于上升趋势，自由派势力有所减弱。
+</p>
+
+<p>
+1989 月 26 日至 30 日，中共十三届三中全会召开，“会议批准了中央政治局向这次全会提出的 <b> 治理经济环境、整顿经济秩序、全面深化改革 </b> 的指导方针和政策、措施。⋯⋯治理经济环境，主要是压缩社会总需求，抑制通货膨胀。整顿经济秩序，
+就是要整顿目前经济生活中特别是流通领域中出现的各种混乱现象。
+</p>
+
+<p>
+1990 年 2 月 22 日，《人民日报》发表时任宣传部部长王忍之长文《关于反对资产阶级自由化》，提出议题：“推行资本主义化的改革，还是推行社会主义改革？”全国开始兴起“<b> 姓资还是姓社 </b>”大讨论，这一年主要是保守派出击。
+</p>
+
+<p>
+1991 年 1 月 1 日，皇甫平<sup>12</sup> 在上海《解放日报》援引时任上海市委书记兼市长朱镕基同志讲话“何以解忧，唯有改革”，发表文章《做改革开放的“带头羊”》。3 月至 4 月，皇甫平连发三篇文章，引发国家上下激辩。4 月 8 日，全国人大七届四
+次会议补选朱镕基为国务院副总理，兼任国务院生产办公室主任、党组书记。”但自由派仍未取得绝对优势。
+</p>
+
+<p>
+邓小平 1992 年 1、2 月以全家度假为由再次南巡，争取到一些省委省政府和军队的支持，以类似于“地方包围中央”的方式，实现了他的政治抱负，确定了坚定不移发展市场经济的道路，中国正式进入市场经济体制。
+</p>
+
+<p>
+80 年代过渡时期，胡耀邦和赵紫阳和两人对宏观经济的认识可谓浅薄，对财政赤字、通货膨胀、基建规模过大、市场变化等问题实在是太过于乐观。
+</p>
+
+<p>
+陈云对胡、赵二人的批评多数成立，认为要辩证看待市场经济的思想也成立。但陈云当时主要处于保守、被动一方，最终也是市场经济完全取代市场经济，这导致难以用现实发展去验证其理论和实践对错。
+</p>
+
+<p>
+陈云始终高度重视粮食战略，建国后的统购统销政策也是由他制定（可见上一章）。城市粮补、进口粮食、控制粮价其实也是延续“工农剪刀差”，其自述“<b> 我们有生之年，农业过不了关 </b>”，这其实有现实的绝望和无奈。
+</p>
+
+<p>
+中国最终还是走向了市场经济道路，且走得太快，或许这是历史和市民社会的必然吧⋯⋯
+</p>
+
+<p>
+邓小平与陈云虽有不同见解，但达成了不上纲上线扩大分歧的默契，斗而不破，能够互有吸收和让步。在邓小平 1992 年 1、2 月南巡后，陈云随即在 4 月份访问上海并表扬了上海改革开放的发展。笔者认为两人间形成了一种微妙的民主，对党内整体的求同
+存异和团结民主起到了好的榜样作用，只是可惜同样并没有走得太远，没有推广至下级官员之间。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-270"></a>
+
+<p>
+<sup>10</sup>&nbsp; 蒋永清 &#x2003;《简述 1977 年至 1982 年国民经济调整的两次决策》
+</p>
+
+
+<p>
+<sup>11</sup>&nbsp; 中共中央文献研究室《一九八八年物价闯关前后》
+</p>
+
+
+<p>
+<sup>12</sup>&nbsp; 作者原名周瑞金，笔者结合薄一波等人看法，认为笔名“皇甫平”应取黄埔江辅助邓小平之意。
+</p>
+
+
+
+</div>
+<!--
+...... section 农业改革......
+-->
+<h4 id="autosec-271"><span class="sectionnumber">12.5&#x2003;</span>农业改革</h4>
+<a id="main-autopage-271"></a>
+<!--
+...... subsection 包干到户、村社分设......
+-->
+<h5 id="autosec-272"><span class="sectionnumber">12.5.1&#x2003;</span>包干到户、村社分设</h5>
+<a id="main-autopage-272"></a>
+
+
+
+<p>
+ 1977 年 11 月 15 日，安徽省在时任省委第一书记 <b> 万里 </b> 的推动下下达了《关于当前农村经济政策几个问题的规定》（简称“<b> 省委六条 </b>”），有“<b> 尊重生产队的自主权 </b>”、“<b> 允许和鼓励社员经营正当的家庭副业 </b>，对收回的
+“自留地”，要按照政策规定如数退还给社员”等内容，安徽省再兴农业改革。1978 年安徽遭遇大旱，省委决定允许 <b> 借地给农民种“保命麦”</b>，9 月，肥西县山南公社黄花大队与山南公社馆西大队小井庄生产队借此政策搞起实质“<b> 包产到户
+ </b>”，12 月凤阳县梨园公社严岗大队小岗生产队决定“<b> 包干到户 </b>”。
+</p>
+
+<p>
+需要注意的是，虽有省委领导人万里推动，但党内和学界普遍认为“包干到户”是 <b> 农民先导和主导 </b>，学者 <b> 高王凌 </b> 将农民主导的 <b> 软性反抗觉悟 </b> 称为“<b> 反行为 </b>”
+                                                                                                            。笔者认为，
+                                                                                                                 “反行为”其实处处皆在，中央和地方关系也
+常常出现“反行为”，关于“反行为”的深入研究可能会在相当多层面上有利于国计民生，希望有相关人士深入研究此项工作。
+</p>
+
+<p>
+      “<b> 工农业剪刀差 </b>”
+前文已经说过，               ：相同价值工业产品、农业产品的价格不成比例，国家财政以 <b> 相对低价格收购农村农副产品，甚至国家再补贴一部分后，</b> 以低粮价供应城镇，使城镇职工可以保有相对低的工资，工业得以较少支出（马克思
+政治经济学中是提高相对剩余价值），借此发展工业。毛时代侧重重工业，邓时代减弱了对重工业的扶持力度。
+</p>
+
+<p>
+根据薄一波所说，统购统销造成的财政缺口是巨大的：
+</p>
+<blockquote>
+
+<p>
+（统购统销）第二年（即 1954 至 1955 年度），即赔了 2.5506 亿元。随着粮食经营费用的增加和购销价格“倒挂”现象的出现，亏损越来越大……1987 年达 276 亿元，1988 年突破 300 亿元，成为 <b> 国家财政的一大包袱 </b>。<a
+id="main-autopage-273"></a><sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]281</sup>
+</p>
+</blockquote>
+
+<p>
+农民农业生产的积极性取决于农产品价格：
+</p>
+<blockquote>
+
+<p>
+1978 年开始，在统购统销的大框架下政府对粮食价格体制进行了一定程度的改革，粮食市场出现松动，市场机制在小范围内开始发挥作用。国家调整了 1966 年以来长期未动的粮食价格，统购价格提高了 20%，超购部分在此基础上再加价 50%。<b> 粮食
+的提价大大刺激了农民的生产积极性，粮食产量大幅提升，</b> 长期以来粮食供需紧张状况得到了缓解，<b> 代表自由市场机制的农产品集贸市场开始出现 </b>。<a id="main-autopage-274"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@taochangsheng">79</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+1983 年中央一号文件《当前农村经济政策的若干问题》，从理论、舆论、政策上确立和巩固了“实行 <b> 生产责任制 </b>，特别是 <b> 联产承包制 </b>；实行 <b> 政社分设 </b>。”原来 <b> 三级所有 </b> 的公社、生产大队和生产队集体组织 <b> 被取
+缔 </b>，建立 <b> 乡政府和基层群众性自治的村民委员会。</b> <sup>13</sup>
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-275"></a>
+
+<p>
+<sup>13</sup>&nbsp;<a href="http://cpc.people.com.cn/GB/64162/64172/85037/85039/6619026.html" target="_blank" >http://cpc.people.com.cn/GB/64162/64172/85037/85039/6619026.html</a>
+</p>
+
+
+
+</div>
+<!--
+...... subsection 合同定购制、农业价格双轨制......
+-->
+<h5 id="autosec-276"><span class="sectionnumber">12.5.2&#x2003;</span>合同定购制、农业价格双轨制</h5>
+<a id="main-autopage-276"></a>
+
+
+
+<a id="sec:nongshuanggui"></a>
+
+<p>
+                                                  “1983–1984 年出现全国性‘<b> 卖粮难 </b>’问题。1984 年，粮食露天存放量超过 300 亿公斤以上，形成‘<b> 收不起、存不下、调不走、销不掉
+农民农业生产的积极性提高，但同时也使国家在 1984 年这个“特大丰收年”已经无法完成“统购统销”了，
+</b>’的困局。同时，超购加价政策以及粮食购销差价补贴，使国家背上沉重的财政负担。<sup>[<a href="17.html#LWR-ht-cite.0@liangshi40">80</a>]</sup>
+                                          ”
+</p>
+
+<p>
+卢迈说，为 <b> 减轻此时财政负担 </b>，<b>“将市场风险转移给农民”</b>，同时 <b> 兼顾城镇企业、职工利益分配 </b>，国家出台了一系列政策。
+</p>
+
+<p>
+1984 年 10 月 20 日，中共十二届三中全会通过的《中共中央关于经济体制改革的决定》明确由 <b> 农村转向以城市 </b> 为重点的整个经济体制改革。
+</p>
+
+<p>
+1985 年 1 月 1 日，中共中央、国务院发布《关于进一步活跃农村经济的十项政策》，粮食、棉花取消统购，改为 <b> 合同定购 </b>；<b> 定购以外的粮食可以自由上市 </b>；逐步放开生猪、水产品和大中城市、工矿区的蔬菜价格。农产品实行政府定价和市
+场定价并存的“<b> 价格双轨制 </b>”，“<b> 逐步缩小合同定购数量，扩大市场议购 </b>；城市应继续办好各类农产品批发市场和贸易中心；发展对外经济、技术交流等。其中最为重要的内容就是 <b> 粮棉的合同定购制 </b>。
+</p>
+
+<p>
+粮食合同定购价格按“倒三七”比例计价：针对合同订购部分的粮食，按照过去定购价格的 135% 收购全部合同定购粮食。<sup>14</sup>。1985 年我国粮食总产量较上一年 <b> 下降 6.92%</b>，这一大幅下降还有“退耕还林”等政策影响。
+</p>
+<blockquote>
+
+<p>
+由于 <b>“倒三七”比例加价小于超购加价 </b> 对农户生产行为刺激，以及经济作物的相对价格较高，这一时期的粮食生产出现 <b> 徘徊不前 </b>。<a id="main-autopage-277"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@shuangguizhi">81</a>]</sup>
+</p>
+
+<p>
+<b> 国家定价是稳定农民预期的重要手段。</b>1985 年和 1993 年我们尝试将计划价和市场价 <b> 并轨 </b>，实际上是 <b> 在粮食供大于求的形势下将市场风险转嫁给农民 </b>，这是 <b> 当年粮食减产的重要原因之一 </b>。
+                                                                                                                             <sup>[<a
+href="17.html#LWR-ht-cite.0@lumaisg">82</a>]</sup>
+</p>
+
+<p>
+然而合同订购执行不到一年便出现 <b> 逆转 </b>，主要是因为 <b> 粮食收购价格下降而导致的 1985 年粮食大幅减产 </b>。为控制粮源、保障供给以及稳定粮食市场价格，国家赋予合同订购为 <b>“国家任务”性质，并封锁粮食市场进行强制收购。</b>
+合同订购 <b> 性质的改变 </b>，标志着粮改折回到 <b>“统购统销”政策原点 </b>，也意味着粮价进入“<b> 虚位双轨制 </b>”时期 (<b> 计划有效运行、市场无效运行 </b>)，中国粮价市场化改革出现第一次反复。
+                                                                                                                    <sup>[<a
+href="17.html#LWR-ht-cite.0@liangshi40">80</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+农民不愿卖粮给国家，合同定购变为实质上的 <b> 合同征购 </b>。为应对农民抵触情绪，刺激农民积极性，1986 年 10 月 14 日，国务院发布《国务院关于完善粮食合同定购制度的通知》。通知中对 <b> 农民的优惠政策 </b>：<b> 超额部分实行议购价
+</b>——“从一九八七粮食年度开始，国家对农民完成合同定购任务外的粮食，实行 <b> 随行就市，议价收购，让农民从多卖议价粮中增加收入 </b>”，<b> 粮棉三挂钩 </b>——“一九八七年中央专项安排一些 <b> 化肥、柴油与粮食合同定购 </b> 挂钩
+⋯⋯国家对合同定购的粮食发给 <b> 预购定金 </b>，由粮食部门按合同定购粮食价款的 20% 发放，在农民交粮时扣还，利息由中央财政负担。”；中央对 <b> 地方和粮企的优惠政策 </b>：“中央对各省、自治区、直辖市 <b> 定购任务仍按九折包干 </b>，
+即 90% 的部分按“倒三七”比例价结算，其余 <b>10% 按‘议转平’价结算 </b>。<b> 国家弥补平价粮食收支差额所需要的粮食 </b>，用‘议转平’的办法解决”。<b> 议转平进一步加大了国家的财政负担 </b>。
+</p>
+
+<figure id="autoid-18" class="figure ">
+
+<p>
+<span
+      id="lateximage-main-1"
+      class="lateximagesource"
+><!--
+          价格（元/公斤）
+          1
+              2
+                     3
+
+
+
+
+19
+     85
+
+19
+     86
+
+19
+  87
+                  大米市场价
+                  大米议购价
+                  大米定购价
+
+
+
+
+19
+     88
+
+19
+     89
+
+19
+     90
+
+19
+     91
+
+19
+     92
+
+19
+     93
+
+19
+     94
+
+19
+     95
+
+19
+     96
+
+19
+  97
+
+19
+     98
+--><img
+      src="main-images/image-1.svg"
+      alt="(-tikz-&nbsp;diagram)"
+      style=""
+      class="lateximage"
+></span>
+</p>
+
+<p>
+<span
+      id="lateximage-main-2"
+      class="lateximagesource"
+><!--
+                价格（元/公斤）
+
+          0.5
+                  1
+                       1.5
+
+
+
+
+19
+     85
+
+19
+     86
+
+19
+     87
+                      小麦市场价
+                      小麦议购价
+                      小麦定购价
+
+
+
+
+19
+     88
+
+19
+     89
+
+19
+     90
+
+19
+     91
+
+19
+     92
+
+19
+     93
+
+19
+     94
+
+19
+     95
+
+19
+     96
+
+19
+     97
+
+19
+     98
+--><img
+      src="main-images/image-2.svg"
+      alt="(-tikz-&nbsp;diagram)"
+      style=""
+      class="lateximage"
+></span>
+</p>
+
+<p>
+<span
+      id="lateximage-main-3"
+      class="lateximagesource"
+><!--
+                  价格（元/公斤）
+                0.5
+                      1
+                            1.5
+
+
+
+
+     19
+        8   5
+     19
+        8   6
+     19
+        8   7
+                          玉米市场价
+                          玉米议购价
+                          玉米定购价
+
+
+
+
+     19
+        8   8
+     19
+        8   9
+     19
+        9   0
+     19
+        9   1
+     19
+        9   2
+年份
+
+
+
+
+     19
+        9   3
+     19
+        9   4
+     19
+        9   5
+     19
+        9   6
+     19
+        9   7
+     19
+        9   8
+--><img
+   src="main-images/image-3.svg"
+   alt="(-tikz-&nbsp;diagram)"
+   style=""
+   class="lateximage"
+></span>
+</p>
+
+
+
+<div class="figurecaption">
+
+
+图&nbsp;12.1：1985–1998 年主粮定购价、议购价、市场价曲线图
+
+</div>
+
+<a id="fig:dingyishi"></a>
+
+
+
+<div class="figurecaption">
+
+
+资料来源：王小鲁，《中国粮食市场的波动》
+
+</div>
+
+</figure>
+
+<figure id="autoid-19" class="figure ">
+<div class="center">
+
+<p>
+<span
+      id="lateximage-main-4"
+      class="lateximagesource"
+><!--
+                       产量（亿吨）
+
+
+
+             3
+                 3.5
+                       4
+                           4.5
+                                 5
+                                     5.5
+                                           6
+                                               6.5
+
+
+
+
+     19
+        8
+     19 0
+        8
+     19 1
+        8
+     19 2
+        8
+     19 3
+        8
+     19 4
+        8
+     19 5
+        8
+     19 6
+       87
+     19
+        8
+     19 8
+        8
+     19 9
+        9
+     19 0
+        9
+     19 1
+        9
+     19 2
+        9
+     19 3
+        9
+     19 4
+        9
+     19 5
+        9
+     19 6
+       97
+     19
+        9
+     19 8
+        9
+年份
+
+
+
+
+     20 9
+        0
+     20 0
+        0
+     20 1
+        0
+     20 2
+        0
+     20 3
+        04
+     20
+        0
+     20 5
+        0
+     20 6
+       07
+     20
+        0
+     20 8
+        0
+     20 9
+        1
+     20 0
+        1
+     20 1
+        1
+     20 2
+        1
+     20 3
+        1
+     20 4
+        1
+     20 5
+        1
+     20 6
+       17
+--><img
+      src="main-images/image-4.svg"
+      alt="(-tikz-&nbsp;diagram)"
+      style=""
+      class="lateximage"
+></span>
+</p>
+
+
+
+<div class="figurecaption">
+
+
+图&nbsp;12.2：1980–2017 年粮食产量
+
+</div>
+
+<a id="fig:liangchanliang"></a>
+
+
+
+<div class="figurecaption">
+
+
+资料来源：国家统计局，《中国统计摘要–2018）》
+
+</div>
+
+<p>
+<span
+      id="lateximage-main-5"
+      class="lateximagesource"
+><!--
+                    增长率（%）
+
+
+             −10
+                   −5
+                        0
+                            5
+                                10
+
+
+
+
+     19
+        8
+     19 0
+        8
+     19 1
+        8
+     19 2
+        8
+     19 3
+        8
+     19 4
+        8
+     19 5
+        8
+     19 6
+       87
+     19
+        8
+     19 8
+        8
+     19 9
+        9
+     19 0
+        9
+     19 1
+        9
+     19 2
+        9
+     19 3
+        9
+     19 4
+        9
+     19 5
+        9
+     19 6
+       9
+     19 7
+        9
+     19 8
+        9
+年份
+
+
+
+
+     20 9
+        0
+     20 0
+        01
+     20
+        0
+     20 2
+        0
+     20 3
+        0
+     20 4
+        0
+     20 5
+        0
+     20 6
+       07
+     20
+        0
+     20 8
+        0
+     20 9
+        10
+     20
+        1
+     20 1
+        1
+     20 2
+        1
+     20 3
+        1
+     20 4
+        1
+     20 5
+        1
+     20 6
+       17
+--><img
+      src="main-images/image-5.svg"
+      alt="(-tikz-&nbsp;diagram)"
+      style=""
+      class="lateximage"
+></span>
+</p>
+
+
+
+<div class="figurecaption">
+
+
+图&nbsp;12.3：1980–2017 年粮食产量增长率（较上一年）
+
+</div>
+
+<a id="fig:liangzengzhang"></a>
+
+
+
+<div class="figurecaption">
+
+
+资料来源：国家统计局，《中国统计摘要–2018）》
+
+</div>
+
+<p>
+<span
+      id="lateximage-main-6"
+      class="lateximagesource"
+><!--
+                          价格（元/公斤）
+
+
+
+             0.3
+                   0.35
+                           0.4
+                                 0.45
+                                        0.5
+                                              0.55
+                                                     0.6
+
+
+
+
+     19
+        80
+     19
+        81
+     19
+        82
+     19
+        83
+     19
+        84
+     19
+        85
+     19
+        86
+     19
+       87
+     19
+        88
+     19
+        89
+年份
+
+
+
+
+     19
+        90
+     19
+        91
+     19
+        92
+     19
+        93
+     19
+        94
+     19
+        95
+     19
+        96
+     19
+       97
+     19
+        98
+--><img
+      src="main-images/image-6.svg"
+      alt="(-tikz-&nbsp;diagram)"
+      style=""
+      class="lateximage"
+></span>
+</p>
+
+
+
+<div class="figurecaption">
+
+
+图&nbsp;12.4：1980–1998 年粮食市场真实价格（1978 年不变价格）
+
+</div>
+
+<a id="fig:liangjia"></a>
+
+
+
+<div class="figurecaption">
+
+
+资料来源：卢锋，《三次粮食过剩（1984–1998）》
+
+</div>
+
+</div>
+
+</figure>
+
+<p>
+1985–1998 主粮定购价、议购价和市场价可见图&nbsp;<a href="14.html#fig:dingyishi">12.1</a>&nbsp;。1980–2017 粮食市场真实价格（1978 年不变价格）可见图&nbsp;<a href="14.html#fig:liangjia">12.4</a>&nbsp;。1985–1991 定购价变化不
+大。1987–1989 合同定购价、议购价与市场价的差距逐年拉大。
+</p>
+
+<p>
+1987–1988 年高于 18% 的强通货膨胀及“价格闯关”的失败，使市场恶化，全国生产继续下降，我国在 1988 后半年为稳定市场采取了一系列措施，如通货紧缩、减少财政支出、缩减基建规模、增加税收等。为扭转农业不利局面，国家也提升了一系列农产
+品价格。<b>1989 年较 1988 年，粮食议购价提升 40.3%，市场价提升 47.2%。虽然议购价和市场价的差距仍较大，但已经强烈刺激了农民的生产积极性 </b>。1990 年粮食产量年较 1989 年 <b> 粮食产量增长 9.5%</b>，达到 4.46 亿吨。据王小鲁统计，
+我国在 1989–1991 年，粮食净进口年年增加。1989 农民迎来了新的问题——<b> 农产品全面“卖难”</b>，并持续至 1991 年。据卢锋，统计
+</p>
+<blockquote>
+
+<p>
+名义粮价从 1989 年的 1.09 元/公斤下跌到 1992 年的 0.82 元/公斤；同期真实粮价从 0.54 元/公斤跌到 0.36 元/公斤，<b> 跌幅达 33%</b>。<b>1989–1991 年三年间，国内购销余量为 5024 万吨，加上净进口 2162 万吨，理论累积剩余超过 7000 万吨。
+</b> 结果出现比 80 年代中期更为严重的市场过剩形势。
+</p>
+</blockquote>
+
+<p>
+此后，国家也颁布了一系列粮食补贴，防止谷贱伤农。1990 年 9 月 16 日，国务院发文《国务院关于建立 <b> 国家专项粮食储备制度 </b> 的决定》。
+</p>
+<blockquote>
+
+<p>
+为了解决主产区农民 <b> 卖粮难问题 </b>，保护农民种粮积极性，当前必须 <b> 加强粮食收购 </b>，把农民需要出售的余粮收购起来，以促进粮食生产持续稳定发展；<b> 建立国家专项粮食储备，增强宏观调控能力，搞好丰歉调剂，保证粮食市场供应和
+粮价的基本稳定。</b>
+</p>
+
+<p>
+敞开收购议价粮，满足农民出售余粮的要求。
+</p>
+</blockquote>
+
+<p>
+同年 11 月“全国粮食工作会议在北京召开。国务院决定从 1990 年秋粮收购开始，<b> 将合同定购改为国家定购，交售国家定购粮作为农民应尽义务，必须保证完成。</b> 会议也强调要积极稳妥地推进粮食流通体制的改革。”
+</p>
+
+<p>
+1991 年 5 月，海南率先实行 <b> 粮食购销同价 </b> 改革。1991 年 5 月 7 日，国务院发布《国务院关于严格控制农业生产资料价格的通知》，<b> 管控、优惠、平价农业生产所需生产资料 </b>。
+</p>
+
+<p>
+1989 年，李鹏在全国人民代表大会的政府工作报告中明确提出要“培育市场体系，发展生产资料批发市场，试办期货市场”。期货市场第一次写入官方文件中，并作为培养市场体系的重要内容提到实践日程。1991 年 3 月，中国第一个粮食批发市场——郑州
+粮食批发市场签订了第一份小麦的远期合同，标志着中国期货交易的开始。<a id="main-autopage-292"></a><sup>[<a href="17.html#LWR-ht-cite.0@taochangsheng">79</a>]</sup>
+</p>
+
+<figure id="autoid-20" class="table ">
+<div class="center">
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:225pt ; ">
+
+<a id="main-autopage-294"></a>
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td class="tdc"><b> 年份 </b></td>
+<td class="tdc"><b> 城镇 </b></td>
+<td class="tdc"><b> 农村 </b></td>
+<td class="tdc"><b> 城乡差额 </b></td>
+<td class="tdc"><b> 农占城 </b></td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdc">1978</td>
+<td class="tdc">343</td>
+<td class="tdc">134</td>
+<td class="tdc">209</td>
+<td class="tdc">39.07%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1979</td>
+<td class="tdc">405</td>
+<td class="tdc">160</td>
+<td class="tdc">245</td>
+<td class="tdc">39.51%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1980</td>
+<td class="tdc">478</td>
+<td class="tdc">191</td>
+<td class="tdc">287</td>
+<td class="tdc">39.96%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1981</td>
+<td class="tdc">500</td>
+<td class="tdc">223</td>
+<td class="tdc">277</td>
+<td class="tdc">44.60%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1982</td>
+<td class="tdc">535</td>
+<td class="tdc">270</td>
+<td class="tdc">265</td>
+<td class="tdc">50.47%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1983</td>
+<td class="tdc">565</td>
+<td class="tdc">310</td>
+<td class="tdc">255</td>
+<td class="tdc">54.87%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1984</td>
+<td class="tdc">652</td>
+<td class="tdc">355</td>
+<td class="tdc">297</td>
+<td class="tdc">54.45%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1985</td>
+<td class="tdc">739</td>
+<td class="tdc">398</td>
+<td class="tdc">341</td>
+<td class="tdc">53.86%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1986</td>
+<td class="tdc">901</td>
+<td class="tdc">424</td>
+<td class="tdc">477</td>
+<td class="tdc">47.06%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1987</td>
+<td class="tdc">1002</td>
+<td class="tdc">463</td>
+<td class="tdc">539</td>
+<td class="tdc">46.21%</td>
+</tr>
+<tr>
+<td class="tdc">1988</td>
+<td class="tdc">1180</td>
+<td class="tdc">545</td>
+<td class="tdc">635</td>
+<td class="tdc">46.19%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1989</td>
+<td class="tdc">1374</td>
+<td class="tdc">602</td>
+<td class="tdc">772</td>
+<td class="tdc">43.81%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1990</td>
+<td class="tdc">1510</td>
+<td class="tdc">686</td>
+<td class="tdc">824</td>
+<td class="tdc">45.43%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1991</td>
+<td class="tdc">1701</td>
+<td class="tdc">709</td>
+<td class="tdc">992</td>
+<td class="tdc">41.68%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1992</td>
+<td class="tdc">2027</td>
+<td class="tdc">784</td>
+<td class="tdc">1243</td>
+<td class="tdc">38.68%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1993</td>
+<td class="tdc">2577</td>
+<td class="tdc">922</td>
+<td class="tdc">1655</td>
+<td class="tdc">35.78%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1994</td>
+<td class="tdc">3496</td>
+<td class="tdc">1221</td>
+<td class="tdc">2275</td>
+<td class="tdc">34.93%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1995</td>
+<td class="tdc">4283</td>
+<td class="tdc">1578</td>
+<td class="tdc">2705</td>
+<td class="tdc">36.84%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1996</td>
+<td class="tdc">4839</td>
+<td class="tdc">1926</td>
+<td class="tdc">2913</td>
+<td class="tdc">39.80%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1997</td>
+<td class="tdc">5160</td>
+<td class="tdc">2090</td>
+<td class="tdc">3070</td>
+<td class="tdc">40.50%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1998</td>
+<td class="tdc">5418</td>
+<td class="tdc">2171</td>
+<td class="tdc">3247</td>
+<td class="tdc">40.07%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1999</td>
+<td class="tdc">5839</td>
+<td class="tdc">2229</td>
+<td class="tdc">3610</td>
+<td class="tdc">38.17%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2000</td>
+<td class="tdc">6256</td>
+<td class="tdc">2282</td>
+<td class="tdc">3974</td>
+<td class="tdc">36.48%</td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+</table>
+
+</div>
+
+&#x2003;
+
+&#x2003;
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:234pt ; ">
+
+<a id="main-autopage-300"></a>
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td class="tdc"><b> 年份 </b></td>
+<td class="tdc"><b> 城镇 </b></td>
+<td class="tdc"><b> 农村 </b></td>
+<td class="tdc"><b> 城乡差额 </b></td>
+<td class="tdc"><b> 农占城 </b></td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdc">2001</td>
+<td class="tdc">6824</td>
+<td class="tdc">2407</td>
+<td class="tdc">4417</td>
+<td class="tdc">35.27%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2002</td>
+<td class="tdc">7652</td>
+<td class="tdc">2529</td>
+<td class="tdc">5123</td>
+<td class="tdc">33.05%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2003</td>
+<td class="tdc">8406</td>
+<td class="tdc">2690</td>
+<td class="tdc">5716</td>
+<td class="tdc">32.00%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2004</td>
+<td class="tdc">9335</td>
+<td class="tdc">3027</td>
+<td class="tdc">6308</td>
+<td class="tdc">32.43%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2005</td>
+<td class="tdc">10382</td>
+<td class="tdc">3370</td>
+<td class="tdc">7012</td>
+<td class="tdc">32.46%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2006</td>
+<td class="tdc">11620</td>
+<td class="tdc">3731</td>
+<td class="tdc">7889</td>
+<td class="tdc">32.11%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2007</td>
+<td class="tdc">13603</td>
+<td class="tdc">4327</td>
+<td class="tdc">9276</td>
+<td class="tdc">31.81%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2008</td>
+<td class="tdc">15549</td>
+<td class="tdc">4999</td>
+<td class="tdc">10550</td>
+<td class="tdc">32.15%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2009</td>
+<td class="tdc">16901</td>
+<td class="tdc">5435</td>
+<td class="tdc">11466</td>
+<td class="tdc">32.16%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2010</td>
+<td class="tdc">18779</td>
+<td class="tdc">6272</td>
+<td class="tdc">12507</td>
+<td class="tdc">33.40%</td>
+</tr>
+<tr>
+<td class="tdc">2011</td>
+<td class="tdc">21427</td>
+<td class="tdc">7394</td>
+<td class="tdc">14033</td>
+<td class="tdc">34.51%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2012</td>
+<td class="tdc">24127</td>
+<td class="tdc">8389</td>
+<td class="tdc">15738</td>
+<td class="tdc">34.77%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2013</td>
+<td class="tdc">26467</td>
+<td class="tdc">9430</td>
+<td class="tdc">17037</td>
+<td class="tdc">35.63%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2014</td>
+<td class="tdc">28844</td>
+<td class="tdc">10489</td>
+<td class="tdc">18355</td>
+<td class="tdc">36.36%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2015</td>
+<td class="tdc">31195</td>
+<td class="tdc">11422</td>
+<td class="tdc">19773</td>
+<td class="tdc">36.61%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2016</td>
+<td class="tdc">33616</td>
+<td class="tdc">12363</td>
+<td class="tdc">21253</td>
+<td class="tdc">36.78%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2017</td>
+<td class="tdc">36396</td>
+<td class="tdc">13432</td>
+<td class="tdc">22964</td>
+<td class="tdc">36.91%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2018</td>
+<td class="tdc">39251</td>
+<td class="tdc">14617</td>
+<td class="tdc">24634</td>
+<td class="tdc">37.24%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2019</td>
+<td class="tdc">42359</td>
+<td class="tdc">16021</td>
+<td class="tdc">26338</td>
+<td class="tdc">37.82%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2020</td>
+<td class="tdc">43834</td>
+<td class="tdc">17131</td>
+<td class="tdc">26703</td>
+<td class="tdc">39.08%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2021</td>
+<td class="tdc">47412</td>
+<td class="tdc">18931</td>
+<td class="tdc">28481</td>
+<td class="tdc">39.93%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2022</td>
+<td class="tdc">49283</td>
+<td class="tdc">20133</td>
+<td class="tdc">29150</td>
+<td class="tdc">40.85%</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2023</td>
+<td class="tdc">51821</td>
+<td class="tdc">21691</td>
+<td class="tdc">30130</td>
+<td class="tdc">41.86%</td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+</table>
+
+</div>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;12.1：1978–2023 城乡年人均可支配收入差距（当年价格）
+
+</div>
+
+<a id="tab:chengxiangcha"></a>
+
+
+
+<div class="figurecaption">
+
+
+来源：国家统计局
+
+</div>
+
+</div>
+
+</figure>
+<blockquote>
+
+<p>
+根据农业经济专家<sup>15</sup><a id="main-autopage-306"></a>的研究，1978 到 1985 年城乡收入的差距是缩小的，从 1985 年起扩大。1989 年到 1991 年农民收入增长基本停滞，城乡收入差距又恢复到 1978 年以前的情况。1993 年以后，由于国家提
+                                                             <sup>[<a href="17.html#LWR-ht-cite.0@wangxiandai">83</a>]</sup>
+高粮食价格、乡镇企业增长快、外出务工人口收入增长等原因，农村收入增长较快，但在城市劳动力大量剩余的情况下，这一势头正在改变。
+</p>
+</blockquote>
+
+<p>
+城乡收入差距可见表&nbsp;<a href="14.html#tab:chengxiangcha">12.1</a>&nbsp;。
+</p>
+
+<p>
+农业问题复杂深远，其中一些政策弊端 <b> 难以用简单的普世伦理衡量 </b>，但确实又具有 <b> 现实性要求和限制 </b>。
+</p>
+
+<p>
+民以食为天，农业是立国之本，在国家战略层面占据重要位置。其实没有哪个现代大国傻到敢于放任农业自由市场化，直面各种严重矛盾。所谓“工农业剪刀差”并非某个别国家的专用品，而是普遍存在于各国，只是形式、方法、实现上略微有些不同。有的
+补贴农民、有的补贴工人，有的补贴食品；有的直接补贴；有的间接补贴。
+</p>
+
+<p>
+绝大部分国家，特别是后发达国家都没有美国早期建立在印第安人骸骨上的“美国式道路”的大农业工业化条件，这给后发国家的发展带来太多的不利因素，真的太难，还请读者客观考量实际政策利弊。
+</p>
+
+<p>
+                                                  ；又 <b> 反过来对进口制成品、加工产品征收高额税 </b>；或者如日本对进口粮食设置高关税壁垒等（遭致美欧等国强烈反对）
+即使是发达国家，也往往借助军事、外交、金融债权等大肆盘剥他国，从他国半强制抽取低价自然资源（包括农业）                                                            ；美国对英国
+也进行过制裁；也常 <b> 给予本国农业巨额补贴 </b> 或 <b> 对食品相关行业减免税 </b> 以使本国 <b> 劳动力便宜、企业经营成本降低 </b>，获得经济增长。具体论述可见联合国报告第&nbsp;<a href="9.html#item:2012report">17</a>&nbsp; 点。
+</p>
+
+<p>
+为什么？因为农产品价格的提高，必然导致工人最低工资的提高。在政治经济学中，工人长期被限制在最低工资水平，这个水平是满足工人自己和繁衍下一代工人所需的最低生活需要（最低生活需要根据社会现实而变化）
+                                                                                                。最低工资水平可使相对剩余价值增
+加。笔者猜想，这甚至可能隐含着资本主义的某种强烈矛盾——主粮不能够体现真实价值，不能等价交换，否则可能带来或者加速资本主义自身的崩溃。但这一做法恰恰又违背了资本本身的“合法性”，相当矛盾。
+</p>
+
+<p>
+笔者无法提供农业问题的任何解决方案，也不倾向于任何方案，这主要源于笔者对于农业问题的认知浅薄和绝望：诚然，改革进程中粮食问题的动荡多是政府过度干预市场，“卖难”“买难”常交替出现，但笔者也绝不赞同主流经济学家所认为的、以及我们
+正在走的快速农业工业化道路。<b> 无论是全面市场化粮食市场还是快速工业化，均未对农村群体中的下层贫弱群体出路，以及剩余劳动力过多进行足够考虑⋯⋯</b> 这不只是伦理层面，也涉及和谐社会层面。
+</p>
+
+<p>
+其实笔者妄自认为，现代世界农业问题几乎没有可能找到一个光明伦理的普世答案，农业问题必然带有对内或对外的 <b> 灰黑色 </b>，这也使各国各界对农业问题的论述常常不能全尽、深刻。正如陈云在建国初所说“<b> 炸弹中的选择 </b>”和有生之年
+看不到问题的解决。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-307"></a>
+
+<p>
+<sup>14</sup>&nbsp; 按过去定购价格的 30% 和超购价格（过去的超购价格是，原定购价格的 150%）的 70% 计算出综合平均单价，作为粮食“倒三七”比例价。其计算公式为：
+</p>
+
+<p>
+\[ “倒三七”比例价 = 定购价 \times 30\% ＋定购价 \times 150\% \times 70\% = 定购价 \times 135\%\]
+</p>
+
+<p>
+
+
+</p>
+
+
+<p>
+<sup>15</sup>&nbsp; 汪晖此处所指专家为曾任国务院农村发展研究中心发展研究所市场研究室主任等职务的卢迈
+</p>
+
+
+
+</div>
+<!--
+...... section 城市改革......
+-->
+<h4 id="autosec-308"><span class="sectionnumber">12.6&#x2003;</span>城市改革</h4>
+<a id="main-autopage-308"></a>
+
+
+
+<p>
+1979 年 4 月，中共中央工作会议上广东省委、省政府主要负责人习仲勋、杨尚昆提议发挥广东优势，
+                                                “在对外开放上做点文章”
+                                                           ，邓小平就此提出“特区”概念。同年 7 月，中共中央和国务院正式批准广东福建两省在深圳、珠海、汕头、厦门四个市划出部分
+地区试办“出口特区”。
+</p>
+
+<p>
+1980 年 5 月，中共中央和国务院正式将“出口特区”定名为“经济特区”。人大常委会此后正式批准此一建议。此后数年持续扩大和增强经济特区的权利和地位。
+</p>
+
+<p>
+1982 年 12 月，国务院发布《国务院关于批转 < 当前试办经济特区工作中若干问题的纪要 > 的通知》。
+</p>
+
+<p>
+1984 年邓小平第一次南巡。1 月巡视深圳、珠海，2 月巡视厦门。同年 5 月 4 日，国务院发出《沿海部分城市座谈会纪要》的通知，确定进一步开放 14 个沿海港口城市——大连、秦皇岛、天津、烟台、青岛、连云港、南通、上海、宁波、温州、福州、广州、
+湛江、北海，扩大厦门经济特区范围到全岛，进一步开发海南等。随后国务院陆续批准在沿海开放城市及部分地区兴办经济开发区，引进外资、技术，以开发工业生产新技术和科研为主，减免税收，鼓励出口创汇。
+</p>
+
+<p>
+1984 年 10 月 20 日，中共第十二届三中全会通过的《中共中央关于经济体制改革的决定》，明确了以城市为重点的整个经济体制改革。
+</p>
+<blockquote>
+
+<p>
+实行政企职责分开以后，要充分发挥 <b> 城市的中心作用 </b>，逐步形成以城市特别是大、中城市为依托的，不同规模的，开放式、网络型的经济区……城市政府应该集中力量做好城市的规划、建设和管理……城市政府还应该根据国民经济发展的总体要
+求和当地的条件，做好中长期的经济和社会发展规划……使承包责任制在城市生根、开花、结果。
+</p>
+</blockquote>
+
+<p>
+1986 年 2 月发布《国务院关于批转经济特区工作会议纪要的通知》。意识形态上明确了“在经济上坚持以社会主义经济为领导，允许多种经济成分存在”；在具体举措上则是引进和利用外资，面向市场经济的国际市场，“<b> 以首先搞好基础设施为重点展开
+基本建设 </b>”，实行 <b> 减税或免税 </b> 等有利于发展市场经济的举措。1988 年 4 月，人大会决定设立海南省经济特区。
+</p>
+<!--
+...... section 企业改革......
+-->
+<h4 id="autosec-310"><span class="sectionnumber">12.7&#x2003;</span>企业改革</h4>
+<a id="main-autopage-310"></a>
+<!--
+...... subsection 雇工及企业性质......
+-->
+<h5 id="autosec-311"><span class="sectionnumber">12.7.1&#x2003;</span>雇工及企业性质</h5>
+<a id="main-autopage-311"></a>
+
+
+
+<p>
+我国在 20 世纪 70 年代，已经开始出现数量稀少的“<b> 红帽子 </b>”企业。进入 80 年代后，随着改革开放的进程逐步提高，“红帽子”企业越来越多。
+</p>
+
+<p>
+所谓“红帽子”
+      ，即私营、个体企业以国有或集体企业身份注册（
+                           “戴红帽子”
+                                ），或者挂靠国有、集体企业（
+                                             “挂红帽子”
+                                                  ），并向政府交纳行政管理费，向国有、集体企业交纳一定资金，以此享受国有、集体企业的利好。一些思想较活的地方行政事业单位与公司
+也建立了 <b> 专门提供挂靠服务的挂靠机构 </b>。虽然“红帽子”使私营企业减少了 <b> 政府审批、贷款、出口 </b> 等诸多方面的限制，但仍未完全放开。
+                                                                                “红帽子”企业中国营、集体成份同私营成份 <b> 产权混杂 </b>、较难辨别。随着私营经济的合法
+性得以确立，其社会地位也飞速提高，私营一方想要脱帽，国营、集体一方想要维持现状，因此在此后 20 余年“红帽子”脱帽的问题一直存在。
+</p>
+
+<p>
+笔者认为需要注意“红帽子”起始于民间自发，并逐渐获得一些地方政府协助。如同“包产到户”
+                                          、“包干到户”的“<b> 反作用 </b>”一样。这仍然是一种从民间到地方再到国家的、自下而上的历史变迁。笔者之所以重点提及这一点，是希望读者注意 <b>
+现代国家不是万能的，更不具备超越市民社会的力量 </b>，马克思认为市民社会是才是国家的基础，而非相反；国家无法一厢情愿地超越阶级对立和现实的物质生活条件、生产关系和交换关系的发展程度，否则将承担严重不良后果。虽如此，也请国家多些
+合法性、理性。
+</p>
+
+<p>
+1979 年，广东肇庆市人陈志雄开始承包鱼塘，越做越大，承包自己所属生产队及其它生产队鱼塘，越做越大，他人也入股部分鱼塘。一时间雇佣固定工 5 人，零工 1000 工作日。1981 年 5 月 29 日，人民日报二版头条位置发表了一篇题为“一场关于承包鱼
+塘的争论”的调查报告，并以“怎样看待陈志雄承包鱼塘问题”为总标题，开辟专栏，进行了为时三个月的激烈讨论。
+</p>
+
+<p>
+1981 年 10 月 17 日，中共中央发布《关于广开就业门路，搞活经济，解决城镇就业问题的若干通知》，文件中允许个体户雇工，但不能超过 7 人：                                       ”俗称“<b> 七上八
+                                                                         “对个体工商户，应当允许经营者请两个以内的帮手；有特殊技艺的可以带五个以内的学徒．
+下 </b>” ，7 人及以下是帮手，8 人及 8 人以上为雇工（资本主义性质）
+                                       。为什么恰恰是 7 人？这一结论由经济学家林子力根据马克思《资本论》第一卷“小业主”概念作出，它是保守派和自由派政治博弈的结果，其意义是政治层面上更加放开了对私营资本
+的限制，在政治经济学理论层面意义不大。
+</p>
+
+<p>
+1983 年 1 月 2 日，中共中央一号文件《当前农村经济政策的若干问题》中提出三不原则——“对农村个体工商户和种养业能手超过规定 <b> 雇请较多帮工的 </b>，<b> 不应提倡，不要公开宣传，也不要急于取缔 </b>”。
+                                                                                                                 “七上八下”的雇工问题虽未完全解
+决，但已有较多松动。
+</p>
+
+<p>
+1984 年 1 月 1 日，中共中央一号文件《关于 1984 年农村工作的通知》中，对农村雇工问题进一步放开，有 <b> 合作经济因素 </b> 的部分企业被认为“实行了一些有别于私人企业的制度”，因此不能看作私人雇工经营。笔者认为需要注意这时期的“红帽
+子”问题。
+</p>
+
+<p>
+1984 年 7 月 1 日，安徽省芜湖市人年广久与芜湖市新芜区劳动服务公司、清水工业公司联营成立“芜湖傻子瓜子公司”，年广久出任总经理。年广久也是想要借助“<b> 红帽子 </b>”降低或规避风险。年广久再次因雇佣问题引起党和政府内部争论，此时再
+次惊动中央。10 月 22 日，邓小平在中顾委第三次全体会议上说“<b> 放两年再看 </b>”。
+</p>
+
+<p>
+1987 年 1 月 22 日，中央五号文件《把农村改革引向深入》发布。文件中提及注意保护农民独立从事 <b> 家庭经营、个体经营的积极性 </b>，以及允许私营企业雇工 <b> 超过七人限制 </b>。
+</p>
+
+<p>
+1988 年 4 月 12 日，第七届全国人民代表大会第一次会议通过《中华人民共和国宪法修正案》，修正案中明确提及“国家 <b> 允许私营经济 </b> 在法律规定的范围内存在和发展。私营经济是社会主义公有制经济的补充。”
+</p>
+
+<p>
+1994 年全国人大颁布《中华人民共和国公司法》。<b> 股份合作企业 </b> 开始逐渐转变为 <b> 产权清晰的有限责任公司 </b>。
+</p>
+<!--
+...... subsection 乡镇企业......
+-->
+<h5 id="autosec-312"><span class="sectionnumber">12.7.2&#x2003;</span>乡镇企业</h5>
+<a id="main-autopage-312"></a>
+
+
+
+<figure id="autoid-21" class="table ">
+<div class="center">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td colspan="2" class="tdc">&#x2003;&#x2003; 单位：万 </td>
+</tr>
+
+
+<tr class="tbrule">
+<td rowspan="2" class="tdc" style="vertical-align:middle"><b> 年份 </b></td>
+<td colspan="5" class="tdc"><b> 企业单位数 </b></td>
+<td colspan="4" class="tdc"><b> 从业人员 </b></td>
+</tr>
+
+
+<tr>
+<td class="tdc tdrulel"><b> 总量 </b></td>
+<td class="tdc tdrule"><b> 增加率 </b>%</td>
+<td class="tdc tdrule"><b> 集体企业 </b></td>
+<td class="tdc tdrule"><b> 私营企业 </b></td>
+<td class="tdc tdruler"><b> 个体企业 </b></td>
+<td class="tdc tdrulel"><b> 总数 </b></td>
+<td class="tdc tdrule"><b> 第一产业 </b></td>
+<td class="tdc tdrule"><b> 第二产业 </b></td>
+<td class="tdc tdruler"><b> 第三产业 </b></td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdc">1978</td>
+<td class="tdc">152</td>
+<td class="tdc"></td>
+<td class="tdc">152</td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc">2827</td>
+<td class="tdc">608</td>
+<td class="tdc">1970</td>
+<td class="tdc">248</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1984</td>
+<td class="tdc">165</td>
+<td class="tdc">8.55</td>
+<td class="tdc">165</td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc">2848</td>
+<td class="tdc">284</td>
+<td class="tdc">3232</td>
+<td class="tdc">332</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1985</td>
+<td class="tdc">1223</td>
+<td class="tdc">641.21</td>
+<td class="tdc">157</td>
+<td class="tdc">53</td>
+<td class="tdc">1012</td>
+<td class="tdc">6979</td>
+<td class="tdc">252</td>
+<td class="tdc">5151</td>
+<td class="tdc">1576</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1988</td>
+<td class="tdc">1888</td>
+<td class="tdc">54.37</td>
+<td class="tdc">159</td>
+<td class="tdc">120</td>
+<td class="tdc">1609</td>
+<td class="tdc">9545</td>
+<td class="tdc">250</td>
+<td class="tdc">7188</td>
+<td class="tdc">2107</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1992</td>
+<td class="tdc">2092</td>
+<td class="tdc">10.81</td>
+<td class="tdc">153</td>
+<td class="tdc">90</td>
+<td class="tdc">1849</td>
+<td class="tdc">10625</td>
+<td class="tdc">262</td>
+<td class="tdc">7889</td>
+<td class="tdc">2474</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1993</td>
+<td class="tdc">2453</td>
+<td class="tdc">17.26</td>
+<td class="tdc">169</td>
+<td class="tdc">104</td>
+<td class="tdc">2181</td>
+<td class="tdc">12345</td>
+<td class="tdc">285</td>
+<td class="tdc">9086</td>
+<td class="tdc">2973</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1997</td>
+<td class="tdc">2015</td>
+<td class="tdc">-17.86</td>
+<td class="tdc">129</td>
+<td class="tdc">233</td>
+<td class="tdc">1652</td>
+<td class="tdc">13050</td>
+<td class="tdc">277</td>
+<td class="tdc">9336</td>
+<td class="tdc">3438</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1998</td>
+<td class="tdc">2004</td>
+<td class="tdc">-0.55</td>
+<td class="tdc">107</td>
+<td class="tdc">222</td>
+<td class="tdc">1675</td>
+<td class="tdc">12537</td>
+<td class="tdc">244</td>
+<td class="tdc">8968</td>
+<td class="tdc">3295</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2002</td>
+<td class="tdc">2133</td>
+<td class="tdc">6.44</td>
+<td class="tdc">73</td>
+<td class="tdc">230</td>
+<td class="tdc">1830</td>
+<td class="tdc">13288</td>
+<td class="tdc">205</td>
+<td class="tdc">9128</td>
+<td class="tdc">3954</td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+</table>
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td colspan="2" class="tdc">&#x2003; 单位：亿元 </td>
+</tr>
+
+
+<tr class="tbrule">
+<td colspan="1" class="tdc"><td rowspan="2" class="tdc" style="vertical-align:middle"><b> 年份 </b></td>
+<td colspan="3" class="tdc"><b> 产值 </b></td>
+<td colspan="3" class="tdc"><b> 出口 </b></td>
+</tr>
+
+
+<tr>
+<td class="tdc tdrulel"><b> 增加值 </b></td>
+<td class="tdc tdrule"><b>GDP</b></td>
+<td class="tdc tdruler"><b> 增加值/GDP</b> %</td>
+<td class="tdc tdrulel"><b> 乡镇企业 </b></td>
+<td class="tdc tdrule"><b> 全国 </b></td>
+<td class="tdc tdruler"><b> 乡镇/全国 </b> %</td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdc">1978</td>
+<td class="tdc">208.3224</td>
+<td class="tdc">3678.7</td>
+<td class="tdc">5.66</td>
+<td class="tdc"></td>
+<td class="tdc">167.6</td>
+<td class="tdc"></td>
+</tr>
+
+
+<tr>
+<td class="tdc">1984</td>
+<td class="tdc">633.2106</td>
+<td class="tdc">7278.5</td>
+<td class="tdc">8.70</td>
+<td class="tdc"></td>
+<td class="tdc">580.5</td>
+<td class="tdc"></td>
+</tr>
+
+
+<tr>
+<td class="tdc">1985</td>
+<td class="tdc">772.31</td>
+<td class="tdc">9098.9</td>
+<td class="tdc">8.49</td>
+<td class="tdc"></td>
+<td class="tdc">808.9</td>
+<td class="tdc"></td>
+</tr>
+
+
+<tr>
+<td class="tdc">1988</td>
+<td class="tdc">1742.0465</td>
+<td class="tdc">15180.4</td>
+<td class="tdc">11.48</td>
+<td class="tdc">269</td>
+<td class="tdc">1766.7</td>
+<td class="tdc">15.23</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1992</td>
+<td class="tdc">4485.342</td>
+<td class="tdc">27208.2</td>
+<td class="tdc">16.49</td>
+<td class="tdc">1193</td>
+<td class="tdc">4676.3</td>
+<td class="tdc">25.51</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1993</td>
+<td class="tdc">8006.8332</td>
+<td class="tdc">35673.2</td>
+<td class="tdc">22.44</td>
+<td class="tdc">2193</td>
+<td class="tdc">5284.8</td>
+<td class="tdc">41.50</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1997</td>
+<td class="tdc">20740.3209</td>
+<td class="tdc">79715</td>
+<td class="tdc">26.02</td>
+<td class="tdc">6826</td>
+<td class="tdc">15160.7</td>
+<td class="tdc">45.02</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1998</td>
+<td class="tdc">22186.4561</td>
+<td class="tdc">85195.5</td>
+<td class="tdc">26.04</td>
+<td class="tdc">6854</td>
+<td class="tdc">15223.6</td>
+<td class="tdc">45.02</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2002</td>
+<td class="tdc">32385.7988</td>
+<td class="tdc">121717.4</td>
+<td class="tdc">26.61</td>
+<td class="tdc">11563</td>
+<td class="tdc">26947.9</td>
+<td class="tdc">42.91</td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+</table>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;12.2：<a id="tab:xiangzhen"></a>部分乡镇企业数据
+
+</div>
+
+
+
+<div class="figurecaption">
+
+
+资料来源：国家统计局 1978–2002《中国乡镇资料》、《中国统计摘要–2018》
+
+</div>
+
+</div>
+
+</figure>
+
+<p>
+1984 年 3 月 1 日，中共中央、国务院转发农牧渔业部和部党组《关于开创社队企业新局面的报告》，并同意报告提出的 <b> 将社队企业名称改为乡镇企业 </b> 的建议，提出发展多种经营，乡镇企业是多种经营的重要组成部分。乡镇企业有利于 <b> 以工补
+农 </b>，<b> 吸收农村剩余劳动力 </b>，<b> 减轻城市压力 </b> 等，乡镇企业 <b> 独立核算 </b>、<b> 自负盈亏 </b>。
+</p>
+
+<p>
+              《中共中央、国务院关于进一步活跃农村经济的十项政策》中指出，对乡镇企业实行信贷、税收优惠。鼓励农民发展采矿和其他开发性事业；鼓励技术转移和人才流动，城市的各类科学技术人员经所在单位同意，<b> 可以停薪留职，应聘到
+1985 年 1 月 1 日，
+农村工作 </b>。<b> 放活农村金融政策 </b>，提高资金的融通效益，农村信用社实行 <b> 独立经营，自负盈亏 </b>；积极发展和完善 <b> 农村合作制 </b>。
+</p>
+
+<p>
+个体、家庭产业所面临的资金匮乏、信贷渠道不畅、生产力落后、政策限制等难题因此得到缓解，联合成立 <b>“股份合作”企业 </b> 的势头也迅速上升。私有产权、私有经营权在乡镇企业成分中发展迅速，且成为一些地方经济支柱。但是它的合法性还存
+一些问题，不同时期利润上交多少也有变动。
+</p>
+<blockquote>
+
+<p>
+以戴慕珍为代表的学者更加侧重关注地方政府在地方工业化中的积极作用，用“<b> 地方国家公司主义 </b>”的概念来解释乡镇企业和一些地方工业的兴起。戴慕珍认为，在 80 年代中期确立的财政包干体制下，地方政府一方面可以获得 <b> 超包干基数的
+财政收入 </b>（乡镇企业能提供的预算内财政收入有产品税即后来的增值税，利润税等），另一方面还可以通过乡镇企业 <b> 上交利润的形式获得预算外收入 </b>，所以有极大的动力去兴办乡镇企业。
+</p>
+
+<p>
+80 年代后期开始，除了乡镇企业蓬勃发展的珠三角、长三角以及浙江之外，山东、河北、辽宁以及中部一些省份也开始大办乡镇企业，有些地区提出的口号是“<b> 村村冒烟、户户上班 </b>”。这些地区的乡镇企业大多由地方政府利用银行、信用社、农村
+合作基金会融资兴办，<b> 无论企业效益如何，都能够立竿见影地给地方政府带来 GDP 和财政收入的迅速增长。</b>
+</p>
+</blockquote>
+
+<p>
+1988 年 4 月，“<b> 私营经济 </b>”写入《宪法修正案》，但仍是“社会主义公有制经济的 <b> 补充 </b>”。
+</p>
+
+<p>
+前文已述，因 1987-1988 年国内经济过热、通货膨胀严重、基建规模盲目扩大，社会反响强烈，1988 年 9 月召开的中共十三届三中全会确定了 <b> 治理经济环境、整顿经济秩序、全面深化改革 </b> 的指导方针和政策、措施。
+</p>
+
+<p>
+近 30 年主流看法是乡镇企业数量在 1988 年到 1991 年大减少的主因是保守派政策，笔者认为有一些影响，但不可背全锅，甚至保守派政策很可能不是主因。
+</p>
+
+<p>
+据表&nbsp;<a href="14.html#tab:xiangzhen">12.2</a>&nbsp; <a href="14.html#tab:xiangzhen"> 部分乡镇企业数据 </a>）
+                                                                                                     ，只从数量来说，乡镇企业中个体企业数量变化不大（其数量只在 1989 年相较 1988 年有所减低，1000 多万个体企业只缩减 1
+万余家）；集体企业受到一些影响（1991 年相较 1988 年数据减少 10 万余家）；私营企业受影响最大最明显（1988 年国家统计数据为 120 万多，1991 年不足 85 万，减少 35 余家）。
+</p>
+
+<p>
+主流说法无视 88 年大通膨抢购潮（自由派导致）
+                       ；无视相应的抢救措施——治理整顿、深化改革本就是要减信贷、通膨、基建等；无视 90 年保守派才发力“姓资姓社”问题，91 年年初自由派就开始大反击，92 年初南巡结束争论的历史；也无视了一些地方，
+乃至官员个人，与乡镇企业形成的利益共同体。笔者只是抛砖引玉，若要明了究竟，非笔者力所能及。
+</p>
+
+<p>
+1990 年 2 月 12 日，农业部公布《农民股份合作企业暂行规定》及附件《农民股份合作示范章程》，6 月《中华人民共和国乡村集体所有制企业条例》发布，这两个法规为乡镇企业的发展提供了 <b> 法律保障 </b>。
+</p>
+
+<p>
+1992 年，邓小平南巡讲话，全国正式迈入市场经济体制，乡镇企业增长迅速。1994 年全国人大颁布《中华人民共和国公司法》。<b> 股份合作企业 </b> 开始逐渐转变为 <b> 产权清晰的有限责任公司 </b>。
+</p>
+
+<p>
+虽然乡镇企业数量在 1989–1991 年减少，但乡镇企业总产值、出口值、占比 GDP 却是年年提升，私营企业的“<b> 红帽子 </b>”保障，<b> 地方政府可从乡镇企业获得更多预算内收入及上缴利润，与乡镇企业达成发展经济的共识和默契 </b> 也越来越多。
+从这点看，我们可能不得不承认这样一个事实：<b> 市场体制不可阻挡。1992 年的历史似是必然。</b> 它未必是全民的，却是市民社会的抉择结果。
+</p>
+
+<p>
+1985 年以前，没有私营和个体企业相关统计数据，以下只以国家统计局数字为准。仅 1985 年，新加入统计表的私营企业 53 万余家，个体企业 1012 万余家。从 1985 到 1993 年的 9 年时间里，乡镇企业就吸纳剩余劳动力 9497 万余人，平均一年过千万人；
+乡镇企业年增加产值占比 GDP 从 18.7% 增长至 22.44%。1985 年乡镇企业出口额占比全国出口总额 15.21%，于 1992 年增长至 25.51%。1993 年因进一步改革开放大环境下对乡镇企业的政策支持放开，以及人民币大幅贬值下的实际汇率影响，使往日受
+压抑的乡镇企业瞬增诸多活力，1993 年其出口额占比全国出口总额 41.5%。
+</p>
+
+<p>
+如同这时期的一系列政策，乡镇企业带有较强先锋、折衷、过渡性质。中国以乡镇企业为突破口，走向了市场经济。此后乡镇企业的发展也有波折，但笔者认已经可以将其划入一般企业改革中，因此不再将乡镇企业单独列出和赘述。笔者感觉这段历史有困惑
+之处，欢迎读者各种方式与我探讨。这时期地方政府和乡镇企业关系进展到什么程度？私占公发展到什么程度？
+</p>
+<!--
+...... subsection 就业制度改革......
+-->
+<h5 id="autosec-317"><span class="sectionnumber">12.7.3&#x2003;</span>就业制度改革</h5>
+<a id="main-autopage-317"></a>
+
+
+
+<p>
+1980 年 8 月 17 日，中共中央发文《中共中央关于转发全国劳动就业会议文件的通知》，指出“要积极创造条件，在国家统筹规划和指导下，实行 <b> 劳动部门介绍就业、自愿组织起来就业和自谋职业相结合 </b>”的三结合方针，企业公开招工并可以增减
+人员。扭转过往片面强调“大”和“公”的错误以及“铁饭碗”的状况。
+</p>
+
+<p>
+1983 年 2 月 22 日，劳动人事部发文《劳动人事部关于积极试行劳动合同制的通知》，<b> 积极实行劳动合同制，打破“大锅饭”、   ，</b> 调动人民积极性，充分调动人们的社会主义积极性，解放生产力，
+                                                                  “铁饭碗”                                 “（全民所有制单位及集体所有制单位）经过若
+干步骤，<b> 最终达到所有职工都实行劳动合同制 </b>。”
+</p>
+
+<p>
+1986 年 7 月 12 日，国务院一次性颁发四个法规：《国营企业实行劳动合同制暂行规定》、《国营企业辞退违纪职工暂行规定》、《国营企业招用工人暂行规定》和《国营企业职工待业保险暂行规定》。
+</p>
+<blockquote>
+
+<p>
+然而，这一改革措施只限于国营企业中 <b> 新招收的工人，并没有根本动摇原有的固定工制度。</b> 到 1991 年底，全民所有制单位合同制工人只有 1449 万人，占全民所有制单位职工总数的 14% 。<a id="main-autopage-318"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@laodongzhiduyuanfang">84</a>]</sup>
+</p>
+</blockquote>
+<!--
+...... subsection 扩大企业经营管理自主权和增强企业活力......
+-->
+<h5 id="autosec-319"><span class="sectionnumber">12.7.4&#x2003;</span>扩大企业经营管理自主权和增强企业活力</h5>
+<a id="main-autopage-319"></a>
+
+
+
+<p>
+1978 年，四川省委、人民政府（赵紫阳时任四川省委第一书记）在 6 个地方国营工业企业开展扩大工业企业经营管理自主权试点，在 1979 年 1 月扩大至 100 家工业企业和 40 家商业企业。
+</p>
+
+<p>
+1979 年 7 月后，国务院出台一系列文件要求全国进行扩大企业自主权试点。
+</p>
+
+<p>
+1982 年 9 月 16 日，国务院批转物价局等部门《关于逐步放开小商品价格、实行市场调节的报告》。1983 年 9 月 1 日，国务院批转物价局等部门座谈会《关于进一步放开小商品价格的报告》。1984 年 10 月 6 日，国家物价局下达《关于全部放开小商品价格的
+通知》。至此小商品价格改革基本完成。      <sup>[<a href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]442-443</sup>
+</p>
+
+<p>
+1984 年 5 月 10 日，国务院颁布了《国务院关于进一步扩大国营工业企业自主权的暂行规定》，进一步扩大了扩大企业和厂长（经理）的自主权，在招工、劳动工资和奖惩制度等方面作出较大放权。
+</p>
+
+<p>
+1984 年 10 月 20 日，中共第十二届三中全会通过《中共中央关于经济体制改革的决定》，在宏观理论层面上确定了城市企业学习农村，大力发展建立 <b> 以承包为主的多种形式的经济责任制 </b>；增强企业活力，减弱政府对经济的各种管控，政企职责分
+开，确立企业主体地位；尊重价值规律及建立合理价格体系等。
+</p>
+
+<p>
+1985 年 9 月 23 日，中国共产党全国代表会议上通过《中共中央关于制定国民经济和社会发展第七个五年计划的建议》，《建议》中提出进一步增强企业特别是 <b> 全民所有制大中型企业 </b> 的活力，使它们实现相对独立的、自主经营的、自负盈亏；国家
+对企业的管理逐步由直接控制为主转向间接控制为主。要围绕这三个方面，配套地搞好计划体制、价格体系、财政体制、金融体制和劳动工资制度等方面的改革
+</p>
+
+<p>
+1986 年 12 月 5 日，国务院颁布《国务院关于深化企业改革增强企业活力的若干规定》，主要提出 <b> 企业所有权 (全民所有制) 与经营权分离 </b>，全民所有制小型企业积极试行租赁、承包、拍卖、折股。少数有条件的全民所有制大中型企业，进行股份
+制试点；企业之间互相投资，或联合投资新建企业，一般宜采取股份制形式；<b> 集体所有制企业一律改为自负盈亏 </b>；对轻纺企业和其他进行重点技术改造的大中型企业减免税收；目前仍由上级部门集中掌握的 30％的折旧基金，要全部留给企业；限期
+清理、撤销行政性公司，停止行政性公司管理企业的职能，半年内限期转为经营型或服务型的经济实体，实行独立核算，自负盈亏；鼓励发展企业集团。
+</p>
+
+<p>
+1988 年 4 月召开的七届全国人大一次会议通过了《中华人民共和国全民所有制工业企业法》。《企业法》规定，<b> 全民所有制企业 </b> 是依法 <b> 自主经营、自负盈亏、独立核算 </b> 的社会主义商品生产和经营单位，第一次用法律的形式明确了政府与
+国有企业之间的权责利关系，为国有企业制度与经营方式的改革打下了坚实的基础。
+</p>
+<!--
+...... subsection 价格双轨制和价格闯关......
+-->
+<h5 id="autosec-320"><span class="sectionnumber">12.7.5&#x2003;</span>价格双轨制和价格闯关</h5>
+<a id="main-autopage-320"></a>
+
+
+
+<a id="sec:qishuanggui"></a>
+<blockquote>
+
+<p>
+1984 年的十二届三中全会后，价格改革开始引入市场机制，确立了放调结合，以放为主的改革方式。<a id="main-autopage-321"></a><sup>[<a href="17.html#LWR-ht-cite.0@wangqiangshehui">86</a>]</sup>
+</p>
+
+<p>
+1984 年 5 月 10 日，国务院发出了 67 号文件 (即扩权 10 条)，其中规定，在完成指令性计划以后，超产部分允许企业在不高于计划价格 20% 的范围内浮动。1985 年 1 月，国务院又发出 17 号文件，干脆把 20% 的限制取消了：<b> 超产部分的价格由供需
+双方自由议定 </b>，国家不加干涉。这样，同一种产品就有两种价格，<b> 计划内的那部分是计划价格，超产部分是市场价格。在供不应求的情况下，市场价格大大高于计划价格。</b><sup>[<a
+href="17.html#LWR-ht-cite.0@yangshuanggui">87</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+笔者已在&nbsp;<a href="14.html#sec:nongshuanggui">12.5.2</a>&nbsp; 节评价农业价格双轨制，这里不再赘述。
+</p>
+
+<p>
+张曙光写到
+</p>
+<blockquote>
+
+<p>
+双轨制改革的运行方式是：固定存量，放开增量，从边际上引入市场，然后再逐步用市场蚕食计划，最后实现单一市场。在双轨制中，<b> 计划价格一轨旨在照顾原有利益格局 </b>，有利于保持大局稳定，减少改革阻力，而 <b> 市场价格一轨则能提供新的
+激励，有利于促进经济发展和结构调整 </b>，从而保证了从计划调节到市场调节的平稳过渡，避免了经济的剧烈震荡，形成了改革与发展的双赢。
+</p>
+</blockquote>
+
+<p>
+笔者认为张曙光的结论有待商榷。双轨制的发起者和拥护者往往认为即使双轨制的实行带有些明显副作用，仍是一种基于现实状况的选择，是市场经济改革的必经之路；是理论创新。推崇西方现代经济学的中青年学者和政治家至此走上中国政界、学界的主
+要位置。
+</p>
+
+<p>
+笔者认为不管价格双轨制是否是国弱民穷下的必然政策<sup>16</sup><a id="main-autopage-322"></a>，是否功远远大于过，仍需要对价格双轨制的副作用着重提出。经济政策中的“副作用”惯于被轻视或淡化；惯于被认为无可避免；惯于被认为功大于
+过；惯于以帕累托改进甚至帕累托最优等辞令作为遮羞布，掩蔽民众利益受损，最终成为既得利益者得利和辩护的工具。
+</p>
+
+<p>
+在张维迎《当年对双轨制认识很粗浅 没想到腐败会如此严重》与张曙光《中国经济风云史》中同样使用了“卡尔多——希克斯改进”
+                                                          、“帕累托改进”
+                                                                 、尊重既得利益团体等术语，且逻辑脉络、话语组织高度一致，如同一文。因张曙光的论述较详细一点，以下
+引用张曙光书中观点。
+</p>
+<blockquote>
+
+<p>
+另一种批评是说，<b> 双轨制为官员腐败创造了条件 </b>，其中最有影响的是吴敬琏和荣敬本主编的《腐败：货币与权力的交换》。这一批评有一定道理。因为，实行价格双轨制，必然出现价格落差，很多人利用计划内外价格差进行投机倒卖，谋取暴利，从
+而形成一批依次为业的倒爷和公司，特别是一些掌握一部分权力的 <b> 官倒，权力寻租，倒卖批文和指标，扰乱市场秩序，破坏体制改革 </b>。不过，应当指出，寻租的条件和寻租行为本身还是有区别的，寻租行为的大量发生，板子恐怕不能完全打在价格
+双轨制上。双轨制带来的负面作用也是改革不得不付的成本和代价，否则，不可能实现制度改革。新制度其所以能够代替旧的制度，就在于它至少必须是一个“卡尔多——希克斯改进”
+                                                                                ，也就是社会总财富的增加。但是，如果我们不能把“卡尔多——希克斯
+              ，改革就会遇到巨大的阻力和反抗，甚至可能根本无法进行，或者激起革命。因此，<b> 改革和革命的不同就在于是否尊重既得利益。双轨制的主要特征之一是尊重在旧有体系下形成的各个利益团体的既得利益（得到牌价供
+改进”转化为一个“帕累托改进”
+应指标是一种既得利益 </b>）。他一开始在一个特殊的起点出现而 <b> 没有遭到任何强烈抵制 </b>，其原因就在这里。不错，双轨制的确为官员寻租创造了条件，但也同时减轻了拥有权力的官僚部门的抵制。这一点可以解释为什么越来越多的政府部门转
+而支持这种改革。此外，<b> 双轨制在为寻租提供条件的同时，也孕育了中国企业家的诞生。因为，双轨制带来了整个经济系统的开放。这正是企业家生长的环境。</b><a id="main-autopage-323"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]459</sup>
+</p>
+</blockquote>
+
+<p>
+笔者对类似论述的批判如下：
+</p>
+
+<p>
+<b> 第一，以上言论在所倡导政策出现问题时较多甩锅给“寻租行为本身”
+                                  ，通俗易懂来说就是甩锅给体制 </b>，经是好的只是和尚念歪了；不是政策本身有问题，而是体制有问题，较为漠视经济政策的综合社会影响和现实状况。并且我们也可从二张的意见
+中看出，其目标甚至本就是尊重“既得利益”，也就是使既得利益集团的利益更加扩大化，并惯以改革本应如此的称号。
+</p>
+
+<p>
+诚然，有权力的不平等便有寻租和腐败行为，复杂巨变的改革时期往往也是权力寻租行为的转型期、暴涨期。可是经济学家们在推行自己所倡导的经济政策时，他们说这是有利于国计民生的，是带领社会利好的，经济权利是最重要的社会权利；在产生副作
+用时，他们又说经济无法代替社会负主要责任。一切为了维护和发展既得利益集团利益，需要国家支持时，国家是喂奶的娘；反之需要国家放开限制时，国家又从喂奶的娘变成了讨人嫌的看门狗。这样的双标是何等的轻松惬意。
+</p>
+
+<p>
+<b> 第二，刻意滥用概念“帕累托改进”。</b>“帕累托改进是指在不减少一方的福利时，通过改变现有的资源配置而提高另一方的福利。
+                                                                ”就历史事实和经验来说，笔者敢于断言双轨制无论如何也不会是帕累托改进，它与强通货膨胀、劫富济贫“铸币税”的
+强相关是无可辩驳的事实。
+</p>
+
+<figure id="autoid-22" class="figure ">
+<div class="center">
+
+<p>
+<span
+      id="lateximage-main-7"
+      class="lateximagesource"
+><!--
+          0
+              5
+                  10
+                       15
+                            20
+                                 25
+
+
+
+
+19
+  75
+
+
+
+
+19
+     80
+
+
+
+
+19
+     85
+
+
+
+
+19
+     90
+
+
+
+
+19
+     95
+
+
+
+
+20
+     00
+
+
+
+
+20
+     05
+
+
+
+
+20
+     10
+
+
+
+
+20
+     15
+
+
+
+
+20
+     20
+                             CPI
+                             GDP
+
+
+
+
+20
+     25
+--><img
+      src="main-images/image-7.svg"
+      alt="(-tikz-&nbsp;diagram)"
+      style=""
+      class="lateximage"
+></span>
+</p>
+
+
+
+<div class="figurecaption">
+
+
+图&nbsp;12.5：<a id="fig:tongpeng30"></a>1977–2023 CPI GDP 较上年增长率 %
+
+</div>
+
+
+
+<div class="figurecaption">
+
+
+数据来源：国家统计局
+
+</div>
+
+</div>
+
+</figure>
+
+<p>
+截止到 1988 年价格闯关前，通货膨胀所收取的高额铸币暗税（见图&nbsp;<a href="14.html#fig:tongpeng30">12.5</a>&nbsp;）；1985–1987 一些社会事件；粮食合同定购农民积极性持续下滑，以至于发展到 1990 年国家要实行更具强制性的“<b> 国家
+定购 </b>”才能完成中央收购；尽快双轨并轨为市场一轨，实行激进“物价、价格闯关”的主因——“双轨制价格造成的腐败和经济秩序混乱”
+                                                                 ，也被这些经济学家们无视掉了；1988 年人民恐慌挤兑抢购的事实何在？只是因为“激进的”价格闯关来临，就没
+有之前“温和的”价格双轨制所造成的原因吗？张维迎、张曙光等对双轨制的辩护中，他们认为计划轨的失败本就属于双轨制改革的目的，那么主要在计划轨上生活的民众怎么办呢？他们居然说这是无损于弱势一方福利的帕累托改进！
+</p>
+
+<p>
+<b> 第三，理论方面，帕累托改进局限在哪里？是否成立？</b> 现实中真的会有一方利益无损而另一方利益可以尽情增长的帕累托改进吗，它是真命题吗？笔者对以相当轻率和主观臆测的态度找到几篇论文，供读者阅读：价格双规制中帕累托改进的理论错
+误：张军《价格双轨制：是奇迹还是神话》<sup>17</sup><a id="main-autopage-326"></a>；帕累托改进的各方局限性：姚洋《作为一种分配正义原则的帕累托改进》
+                                                                                              <sup>[<a href="17.html#LWR-ht-cite.0@yaoyang">88</a>]</sup>；帕累托改进理论的
+                                        <sup>[<a href="17.html#LWR-ht-cite.0@zhufuqiang">89</a>]</sup>，宋圭武《
+伪命题：朱富强《帕累托改进原则能否应用于社会改革？——实践的可行性和内在的保守性》                                                                           <sup>[<a
+                                                                                                           “帕累托最优”质疑》
+href="17.html#LWR-ht-cite.0@songguiwu">90</a>]</sup>。
+</p>
+
+<p>
+另外，阶段性的帕累托改进形成的发展不平衡、财富加剧分化往往会为下一次经济下行期带来更大矛盾和压力。此一阶段的成功，可能是下一阶段严重大萧条的根源所在。
+</p>
+
+<p>
+更大胆来说，帕累托改进本身就是一个伪命题。人类社会是互相动态联系的整体，拔高一极，另一极不变，无可辩驳地会造成拔高一方对不变一方的权力压制。这本是中二生依据自己的现实经验就可以明白的道理，无需什么旁征博引，也无需扯什么“科学”
+的大旗。
+</p>
+
+<p>
+第四，也是最后一条。双轨制的发明被认为是 1984 年莫干山会议的重大成果。这次会议参会者是通过征文入选，投稿人多是在读硕士研究生、讲师等青年人。参会者就“究竟谁最早提出双轨制”有争论；也有石油系统和其他公司认为自己早在 70 年代末、
+80 年代初便已实际实施双轨制，他们才应是双轨制发起人，事实上，莫干山会议参加者正是学习了已实际实施了几年的双轨制。笔者妄断，其实谁提出双轨制并不重要，双轨制的路径是预设的，莫干山会议只是作为批判的武器——为双轨制增加经济学份量
+的一次会议。
+</p>
+
+<p>
+杨继绳<sup>[<a href="17.html#LWR-ht-cite.0@yangshuanggui">87</a>]</sup>和张曙光就李鹏向邓小平反映价格问题的时间有出入，杨继绳说是七届全国人大一次会议期间，张曙光说是两会后，笔者认为并没有实质的差别，以下以张曙光记述为准。
+</p>
+<blockquote>
+
+<p>
+1988 年 3 月 25 日到 4 月 13 日，一年一度的“两会”在北京召开，<b> 物价和“官倒”</b> 问题成为会议议论的焦点。代表们强烈抨击双轨制给不法分子可乘之机，痛斥社会风气每况愈下。
+</p>
+
+<p>
+两会后，李鹏向邓小平汇报会议情况。邓小平问代表们意见最大的是什么事情，李鹏说是价格问题，<b> 双轨价格造成的腐败和经济秩序混乱 </b>。邓小平再次提出要闯过价格改革这一关。并认为“<b> 晚过不如早过 </b>”
+                                                                                                           、“<b> 长痛不如短痛 </b>”
+                                                                                                                            。事
+后，李鹏向中央政治局传达了邓小平价格闯关的意见。<a id="main-autopage-327"></a><sup>[<a href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]563</sup>
+</p>
+</blockquote>
+
+<p>
+1988 年 8 月 15 日至 17 日，中共中央政治局在北戴河召开第十次全体会议，通过了《关于价格、工资改革的初步方案》，<b> 价格闯关正式开始，部分烟酒市场价较原来提高 10 倍，全国挤兑抢购现象相当严重。1989 年 2 月，CPI 通胀率同比（去 1988 年 2
+月相比）增长 28.4%，为改革开放以来同比最高比例。</b>
+</p>
+
+<p>
+                                                                       “会议批准了中央政治局向这次全会提出的 <b> 治理经济环境、整顿经济秩序、全面深化改革 </b> 的指导方针和
+1988 年因价格闯关彻底失败，保守派势力处于上升趋势，自由派势力相当之前有所减弱。同年 9 月 26 日至 30 日，中共十三届三中全会召开，
+政策、措施⋯⋯治理经济环境，主要是压缩社会总需求，抑制通货膨胀。整顿经济秩序，就是要整顿目前经济生活中特别是流通领域中出现的各种混乱现象。”<sup>18</sup>
+</p>
+<blockquote>
+
+<p>
+由于连续两年的治理整顿，再加上 1989 年的政治风波，中国的经济运行发生了重大变化，从经济过热变成增长过慢，从通货膨胀变成通货紧缩。1988 年和 1989 年 GDP 分别增长 4.1% 和 3.8%，1990 年和 1991 年零售物价上涨率从 1988 年的 18.5% 和
+1989 年的 17.8% 下降到 1990 年的 2.1% 和 1991 年的 2.9%。市场秩序也发生了逆转，从紧张变成疲软，从旺销变成滞销，<b> 持续了几十年的卖方市场第一次出现了买方市场，这就导致了计划内外价差的缩小，计划价格变成了市场价格。于是，双规价格自
+然而然地实现了并轨，</b> 到 1991 年底，80% 的商品价格都已经放开，基本上实现了市场化。这真是“踏遍铁鞋无觅处，得来全不费功夫”             。<a id="main-autopage-328"></a><sup>[<a href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]579</sup>
+</p>
+</blockquote>
+
+<p>
+笔者想，一些领导人和经济学家极力推动，举国之力想要完成的事情都没有完成，却被历史和真正市场（并非现代西方经济学所说的“自由”市场）以一种荒谬、戏谑众生和神奇的自我动态平衡实现了最终的并轨⋯⋯
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-329"></a>
+
+<p>
+<sup>16</sup>&nbsp; 双轨制前有波兰，双轨之后有苏东剧变，市场价格一步到位的“休克疗法”的失败在实践上证明了直接转变为市场单轨是不可取的。
+</p>
+
+<p>
+而国家模拟单一价格并逐步发展到彻底市场的模式除已知或未知的缺陷外，更需要国家投入，这与当时国弱民穷希望大规模减轻中央财政支出的中国大背景不兼容。
+</p>
+
+<p>
+所以可能由此走向了双轨制。
+</p>
+
+
+<p>
+<sup>17</sup>&nbsp;<a href="http://economics.efnchina.com/show-1554-58760-1.html" target="_blank" >http://economics.efnchina.com/show-1554-58760-1.html</a>
+</p>
+
+
+<p>
+<sup>18</sup>&nbsp;<a href="http://cpc.people.com.cn/GB/64162/64165/70293/70319/4857100.html" target="_blank" >http://cpc.people.com.cn/GB/64162/64165/70293/70319/4857100.html</a>
+</p>
+
+
+
+</div>
+<!--
+...... section 金融改革......
+-->
+<h4 id="autosec-330"><span class="sectionnumber">12.8&#x2003;</span>金融改革</h4>
+<a id="main-autopage-330"></a>
+
+
+
+<a id="sec:huilv78"></a>
+<!--
+...... subsection 现代化银行......
+-->
+<h5 id="autosec-331"><span class="sectionnumber">12.8.1&#x2003;</span>现代化银行</h5>
+<a id="main-autopage-331"></a>
+
+
+
+<p>
+1979 年 10 月 4 日，邓小平同志在省、自治区、直辖市党委第一书记座谈会上作出讲话，收录在《关于经济工作的几点意见》。意见中指出：“必须把银行真正办成银行⋯⋯过去我们的制度是采取拨款的形式，而不是银行贷款的形式。这个制度必须改革。任
+何单位要取得物资，要从银行贷款，都要付利息。”我国开始了恢复、重构金融体系的工作。
+</p>
+
+<p>
+1979 年到 1984 年，中国恢复和建立了中国农业银行、中国银行、中国建设银行等专业银行；中央人民银行专门行使中央银行职能；成立中国工商银行，承担原来由人民银行办理的工商信贷和储蓄业务。同期也成立了中国国际信托投资公司和地方信托投资
+公司、租赁公司、农村和城市信用合作社等。
+</p>
+
+<p>
+1985 年后，中央政府按照市场化运作的原则成立了一批股份制商业银行，包括交通银行、中信实业银行、华夏银行等。
+</p>
+
+<p>
+1986 年 12 月 19 日，邓小平同志在听取中央负责同志汇报时再次指出“要把银行真正办成银行。我们过去的银行是货币发行公司，是金库，不是真正的银行。对金融问题，我们知识不足，可以聘请外国专家做顾问嘛”。
+</p>
+
+<p>
+1995 年《中国人民银行法》公布以前，财政部可以向人民银行借款和透支，用于弥补中央财政赤字和解决专项支出。
+                                                     《中国人民银行法》关于“中国人民银行不得对政府财政透支，不得直接认购、包销国债和其他政府债券”的规定出台后，中央财政不能再从
+人民银行借款。同时《预算法》规定政府财政赤字只能通过发行国债来弥补。
+</p>
+<!--
+...... subsection 汇率双轨制......
+-->
+<h5 id="autosec-332"><span class="sectionnumber">12.8.2&#x2003;</span>汇率双轨制</h5>
+<a id="main-autopage-332"></a>
+
+
+
+<p>
+                        <sup>[<a href="17.html#LWR-ht-cite.0@huilvshi">91</a>]</sup>
+杨帆将市场经济过渡时期的汇率制度变革分为两个阶段。
+</p>
+
+<p>
+20 世纪 70 年代后期，因人民币汇率被严重高估，<b> 全国平均出口换汇成本较官方汇率过高，造成企业出口越多亏损越大。</b> 笔者根据杨帆文中表格测算，1975–1979 年的出口平均换汇成本均高于同期官方汇率 50% 以上，最高达至 68%。
+</p>
+
+<p>
+1978 年 8 月为促进出口，平衡外汇收支，我国开始实行 <b> 外汇留成制 </b>，所谓“外汇留成，即是对外贸易单位和出口生产企业把收入的外汇卖给国家，国家按一定比例拨给他们相应的外汇留成。”
+</p>
+<blockquote>
+
+<p>
+“外汇留成有两种形式，一种是 <b> 现汇 </b>（在企业和地方、国家间直接分配外汇数量），一种是 <b> 额度 </b>；且以后者为主。所谓外汇额度，是指按照官方汇率获取外汇的一种权利。其目的是 <b> 政府直接控制外汇 </b>，其办法是，外贸企业必须
+将 <b> 包括留成外汇在内的全部收汇，按官方价格售给政府指定的银行，</b> 同时按照留成比例拿到一个凭证，即 <b> 外汇额度 </b>。当该企业想使用外汇时，再持 <b> 外汇额度凭证 </b> 到银行按照政府规定的汇率用人民币购买外汇”。<a
+id="main-autopage-333"></a><sup>[<a href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]769</sup>
+</p>
+</blockquote>
+
+<p>
+杨帆将 1981 年至 1984 年间划分为转轨时期第一阶段——“<b> 人民币内部结算价和官方汇率并存的双重汇率时期 </b>”
+                                                                。此一时期，<b> 贸易内部结算价 </b> 基本不变，
+                                                                                           “内部结算价按照 1978 年全国平均换汇成本 2.53 人民币/美元加上 <b>10% 的出口
+利润 </b> 计算出来，为 2.8 人民币/美元⋯⋯我国贸易收支明显好转，外汇储备明显增加。<b>1984 年外汇储备年末累计余额 170.42 亿元特别提款权，为历史上和 20 世纪 80 年代最高水平”</b>。
+</p>
+<blockquote>
+
+<p>
+有外汇额度的企业暂时不用，而没有外汇额度的企业却急需用汇，外汇额度交易（<b> 合法和非法 </b>）及其交易场所就应运而生。<a id="main-autopage-334"></a><sup>[<a href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]769</sup>
+</p>
+</blockquote>
+
+<p>
+1980 年到 1983 年中国银行先后在北京、上海等 12 个城市开办了外汇调剂业务。张曙光指出，<b> 调剂柜台外汇交易价格 </b> 为贸易内部结算价 2.8 人民币/美元基础上上浮 10%，3.08 人民币/美元），但这仍然低于 <b> 市场实际成交价格 </b>。
+</p>
+<blockquote>
+
+<p>
+随着外汇留成的增加和官方控制的放松，<b> 私下的场外交易 </b> 发展起来……一美元可以兑付 4–5 元人民币。这样，外汇额度的价值已经由 <b> 市场 </b> 来评价了。<b> 一般的交易方式 </b> 是，
+                                                                                                           （笔者注：有外汇或外汇额度凭证的企业）先在银行按
+照官价提取外汇，出门后再按 <b> 黑市价格 </b> 补齐（笔者注：按黑市价格卖给需求外汇的企业或个人）。<a id="main-autopage-335"></a><sup>[<a href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]769</sup>
+</p>
+</blockquote>
+
+<p>
+杨帆提及“（第一阶段）影响了 <b> 非贸易部门 </b> 的积极性⋯⋯<b> 外贸亏损增大 </b>，在对外经济中陷入被动，造成了 <b> 外汇管理的混乱 </b>，更加重了 <b> 国家的财政负担 </b>。因此实行内部结算价注定成为一个 <b> 过渡时期的应急措施
+</b>。”
+</p>
+
+<p>
+杨帆将 1985–1993 年间划分为转轨时期的第二阶段：
+</p>
+<blockquote>
+
+<p>
+<b> 官方汇率 </b> 和 <b> 外汇调剂市场汇率 </b> 并存时期。从 1985 年 1 月 1 日起，我国 <b> 取消内部结算价 </b>，官方汇率应用于 <b> 贸易结算 </b> 和 <b> 非贸易外汇兑付 </b>。
+</p>
+
+<p>
+为 <b> 鼓励出口 </b>，在 <b> 人民币汇率下调 </b> 的同时，1985 年国家又一次 <b> 提高外汇留成比例 </b>，采取按出口商品收汇金额比例留成的办法。
+</p>
+</blockquote>
+
+<p>
+这一阶段官价实行 <b> 以美元为基准的有限弹性汇率制 </b>。综合来看汇率恰逢其时的步入了 <b> 实质性和典型的价格“双轨制”时期 </b>。
+</p>
+<blockquote>
+
+<p>
+1988 年上海首创外汇调剂公开市场，实行公开竞价制度，其它城市也纷纷效仿。这样一来，外汇现汇交易和额度交易就 <b> 合法化 </b> 了。<a id="main-autopage-337"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@fengyunshi1b">85</a>]769-770</sup>
+</p>
+
+<p>
+1988 年后，国家 <b> 放开了外汇调剂价格 </b>，调剂价格根据外汇供求 <b> 自由浮动 </b>。同年，在北京设立了 <b> 全国外汇调剂中心 </b>，形成了全国统一的外汇调剂市场。
+                                                                                                 <sup>[<a
+href="17.html#LWR-ht-cite.0@wangqiangshehui">86</a>]</sup>
+</p>
+
+<p>
+1988 年我国外贸体制进行了重大改革，外贸开始推行承包责任制，并对轻工、工艺、服装三个行业实行独立核算、自负盈亏。1991 年外贸由补贴机制转向自负盈亏机制，取消财政补贴。外贸体制改革的深化，要求人民币汇率成为调节进出口贸易的主要手段。
+</p>
+
+<p>
+1988 年至 1993 年由于 <b> 经济过热、通货膨胀 </b>、物价上涨、进口需求猛增。1993 年，中国出现了历史上最后一次年度贸易逆差。外汇 <b> 求大于供 </b>，市场汇率 <b> 不断下跌 </b>，由 5.70 人民币/美元贬值为 1993 年 2 月的 8.20 人民币/美
+元。为了 <b> 限制汇率投机性上涨 </b>，一度实行限价，造成 <b> 外汇流向场外交易 </b>。1993 年 5 月 <b> 取消限价 </b>，市场汇率骤升至 <b>11.20 人民币/美元 </b>。1993 年 7 月以后，在国家加强宏观调控和中国人民银行对市场进行干预下，到
+1993 年底市场汇率回落到 <b>8.72 人民币/美元 </b>。<sup>[<a href="17.html#LWR-ht-cite.0@huilvshi">91</a>]</sup>人民币市场汇率贬值波动在 43.86% – 96.49% 之间。
+</p>
+
+<p>
+从 1994 年 1 月 1 日起，国家决定实行 <b> 单一的有管理的浮动汇率制 </b>，实现了官方汇率与调剂市场汇率的并轨。特别要强调的是，1994 年汇率并轨时，人民币汇率制度是 <b> 以市场供求为基础的、单一的、有管理的浮动汇率制度 </b>。其中，这
+个“单一”<b> 不是单一盯住美元的汇率制度 </b>，而是相对于 1994 年并轨以前的双重汇率制度来说的。双重汇率制度时期，官方汇率和外汇调剂市场汇率的差价很大，并轨以后，所有的交易都使用了 <b> 市场形成的汇率 </b>，因此，强调了“<b> 单一
+</b>”<sup>[<a href="17.html#LWR-ht-cite.0@guantaohuigai">92</a>]</sup>
+     。
+</p>
+</blockquote>
+
+<p>
+根据邵宇、陈达飞<sup>[<a href="17.html#LWR-ht-cite.0@huilv70binggui">93</a>]</sup>，当时对于人民币汇率是否应该并轨在决策层基本取得了一致意见，央行是坚定的支持者，这被认为增加了一个调控经济的工具，而且简化了汇率政策。但就人民
+币升值或贬值有分歧：<b> 人民币升值，可抑制通货膨胀，利好民众；贬值，利好出口，但会通货膨胀。</b> 最后在时任副总理兼人行行长的朱镕基主导下，选择了贬值通膨的道路。
+</p>
+
+<p>
+1 月 1 日汇率强行并轨，从 5.8 贬至 8.72，一次性贬值 50%，中央配发大量基础货币，加之同期因经济过热、金融信贷短缺等也超发的货币，使我国 1994 年通货膨胀率 24.1%，1995 年 17.1%。
+</p>
+
+<p>
+并轨之初，市场普遍认为人民币汇率 8.7 守不住，甚至会跌到 9 甚至 10 以上，俗称“破九望十”。当时中央下达的任务是，一方面要稳定汇率，另一方面要增加外汇储备。
+</p>
+
+<p>
+当时实行全面出口退税，对出口实行了零税率政策，整个退税比例相当于提高了 11 个百分点；不少企业受人民币信贷规模控制转而借外汇后兑换成人民币使用；一些外商也以各种形式进入国内进行套利活动，例如某些外商通过其在华企业用外汇兑换人民
+币后，再高息拆借给资金短缺的国内企业。
+</p>
+
+<p>
+1994 年的出口增长高达 31.9%，贸易收支由 1993 年的逆差 122.2 亿美元转变成为顺差 53.9 亿美元；外商直接投资有 1993 年的 275.2 亿美元上升至 337.2 亿美元，增幅达 22.7%；实际利用外资额 458 亿美元。出乎绝大部分人预料，包括中国政府，外汇储
+备由年初的 212 亿美元猛增到 516.2 亿美元，增加 304.2 亿美元。
+</p>
+<blockquote>
+
+<p>
+1994 年汇改之后，与“破九望十”的市场预期相反，人民币反而面临较大的升值压力，部分原因在于经常账户扭亏为盈和国际资本加速流入。至 1998 年 10 月，人民币与美元的双边汇率从 8.72 升至 8.28，升幅 5%。<a
+id="main-autopage-338"></a><sup>[<a href="17.html#LWR-ht-cite.0@huilv70binggui">93</a>]</sup>
+</p>
+
+<p>
+双轨并轨使中国贸易顺差持续加大，促进了中国国内分工的深化和商品经济的繁荣；但与此同时，也令中国丧失了货币主权。<b> 顺差依赖 </b> 成为中国经济的阿喀琉斯之踵，美联储利率的波动成为人民币信用震荡的主要外源。
+                                                                                                         <sup>[<a
+href="17.html#LWR-ht-cite.0@dajueqi">94</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+市场经济体制过渡时期的汇率双轨思路是一贯的，国家抛弃财政包袱，减少对各方面的投入和支持，获取收益，解决原来企业出口亏损问题，通过汇率双轨、特别是持续增加市场一轨的权重刺激出口，做大市场。
+</p>
+
+<p>
+改革过程中出现的问题也是简明的，同农业、企业方面的双轨制一样，其中市场轨增大了权利寻租的操作空间，并过来压榨计划轨。双轨并轨似乎是势在必行的，权力寻租似乎也是无法避免的。笔者认为，这可能是历史的趋势吧，不以个人或组织（包括政
+府）主观意愿为转移的趋势。
+</p>
+
+<p>
+但笔者也认为（好像在本书中说过几次了），不管负面影响是不是大势所趋，在任何政策的制定和执行过程中，不能因为负面影响不可避免，就完全忽视负面，这已经成为一些当代学者和官僚的通病。
+</p>
+<!--
+...... section 财政改革......
+-->
+<h4 id="autosec-339"><span class="sectionnumber">12.9&#x2003;</span>财政改革</h4>
+<a id="main-autopage-339"></a>
+<!--
+...... subsection 财政体制改革的深层逻辑......
+-->
+<h5 id="autosec-340"><span class="sectionnumber">12.9.1&#x2003;</span>财政体制改革的深层逻辑</h5>
+<a id="main-autopage-340"></a>
+
+
+
+<p>
+2008 年 3 月 18 日，时任国务院总理温家宝在十一届全国人大一次会议的记者见面会上说：“其实一个国家的财政史是惊心动魄的。如果你读它，会从中看到不仅是经济的发展，而且是社会的结构和公平正义。”
+</p>
+<blockquote>
+
+<p>
+回顾 40 年改革长路，是什么在推动中国财政改革？其深层逻辑又是什么？我们发现，从过去到现在，这一问题根本上可以归结为一点，那就是公共风险的变化。<b> 财政改革往往不是在先见之明的制度设计基础上进行的，而是在公共风险暴露与加剧时，不
+得不做出的选择。</b>
+</p>
+
+<p>
+<b> 防范和化解公共风险是财政改革的原动力。</b> 从历史上看，制度变迁无一不是公共风险与危机推动的结果，而制度变迁的突破口常常是在财政。改革开放以来，我国财政改革实质上都是遵循公共风险变化的逻辑而推进的，其变化的脉络是从“<b> 家
+贫国穷 </b>”的风险到“<b> 机会不均 </b>”的风险，再到 <b> 全球公共风险 </b>，这也是我国主要公共风险的昨天、今天和明天。<a id="main-autopage-341"></a><sup>[<a href="17.html#LWR-ht-cite.0@cai40">95</a>]</sup>
+</p>
+
+<p>
+1978 年 12 月中共十一届三中全会的改革开放，提出解放思想。理论界批评投资饥渴症，提出要 <b> 扩大企业自主权，强化对企业的预算约束，让企业成为独立的经济核算单位，自负盈亏 </b>。对应的改革，一个是“<b> 利改税 </b>”，即把企业向国家财
+政纳税和上交利润两种形式，改为只向国家纳税一种形式。另一个是“<b> 拨改贷”</b>，即把基本建设投资的财政拨款改为由企业向建设银行贷款，项目建成投产后，还本付息。
+                                                                                  <sup>[<a href="17.html#LWR-ht-cite.0@bogaidai30">96</a>]</sup>
+</p>
+</blockquote>
+<!--
+...... subsection 财政包干制......
+-->
+<h5 id="autosec-342"><span class="sectionnumber">12.9.2&#x2003;</span>财政包干制</h5>
+<a id="main-autopage-342"></a>
+
+
+
+<p>
+      <sup>[<a href="17.html#LWR-ht-cite.0@yangdi">64</a>]</sup>：
+据《央地关系》
+</p>
+<blockquote>
+
+<p>
+从 80 年代初到 90 年代中期，中国改革的主要手段就是 <b> 承包制 </b>，所谓“<b> 一包就灵 </b>”，是适用于整个 80 年代的总体改革思路。承包制从农村开始，逐步扩展到企业以至于中央地方关系领域。
+</p>
+
+<p>
+我国自 1980 年就开始试行 <b> 财政承包制 </b>，经过几次尝试，到 1988 年在全国推行开来。财政承包，其基本思路是中央对各省级财政单位的财政收入和支出进行 <b> 包干 </b>，地方增收的部分可以按一定比例留下自用，对收入下降导致的收不抵支
+则减少补助或者不予补助。这与农村包产到户与企业承包制的方法是基本一致的。
+</p>
+
+<p>
+财政包干制则更加接近于真正意义上的中央对地方的“分权”。包干制总的精神就是“包”，“包”的前提就是将中央和地方各自的收支权限划分清楚，中央“包”给地方的是 <b> 收支总数 </b>，而 <b> 不对地方的增收、减支的权利多加干预 </b>。这种
+“一揽子”包干实际上赋予了地方政府相对稳定的配置物资、管理企业的权限，地方政府开始逐步变成有明确的利益和主体意识的单位，而不再是被“条条”系统不断分割的、相对零散的“块块”。
+</p>
+</blockquote>
+
+<p>
+1980 年 2 月，国务院颁发了《关于实行”<b> 划分收支，分级包干 </b>” 的财政管理体制的规定》，划分中央和地方财政的收支范围；对于 15 省确定包干基数，基数以外收入由中央和地方比例分成；扩大地方财政权限，中央各主管部门对于应对由地方安排
+的各项生产建设和文教事业，不再归口按“条条”安排支出，不再向地方分配财政支出指标”，“<b> 原则上五年不变 </b>”。俗称“<b> 分灶吃饭 </b>”，改变了过去“统收统支”的财政体制。
+</p>
+<blockquote>
+
+<p>
+但是自 1981 年起，因为中央的财政收入下降，就开始着手 <b> 改变 </b> 这种“分级包干”的办法。到 1982 年 6 月底，在上述 15 个省份中，有 10 个又回到了之前“<b> 总额分成 </b>”的办法；到 1983 年，15 个省份就全部恢复了“总额分成”的办法，
+分级包干的尝试可以说是名存实亡。
+</p>
+
+<p>
+唯一留下的改变是广东和福建两省实行的“<b> 大包干 </b>”财政体制。所谓“大包干”
+                                           ，其关键在于由 <b> 比例上解 </b> 和 <b> 比例补助 </b> 变为 <b> 定额上解 </b> 和 <b> 定额补助 </b>，其中广东实行的是定额上解，收小于支的福建实行的是定
+额补助。定额上解和定额补助的含义就是超基数部分 100% 归地方所有，中央不再分享超收部分。广东、福建实行的定额包干体制一直没有改变，可以算作中央推行 <b> 定额包干的试点省份 </b>。
+</p>
+
+<p>
+在这个阶段 (<b>1985–1987 年包干制的过渡阶段 </b>)，中央和地方实行的包干体制可以概括为“<b> 划分税种，核定收支，分级包干 </b>”
+                                                                             。在此期间，全国 17 个省级单位仍然与中央实行 <b> 总额分成 </b> 的体制，但是与此前一年一变的总额分成体
+制相比发生了一个重要的变化，就是 <b> 分成比例固定下来并且一定五年不变。一定五年不变，实际上为地方财政增收提供了动力。</b> 其中，黑龙江与广东一样，实行定额上解的“大包干”办法，超收部分上解额度是 0.65 亿元。另外，吉林、江西、陕
+西、甘肃、湖北、四川也开始与福建一样，实行 <b> 定额补助 </b> 的办法。这样，定额包干的省份由第一阶段的 2 个增加到 7 个。其他少数民族和边疆省份则实行 <b> 民族地区预算管理体制 </b>，实际上也是 <b> 定额补助 </b> 体制。<a
+id="main-autopage-344"></a><sup>[<a href="17.html#LWR-ht-cite.0@yangdi">64</a>]</sup>
+</p>
+
+<p>
+（1988—1993 年 <b> 包干制的全面推行阶段 </b>）是比较彻底的所谓“<b> 分灶吃饭 </b>”的财政体制阶段。在这个阶段，包干形式多种多样，全国 39 个省级单位（省、自治区、直辖市和计划单列市）共实行了六种不同的包干形式。
+</p>
+
+<p>
+<b> 包干制将地方的经济发展速度与地方政府的财政收入挂钩 </b>，使得地方政府为了增加财政收入，就要提高地方经济发展速度。随着实行大包干的省份越来越多，地方政府之间也就经济发展展开了 <b> 区域间的竞争 </b>……这就是财政分权导致的地
+方政府“<b> 放水养鱼 </b>”的竞争模式。
+</p>
+
+<p>
+在地方政府的各层级内，也普遍实行了中央与省级政府的包干制。
+</p>
+
+<p>
+从理论而言，这个体制体现出的是一种与企业管理类似的激励模式。这正是戴慕珍提出的“<b> 地方国家公司主义 </b>”的微观运行机制的核心，是 <b> 地方政府“公司化”</b> 的主要动力之一。在地方的实践中，乡镇政府要实现自己可支配收入的最大
+化，并非一味地以收入最大化为目标。因为在这种包干制下，在一个体制周期内收入的快速增长会提高下一周期内的收入基数和收入任务数，这会增加下一体制周期内完成任务的难度，并造成自身收入的减少。因此，<b> 乡镇政府的行为策略是应该与乡镇
+政府官员的任期制结合在一起理解的。</b> 如果一个官员为了博取很快的晋升，他可能会尽全力增加其任期内的财政收入；如果一个官员预期到自己会在相当长的一段时间内留在本乡镇，则他可能会对收入增长的速度进行适度的“控制”。而对于县级政府
+来说，这种周期性的对基数和任务数的调整使得在增加乡镇增收激励的同时，又能保证县级财政的收入不会大幅度减少，并且会在下一周期内实现快速的增长。另外，通过调节超收分成的比例，县级政府可以对增收较快和较慢的乡镇进行刺激，比如通过加
+大留成比例，就可以鼓励乡镇多超收；通过缩减这个比例，又可以在一定程度上集中乡镇的收入或者“劫富济贫”。
+</p>
+</blockquote>
+<!--
+...... subsection 税制改革......
+-->
+<h5 id="autosec-345"><span class="sectionnumber">12.9.3&#x2003;</span>税制改革</h5>
+<a id="main-autopage-345"></a>
+
+
+
+<p>
+1980 年 9 月 10 日，第五届全国人民代表大会第三次会议通过了《中华人民共和国中外合资经营企业所得税法》和《中华人民共和国个人所得税法》。1981 年 12 月 13 日，第五届全国人民代表大会第四次会议通过了《中华人民共和国外国企业所得税法》。
+中国 <b> 涉外税制 </b> 初步建立。
+</p>
+
+<p>
+为理顺中央与地方、政府与企业的分配关系，政企分开、增强经济活力，“使企业真正成为自主经营、自负盈亏、自我发展、自我约束的商品生产者与经营者，减少政府对企业的行政干预和条条、块块分割的矛盾，企业对中央与地方只承担纳税的义务”
+<sup>19</sup>，实现“国家得大头、企业得中头、职工得小头”的目标，中国开始了利改税。
+</p>
+
+<p>
+1983 年 4 月 24 日，国务院批转财政部制定的《关于国营企业利改税试行办法》，规定“<b> 以税代利，税利并存 </b>”，国营企业上交利润转为上交税收，实现了（<b> 利改税 </b>）的第一步改革，允许企业使用 <b> 税前利润归还银行贷款本息 </b>，并
+且 <b> 小型国有企业自负盈亏 </b>。9 月 18 日，国务院批转财政部《关于在国营企业推行利改税第二步改革的报告》   ，并颁布了《国营企业第二步利改税试行办法》，规定 10 月 1 日起试行第二步利改税，进一步分解增设多种税种，由 <b> 税利并存逐步过
+渡到完全的以税代利 </b>。
+</p>
+
+<p>
+根据田纪云 1984 年 1 月 20 日《关于完善利改税制度的几个问题》：
+</p>
+<blockquote>
+
+<p>
+据初步计算，1983 年全国实行利改税的国营企业新增加的收入，以税金和利润的形式上缴国家的约占 <b>70％</b> 左右，企业所得约占 <b>30％</b> 左右，其中用于职工奖励基金的部分约为 <b>8％</b> 左右。
+</p>
+
+</blockquote>
+
+<p>
+1985 年 3 月 21 日，国务院发布《关于实行“划分税种、核定收支、分级包干”的财政管理体制的规定》，进一步改革包干式财政管理体制，“<b> 一定五年不变 </b>”。
+</p>
+
+<p>
+国营大中型企业利改税综合税赋约为利润的 70%，税赋较重。<b> 税前还贷 </b> 使中央财政支出不降反增；经营状况好的企业被 <b> 鞭打快牛 </b>，亏损的企业 <b> 包盈不包亏——亏损算国家的 </b>；一些企业和地方政府两本帐，<b> 消极预算内收入
+（税收），热衷于预算外收入（非税收入）</b>。
+</p>
+
+<p>
+<b> 利改税实行一年之后便让位给承包制。</b>
+</p>
+<blockquote>
+
+<p>
+针对两步利改税中暴露出来的 <b> 价格、税收、信贷等宏观体制不配套 </b> 的问题，1984 年-1985 年，国家开始酝酿以 <b> 价格、税收、财政为中心的配套改革 </b>。但是，这一时期出现了 <b> 严重的投资、信贷失衡 </b>，因此，这一改革方案虽由国
+务院讨论通过并得到中央批准，却 <b> 最终未能推开 </b>。在价格、外汇等方面，采取了 <b> 双轨制 </b> 的过渡办法。而企业改革的重心则转向推广 <b> 承包制 </b>。<sup>20</sup><a id="main-autopage-347"></a>
+</p>
+</blockquote>
+
+<p>
+<b> 税制改革从此成为中央与地方政府的博弈场 </b>。依马骏所说，原“分灶吃饭”税制中，“20% 共享收入归地方的一刀切计算办法使富省多有结余，穷省多有赤字”，因此促成了这次改革。新税制改革的弊端是：
+</p>
+<blockquote>
+
+<p>
+自 1978 年底以来，政府财政收入占国民生产总值的比例及中央财政收入占全部财政收入的比重快速地下降。
+</p>
+
+<p>
+<b>（地方政府）利用各种减免税来调节其实际税收 </b>……地方政府对有效税率及税基的控制还表现在其对财政收入渠道的控制……<b> 地方政府预算内收入比重的下降和预算外收入上升 </b>，中央政府控制全国财政收入与支出的能力相应下降。
+</p>
+
+<p>
+<b> 由于地方政府在事实上控制了有效税率和税基，中央政府越来越多地依赖于一些不规范的政策工具来控制地方向中央上缴的财政收入。</b><a id="main-autopage-348"></a><sup>[<a href="17.html#LWR-ht-cite.0@majuncaigai">97</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+其实 1994 年分税制也是如此，这或许是中国中央和地方关系“一放就乱，一抓就死”的固有矛盾。
+</p>
+
+<p>
+1988 年税制改革见下一节。
+</p>
+
+<p>
+财政部官网转载刘邦驰、马韵《三十年税制改革的回顾与发展趋向》<sup>21</sup> ，将 1978 年–1993 年这一时期的税制改革称为“有计划商品经济时期的税制改革”
+                                                                                      ，涉外税制、利改税 (“新中国成立后实行了 30 多年的国营企业向国家上缴利润的制度改
+为缴纳企业所得税和调节税”)、个人所得税等税务改革。
+</p>
+<blockquote>
+
+<p>
+这一时期全面改革了工商税制，建立了涉外税制，彻底摒弃了“非税论”和“税收无用论”的观点，恢复和开征了一些新税种，从而使我国税制逐步转化为多税种、多环节、多层次的复合税制，税收调节经济的杠杆作用日益加强。<sup>22</sup><a
+id="main-autopage-349"></a>
+</p>
+</blockquote>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-350"></a>
+
+<p>
+<sup>19</sup>&nbsp; 田纪云《光辉的八十年代》
+</p>
+
+
+<p>
+<sup>20</sup>&nbsp; 吴晓灵《国企改革前奏（1978 年-1992 年）：扩权让利与承包制》
+</p>
+
+
+<p>
+<sup>21</sup>&nbsp;<a href="https://www.mof.gov.cn/zhuantihuigu/czgg0000_1/czggcz/200811/t20081106_88385.htm" target="_blank" >https://www.mof.gov.cn/zhuantihuigu/czgg0000_1/czggcz/200811/t20081106_88385.htm</a>
+</p>
+
+
+<p>
+<sup>22</sup>&nbsp;<a href="http://finance.ce.cn/sub/2013zt/zgszgg/hgyzw/201304/18/t20130418_199980.shtml" target="_blank" >http://finance.ce.cn/sub/2013zt/zgszgg/hgyzw/201304/18/t20130418_199980.shtml</a>
+</p>
+
+
+
+</div>
+<!--
+...... subsection 拨改贷......
+-->
+<h5 id="autosec-351"><span class="sectionnumber">12.9.4&#x2003;</span>拨改贷</h5>
+<a id="main-autopage-351"></a>
+<blockquote>
+
+<p>
+1979 年 4 月的中央工作会议期间，邓小平在一次省市委第一书记会议上讲了话：是否可以设想，<b> 将财政拨款制度改为银行贷款制度，把银行作为发展经济、革新技术的杠杆。银行应该抓经济，</b> 现在只是算账、当会计，没有真正起到银行的作用。对
+投资少、见效快的企业，要采取 <b> 不用财政拨款，而用银行贷款 </b> 的办法。<a id="main-autopage-352"></a><sup>[<a href="17.html#LWR-ht-cite.0@bogaidai30">96</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+1985 年，<b> 所有国家基本建设投资 </b> 由财政无偿拨款改为向中国人民建设银行贷款，并要还付本息，即“<b> 拨改贷 </b>”，信托投资公司也随之兴起。
+</p>
+<blockquote>
+
+<p>
+实施“拨改贷”的初衷是：与无偿拨款不同，获得贷款的企业要还本付息，从而促使企业精打细算，先用自有资金建设，缩短工期，提高效率，把加速资金周转和提高经济效益提上企业的议事日程。
+</p>
+
+<p>
+1984 年国家出台拨款改贷款政策后，意味着 1984 年以后新成立的国企，一出生就是 <b>100% 的负债率 </b>。<a id="main-autopage-353"></a><sup>[<a href="17.html#LWR-ht-cite.0@bogaidaizhaizhuangu">98</a>]</sup>
+</p>
+
+<p>
+银行系统贷给国有企业的贷款很多都成了呆坏账，国有企业拖欠还贷的情况非常严重。但是，出于对国有企业进行政策性支持的需要，银行在政府的影响下，会继续向那些企业发放贷款。这样日积月累，便形成了银行系统今天巨额的不良资产。
+                                                                                                          （林毅夫与李
+志赟就此总结有三个原因，一是计划经济转入市场经济过程中，原资本密集型国有企业尤其受到外资、合资企业冲击，由此造成的 <b> 战略性政策负担 </b>；二是国有企业承担了大量劳动力的养老、医疗、教育等社会保障责任，由此造成的 <b> 社会性政
+策负担 </b>；三是无法划清亏损 <b> 企业经营者的责任 </b>，经营者往往将责任归咎于前两者，并以此为理由拖欠银行贷款，政府在各方面压力下干预银行，要求银行继续贷款给亏损企业，由此造成 <b> 预算软约束 </b><sup>23</sup> 问题。
+                                                                                                                               ）<sup>[<a
+href="17.html#LWR-ht-cite.0@guoyoujinrong">99</a>]</sup>
+</p>
+
+<p>
+1988 年，国家实施税收制度改革，明确了“<b> 税利分流、税后还贷、税后承包 </b>”政策，规定企业债务由税前还贷改为税后还贷，<b> 原来由财政减税负担一部分还贷责任，改为全部要由企业的盈利偿还。</b> 尽管当时限于国有资产的产权制度尚未
+建立，国家最终没有解脱对国有企业承担的 <b> 无限责任 </b>，但是这样一种政策规定，实际上是要 <b> 国有企业代替国家完全承担出资者的经济责任，国家成为既未出资，也不对投资经营后果承担责任的出资者。</b><sup>[<a
+href="17.html#LWR-ht-cite.0@bogaidai30">96</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+银行由财政部门的会计和出纳成为功能健全的现金融商业银行。但此时“利用存款发放贷款的指标，也要由国家计委分配，变成了按部门归口切块分配投资和贷款”。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-354"></a>
+
+<p>
+<sup>23</sup>&nbsp; 软预算约束就是指当一个经济组织遇到财务上的困境时，借助外部组织的帮助得以继续生存这样一种经济现象。
+</p>
+
+
+
+</div>
+<!--
+...... section 土地财政......
+-->
+<h4 id="autosec-355"><span class="sectionnumber">12.10&#x2003;</span>土地财政</h4>
+<a id="main-autopage-355"></a>
+
+
+
+<a id="sec:80tudi"></a>
+
+<p>
+1978 年，中国人均住房面积 6.7 平方米。
+</p>
+
+<p>
+1978 年 1 月至 1979 年 2 月的一年间，邓小平相继访问了缅甸、尼泊尔、朝鲜、日本、泰国、马来西亚、新加坡和美国。这一系列出访，特别是对美国、日本、新加坡的访问，奠定和加强了邓小平自由开放的决心。
+</p>
+
+<p>
+1978 年 9 月，中央召开的城市住宅建设会议传达了邓小平同志的一次重要谈话，大体精神是：解决住房问题能不能路子宽些，譬如允许 <b> 私人建房或者私建公助，分期付款 </b>。把个人手中的钱动员出来，国家解决材料。<b> 建筑业是可以为国家增加
+收入、增加积累的一个重要产业部门。在长期规划中，必须把建筑业放在重要位置。</b>
+</p>
+
+<p>
+1978 年 11 月的新加坡之行使邓小平对公共住房计划和工业园区感触颇深。
+</p>
+<blockquote>
+
+<p>
+<b> 一、公共住房计划 </b>
+</p>
+
+<p>
+邓小平听取了关于公共住房计划情况的介绍，并登上该局 22 层办公大厦的顶层，瞭望周围一幢幢新建成的公共组屋。小平询问了新加坡每年住房建筑的总面积和其他有关问题，在得悉新加坡总共有三万名技术人员和工人从事住房建筑的情况之后，他说，
+新加坡的建筑机械化程度高。
+</p>
+
+<p>
+据中国新闻社报道，结束访问新加坡之后，12 月 2 日，邓小平约胡耀邦、胡乔木、于光远等在家中谈话，特别举了新加坡的例子：新加坡月收人 1500 新币有权买房产，五房单位，70 平米，花半年工资。那里的房租是工资的 15%，而欧美日则是三分之一。
+</p>
+
+<p>
+<b> 二、工业园区 </b>
+</p>
+
+<p>
+邓小平也到裕廊工业区，听取了相关介绍，并登上五层楼高的瞭望塔，鸟瞰这个新加坡最大的工业区。新加坡以裕廊工业区为基地，提出面向出口的工业化战略，走跨国公司投资为主的发展道路。时至今日，裕廊工业区依然保持着旺盛的活力，其发展模式
+是中国各地的开发区借鉴的对象。
+</p>
+
+<p>
+李光耀向邓小平介绍了外商投资对新加坡的好处。邓小平回忆说：“我到新加坡去，了解他们利用外资的一些情况。外国人在新加坡设厂，新加坡得到几个好处……我们要下这么个决心，权衡利弊、算清账，略微吃点亏也干。”<sup>24</sup><a
+id="main-autopage-356"></a>
+</p>
+</blockquote>
+
+<p>
+据赵燕菁<sup>[<a href="17.html#LWR-ht-cite.0@dajueqi">94</a>]</sup>：
+</p>
+<blockquote>
+
+<p>
+1979 年 3 月，骆锦星调职深圳担任深圳市房管局副局长 <sup>25</sup><a id="main-autopage-357"></a>。征得时任省委书记任仲夷许可后，他选择了通过贸易补偿，获取地产开发资金——<b> 港商刘天就出钱，特区政府出地，建房子到香港卖 </b>，对
+于收入，深圳市政府和刘天就按 85:15 分成。为了吸引香港购房者，允许“一次性付款 9.5 折，提供购房入户，每家配备 3 个户口名额”                 ，价格比香港的便宜一半。这一政策刺激了在内地有亲属的香港居民的购房欲望，结果楼盘很快售罄。<b> 中国第一个商
+品房小区 </b>——<b> 东湖丽苑 </b> 出现了。这就是最早的“<b> 土地财政 </b>”的雏形。骆锦星后来回忆说：“东湖丽苑是土地商品化的体现，开了土地有偿使用的先河。”此后，很多香港房地产开发商来深圳要求合作，深圳意识到了土地的价值。
+</p>
+</blockquote>
+
+<p>
+之后深圳规划建设罗湖小区，造价 3 亿，国家贷款给 3000 万，剩余缺口 2.7 亿由深圳自己想办法。1979 年 8 月深圳房管局提出以“<b> 土地使用费 </b>”解决城市建设资金难题。小区由外商独资，以 1∶10 的容积率建设，即 1 平方米土地建设 10 平方米的
+高楼。一平方米收 <b>5000 元土地使用费 </b>，合同签订后要交 50%，<b> 卖楼花 (房屋预售)</b> 后交齐。项目出租 5 块地，占地 1.1 平方千米，收回 5 亿多元资金。
+</p>
+
+<p>
+源于香港，始于深圳，自此拉开中国土地财政序幕。赵燕菁认为：
+</p>
+<blockquote>
+
+<p>
+开发和建设深圳的故事显示，并不是只要有经济活动，就会自发形成基础设施；而是要政府先提供基础设施，才能招商引资。<b> 基础设施建设资金来自土地收入，其价值体现的是未来城市“外部性”带来的现金流的贴现。</b> 没有“土地财政”，深圳的
+“第一动力”就不会产生。中国城市化伟大成就背后的重要原因，就是创造性地发展出一套 <b> 将土地作为信用基础 </b> 的制度——“<b> 土地财政 </b>”
+                                                                               ，也正因如此，<b>“土地财政”乃是一种金融活动。将土地收入视作“财政收入”
+                                                                                                                    ，暴露出传统经济
+理论对真实世界的错误观察和认识。</b>
+</p>
+
+<p>
+只有政府提供了重资产（笔者注：企业不愿投入的、投资巨大、周期长、直接回报低等难见市场效益的公共服务），其他社会主体才可能以轻资产启动各类商业模式。<b> 城市化就是资本不断聚集的过程 </b>。
+</p>
+</blockquote>
+
+<p>
+根据王永红《攀登新的高度——我国土地有偿使用制度改革 30 年历程》：
+</p>
+<blockquote>
+
+<p>
+<b>1. 启用经济杠杆，土地由无偿、无期限、无流动向有偿、有期限、有流动转变 </b>
+</p>
+
+<p>
+1979 年 7 月五届全国人大二次会议审议通过和颁布施行的《中外合资经营企业法》规定，可以 <b> 出租批租 </b> 土地给外商使用。
+</p>
+
+<p>
+同年 12 月 31 日，成立不久的广东省深圳市，签订了 <b> 第一个吸引外资开发经营房地产项目合同 </b>，由深方提供土地，香港妙丽集团投入资金，合作兴建和经营住宅楼，规定税后纯利深方、港方按 85∶15 分成。
+</p>
+
+<p>
+（笔者附：1980 年 9 月北京城市开发总公司成立。同年 12 月 9 日国务院批转《全国城市规划工作会议纪要》，提出可以 <b> 组织开发公司，对土地进行综合开发 </b>。1981 年 1 月，中国房地产开发集团公司由国务院批准组建，这是中国第一家房地产开
+发公司，房地产项目从此开始出现。）
+</p>
+
+<p>
+由于合作经营很成功，妙丽集团进而申请独资开发经营。1981 年 2 月，双方签订合同，深圳市提供 6000 平方米“<b> 地皮使用权 </b>”
+                                                                        ，由妙丽集团“<b> 独资兴建和经营商住大厦 </b>”
+                                                                                                   ，土地使用年期 30 年，使用费每平方米 5000 港元。至 1981 年 12
+月的两年间，深圳房地产公司单在罗湖小区就“引进外商独资经营房地产项目 10 个，订租（出租）土地 4.54 万平方米，土地使用费 21360 万港元；另有 8.1 万平方米土地作为 4 亿多港元的物化资本，在 10 个项目中与外商 6 亿多港元的投资合作建造商品
+楼宇”，“使昔日杂草丛生的罗湖小区，很快变成了高楼林立的商业、金融中心”。
+</p>
+
+<p>
+《深圳经济特区土地管理暂行规定》自 1982 年 1 月 1 日起施行，规定了不同用途土地各自使用最长年期和不同用途不同地区每年每平方米土地使用费标准。还规定，土地使用费“可一次性付款……也可分年付款，按年息八厘加收利息。
+                                                                                                              ”《暂行规定》
+                                                                                                                    “适用
+于在特区兴办企业、事业的所有单位”。
+</p>
+
+<p>
+(笔者附：1982 年宪法增加“城市的土地属于 <b> 国家所有 </b>。农村和城市郊区的土地，除由法律规定属于国家所有的以外，属于 <b> 集体所有 </b>；宅基地和自留地、自留山，也属于 <b> 集体所有 </b>。”集体所有影响至今，在征收集体所有土地、
+新增建设用地和拆迁中发挥重要作用。)
+</p>
+
+<p>
+辽宁省抚顺市自 1984 年 1 月起开征土地使用费，是非沿海城市中起步最早的。开征的缘起是，当时的抚顺市主管副市长刘文甲，于 1983 年听了中共中央党校教授易之关于社会主义社会地租仍然存在、城市土地理应有偿使用的专题讲课后，开始琢磨并组织
+调研，提出开征方案。后经市政府讨论通过和财政部批准，全面开征城市土地使用费。尽管当时市里还没有“三资”企业，但开征当年就收取土地使用费 1300 多万元，不仅使城市基础设施投资短缺的情况有所缓解，而且有的企业主动退出超占及闲置的土
+地。至 1985 年底，全市共退还土地 15 万平方米。
+</p>
+
+<p>
+1984 年初，上海市城市经济研究会成立了“上海城市土地有偿使用”课题组，对有偿用地的收费形式、方法和标准等六个方面作了专门研究，抽样调查了区位反映最敏感的 1161 家独立核算的商业企业（占全市商业总数的 20%）的土地收益情况。经测算，
+并参考历史上地价水平，将市区用地按地段繁华和开发程度分成 7 级，郊区、县分为 3 级，设计了 3 套土地使用费方案。
+</p>
+
+<p>
+广东省广州市自 1984 年下半年起开征经济技术开发区、新建项目、“三资”项目的土地使用费。据介绍，广州城市建设资金每年约需 5 亿元，但实际只有一半左右，缺口很大，征收土地使用费对缓解资金短缺起到了不小的作用。
+</p>
+
+<p>
+1984 年下半年，浙江省苍南县龙港镇政府顺应农民盼望进城改善居住条件和从事经济活动的愿望，有偿提供土地，成为我国 <b> 第一座农民城 </b>。至 1985 年底，龙港镇政府收取土地使用费 1000 多万元。后来的 12 年间，龙港新城建设共投入资金 12
+亿多元，其中 90% 是通过土地有偿使用筹措的。
+</p>
+
+<p>
+<b> 收取城镇土地使用费，尽管标准较低，土地仍然由行政划拨，还不能名正言顺地进行市场流通，但这一创造性的实践，使原本不值钱、随意使用的土地一下子有了“身价”，为我国土地使用制度改革取得历史性突破作好了准备。</b>
+</p>
+
+<p>
+<b>2. 引入竞争机制，从深圳土地拍卖“第一槌”到全面推行经营性用地和工业用地招拍挂出让 </b>
+</p>
+
+<p>
+1987 年 9 月 9 日，深圳市政府首次以 <b> 协议 </b> 方式将一块 5321 平方米住宅用地的使用权，以 106 万元的价格出让给某公司，使用年限为 50 年。同年 12 月 1 日，深圳市 <b> 首次公开拍卖土地使用权 </b>，一宗面积为 8588 平方米的土地被一家房
+地产公司以 525 万元的价格竞得使用权。这一改革举措面临的最大困境是“违宪”，因为《宪法》明文规定土地不能出租、转让。一槌定乾坤。次年 4 月，《宪法》增加了“<b> 土地的使用权可以依照法律的规定转让 </b>”的条文<sup>26</sup><a
+id="main-autopage-359"></a>。随后，《土地管理法》也作了相应的修改。
+</p>
+
+<p>
+引入竞争机制之路并非坦途，土地拍卖槌声一度相当寥落。有的地方原来已经建立了成熟的土地拍卖制度，这时也改为协议出让。<b> 在协议出让的情况下，关系好的或者付了“寻租”成本的人，就能用很低的价格批到好地，国有土地资产大量流失。</b>
+</p>
+</blockquote>
+
+<p>
+一直到二十一世纪初，协议出让仍是土地使用权转让主流，持续滋生较大权力寻租空间。
+</p>
+
+<p>
+1988 年 8 月召开的第一次全国住房制度改革工作会议，明确提出我国城镇住房制度改革的目标是实现住房商品化，由此进入 <b> 福利住房与市场化双轨 </b> 推进时期。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-360"></a>
+
+<p>
+<sup>24</sup>&nbsp; 新加坡眼《<a href="https://www.yan.sg/gaibianeshijiegejucbxiaopige/" target="_blank" >45 年前的今天，新加坡迎来了邓小平；他的改革开放，改变了世界格局 </a>》
+</p>
+
+
+<p>
+<sup>25</sup>&nbsp; 据骆锦星回忆，彼时深圳基建落后，资金短缺，其走马上任后领导给的任务是“一年之内按照省科级干部住房标准，建好两万平米、三百多套干部宿舍，但市里批的经费是 50 万”。
+</p>
+
+
+<p>
+<sup>26</sup>&nbsp; 宪法第十条第四款“任何组织或者个人不得侵占、买卖、出租或者以其他形式非法转让土地。”修改为：“任何组织或者个人不得侵占、买卖或者以其他形式非法转让土地。土地的使用权可以依照法律的规定转让。”
+</p>
+
+
+
+</div>
+<!--
+...... section 权力寻租、官倒和腐败......
+-->
+<h4 id="autosec-361"><span class="sectionnumber">12.11&#x2003;</span>权力寻租、官倒和腐败</h4>
+<a id="main-autopage-361"></a>
+<blockquote>
+
+<p>
+改革开放初期，走私贩私、贪污受贿、投机诈骗、盗窃国家和集体财产等严重犯罪活动明显增加。这些严重犯罪活动，往往是由国家机关和企业、事业单位内的少数人员，同社会上的不法分子相勾结进行的。
+</p>
+
+<p>
+从 1982 年 1 月中央确定中央纪委和地方各级纪委作为打击经济犯罪斗争的办事机构开始，到 1986 年 7 月中央同意纪委不再作为该机构止，在中央纪委参与下，在打击严重经济犯罪活动中，受党纪处分的党员 67613 人，其中被开除党籍的 25598 人。
+<sup>27</sup><a id="main-autopage-362"></a>
+</p>
+</blockquote>
+
+<p>
+1980 年 11 月，中央纪委召开第三次贯彻《关于党内政治生活的若干准则》座谈会，陈云提出“<b> 执政党的党风问题是有关党的生死存亡的问题。因此，党风问题必须抓紧搞，永远搞 </b>”。
+</p>
+
+<p>
+1981 年 1 月 7 日，国务院《关于加强市场管理、打击投机倒把、走私贩私活动的指示》。
+</p>
+
+<p>
+1982 年 4 月 10 日政治局会议讨论《中共中央、国务院关于打击经济领域中严重犯罪活动的决定》。4 月 13 日，中共中央、国务院发布了《关于打击经济领域中严重犯罪活动的决定》。
+</p>
+
+<p>
+1983 年 9 月 15 日，人民日报发表评论员文章《必须依法从重从快惩处经济罪犯》。1983 年月 12 日，中共第十二次全国代表大会发出《中共中央关于整党的决定》。
+</p>
+
+<p>
+1984 年 12 月 3 日，中共中央、国务院发出《关于严禁党政机关和党政干部经商、办企业的决定》。
+</p>
+
+<p>
+1985 年 5 月 23 日，中共中央、国务院发出《关于禁止领导干部的子女、配偶经商的决定》。
+</p>
+
+<p>
+1986 年 2 月日，中共中央、国务院发布《关于进一步制止党政机关和党政干部经商、办企业的决定》。
+</p>
+
+<p>
+1989 年 2 月 5 日，中共中央办公厅、国务院办公厅发出《关于清理党和国家机关干部在公司（企业）兼职有关问题的通知》。
+</p>
+
+<p>
+关于价格双轨制时期的权力寻租和腐败论述请见&nbsp;<a href="14.html#sec:qishuanggui">12.7.5</a>&nbsp; 节。
+</p>
+
+<p>
+改革开放之后，权力寻租和腐败问题普遍发生，贯穿这一时期始终，并未得到有效治理。有专家学者认为主因是这一时期价格双轨制、利改税、拨改贷等具体财经政策的巨大负面作用。个别专家认为正是体制本身产生了权力失控，从而导致权贵资本主义的
+形成和腐败。腐败犹如流行病毒般传播，批条倒卖迅速从少部分权力核心自上而下扩散到全民，当时有句顺虽有夸张却很形象的俗语——“十亿人民九亿倒，还有一亿在寻找”。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-363"></a>
+
+<p>
+<sup>27</sup>&nbsp; 刘仓《陈云指导中央纪委打击经济犯罪》
+</p>
+
+
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>

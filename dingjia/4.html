@@ -1,0 +1,2540 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—济南市丁家庄城中村见闻散记 </title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-38"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... chapter 济南市丁家庄城中村见闻散记......
+-->
+<h3 id="autosec-40"><span class="sectionnumber">第二章&nbsp;&#x2003;</span>济南市丁家庄城中村见闻散记</h3>
+<a id="main-autopage-40"></a>
+<a id="main-autofile-4"></a>
+<!--
+...... section 城中村的简单概念......
+-->
+<h4 id="autosec-42"><span class="sectionnumber">2.1&#x2003;</span>城中村的简单概念</h4>
+<a id="main-autopage-42"></a>
+
+
+
+<p>
+所谓城中村者，城市和村居性质兼而有之：它往往位于城市中心或郊区，作为城市的一部分，周边均具城市特征，自身却充斥着农村式的无序和自然，缺乏人工的总体规划，各家各户的宅地界限比传统村庄混乱得多，基础设施（能源、通讯、供水、交通、安
+全、卫生、医疗、文化等）薄弱，常住人口基本为农村户籍，土地制度仍为农村集体所有制而非城市的全民所有制；作为农村，它的外来流动人口数量数倍，甚至数十倍于常住人口，耕地被大量或完全占用，转为实质上的商业或住宅地产，耕地的这种性质转
+变使常住人口原赖以生存的农业收入转为地产收入，并成为重要收入来源。
+</p>
+
+<p>
+联合国对 <b> 贫民窟 </b> 的定义是“以低标准和贫穷为基本特征之高密度人口聚居区”，对 <b> 贫民窟家庭 </b> 所作的定义为：
+</p>
+<blockquote>
+
+<p>
+贫民窟家庭是指有以下一项或多项问题的家庭：(a) 缺乏改善的饮水；(b) 缺乏改善的卫生设施；(c) 缺乏足够居住面积，过于拥挤；(d) 住宅的结构耐久性差；(e) 缺乏土地所有权的保障。
+</p>
+</blockquote>
+
+<p>
+我们通常所说的城中村可以认为是中国政府之前棚改文件中定义的“城市棚户区”，并且明显属于联合国定义的城市贫民窟范畴。<a id="main-autopage-43"></a><sup>[<a href="17.html#LWR-ht-cite.0@unandchina">1</a>]</sup>
+</p>
+
+<p>
+中国的城市贫民窟人口有多少呢？联合国人居署提供的往年数据如下：
+</p>
+<figure id="autoid-16" class="table ">
+<div class="center">
+
+<p>
+<table><tr style="display:none"><th>.</th></tr><tr class="tbrule"><td class="tdl tvertbarr" style="border-right: 1px solid black"></td><td class="tdl">1990 年 </td><td class="tdl">1995 年 </td><td class="tdl">2000 年 </td><td class="tdl">2005 年 </td><td class="tdl">2010 年 </td><td class="tdl">2014 年 </td></tr><tr class="hline"><td class="tdl tvertbarr" style="border-right: 1px solid black"> 城市中贫民窟人口的比例（%）
+                                                                                                                                                                                                                                                                                                                                                                                                                    </td><td class="tdl">43.6</td><td class="tdl">40.5</td><td class="tdl">37.3</td><td class="tdl">32.9</td><td class="tdl">29.1</td><td class="tdl">25.2</td></tr><tr><td class="tdl tvertbarr" style="border-right: 1px solid black"> 城市贫民窟人口的数量 </td><td class="tdl">1.316 亿 </td><td class="tdl">1.514 亿 </td><td class="tdl">1.691 亿 </td><td class="tdl">1,835 亿 </td><td class="tdl">1.806 亿 </td><td class="tdl">1.911 亿 </td></tr><tr class="tbrule" aria-hidden="true"><td class="tdl"></td><td class="tdl"></td><td class="tdl"></td><td class="tdl"></td><td class="tdl"></td><td class="tdl"></td><td class="tdl"></td></tr></table>
+
+
+
+
+</p>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;2.1：1990-2014 年中国城市贫民窟人口比例及数量
+
+</div>
+
+
+
+<div class="figurecaption">
+
+
+联合国人居署旗舰报告《World Cites Report 2016》<a id="main-autopage-44"></a><sup>[<a href="17.html#LWR-ht-cite.0@9789211327083">2</a>]</sup>
+
+</div>
+
+</div>
+
+</figure>
+
+<p>
+根据《国家新型城镇化规划（2014-2020 年）
+                        》                           。根据 2018 年第十三届全国人大一次会议政府报告<sup>1</sup>，
+                         ，我国预计“到 2020 年基本完成城市棚户区改造任务”                                     “棚户区住房改造 2600 多万套，农村危房改造 1700 多万户，上亿人喜迁新居”
+                                                                                                                                   。全国轰
+轰烈烈兴起的城中村改造跑步前进，新型城镇化取得了惊人成绩，这同时也标志着曾经遍布每个大中型城市的老式城中村的大量消亡，丁家庄城中村也在其中。先让我们看下曾经的丁家庄是什么样子吧。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-45"></a>
+
+<p>
+<sup>1</sup>&nbsp;<a href="http://www.gov.cn/gongbao/content/2018/content_5286356.htm" target="_blank" >http://www.gov.cn/gongbao/content/2018/content_5286356.htm</a>
+</p>
+
+
+
+</div>
+<!--
+...... section 背景介绍......
+-->
+<h4 id="autosec-46"><span class="sectionnumber">2.2&#x2003;</span>背景介绍</h4>
+<a id="main-autopage-46"></a>
+
+
+
+<p>
+济南市丁家庄，又名丁家村、丁家新村，据 1992 年 5 月 1 日所立村碑记载：
+</p>
+<blockquote>
+
+<p>
+明永乐年间（1403–1424）当地根据传说取村名“定妖庄”。后因此名不雅，故以“定”字谐音“丁”字改为丁家庄。
+</p>
+</blockquote>
+
+<p>
+丁家庄隶属于山东省济南市姚家街道，曾是济南市一个较大且密集的城中村，在 2000 年前就已开始为外来务工人员提供住房餐饮等生活服务，共有村民宅基地（院落）近 800 户 5000 人，外来流动人口峰值大约可达 30000 人。丁家村城中改造是山东省棚
+改旧改的重点项目，于 2017 年年底基本完成房屋拆除工作，拆迁面积约为 53 万平方米，包括村民宅基地、公益性公共设施用地和经营性用地等，整体搬迁至奥体西路新建高层小区。
+</p>
+<!--
+...... section 初见......
+-->
+<h4 id="autosec-48"><span class="sectionnumber">2.3&#x2003;</span>初见</h4>
+<a id="main-autopage-48"></a>
+
+
+
+<p>
+笔者初入丁家庄时便因它表面的破败和杂乱而产生一种恐惧感。整个城中村除 20 余栋 6 层楼房以外，基本全是村民自建、层层加盖的三四层楼房，有的自建房已有些轻微倾斜，有的在房顶上再加装简易活动板房；各种样式的电线、网线、不明用途的线缆随
+意聚成一团团，与敞盖或无盖的配电箱、歪七扭八的电线杆纠结交织，这里似乎随时会演变为危房倒塌或大型火灾现场。笔者倒是未闻未见相关事故，或许是因户主和租户有一套自发自治管理办法。
+</p>
+
+<p>
+条条未经规划和硬化的水泥石板路面也是蜿蜒曲折，纵横交错整个村落，笔者游历丁家庄数次之后才可不迷路。出租房基本都是单间，十几二十几户共用户主搭建的公共厕所，楼上住户冬天起夜时还要穿衣下楼，并不方便。村民们多是传统农民打扮，外来
+务工人员衣着也称不上光鲜亮丽。过往中国农村生活条件艰苦，重病患者、残障、丧失劳动能力的人口比例往往大于城市，而丁家庄这里边缘人的比例可能比传统农村还要高些。笔者有次刚要走出丁家庄时碰见村口一位 50 岁左右的男子坐在轮椅上斜着头，
+面无表情、眼神空洞，对周围不管不问地在晒太阳，或许是偏瘫。未过几秒，迎面又走来一个怯生生的 30 岁左右的男子。他提着午饭低头走来，看见我时便将整个身子直接旋转 180 度，定在原地背向我，不敢和我有一瞥眼的接触。当我正要和他擦肩而过时，
+这位男子又朝无人那侧 180 度急速转身，继续前行，他应有视线恐惧症或社交恐惧症等精神疾病吧。不过有路过的村民向他热情问候。
+</p>
+
+<p>
+未接触过城中村的人，初入丁家庄，很难不恐惧吧，毕竟这里像是随时随地会发生刑事案件一样。然而，这确实多虑了。房东们多会查看并登记租户身份信息，考察租户人品性格，周边人群间的关系也比高楼大厦上来得亲密一些。一只只小小的、防君子不防
+小人的普通挂锁足以保证财物安全。不知怎的，当我在那不足 10 平的单间里住宿时，却比在现代小区高楼上居住更加平静和坦然一些。
+</p>
+<!--
+...... section 黑夜与清晨......
+-->
+<h4 id="autosec-49"><span class="sectionnumber">2.4&#x2003;</span>黑夜与清晨</h4>
+<a id="main-autopage-49"></a>
+
+
+
+<p>
+丁家庄城中村的夜总比周边来的更早些。
+</p>
+
+<p>
+街道路灯不多，住户多使用散发着黄色光晕的白炽灯。晚上八九点钟，灯光和墙面组成的黄色主色调混合着个别店铺的七彩霓虹灯光闪耀在城中村里，叮叮当当的做饭声时常在周边响起，笔者还见过住处一楼楼廊里一位不足 10 岁的小男孩独立炒菜做饭，归
+来的叔叔阿姨们在路过时对他不吝赞叹。
+</p>
+
+<p>
+深夜，村外尚有较晚收摊的小吃车、大排档、夏天 24 小时营业的烧烤店、为深夜食客们服务的小零售店、长明的路灯和过往的车辆。村里却是另一片景象，这里更黑更静。晚 10 点左右还能偶尔听见晚归人家的锅碗瓢盆交响曲，11 点左右整个村子便一下子
+寂静起来，水泥石板路上鲜有路人。偶在没有路灯照耀的环卫点，有老人在几个垃圾箱中翻找可再利用的杂物。
+</p>
+
+<p>
+这里的早晨也比周边来的更早些，6、7 点钟各处雄鸡打鸣，各家各样的声音均透过不隔音的墙壁和窗户传到家家户户，问候声、寒暄声也此起彼伏。孩子、送孩子上学的家长、上班族一下子散布各处，城中村在这个时间已经开始繁忙起来。
+</p>
+<!--
+...... section 医疗保健和社会保障......
+-->
+<h4 id="autosec-50"><span class="sectionnumber">2.5&#x2003;</span>医疗保健和社会保障</h4>
+<a id="main-autopage-50"></a>
+
+
+
+<p>
+笔者起初本想使用定性和定量相结合的社会学调查方法深度挖掘丁家庄，但因笔者的怯懦和懒惰未能成功，使本章主要是个别人文见闻，无甚社会学价值。
+</p>
+
+<p>
+接受笔者调查的人群多为中老年人并且数量很少。存在严重样本偏差，导致不能推导出一般性的结论，但笔者认为可以提下自己直观经验感受：不管是流动人口还是常住人口，他们身高较之周边明显偏矮，心脑疾病比例较多，也有被调查人家庭两代人中均
+患重大疾病的事例。《中国心血管病报告 2017》中开篇有提“我国居民心血管病 (CVD) 危险因素普遍暴露, 呈现在低龄化、低收入群体中快速增长及个体聚集趋势”，贫穷始终是种顽疾，甚至是绝症。
+</p>
+
+<p>
+根据“丁家庄环境卫生管理公示牌”
+               ，丁家庄有保洁人员 21 人，保洁面积 4 万平方米。据本次调查，济南市环保局贯彻执行八小时工作制，并为保洁人员缴纳三险。所聘用保洁人员多为丁家庄居住人口，当时每月到手收入在 1600 元左右。济南市环保局在社
+会保障上的表现出乎笔者意料，在此点赞。另外，有一例保洁员工伤纠纷，当事人为外地来济 60 多岁老人，因是否算工伤与环保局有分歧，环保局领导也曾亲切慰问。虽然当时问题并没有解决，但当事人对国家和政府仍表示“非常满意”，没有任何意见。
+</p>
+
+<p>
+丁家庄老年村民大多没有缴纳任何形式的养老保险，包括新型农村社会养老保险（新农保）
+                                       ，也不了解具体政策。满 60 岁老人由村委每月补助 600 元左右。丁家庄大部份村民所能缴纳的社保只有新型农村合作医疗（新农合）
+                                                                                                      ，有每年缴纳 100 元和 300 元两
+个档次。新农合在丁家庄村民重大疾病治疗上发挥了极其重要和显著的作用，常可报销 60% 多的费用。
+</p>
+<!--
+...... section 何不食肉糜......
+-->
+<h4 id="autosec-51"><span class="sectionnumber">2.6&#x2003;</span>何不食肉糜</h4>
+<a id="main-autopage-51"></a>
+
+
+
+<p>
+虽然丁家庄北侧就是一个较大的综合市场，向周边几个社区的居民供给农副产品，生意兴隆但年租金昂贵，大菜摊租金约 9 万元/年。城中村里仍有些蔬果摊子长期固定在街道一角，它们铺设在水泥道路或机动三轮车上；还有些定期定时流动叫卖的轻型贩菜
+货车。城中村蔬果摊主要面向城中村内中老年居民，无需承担任何租金，多供应次一级的菜品并且价格低廉，但销售额和利润远不能与综合市场相比。（可参考图&nbsp;<a href="3.html#fig:caishichang">1.16</a>&nbsp;，图&nbsp;<a
+href="3.html#fig:caitandajie1">1.17</a>&nbsp;，图&nbsp;<a href="3.html#fig:caitandajie2">1.18</a>&nbsp;。）
+</p>
+
+<p>
+这里我们来谈一个架设在机动三轮车上的水果摊主吧，笔者将其隐去名讳，代称为刘哥吧。即使在城中村，刘哥家的居住环境可能仍是最为糟糕的，他一家三代住在一个 200 多元月租的单间中。他的立业史，也是每一步都恰被时代所驱赶和压迫的悲剧史。
+他做过走街串巷流动叫卖的小贩，被驱逐淘汰；又做过居民小区外较固定的摊贩，被驱逐淘汰；又做过丁家庄综合市场外路边摆摊的摊贩，相较综合市场的高额租金，路边摊所需费用便宜太多，同样也是被驱逐淘汰；最后刘哥成为了城中村内一个机动三轮
+车上的瓜果小贩。2017 年丁家庄已被夷为平地，真正的硬汉刘哥不知又将以何种方式去往何处，拖家带口继续书写他自己的奋斗史⋯⋯
+</p>
+
+<p>
+夏季的一天，笔者碰到他十岁左右的儿子从自家中捧来几片薄切的西瓜给他吃，可他明明就正在三轮车那卖瓜呀。
+</p>
+
+<p>
+笔者无论如何也没有想到，当笔者向一些人说起丁家庄综合市场和城中村菜摊的区别时，有些人会指责刘哥不努力不争气，质疑他为何不早在综合市场租摊位（高租金）以求得良好收益。一个一家三代居住在城中村破败单间的外来人，如何去承担每年数万
+的租金啊。我记得 90 年代初当我还是个小孩时，并没有铺天盖地地听到“成功”
+                                     “成功人士”这类说法，对于贫穷者多半是怜悯其境遇不佳。今时简单用资本结果作为个人能力的衡量标准，从而一叶障目时，我们都将成为那个呆傻可笑的晋惠帝，
+                                                                                                             “百姓无粟
+米充饥，何不食肉糜？”
+</p>
+<!--
+...... section 过往的宅田基地之殇......
+-->
+<h4 id="autosec-52"><span class="sectionnumber">2.7&#x2003;</span>过往的宅田基地之殇</h4>
+<a id="main-autopage-52"></a>
+
+
+
+<p>
+在中国传统小农经济的农村中，往往以家庭为基本单位，主要活动范围局限在村内，生产集中在自家规模极为有限的耕田或从事简单手工业、半加工业的家中，生活集中在自家住宅与村内公共空间。田区和住宅区常常分隔明显，呈大块状分布，同一大块内
+常是多家彼此有联结的田地或住宅，其中相联两家之间的田地多用沟、垄、界石作为田界，住宅之间多用共用的一面墙壁或距离极近的两面墙壁作为宅界。
+</p>
+
+<p>
+多数人的社会空间长期固定、聚合、封闭在居住村，物质和社会资源有限，生产生活单调贫乏，村民之间联系频繁，信息传播速度快，甚至可以代代相传。这种情况下发生的利益冲突常常尖锐持久、难以调和，田界和宅界作为最重要的家庭产权，具有相当刚性。
+</p>
+
+<p>
+在实践和具体的社会空间中，这一刚性界限却又常常变动并受到侵蚀。它本身包含农村中通风、采光、日照、排水、通道等难以界定的方面，另外在国家和政府层面来说，又有历史遗留、立法不健全、执法成本高等问题；在村民来说，则有历史遗留、普遍违
+规超额占用、法律维权成本高、法制观念不强、宗族势力等问题。
+</p>
+
+<p>
+如果氏族大家庭或直系小家庭被其他大小家庭侵犯界限而未采取有效措施，则不单是家庭经济效益，连带个人和家庭的自我认同、社会地位也将受到严重负面影响。这也使宅、田基地矛盾相当尖锐频发，家庭中的强壮男子往往被赋予保卫甚至扩张这一刚性
+界限的责任。过往中国对家庭伦理的重视，甚至重男轻女等现象，也多由此建立起来。
+</p>
+
+<p>
+在笔者对丁家庄的走访过程中，也曾碰到宅基地纠纷当事人商姐（化名）说起一例二十多年前的惨剧：两家因新修墙壁越界而产生的宅基地矛盾步步升级，致使受到屈辱的商姐丈夫自杀。商姐带领家人将邻居群殴至半死，法院支持了邻居的索赔诉求，商家
+并未履行法院判决，于是被打邻居二十余年不允许商姐家开发自家一块空地。
+</p>
+
+<p>
+丈夫自杀后，商姐带着两个儿子独立生活，其中小儿子当年不到两岁。她抓住了城市更新空间转化的时机，是 90 年代丁家庄第一批建立租屋的人。丁家庄拆迁前她的租屋总面积已经超过 1500 余平，出租房屋超过 50 户，月入过万，在丁家庄这也是了不起的
+成就。她的两个儿子也争气，可给她带去一些宽慰，只是长年的劳苦使其腿疾明显，面态老相，但商姐勤劳不改，晚上仍会去丁家庄综合市场进行清洁工作，以换取一些额外的微薄报酬。总是风风火火、穿着男式西装、一瘸一拐地支撑起整个家庭的商姐啊⋯⋯
+</p>
+
+<p>
+当商姐以维权为理由向我极为悲愤倾诉她的故事时，笔者一再说明我这个自发小项目不能给其带来任何改变，也难以根据她的一家之言去支持她时，她对笔者的中立态度表示认可，最后甚至还埋怨起她的家庭当年为什么不让一下那寸土的界限，即使再让更
+多些也不要紧啊⋯⋯
+</p>
+
+<p>
+诉说过程中，笔者渐感商姐并非真要维权，并非还存那样强烈的恨意。她曾说要带笔者去看那块因久被搁置而自然成为停车场的空地，笔者当时就感觉可能此事到此为止，事实上也是如此。事后我为求证自己想法两三次询问时间安排时，她果然都借故推脱，
+并刻意回避我。
+</p>
+
+<p>
+她真正想要的其实只不过是一场没有利害关系的倾诉⋯⋯倾诉完之后当事人产生了羞愧感，不敢面对被倾诉人；而所谓仇恨早已经在时空的变换中变成了心中一大块难看疮疤。
+</p>
+
+<p>
+随着丁家庄旧村改造的完成，丁家庄人将进入新的、现代化的城市空间，城市空间中的界限更为明显也易维权，原本农村中典型的宅基地矛盾将很少存在，希望两家日后能够相忘于江湖，也同样希望人们彼此能够多一些理解，多给一些倾诉的空间，以使悲
+剧不再那么多，那么难以令人承受⋯⋯
+</p>
+
+<p>
+另外笔者进行国在丁家庄发放调查问卷时，听闻山东大学有两个女学生也在发放社会学调查问卷，并且工作扎实，在此深表惭愧⋯⋯
+</p>
+<!--
+...... section 希望的贫民窟与绝望的贫民窟......
+-->
+<h4 id="autosec-53"><span class="sectionnumber">2.8&#x2003;</span>希望的贫民窟与绝望的贫民窟</h4>
+<a id="main-autopage-53"></a>
+
+
+
+<a id="sec:hopedespair"></a>
+
+<p>
+中国的城中村早先多是位于中大型城市郊区的传统农业村庄；上世纪 90 年代出现农村向城市、小城市向大城市、中西部地区向东部地区劳动力大规模流动转移的“民工潮”
+                                                                             ，城中村始现。随着 21 世纪初人口流动逐渐全部放开、工业化和城市化进程加快，城
+中村开始兴盛，成为城市景观中一个特殊部分。
+</p>
+
+<p>
+在此过程中，城中村原常住民集体农地逐步减少，多转为事实上的集体工商业出租用地; 其中一些村集体也由此走向富裕之路；村民主要收入由农业转为出租，非规划占地、无序自建房屋；城中村也由此成为不断扩张的城市的一部分；城中村基础和配套设施
+薄弱，且仍保留着部分乡村特色；常常薄薄一墙之隔，里边是城中村，外边是摩天大楼和现代化道路。
+</p>
+
+<p>
+当一群群、一波波外来务工人员们背井离乡来到城市时，城中村给了他们一个暂时的落脚地，只提供最基础生活保障，但也得以较少，甚至可以不承担，城市公共服务显性或隐性的“税收”
+                                                                                  ，使他们得以省吃俭用、向着梦想奋斗，在此过程中，不少人创造了
+一个个发家致富的奇迹，也为一些赤贫、生理或精神病患者提供了一个并不足以保暖御寒的小小家园。
+</p>
+
+<p>
+联合国 2003 年发布了《贫民窟的挑战》报告，报告描述了两种贫民窟——希望的贫民窟和绝望的贫民窟。
+</p>
+
+<p>
+笔者认为大可不必多提一些量化分区指标，以准确补强定义，那是专家干的事情。我们可以依托世俗对“希望”和“绝望”两词的理解，对联合国定义补充如下（粗体为笔者自加注释）：
+</p>
+<dl class="description" >
+
+
+<dt><span class="listmarker">希望的贫民窟 </span></dt>
+<dd>
+<p>
+                                     。这些建筑正处于或最近经历了发展、巩固和改善的过程。<b> 大部分住民的生活质量有基本保障或逐步提高；存在阶层跨越空间，部分人得以搬离贫民窟，住进其他拥有完
+“进步”的住区，其特点是新的、通常是自建的建筑，通常是非法的（例如擅自占地）
+善配套设施和产权的现代化社区。</b>
+</p>
+</dd>
+<dt><span class="listmarker">绝望的贫民窟 </span></dt>
+<dd>
+<p>
+“衰落”的住区，其环境条件和配套服务正在经历退化的过程。<b> 大部分住民对未来丧失信心，人文环境恶劣，难以阶层跨越，多发违规违法事件且难以根治。</b>
+</p>
+</dd>
+</dl>
+
+<p>
+中国几乎全部城中村都为丁家庄类似“希望的贫民窟”
+                       、并且绝大部分城中村也已改造完成，不少原常住人口、产权人也已住上现代化高楼大厦，配套设施较为完善，彻底脱离“农村”
+                                                                               ，正式成为“城市”的一分子。甚至世界的贫困状况也主要因中国一系列扶
+贫安置政策而得以明显改善，联合国多次对中国不吝赞美之辞。
+</p>
+
+<p>
+“绝望的贫民窟”在中国极少，但也有，如曾经的深圳龙华三和人才市场周边，“三和大神”们“干一天，玩三天”，身份证等个人信息材料多抵卖给违法犯罪团伙，负债累累，挂逼<sup>2</sup> 习以为常⋯⋯
+</p>
+
+<p>
+当城市化、工业化加速发展之时，很多城中村被列入市政规划。一些城中村居民希望借此获得更多收益，住上一至多套宽敞明亮新房，政府也为其配备了集体工业用地、商业用房用以补偿村集体经济，补偿金额也在逐年提升。
+</p>
+
+<p>
+但是也有一些家境更为贫寒、缺乏可持续收入来源的居民确实不希望搬迁，因为搬迁进入高层楼房意味着更高的生活成本和城市公共服务隐性税赋，同时失去了原有稳定的房租收入来源。而外来租户的权利，更是往往被忽视，因其“大可去其他地方出租”，
+似乎很“公平”。前文中的瓜果商刘哥和曾经居住在此的边缘人群又将去经历怎样的风雨，去怎样奋斗呢？
+</p>
+
+<p>
+快速城市化、工业化的进程必然面临着一个越来越尖锐的矛盾：个别“钉子户”为维护自身利益最大化漫天要价，会对整体规划产生巨大损耗，甚至导致规划夭折。这是新自由主义所宣扬的市场和个人功利的必然结果，自上而下的弥漫扩散。为应对这种局
+面，资本将可能联合政府使用软硬手段（例如以村集体多数通过的“合理性”等方式）完成拆迁安置，摧毁这部分群体的个人功利诉求。
+</p>
+
+<p>
+过高拆迁安置成本的老城中心、已由低容积率升级成超高容积率的密集高楼住宅区等，也将因难以具备资本增殖空间而成为城市更新的弃儿，生活环境和条件日渐衰退，贫民窟化。
+</p>
+
+<p>
+在恩格斯、列斐伏尔、哈维等关于空间生产、城市权利的论述中，有条可怕的论断：现代社会城市更新的过程亦是阶级再生产的过程；在旧的差的空间被“建设性摧毁”，城市边缘人被抛离出原住所时，更旧更差的空间必将在城市他处生产出来。
+</p>
+
+<p>
+这意味着希望的贫民窟将向绝望的贫民窟步进转化，且无法真正根除⋯⋯
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-54"></a>
+
+<p>
+<sup>2</sup>&nbsp; 挂逼：三和群体的象征性概念，常指遇到了特别困难的情况，比如身无分文，有时也指身亡。但大多时候指的是基本上身无分文又无事可做的状态。进入“挂逼”状态时在三和所能买到的最廉价的商品则被称为“挂逼 ×”
+                                                                                                                    ，如人民币五元
+一碗的“挂逼面”（清汤面），五角一支的“挂逼烟”（“红双喜”牌），两元两升的“挂逼水”（也叫“大水”，一般为“清蓝”牌），十五元一晚的“挂逼床位”等。
+</p>
+
+
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>

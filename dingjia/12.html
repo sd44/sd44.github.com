@@ -1,0 +1,2256 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—平民视角下的中国 </title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-193"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... part 平民视角下的中国......
+-->
+<h2 id="autosec-195"><span class="sectionnumber">第四部分&nbsp;<br />
+
+
+
+</span>平民视角下的中国</h2>
+<a id="main-autopage-195"></a><a id="main-autopage-196"></a>
+<a id="main-autofile-12"></a>
+<!--
+...... chapter 关于中国的前言......
+-->
+<h3 id="autosec-197"><span class="sectionnumber">第十章&nbsp;&#x2003;</span>关于中国的前言</h3>
+<a id="main-autopage-197"></a>
+
+
+
+<p>
+笔者已过不惑，越发感觉一切都是渺小的。仍具相当动物性和原始性的人给了世界历史社会太多限制，世界历史社会给了国家太多限制，国家给了政府和领导人太多限制⋯⋯而凡人平民无疑是最为受限和苦难的。在这些丰富张力之下，若有一只上帝之眼去
+观看任何一人的一生，那都是怎样辉煌又深刻丰富的悲喜剧呢！
+</p>
+
+<p>
+人类常常一直缺乏直面社会现实的勇气，常将幻梦蒙在真实和悲苦之上，这层面纱或遮掩或美化或扭曲。中国在数千年沧桑历史中形成的一种绝望尤使太多中国人爱做幻梦，常常自我麻醉、视而不见现实悲剧那并不让人开心的力量。
+</p>
+
+<p>
+李大钊先生早在百年前就说：
+</p>
+<blockquote>
+
+<p>
+<b> 中国自古昔圣哲，即习为托古之说，以自矜重 </b>：孔孟之徒，言必称尧舜；老庄之徒，言必称黄帝；墨翟之徒，言必称大禹；许行<sup>1</sup><a id="main-autopage-198"></a>之徒，言必称神农。此风既倡，后世逸民高歌，诗人梦想，大抵慨念黄、
+农、虞、夏、无怀、葛天的黄金时代，以重寄其怀古的幽情，<b> 而退落的历史观，遂以隐中于人心。其或征诛誓诰，则称帝命；衰乱行吟，则呼昊天；生逢不辰，遭时多故，则思王者，思英雄。</b> 而王者英雄之拯世救民，又皆为应运而生、天亶天纵的聪
+明圣智，而中国哲学家的历史观，遂全为 <b> 循环的、神权的、伟人的历史观 </b> 所结晶。一部整个的中国史，迄兹以前，遂全为是等史观所支配，以潜入于人心，深固而不可扰除。
+</p>
+</blockquote>
+
+<p>
+今日又改变了多少呢？
+</p>
+
+<p>
+在笔者的日常生活中，偶有贩夫走卒直指一些问题深刻本质，历史经验和个人的现实经验给予了他们一些超过“转椅上的专家”的真知灼见。很多人其实不是不知道，不是不能知道，只是不愿面对。
+</p>
+
+<p>
+痴痴幻梦可以让人在世界悲凉残酷时感受到并不存在的温暖。过去我认为这是国人的虚弱，现在我更接受这是理性，是沧桑历史赋予我们的、用以应对现实的理性。面对了又能怎样呢？一切又有何用呢？太阳照常从东方升起，哪有什么迷雾外的彼岸伊甸园？
+六朝何事，只成门户私计，人民的自愿幻梦，怎不是看透了世事的大智慧？！
+</p>
+
+<p>
+但我还是想在还能写的时候，把历史写下来。民为重，社稷为轻、君次之。我想写的是民的历史，而非人斗人或某些具体个人的历史。不管是社稷还是权力者都应当成为民的历史的注解，而非相反。悠悠世间，浊浪苍生，民总是这样翻来覆去起伏着，悲喜着，
+树欲静而风不止⋯⋯但当我尽可能去避免描述政治人物，尤其是政治斗争，为了更好书写中国人的历史的时候，才发现政治主线其实是不可避免的，因此关于政治的描写也不得已追加。
+</p>
+
+<p>
+有一点需要声明，笔者仅是高中文凭，一介匹夫，本身所知就甚少，接触到的资料又极少和片面，另外很多内在动因其实只有局内人才可知悉，这一切均使本部分内容可能出现较多幼稚谬误，让人贻笑大方，不可轻信。
+</p>
+
+<p>
+土地在本部分占有极大篇幅，但也只是笔者在三个月内的所得。如果要写，不免错漏百出；不写，本书太过残缺，最终还是选择了写下来。
+</p>
+
+<p>
+为什么敢写敢说，因为笔者仍有些天真相信真实和睁眼看世界这二者的力量，真诚求索的前提下，未达山峰只是在路上并不怎样难堪。
+</p>
+
+<p>
+笔者所述中国史仅为一些片段，并非全貌。一是因为前文所述笔者能力有限，二是因为历史往往相通，乃至重复，无需面面俱到便可䌷绎得出一些更为本质的内在逻辑。笔者希望借这些历史片段去纪念在时代沉浮中漂泊的人民，如能激发起个别读者公平正
+义之心思自是最好，不能的话，也足可聊以自慰。
+</p>
+
+<p>
+或许一切都是徒劳，每朝每代都有人在旷野中呼唤；或许一切是最好，人性的缺点所保证的是人类整体的繁衍生息，代代基因的传递；或许这只是不识庐山真面目的愚者所作所为⋯⋯
+</p>
+
+<p>
+但我还是想写下来，总有人会去做这样的事，我愿成为其中的一员。写完了，向我那总做傻事、一直逃避的青春致敬完毕，也就可以大方去做我的小家幻梦，继续另一段逃避历程了。
+</p>
+
+<p>
+另外，中国近几十年的发展有目共睹，我们的衣食住行得到了飞跃式的提高，坚硬的城乡二元壁垒被打破，阶级流动前所未有，物质生活日益丰富，跻身世界大国前列，诸如此类。笔者爱之深、责之切，还请读者多多理解。另外当代似也缺乏批判精神，甚至
+有人将之归入负能量，笔者不敢苟同，还是认为需要多些批判的力量。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-199"></a>
+
+<p>
+<sup>1</sup>&nbsp; 先秦农家学派代表人物
+</p>
+
+
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>

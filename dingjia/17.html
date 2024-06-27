@@ -1,0 +1,4253 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—中国未来怎么走？</title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-507"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... chapter 中国未来怎么走？......
+-->
+<h3 id="autosec-509"><span class="sectionnumber">第十五章&nbsp;&#x2003;</span>中国未来怎么走？</h3>
+<a id="main-autopage-509"></a>
+<a id="main-autofile-17"></a>
+
+<a id="chap:future"></a>
+
+<p>
+笔者认为马克思足够深刻地揭示了现代世界的破坏性，但在建设性上乏善可陈，宏观或曰大师叙事 40 余年来也欠缺实质性发展。笔者自然也更加无力去探讨中国未来发展路径应是怎样，但自认可发现个别“忧国忧民”
+                                                                                                 “专家”政策提案所描绘未来美妙画卷
+背后隐藏的真实破坏性——一些可以让党和国家陷入大崩溃泥沼、让人民生活日益困苦的破坏性。笔者确信这个别“专家”要么是天真幼稚的蠢，要么是为背后利益集团服务的刻意为恶。
+</p>
+
+<p>
+当代世界的批判武器虽然在宏观和建设性上缺失，但历经 200 多年积累，其数量已积累不少，可称是批判武器军火库了。边沁利己资本主义的侵蚀，人民批判意识日益增长，信息化传播越来越便捷，使我们的一些“专家”话术也随之更加高明，可以十句话
+九句真，隐蔽性极强。其中九句真话，主要立足批判现实存在的问题、弊端，也常常以人民的名义批判政府，悲天悯人真是我见犹怜，比如减少城乡二元对立——户籍改革，劳动力自由流动；加大民生支出、社会保障、居者有其屋。但剩下的那一句假话，才
+是其话术“<b> 精华 </b>”和真实意图所在，<b> 前面九句真话、正确的话只是说明自己的正义和“洞见”，为其谎话打造完全不存在的合法合理性。真正要做的是悄悄引导党和国家、人民成为其背后利益集团待宰的羔羊。</b>
+</p>
+
+<p>
+伪道学家、欺世盗名、祸国殃民、宵小鼠辈式的“专家”真不算少，道行更高者甚至可以十句话十句真，比如可以流涕于中国财富分化之严重，摇旗呐喊中国要建立健全对富人的累进直接税征收，呼吁国家招纳这类方向的专家进入智囊团，他自己其实却在国
+际金融寡头公司从事着“资本管理”类业务⋯⋯真是让人叹为观止！高手啊！“高级知识分子”啊！
+</p>
+
+<p>
+笔者曾经真的失望于中国脊梁式的专家为何如此罕见，后来在写作本书、搜集资料的过程中发现自己可能想错了。中国脊梁一样的专家不是凤毛麟角，只是他们大多乏名少利，影响力有限，很少能站在光鲜亮丽的舞台前，时代并不能给他们多少表达空间
+⋯⋯不过当前世界已经应验了习总书记所说“<b> 百年未有之大变局 </b>”，脊梁们还是能发声的多发一些，能做事的多做一些，晚一些隐退于浊世吧⋯⋯
+</p>
+
+<p>
+本节一是说明世界各主要经济体在“百年未有大变局”中的共性背景，二是以《大国大城》为例，对其批判，希望读者能够多些批判性思维，勇敢独立思考，谨防新自由主义实践对公民权利的损害。三是建议党和政府对政策提案要进行不可行性研究，并提供
+部分考量标准。四是谨防影子政府，与之战斗。
+</p>
+<!--
+...... section 背景：资本主义民主国家危机的共性......
+-->
+<h4 id="autosec-511"><span class="sectionnumber">15.1&#x2003;</span>背景：资本主义民主国家危机的共性</h4>
+<a id="main-autopage-511"></a>
+
+
+
+<p>
+                   <sup>[<a href="17.html#LWR-ht-cite.0@JJDK201504024">120</a>]</sup><sup>[<a href="17.html#LWR-ht-cite.0@streeck2017will">121</a>]</sup> 一书中认为资本主义民主国家面临着同质的危机，尤其
+沃夫冈·斯特里克在《资本主义将如何终结》
+是美国，摘抄如下：
+</p>
+<blockquote>
+
+<p>
+20 世纪 70 年代的 <b> 全球通胀 </b> 之后，发生了 80 年代 <b> 公共债务的上升 </b>，而 90 年代财政的巩固伴随着这一时期 <b> 私人债务的迅速增加 </b>，危机最终在 2008 年的金融危机中爆发，这种紧张局势被一个 <b> 不可持续的“向未来借款”
+</b> 的过程所取代……40 年来，<b> 失衡 </b> 几乎是各“发达”工业国和“发达”工业世界的常态。实际上，随着时间的流逝，人们已经不再把危机看成是纯粹的经济危机。这引发人们重新发现资本主义社会从前的概念——<b> 资本主义是一种从根本上
+依靠私有资本连续积累过程的社会秩序和生活方式。</b>
+</p>
+
+<p>
+日益去工业化的资本主义国家轨迹有三个长期趋势。<b> 首先是经济增长率持续下降 </b>，最近因 2008 年的事件而加剧了这一趋势；<b> 二是主要资本主义国家整体负债程度普遍而持续的上升 </b>，40 年来，这些国家的政府、家庭、金融以及非金融企
+业不断累积起大量债务；<b> 三是几十年来，伴随着债务增加和经济增长下降，收入与财富分配的不平等均处在上升过程中。</b>
+</p>
+
+<p>
+多年来，这三者似乎已经相辅相成：低增长加剧了分配冲突，加剧了不平等；不平等通过限制有效需求来抑制增长；高额的现有债务堵塞了信贷市场，增加了金融危机的可能性；过度增长的金融部门既是经济不平等的结果，也是经济不平等的加剧，等等。
+</p>
+
+<p>
+现在很清楚，资本主义世界的民主国家不是一个主权国家，而是 <b> 两个主权国家：下层的人民和上层的国际“市场”
+                                                      。</b> 全球化、金融化和欧洲一体化削弱了前者，加强了后者。现在，权力的平衡正迅速向上层转移。<b> 以前，领导人需要了解和使用人
+民语言；今天，他们必须掌握国际“市场”这一金钱语言。“人民耳语者”由“资本耳语者”接替。资本期望领导人知晓可保障投资者们以复利收回资金的秘密戏法。</b>
+</p>
+
+<p>
+<b> 资本主义可以由于过于成功而破坏其自身。</b> 我所想像的资本主义终结，是资本主义由于其自身的原因而慢性衰败的过程。虽然我们 <b> 无从准确知道 </b> 资本主义什么时候消失、如何消失、以及替代资本主义的将是什么制度，<b> 但重要的是，
+目前没有力量能够扭转经济增长、社会平等和金融稳定的持续恶化趋势并终结三者之间的相互强化 </b>。
+</p>
+
+<p>
+当今经济和社会混乱背后存在着 <b> 结构性紧张和矛盾，社会科学几乎无能为力帮助解决这一问题。然而，它所能做的是揭示它们，并指出其历史连续性，以便充分理解当前危机。</b> 它可以，并且必须指出 <b> 民主国家正在戏剧性沦为全球投资者寡头
+集团的债务催收机构 </b>……今天，经济权力似乎比以往任何时候都更加成为政治权力，
+                                         （笔者注：新自由主义所要求的是经济自由优于政治自由。笔者妄论，可以认为新自由主义要求经济权力大于政治权力，政治权力沦为经济权力附庸。
+                                                                                                          ）而公民似乎已被
+完全剥夺了自身捍卫民主的力量，以及向政治经济施加影响的能力；公民的利益及其诉求与资本所有者的无法相提并论。
+</p>
+
+<p>
+事实上，回顾 1970 年代以来的一系列资本主义危机，仿佛真的有可能在发达资本主义中找到一种新的 (即使是暂时的) 社会冲突解决方案，这一次完全有利于现在牢固地扎根于其政治上无懈可击的据点——<b> 国际金融资产阶级 </b>。
+</p>
+
+</blockquote>
+<!--
+...... section 大国大城 = 超级资本原始积累......
+-->
+<h4 id="autosec-513"><span class="sectionnumber">15.2&#x2003;</span>大国大城 = 超级资本原始积累</h4>
+<a id="main-autopage-513"></a>
+<!--
+...... subsection 大国大城概述......
+-->
+<h5 id="autosec-514"><span class="sectionnumber">15.2.1&#x2003;</span>大国大城概述</h5>
+<a id="main-autopage-514"></a>
+
+
+
+<p>
+陆铭“教授”写了《大国大城》                 ，政府发力发展节约空间和时间的 <b> 大城市规模集约经济 </b>——户籍改革，劳动力自由流动；一线大城市不怕大、不怕扩建，敞开发展并吸纳劳动力，实现人员高度集聚的规模经济。
+             ，概括来说，他希望“在集聚中走向平衡”
+</p>
+
+<p>
+他认为，“拥挤 Time、污染 Grime 和犯罪 Crime 问题这三种“城市病”对于中国来说并不可怕，事实上可能并不严重。大城市在合适政府政策下也不会陷入贫民窟拉美化，反而更应去实现高密度基建。
+</p>
+
+<p>
+过往土地金融导致地方以邻为壑、各自为政，重复建设、高大全项目体系可以休矣。当然，这点批判完全没问题，许多专家也痛陈这一弊端，本书也涉及，这已是一种定论。但关键是，要做什么！
+</p>
+<!--
+...... subsection 具体批判......
+-->
+<h5 id="autosec-515"><span class="sectionnumber">15.2.2&#x2003;</span>具体批判</h5>
+<a id="main-autopage-515"></a>
+
+
+
+<p>
+笔者无意于多么科学详实、引经据典地说明自己的批判观点，对于这样错漏百出、昭然若揭的书来说并无必要。
+</p>
+
+<p>
+接下来笔者逐条引用《大国大城》陆铭观点，然后进行具体批判：
+</p>
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 无知之幕
+</p>
+<blockquote>
+<p>
+美国的政治学家罗尔斯在他的《正义论》当中提出，一个问题中所涉及的所有各方，都应该被放在同一个标杆之后，在那儿 <b> 没有角色之分，也没有社会差异 </b>，这样的原则被称为“<b> 无知之幕 </b>”
+                                                                                                     （veil of ignorance）。更通俗地说，其实这就是
+国际版的“换位思考”和“己所不欲，勿施于人”，这意味着在公共政策的讨论当中，<b> 每一个公民所持的观点应该与自己的社会身份无关。</b> 再换句话说，<b> 公民所持的观点不应该跟自己是否在当前处于既得利益的位置有关。</b>
+</p>
+<p>
+中国的地方政府最大化本地利益，缺乏彼此之间的协调，国家利益被忽视，这极大地影响了中国发展的道路和可持续性。<b> 中国已经到了呼吁每一个省、每一个市、每一个县、每一个人放弃本地思维，顾全公共利益的时候了。</b>
+</p>
+<p>
+不管是通过 <b> 财政转移支付 </b> 的方式，还是通过 <b> 帮欠发达地区还债 </b> 的方式，<b> 发达地区都需要负起相应的责任 </b>。读者可能会问，发达地区为什么要负起这个责任？道理并不复杂，因为这是 <b> 统一国家的必需 </b>，而且，发达地
+区恰恰是因为处于一个统一国家和统一货币区的内部，享受了统一市场的好处，获得了来自欠发达地区不断流入的劳动力资源，并且恰恰因为自身是这个国家统一货币区的一部分而成了金融中心。<b> 只想要统一的好处，不想承担统一的义务，这是任何国
+家的政治都不会允许的。</b>
+</p>
+</blockquote>
+<p>
+“无知之幕”之正义本身没有错，但世界不正是笼罩在功利利己这一经济学倡导的“理性”之下么？陆教授知道“<b> 发达国家才不会以天下大同为己任呢！</b>”但似乎不知道自由经济学家们口中所说的 <b> 利己“理性人”
+                                                                                                         ，不止包括人，也实际包括着各
+级各处人的组织。</b> 从何让各级各处组织和个人放弃自利，去实现这无知之幕呢？中央如何呼吁和管控？级级以邻为壑，事权层层下压，财权层层上收的过去，经陆教授振臂一呼就变成大同天下，统一大国了？真好！共产主义一夜间到来了！真是正确又
+毫无营养的梦话。
+</p>
+<p>
+我们回到恩格斯《论住宅问题》，看到了历史的轮回：
+</p>
+<blockquote>
+<p>
+<b> 现代的国家不能够也不愿意消除住房灾难。</b> 国家无非是有产阶级即土地所有者和资本家用来反对被剥削阶级即农民和工人的有组织的总权力。<b> 个别资本家 </b><sup>1</sup><a id="main-autopage-517"></a><b> 不愿意做的事情，他们的国家
+也不愿意做。</b> 因此，如果说个别资本家对住房短缺虽然也感到遗憾，却未必会受触动而去从表面上掩饰由此产生的极其可怕的后果，那么，<b> 总资本家，即国家，也并不会做出更多的事情。国家顶多也只是会设法在各地均衡地推行已经成为通例的表
+面掩饰工作。我们看到的情形正是如此。</b>
+</p>
+</blockquote>
+<p>
+笔者知道，资本和性质等问题较为敏感。这里主要请读者理解。诚然，资本主义不完美，相当具有破坏性，但至今仍是革命性的和先进的，尚未有可以取代的生产关系。早中期苏俄所谓社会主义其主体其实仍是列宁所说国家垄断资本主义，社会主义或许并不
+具备充要科学成分。最终中国不能不走向这条世界性的道路，不然早就崩溃，只是我们走的太快，也舍弃了太多太多⋯⋯本章首节引用了沃夫冈·斯特里克的几段话，在他看来，马克思可能悲观了，<b> 资本主义如今日益严重的危机可能在尚未有新的革命性
+生产关系出来之前终结 </b>。笔者对此抱有相当大的怀疑。
+</p>
+<p>
+至于国家，也请理解这番直言。笔者只是一介草民，于国于家无用，身无长物；没有加入什么结社团体；更无什么图谋不轨。只是世界各国如今都太危险了，中国作为各大国强国眼中的大肥肉，皆欲对我食肉寝皮，更是危险中的危险；而国外垄断金融寡头对
+我国的侵蚀程度并不乐观，国家肯定有相关了解，情况应当比大部分人想象的要更加可怕。笔者说出来，便想给出一个小压力，使国家不至于那么乐观，政策后果不至于那么坏，能减轻一些就好。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 用人均 GDP、人均收入和生活质量来考量区域平衡
+</p>
+<blockquote>
+<p>
+应该从 GDP 总量增长的考核转变为 <b> 人均 GDP 的考核 </b>。特别是对那些人口流出地来说，追求人均 GDP、人均收入和生活质量才是长久之计，
+</p>
+<p>
+经济学家的研究发现，在欧洲，收入不平等减少快乐，而在美国，这种效应却不强。这实际上就和美国社会不同收入阶层之间的流动性更强有关，其实，<b>“美国梦”的道理就是说每个人都平等地拥有致富的机会 </b>。
+</p>
+</blockquote>
+<p>
+前文已述（见&nbsp;<a href="16.html#sec:gdp">14.7</a>&nbsp; 节)，GDP、总收入的加总方式，无法说明分配不均、贫富差距、社会福利这类问题。大区域（比如美国的州）人均的本质仍是加总，同样无法说明这类问题。陆铭进而通过美国各州人均
+GDP 比较平衡，证明美国区域发展均衡。美国梦“每个人都平等地拥有致富的机会”，哈哈哈哈⋯⋯
+</p>
+<p>
+美国财富不平等可见表&nbsp;<a href="16.html#tab:gini">14.6</a>&nbsp;。
+</p>
+<figure id="autoid-32" class="figure ">
+<div class="center">
+<p>
+
+
+<a href="figures/DCIbyDistricts.png" target="_blank" ><img
+      src="figures/DCIbyDistricts.png"
+      style="
+      width:390pt;
+      "
+      class="inlineimage"
+      alt="(image)"
+></a>
+</p>
+
+
+<div class="figurecaption">
+
+
+图&nbsp;15.1：<a id="fig:DCIbyD"></a>美国困境社区指数（按 districts 划分）
+</div>
+
+
+<div class="figurecaption">
+
+
+来源：<a href="https://eig.org/distressed-communities/" target="_blank" > 美国经济创新集团 </a>
+</div>
+</div>
+</figure>
+<p>
+也可以参考美国经济创新集团（The Economic Innovation Group）发布的困境社区指数（DCI，the Distressed Communities Index，见图&nbsp;<a href="17.html#fig:DCIbyD">15.1</a>&nbsp;）
+                                                                                                                                              。对困境社区指数 DCI 的中文介绍可见澎湃《美国社
+区评价：困境社区指数和繁荣城区体系》。有兴趣的读者可以根据以上 DCI 链接网址，进一步了解美国区域发展不平衡。
+</p>
+<blockquote>
+<p>
+但是，城市化和地区之间的自由移民是一个 <b> 几十年甚至上百年的过程 </b>，在这个过程中，如果我们只看 <b> 特定时段的局部地区 </b>，就可能会觉得，劳动力流动并没有带来地区间收入水平差距的缩小。
+</p>
+</blockquote>
+<p>
+陆铭倒是知道均衡需要长期（实际上根本不可能均衡）。可在几十年甚至上百年的区域失衡中，中国中央和地方、地方和地方、政府和人民的矛盾恐怕早已内爆了。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 不可能三角
+</p>
+<blockquote>
+<p>
+第一，国家的统一。
+</p>
+<p>
+第二，经济效率的提高。
+</p>
+<p>
+第三，区域之间的平衡发展。
+</p>
+<p>
+大国发展的“<b> 不可能三角 </b>”
+                    ，而如果要破解这个“不可能三角”                                ，转变为 <b> 人均 GDP、人均实际收入和生活质量意义上的“平衡”</b>，而这种人均意义上的平衡恰恰是
+                                   ，就必须改变“平衡”的定义，将经济资源和人口均匀分布意义上的“平衡”
+可以在人口自由流动的过程中实现的，不需要大规模地采取行政控制的手段来对人口流动进行限制。
+</p>
+</blockquote>
+<p>
+前面一条已述当前人均“平衡”的荒谬。那么按陆铭说法，我们还是要面对不可能三角。我们是要国家的统一，还是经济效率的提高，还是区域之间的平衡发展呢？事实上会走到哪一步？
+</p>
+<p>
+恐怕这三角三边全部失败，只留资本寡头的胜利，他们可以资本外逃或当买办。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 持续发展
+</p>
+<blockquote>
+<p>
+未来中国的严峻挑战是城市部门是否能够 <b> 不断地提高劳动生产率 </b>，并且创造出越来越多的就业岗位，特别是 <b> 服务业岗位 </b>，从而吸纳更多的农村人口进城，使得城市化率不断提高，直至 75%，甚至 80% 以上的水平。我们应该担心的，不
+是劳动力总量的枯竭，而是未来城市是否具有 <b> 不断提高劳动生产率的能力 </b>。
+</p>
+<p>
+大家可能会怀疑，中国这样一个人口大国，能够实现 75% 以上的城市化率吗？问这个问题，在本质上就是在问中国能不能 <b> 实现经济持续增长，最终成为发达国家 </b>。未来中国的城市化率到底能够提高到什么程度，主要是看城市部门是不是能够 <b>
+持续地提高生产率，并为农村进城的移民源源不断地创造就业，</b> 如果能做到，农民就可以不断地减少，最终，通过农业的规模化经营提高 <b> 少量农民的收入 </b>。
+</p>
+</blockquote>
+<p>
+陆铭认为进城农民可从事餐饮、家政、网约车、快递、外卖等服务业。大城市那伟大规模的服务业，竟能容纳那么多人呵！
+</p>
+<p>
+笔者认为，<b> 当前世界环境及生产关系之下，从无“可持续发展 </b>”。即使在主流经济学，也只有上升和下降交替的“<b> 经济周期 </b>”。持续发展是梦，或是谎言！我们必然要经历下行期，甚至可能就在五年内、后年、明年。中国自市场经济以来，
+尚未经历过一个完整的经济周期，我们用巨大规模超发货币逃课了，这使我们太乐观了，真的太乐观了⋯⋯
+</p>
+<p>
+不可能持续发展的境况下，陆自己的论述就会将我们引到农民数量不可以不断减少，或者被迫挤进城市成为贫民。这点无需多说。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 政府支出和中央转移支付
+</p>
+<p>
+我们的陆教授说了几句冠冕堂皇的话，既好听又正确！但能做的是什么？做不到的后果又是什么呢？
+</p>
+<blockquote>
+<p>
+<b> 社会保障健全 </b> 则储蓄的动机将减弱。
+</p>
+<p>
+通过 <b> 中央向地方的财政转移支付，可以为人口流出地的养老提供更多资源。</b> 更重要的是，<b> 全国的养老保障体系将逐步走向一体化 </b>，这时，即使人口流出地面临更为严重的老龄化问题，也不需要担心了，这才是解决问题的根本出路。
+</p>
+<p>
+农民在放弃土地的时候要满足 <b> 自愿、有就业、有社会保障、土地（或建设用地指标）能够市场定价这几个基本的前提 </b>，让农民 <b> 避免被剥夺 </b>。而以禁止市场交易的方式来保障农民，这是最为荒谬的逻辑，其结果恰恰是给不尊重土地产权的
+行政性剥夺找到了借口。
+</p>
+<p>
+在“蛋糕做大”的情况下，中央财政就更有能力来进行 <b> 区域间和城乡间的财政转移 </b>，但未来的财政转移应该更多地用于 <b> 城乡和区域间公共服务的均等化 </b>，比如说提高欠发达地区中小学教师和医护人员的待遇，相应地减少欠发达地区
+（特别是农村）政府的财政负担，以促进区域和城乡间在生活质量上的平衡，实现 <b>“动人”和“动钱”的良性互动 </b>。
+</p>
+<p>
+如果一个城市可以通过 <b> 基础设施和人力资本的投入，从而放大正外部性 </b>，会引导城市进一步向有效的更大规模城市发展；如果一个城市可以通过 <b> 技术进步和政府的管理措施减少负外部性 </b>，也可以使这个城市更加有效地运转。
+</p>
+<p>
+对于部分国家出现的贫民窟现象，要作有针对性的分析。城市经济是否可以持续增长，从而为农村移民创造就业是非常重要的问题，一些拉美国家经济增长乏力，制约了低收入阶层提高收入的机会。而在印度这样经济增长较快的国家，城市经济高度偏向现
+代服务业和信息技术产业，为低技能者创造的就业机会有限。
+</p>
+<p>
+中国城市的土地是国有的，这在根本上可以允许 <b> 中国城市政府作出更好的规划 </b>，以及 <b> 向低收入居住区提供基本而必要的公共服务，来防止大面积贫民窟的出现。</b>
+</p>
+</blockquote>
+<p>
+大国大城策略，要求在中国债务累累的背景下，国家继续进行巨额投资，发达城市要：巨资投入基础设施扩张。土地金融造就的大量衰退城市又被人为加大其人力流出，负债更加无力解决。中央要从自身和发达城市抽水，为衰退城市财政转移支付，用以发展
+落后地区的教育、培训、民生、公共服务等。你猜中央有多少钱？发达城市愿不愿意，会不会软性反抗，又能抽出多少水来？继续超发货币吗？
+</p>
+<p>
+普遍劳动力过剩、土地金融导致多数城市衰退的现状下，让农民挤入城市谋生，小城市市民挤入大城市，大量中小企业家破产甚至负债累累，这一系列人造集约规模经济（资本史上也是一直如此人造，而非什么自由市场自由经济。
+                                                                                                    ）之下劳动力只会更加溢出，
+失业后备军必然更大。政府需要在目前负债累累、养老保障覆盖面不足、养老金缺口巨大且持续扩大的今天，负担起更全面的社会保障。说得很好，点赞！资金从何而来？如何保障就业？危机之下农民又如何自愿放弃土地前往城市？农民、城市职工的社会保
+障肯定要政府支出，我们当前现实的社会保障什么水平，要达到这个目标又需要什么水平呢？不知从何而来的巨额支出！
+</p>
+<p>
+建设用地指标交易中，出卖土地指标方一般会是土地资源较大、发展落后的地区。农业工业化所需人力极少，即使这些地区获取了收入，在劳动力大规模流失的情况下也难免面临大工业发展限制。人力将会进一步流失，利得者是农业工业化的所有者。
+</p>
+<p>
+正是大规模快速城市化造就大量贫民窟，城市化在消除过往贫民窟的时候，也将在未来生产出更为恶劣的贫民窟。中国过去充满活力的“希望的贫民窟”——城中村因城市新增建设用地、发展工业和房地产中大部分消亡，但将在步步改造中产出生活条件恶
+劣、犯罪事件频发、公共服务无法保障、没有明天的“绝望的贫民窟”（见&nbsp;<a href="4.html#sec:hopedespair">2.8</a>&nbsp; 节），届时将处处有“深圳三和”，里面到处有不怀希望的“挂逼”。
+</p>
+<p>
+20 年来，各行各业均有不少人担心中国出现“拉美化”，陆认为中国实现大国大城就不会“拉美化”，要求政府“作出更好规划⋯⋯基本而必要的公共服务”等等。<b> 其真实目的是将可能出现——其实是必然出现的——将“拉美化”贫民窟的责任转嫁给政府！
+</b> 不是我的政策提议不好，而是因为政府技术和管理水平差，超出预期！不知道读者们是否还记得本书提及的个别专家学者对 80 年代中后期双轨制的论述。政府管理水平又如何提高至可以应对其中种种问题？政府实际能力的限度是多少？我想政府和专
+家都应该明白。
+</p>
+<p>
+当前地方以邻为壑、各自为政，陆对此也批判。但陆所要求的是 1980 年代以来一个从未有过的空前集权的中央政府！一个具备超凡入圣管理水平的政府！一次 <b> 超级大跃进 </b> 呵！完全无视中央和地方关系的复杂化，更重要的是无视现实境况。
+</p>
+<p>
+全国土地的市场定价，呵呵，恐怕是软硬暴力下才会有这样一个“市场”吧。这条放在本节总结时再论述总结。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">6.</span> 地方比较优势
+</p>
+<p>
+                        ，倡议中国大力发展生态旅游农村、农家乐、山海旅游景点或港口均是如此，大多数人第一反映是这究竟能对这么大中国的经济帮助多少？类似观点有时并非是“专家”高瞻远瞩，<b> 更可能是别有用
+一些“专家”提出了常人都不理解的“比较优势救国论”
+心 </b>。将特殊提升至一般，建立自己提案的伪合法性和伪有效性，隐藏其真实动机。
+</p>
+<p>
+个别、特殊、一般（普遍）这三个基本的哲学概念及其矛盾和张力常常被忽视。国家和人民要小心对待任何“比较优势”说法！比较优势基于区域 <b> 特殊性 </b>，一定要考察相应提案能覆盖和折射中国多少区域；有相近比较优势的区域过多也会使其同质
+化，走向 <b> 一般性 </b>，丧失 <b> 特殊性 </b>，届时哪有什么比较优势，只有比较破败。
+</p>
+<p>
+
+
+</p>
+</li>
+</ul>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-524"></a>
+
+<p>
+<sup>1</sup>&nbsp; 恩格斯注：这里与问题有关的只是资本家，因为 <b> 参加这种事业的土地所有者首先也是以资本家资格出现的 </b>
+</p>
+
+
+
+</div>
+<!--
+...... subsection 总结——美国式道路的超级原始积累......
+-->
+<h5 id="autosec-525"><span class="sectionnumber">15.2.3&#x2003;</span>总结——美国式道路的超级原始积累</h5>
+<a id="main-autopage-525"></a>
+
+
+
+<p>
+本节以陆铭《大国大城》为例展开批判，并非因为陆铭是段位很高的“高级知识分子”或很专的“专家”
+                                             。相比于他那些可以十句话里九句真、只有一谎为利益的同路“专家”
+                                                                           ，他的话术并不高明，往往以片面论述全面，以个别论证一般，以小作文抒情代替论
+证，但其“大国大城”政策提案却真是太可怕了。
+</p>
+
+<p>
+大国大城其实并无多少新意，其实只是我国政府 2012 年正式提出的“新型工业化、信息化、城镇化、农业现代化（工业化）”新四化的扩大版，我们也一直在走这条道路。要说有新意，那就是倡议立刻将区域限制由省市县直接扩展到国家一级。
+</p>
+
+<p>
+<b> 土地的自由留转、自由市场定价没有在过去 200 年出现过，也不会在未来几年实现，只能在农业农村税、政府和资本协作的羊吃人、农业工业化挤出小农生存空间等软硬暴力中实现。</b> 希望是不学无术的笔者错了。
+</p>
+
+<p>
+对马克思政治经济学有基本了解的人，便可以看出这是赤裸裸的超级“<b> 资本原始积累 </b>”，并且是超级“<b> 美国式道路 </b>”。
+</p>
+
+<p>
+我们回看历史，美国式道路是建立在殖民者造成的印第安人累累白骨之上。19 世纪中后期俄国民粹派知识分子正是害怕血淋淋原始积累才积极学习马克思，向马克思求助，探索社会主义道路。1900 年代之初政治强人如列宁认为俄国要生存和发展最好是经
+过“美国式道路”——农业工业化资本家，但他也只敢借希望由沙皇俄国来推动，沙俄没有推动，列宁掌权后也不敢推动。强人斯大林掌权后搞了古拉格和大迁徙，仅饿死人就 600 万人以上，造成巨大灾难（见&nbsp;<a
+href="11.html#subsec:shenkerenshi">9.8.1</a>&nbsp; 节）
+                                                    ，效果未有多好。强人毛泽东尝试大兴农田水利基建消化农村剩余劳动力的社会实验失败后，也只是城乡二元对立固化、工农剪刀差，先保障城市经济，同样没有搞“美国式道路”
+                                                                                                                                  。对于中国现状
+来说，这仍将是极为可怕的、血淋淋的！
+</p>
+
+<p>
+大量失地农民，过剩的产业后备军（失业和半失业者）
+                       ，破产中小企业，无限压低的工资⋯⋯中国人已经不是饿不死就不乱的中国人了，届时党和国家将面临极大危机，甚至是前所未有的危机！陆的真实目的到底是什么？谁最得利？最后的胜利者只有国内外
+的金融和土地食利者——金融垄断资本家（土地已彻底归于金融）。
+</p>
+
+<p>
+这便是新自由主义，步步吸取国家政府和人民血液，至死不休，定要寝骨食皮。矛盾最后可能直接被转嫁给党和国家。“啊，政策是好的，让和尚念歪了”！党和政府不可不防啊！
+</p>
+
+<p>
+事实上，笔者还见到有其他“专家”设此同样路径——他们一方面大给糖衣炮弹、赞美党和国家能力；另一方面将必然会失败的内容，同时也是私人资本不愿承担的内容，推给国家负责。例如倡议政府和国有企业负责必然会被债务压垮的巨型重固定资本投
+资，同时要求国家负责消除届时兴起的条件愈来愈差的贫民窟等。
+</p>
+
+<p>
+我国在 1992 年后没有经历完整经济周期，1998、2008 年左右依靠原垄断在国家的土地红利超发货币渡过难关，但不会一直这样下去。除非我们能战胜美国资本，危机转嫁美国；或者战争侵夺他国财产、灭失自己人口等等⋯⋯这都是太过邪恶的道路，并且
+有着艰难未知后果。
+</p>
+
+<p>
+党和国家需要更悲观反思危机，需要更谨慎小心政策提案，甚至可能需要坦诚面对和释放一些危机。超发货币不持续，其实谁都知道⋯⋯
+</p>
+<!--
+...... section 建立健全政策提案的不可行性报告......
+-->
+<h4 id="autosec-526"><span class="sectionnumber">15.3&#x2003;</span>建立健全政策提案的不可行性报告</h4>
+<a id="main-autopage-526"></a>
+
+
+
+<p>
+笔者建议党和国家建立健全全国性政策提案的不可行性报告，慎重对待任何人对中国未来走向的提案。可包括如下内容：
+</p>
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 建立各种不同倾向专家、官僚组成的评审机制，建议倾向于有才，但少名少利或暂受抑制的人员。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 由情报机关牵头对提案人及其关联人员、组织做背景调查，简明描述其政策倾向。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 提案人需说明提案倾向于投资还是消费，二者内容如何划分，篇幅不必长，但必须涉及具体举措。
+</p>
+<p>
+如提倡“居者有其屋”的赵燕菁应说明政府需投资多少，政府债券是否会造成美国式次贷危机，城市报障房规模到底能多大、到底能容纳多少人，如何健全报障房租户审核，退出机制如何，报障房又如何不影响商业房等，与 19 世纪英国一些所谓住宅报障计
+划有何本质区别，而不是只以杜甫式“安得广厦千万间，大庇天下寒士共欢颜”的话术模糊其真实目的。
+</p>
+<p>
+对可能出现的破坏性后果必须详细说明，话不必多，但要涉及要点难点。《大国大城》就是未对破坏后果详细说明的反面例子，前文已批判。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 警惕一切需要政府大力兜底的政策。我们的一些提案者们已经习惯于边拍政府马屁，边让政府“负责”某些必然或极可能失败的内容。届时出了问题，“非我之罪，罪在政府，政府大罪！”。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 提案不可行性报告是领导接见提案人的前提，莫要被“赞许”冲昏头脑。
+</p>
+</li>
+</ul>
+<!--
+...... section 谨防影子政府......
+-->
+<h4 id="autosec-527"><span class="sectionnumber">15.4&#x2003;</span>谨防影子政府</h4>
+<a id="main-autopage-527"></a>
+
+
+
+<p>
+美国有 Shadow Government（影子政府），或曰 Deep state（深层国家），现在基本上是易得认识。笔者甚至怀疑 New World Order（新世界秩序，多国顶层资本精英和政府权力贵族组成的幕后世界政府）到底是阴谋论还是现实⋯⋯
+</p>
+
+<p>
+世界各主要经济国普遍持续超发货币，制造货币炸弹摧毁之前的货币；寅吃卯粮的丧失理性，进行着“击鼓传花”和“只要我跑得比你快”的庞氏骗局金融游戏；为了躲避 1929 年美国经济大萧条危机而持续吹大泡沫、给未来炸弹持续装填炸药；为“大到不
+能倒”甚至“大到不能判刑”的金融资本集团造血输血；人民在超发货币中不停缴纳铸币暗税⋯⋯
+</p>
+
+<p>
+这其中负债累累的政府其实并不是胜利者，暂时的胜利者只有财富分化日益严重下越来越富的顶级富人阶层。当然，他们现在也面对当前世界天威难测的大变局。（见<sup>[<a
+href="17.html#LWR-ht-cite.0@piepenburg2022gold">118</a>]</sup>、
+                                                              <sup>[<a href="17.html#LWR-ht-cite.0@streeck2017will">121</a>]</sup>、&nbsp;<a href="10.html#sec:podestamail">8.2</a>&nbsp; 节 <a
+href="10.html#sec:podestamail"> 希拉里邮件门事件 </a>）
+</p>
+
+<p>
+结合新自由主义批判说法（见第&nbsp;<a href="9.html#chap:neoliber"> 七</a>&nbsp; 章），影子政府应是金融精英和权力贵族的合体，以政府透支于公共债务减轻投资压力、加快资本流转，并做私人贷款的催债机构，来使自己的资本增殖。
+</p>
+
+<p>
+读者们应该比较熟悉日本和韩国“<b> 财阀 </b>”一词，其实财阀即 <b> 康采恩垄断集团 </b>。康采恩以其金融垄断机构为核心，直接或间接控制多行业领域中的企业，往往涉及各行业全链条或主要部分，实现横向纵向全面垄断，为金融中心服务，获取
+超额利润。
+</p>
+
+<p>
+中国也有自己的康采恩，如一些 IT 集团（这很可能也只是显露出的冰山一角）
+                                    。2020 年 7 月 15 日，蚂蚁金融服务集团运营主体浙江蚂蚁小微金融服务集团股份有限公司正式变更企业名称为蚂蚁科技集团股份有限公司。同年 10 月 24 日，马云在上海第三届
+外滩峰会上发表一番惊世骇俗的演讲，笔者认为其深层目的在于除了欲让蚂蚁科技集团股份有限公司这一“科技公司”取代央行货币的四大职能——价值尺度、流通、贮藏、支付手段；还要超高杠杆、无节制发展金融信用；消泯国家金融监管职能乃至世界金
+融监管体系！
+</p>
+
+<p>
+传统的金融公司都受到巴塞尔协议的限制，可是蚂蚁科技通过将自己“包装”成科技公司绕过了监管，并且依托其行业垄断地位和大数据红利等获得了传统金融公司无法得到的超额利润。一旦蚂蚁科技集团出现金融风险而国家不得不出手救助，就意味着让
+全体国民被动帮它分担和承受巨大风险损失。
+</p>
+
+<p>
+2021 年 4 月 10 日，市场监管总局依法对阿里巴巴集团处以行政处罚，并处以 182.28 亿元人民币。2021 年 7 月 7 日，中国金融监管机构对蚂蚁集团及旗下机构处以 71.23 亿元罚款，并关停其旗下的“相互宝”业务。两次巨额罚款之后，阿里股票大涨，资
+本市场认为蚂蚁“<b> 利空出尽 </b>”，投资信心回升⋯⋯在其演讲和事后处罚的表现上，我们都可以直观感受到金融垄断资本的强势地位和野蛮狂妄。
+</p>
+
+<p>
+中国体量太大，营养太丰富，国外反动势力意图阴谋颠覆中国之心未曾停歇。在当今残酷的世界政治竞技场中，一个伤痛的中国将被诸多国家、甚至本国买办——金融精英和腐败权力贵族群拥而上，饕餮而食，渣骨不剩，万劫不复。不了解当前世界政治这一
+残酷性，要么是幼稚无知，要么是包藏祸心，望大家明鉴，莫要让亲者痛、仇者快。我们砥砺前行吧。
+</p>
+
+<p>
+党和政府一定要深刻理解并运用好习总书记所说“人民监督”“自我革命”两种武器，一定谨防影子政府的产生，或者与已经产生的影子政府开展艰苦卓绝斗争。影子政府总的意图是相通的——侵蚀中国国力和民生，借此满足自己对资本增殖的无限贪欲。
+</p>
+<blockquote>
+
+<p>
+主人说，“你这又可恶又懒惰的奴仆！你既然知道我在没有播种的地方也要收割，没有撒种的地方也要收获，就应该把钱存入钱庄，等我回来可以连本带利还给我。”
+</p>
+
+<p>
+“所以收回他的一千银币，给那个有一万银币的奴仆。因为凡有的，还要给他更多，让他丰富有余；凡没有的，连他仅有的，也要夺去。把这没用的奴仆扔进外面的黑暗里，他必在那里哀哭切齿。”
+</p>
+
+<p>
+——&#x2003;《圣经·马太福音》&#x2003;&#x2003;
+</p>
+</blockquote>
+<!--
+...... chapter 插图索引......
+-->
+<h3 id="autosec-529">插图索引</h3>
+<a id="main-autopage-529"></a>
+
+
+
+
+<nav class="lof">
+
+<p>
+<a href="3.html#autoid-1" class="tocfigure" >
+<span class="sectionnumber">1.1</span>&#x2003; 丁家庄村碑 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-2" class="tocfigure" >
+<span class="sectionnumber">1.2</span>&#x2003; 熙熙攘攘的三八大集 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-2" class="tocfigure" >
+<span class="sectionnumber">1.3</span>&#x2003; 北侧一处出租楼房外景 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-3" class="tocfigure" >
+<span class="sectionnumber">1.4</span>&#x2003; 一条街道 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-4" class="tocfigure" >
+<span class="sectionnumber">1.5</span>&#x2003; 城中村最为破败的一间自搭棚户 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-4" class="tocfigure" >
+<span class="sectionnumber">1.6</span>&#x2003; 笔者田野调查中租住的单间 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-5" class="tocfigure" >
+<span class="sectionnumber">1.7</span>&#x2003; 夫妻二人和他们一岁孩子所租住的储藏室 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-6" class="tocfigure" >
+<span class="sectionnumber">1.8</span>&#x2003; 城中村中等水平的简易卫生间 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-7" class="tocfigure" >
+<span class="sectionnumber">1.9</span>&#x2003; 阳光 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-7" class="tocfigure" >
+<span class="sectionnumber">1.10</span>&#x2003; 二楼房顶私搭简易板房 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-8" class="tocfigure" >
+<span class="sectionnumber">1.11</span>&#x2003; 丁家庄村民常用的木柴铁皮桶炉 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-9" class="tocfigure" >
+<span class="sectionnumber">1.12</span>&#x2003; 幼儿园外墙与线缆 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-9" class="tocfigure" >
+<span class="sectionnumber">1.13</span>&#x2003; 玩耍的孩子们 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-10" class="tocfigure" >
+<span class="sectionnumber">1.14</span>&#x2003; 改造楼梯、层层加盖的一座楼房 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-11" class="tocfigure" >
+<span class="sectionnumber">1.15</span>&#x2003; 街景 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-11" class="tocfigure" >
+<span class="sectionnumber">1.16</span>&#x2003; 丁家庄综合市场中的一处菜摊 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-12" class="tocfigure" >
+<span class="sectionnumber">1.17</span>&#x2003; 城中村内一处简易搭建的菜摊 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-12" class="tocfigure" >
+<span class="sectionnumber">1.18</span>&#x2003; 简易菜摊消失了 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-13" class="tocfigure" >
+<span class="sectionnumber">1.19</span>&#x2003; 墙上张贴的治安告示 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-13" class="tocfigure" >
+<span class="sectionnumber">1.20</span>&#x2003; 一位走丢的小孩暂在三轮车摊主的怀抱中睡着 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-14" class="tocfigure" >
+<span class="sectionnumber">1.21</span>&#x2003; 一处住户外侧的绿植与杂物 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-14" class="tocfigure" >
+<span class="sectionnumber">1.22</span>&#x2003; 一处阳台——花与衣 </a>
+</p>
+
+
+
+<p>
+<a href="3.html#autoid-15" class="tocfigure" >
+<span class="sectionnumber">1.23</span>&#x2003; 丁家庄工业南路南区一户未拆住房的外墙 </a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-18" class="tocfigure" >
+<span class="sectionnumber">12.1</span>&#x2003;1985–1998 年主粮定购价、议购价、市场价曲线图 </a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-19" class="tocfigure" >
+<span class="sectionnumber">12.2</span>&#x2003;1980–2017 年粮食产量 </a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-19" class="tocfigure" >
+<span class="sectionnumber">12.3</span>&#x2003;1980–2017 年粮食产量增长率（较上一年）</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-19" class="tocfigure" >
+<span class="sectionnumber">12.4</span>&#x2003;1980–1998 年粮食市场真实价格（1978 年不变价格）</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-22" class="tocfigure" >
+<span class="sectionnumber">12.5</span>&#x2003;1977–2023 CPI GDP 较上年增长率 % </a>
+</p>
+
+
+
+<p>
+<a href="15.html#autoid-26" class="tocfigure" >
+<span class="sectionnumber">13.1</span>&#x2003;2008 年以前工业增长、土地财政与地区经济增长（可持续）</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autoid-26" class="tocfigure" >
+<span class="sectionnumber">13.2</span>&#x2003;2008 年后软预算约束与地区经济增长（不可持续）</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autoid-27" class="tocfigure" >
+<span class="sectionnumber">13.3</span>&#x2003; 城乡建设用地增减挂钩政策示意图 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autoid-32" class="tocfigure" >
+<span class="sectionnumber">15.1</span>&#x2003; 美国困境社区指数（按 districts 划分）</a>
+</p>
+</nav>
+<!--
+...... chapter 表格索引......
+-->
+<h3 id="autosec-530">表格索引</h3>
+<a id="main-autopage-530"></a>
+
+
+
+
+<nav class="lot">
+
+<p>
+<a href="4.html#autoid-16" class="toctable" >
+<span class="sectionnumber">2.1</span>&#x2003;1990-2014 年中国城市贫民窟人口比例及数量 </a>
+</p>
+
+
+
+<p>
+<a href="6.html#autoid-17" class="toctable" >
+<span class="sectionnumber">4.1</span>&#x2003;20 世纪死于战争、屠杀和压迫的人数统计表 </a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-20" class="toctable" >
+<span class="sectionnumber">12.1</span>&#x2003;1978–2023 城乡年人均可支配收入差距（当年价格）</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autoid-21" class="toctable" >
+<span class="sectionnumber">12.2</span>&#x2003; 部分乡镇企业数据 </a>
+</p>
+
+
+
+<p>
+<a href="15.html#autoid-23" class="toctable" >
+<span class="sectionnumber">13.1</span>&#x2003;1993–2005 中央与地方财政收入及转移支付规模 </a>
+</p>
+
+
+
+<p>
+<a href="15.html#autoid-24" class="toctable" >
+<span class="sectionnumber">13.2</span>&#x2003; 不同土地出让方式出让土地面积、收入的构成 </a>
+</p>
+
+
+
+<p>
+<a href="15.html#autoid-25" class="toctable" >
+<span class="sectionnumber">13.3</span>&#x2003;2008 年四季度到 2010 年底，4 万亿元投资的重点投向和资金测算 </a>
+</p>
+
+
+
+<p>
+<a href="16.html#autoid-28" class="toctable" >
+<span class="sectionnumber">14.1</span>&#x2003;1988–2021 财政及土地出让收入（单位：亿元）</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autoid-29" class="toctable" >
+<span class="sectionnumber">14.2</span>&#x2003; 中国非金融部门债务 </a>
+</p>
+
+
+
+<p>
+<a href="16.html#autoid-30" class="toctable" >
+<span class="sectionnumber">14.3</span>&#x2003; 全球债务总额（占 GDP 百分比，加权平均数）</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autoid-30" class="toctable" >
+<span class="sectionnumber">14.4</span>&#x2003; 全球公共债务（占 GDP 百分比，加权平均数）</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autoid-30" class="toctable" >
+<span class="sectionnumber">14.5</span>&#x2003; 全球私人债务（占 GDP 百分比，加权平均数）</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autoid-31" class="toctable" >
+<span class="sectionnumber">14.6</span>&#x2003; 全球财富不平等趋势 </a>
+</p>
+</nav>
+<!--
+...... chapter 参考文献......
+-->
+<h3 id="autosec-531">参考文献</h3>
+<a id="main-autopage-531"></a>
+
+
+
+<ul class="list" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">[1]</span> <a id="LWR-ht-cite.0@unandchina"></a>孟繁瑜, 刘红海. 城市化过程中的贫民窟问题[J/OL]. 中国城市报, 2015(07)(2015-07-06). <a
+href="http://paper.people.com.cn/zgcsb/html/2015-07/06/content_1584683.htm" target="_blank" >http://paper.people.com.cn/zgcsb/html/2015-07/06/content_1584683.htm</a> (引用页: <a href="4.html#main-autopage-43">2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[2]</span> <a id="LWR-ht-cite.0@9789211327083"></a>UN-HABITAT. World Cities Report 2016: Urbanization and Development - Emerging Futures[M]. United Nations, 2016 (引用页: <a
+href="4.html#main-autopage-44">2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[3]</span> <a id="LWR-ht-cite.0@maenwen3"></a>马克思 卡, 恩格斯 弗. 马克思恩格斯文集: 第三卷[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 2009 (引用页: <a
+href="5.html#main-autopage-60">3.1</a>, <a href="11.html#main-autopage-163">9.2</a>, <a href="11.html#main-autopage-191">9.8.2</a>, <a href="13.html#main-autopage-228">11.2.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[4]</span> <a id="LWR-ht-cite.0@zhuzhaiwenti"></a>臧峰宇. 恩格斯《论住宅问题》研究读本[M]. 北京: 中央编译出版社, 2014 (引用页: <a href="5.html#main-autopage-60">3.1</a>, <a
+href="9.html#main-autopage-123">7.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[5]</span> <a id="LWR-ht-cite.0@zhangxiaoyi"></a>张笑夷. 列斐伏尔空间批判理论研究[M]. 社会科学文献出版社, 2014 (引用页: <a href="5.html#main-autopage-61">3.2</a>, <a
+href="11.html#main-autopage-190">9.8.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[6]</span> <a id="LWR-ht-cite.0@harvey2012rebel"></a>HARVEY D. Rebel cities: From the right to the city to the urban revolution[M]. Verso books, 2012 (引用页: <a href="5.html#main-autopage-63">3.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[7]</span> <a id="LWR-ht-cite.0@renquanwiki"></a>人权[EB/OL]. <a href="https://zh.wikipedia.org/wiki/%E4%BA%BA%E6%9D%83" target="_blank"
+>https://zh.wikipedia.org/wiki/%E4%BA%BA%E6%9D%83</a> (引用页: <a href="6.html#main-autopage-71"> 四</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[8]</span> <a id="LWR-ht-cite.0@kandaijiangli"></a>如何看待北京医生辞职去阿富汗参加无国界医生？[EB/OL]. <a href="https://www.zhihu.com/question/53835987" target="_blank"
+>https://www.zhihu.com/question/53835987</a> (引用页: <a href="6.html#main-autopage-73">4.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[9]</span> <a id="LWR-ht-cite.0@jiangli"></a>丽水市教育局. 《朗读者》首期特邀嘉宾蒋励[EB/OL]. <a href="http://www.sohu.com/a/127492681_387142" target="_blank"
+>http://www.sohu.com/a/127492681_387142</a> (引用页: <a href="6.html#main-autopage-73">4.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[10]</span> <a id="LWR-ht-cite.0@yousheng"></a>邱仁宗. 一本医学家、遗传学家、决策者和立法者必读的书: 读《从“安乐死”到最终解决》[J]. 医学与哲学, 2002, 23(5): 61-63 (引用页: <a
+href="6.html#main-autopage-74">4.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[11]</span> <a id="LWR-ht-cite.0@mattwhite"></a>WHITE M. Necrometrics: Death Tolls across history[EB/OL]. <a href="http://necrometrics.com/all20c.htm" target="_blank"
+>http://necrometrics.com/all20c.htm</a> (引用页: <a href="6.html#main-autopage-77">4.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[12]</span> <a id="LWR-ht-cite.0@renxiangshi"></a>易江波. 人相食”：中国史中的一个固有表述及其法理[J]. 人大法律评论, 2015, 2 (引用页: <a href="6.html#main-autopage-80">4.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[13]</span> <a id="LWR-ht-cite.0@9787500415480"></a>郑麒来. 中国古代的食人: 人吃人行为透视[M]. 北京: 中国社会科学出版社, 1994 (引用页: <a href="6.html#main-autopage-80">4.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[14]</span> <a id="LWR-ht-cite.0@guojilaogongshijian"></a>丁赛尔. 国际劳工实践标准将对我国企业构成潜在威胁[N]. 2011-11-18(003) (引用页: <a href="7.html#main-autopage-86">5.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[15]</span> <a id="LWR-ht-cite.0@fushikangzuixin"></a>” 新生代”ilabour 课题组. 富士康最新工资、工时与生产管理调研[J]. 政治经济学报, 2015, 4: 97-132 (引用页: <a href="7.html#main-autopage-86">5.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[16]</span> <a id="LWR-ht-cite.0@huaweimaiduan"></a>中国网. 华为买断工龄终辟谣专家指其行为“双输”[EB/OL]. (2007-11-08). <a href="http://www.china.com.cn/tech/txt/2007-11/08/content_9196708.htm"
+target="_blank" >http://www.china.com.cn/tech/txt/2007-11/08/content_9196708.htm</a> (引用页: <a href="7.html#main-autopage-87">5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[17]</span> <a id="LWR-ht-cite.0@huaweifendou"></a>瞭望东方周刊. 华为：“自愿”的奋斗者协议[EB/OL]. (2010-09-21). <a href="http://focus.news.163.com/10/0921/15/6H460OOP00011SM9.html" target="_blank"
+>http://focus.news.163.com/10/0921/15/6H460OOP00011SM9.html</a> (引用页: <a href="7.html#main-autopage-87">5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[18]</span> <a id="LWR-ht-cite.0@tai58"></a>钛媒体. 58 同城要实行“996 工作制”了，姚劲波微博正被员工攻陷[EB/OL]. 钛媒体. (2016-09-02). <a href="http://www.tmtpost.com/2453930.html" target="_blank"
+>http://www.tmtpost.com/2453930.html</a> (引用页: <a href="7.html#main-autopage-87">5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[19]</span> <a id="LWR-ht-cite.0@zuihen"></a>滴滴北京. 滴滴大数据｜ 2016 年最“狠”公司大揭秘[EB/OL]. 滴滴北京. 2016. <a
+href="https://mp.weixin.qq.com/s?__biz=MzI3NjAyODM0NQ==&amp;mid=2650506049&amp;idx=2&amp;sn=38698a2abe64348969f064704c62ae02" target="_blank"
+>https://mp.weixin.qq.com/s?__biz=MzI3NjAyODM0NQ==&amp;mid=2650506049&amp;idx=2&amp;sn=38698a2abe64348969f064704c62ae02</a> (引用页: <a href="7.html#main-autopage-87">5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[20]</span> <a id="LWR-ht-cite.0@britishworkday"></a>陈日华. 19 世纪英国对工厂制度的规制: 实践与立法[J]. 贵州社会科学, 2014 (引用页: <a href="7.html#main-autopage-88">5.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[21]</span> <a id="LWR-ht-cite.0@capital"></a>马克思 卡. 资本论: 第一卷[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 2004 (引用页: <a href="7.html#main-autopage-88">5.3</a>, <a
+href="7.html#main-autopage-90">5.4</a>, <a href="7.html#main-autopage-92">5.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[22]</span> <a id="LWR-ht-cite.0@capital3"></a>马克思 卡. 资本论: 第三卷[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 2004 (引用页: <a href="7.html#main-autopage-90">5.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[23]</span> <a id="LWR-ht-cite.0@foxconnwiki"></a>Foxconn[EB/OL]. Wikipidea. <a href="https://en.wikipedia.org/wiki/Foxconn" target="_blank" >https://en.wikipedia.org/wiki/Foxconn</a> (引用
+页: <a href="7.html#main-autopage-92">5.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[24]</span> <a id="LWR-ht-cite.0@roosevelt"></a>刘绪贻. 罗斯福新政与凯恩斯主义[J]. 美国研究, 1991(1): 70-92 (引用页: <a href="8.html#main-autopage-98"> 六</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[25]</span> <a id="LWR-ht-cite.0@bijiao202002"></a>王小鲁. 美国大萧条与新政再思考[J]. 比较, 2020(2) (引用页: <a href="8.html#main-autopage-98"> 六</a>, <a href="8.html#main-autopage-100"> 六</a>, <a
+href="8.html#main-autopage-101">6.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[26]</span> <a id="LWR-ht-cite.0@JJFX200100010"></a>张世明. 经济法学的经济学基础探讨[J]. 经济法学评论, 2001, 1: 349-389 (引用页: <a href="8.html#main-autopage-98"> 六</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[27]</span> <a id="LWR-ht-cite.0@lenin29"></a>列宁. 列宁全集: 第 29 卷[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 人民出版社, 2017 (引用页: <a href="8.html#main-autopage-104">6.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[28]</span> <a id="LWR-ht-cite.0@jahan2014keynesian"></a>JAHAN S, MAHMUD A S, PAPAGEORGIOU C. What is Keynesian economics[J]. International Monetary Fund, 2014, 51(3): 53-54 (引用页: <a
+href="8.html#main-autopage-107">6.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[29]</span> <a id="LWR-ht-cite.0@newneo"></a>李小科. 澄清被混用的“新自由主义”                                                       , 2006(01): 56-62 (引用页: <a
+                                                                                       : 兼谈对 New Liberalism 和 Neo-Liberalism 的翻译[J]. 复旦学报（社会科学版）
+href="8.html#main-autopage-110">6.3</a>, <a href="9.html#main-autopage-120">7.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[30]</span> <a id="LWR-ht-cite.0@neoxuepai"></a>林光彬, 张蔚. 新自由主义研究综述与研究新思路[J]. 教学与研究, 2005(05): 55-62 (引用页: <a href="9.html#main-autopage-116">7.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[31]</span> <a id="LWR-ht-cite.0@davidneoliber"></a>哈维 大. 新自由主义简史[M]. 王钦, 译. 上海: 上海译文出版社, 2016 (引用页: <a href="9.html#main-autopage-118">7.2</a>-<a
+href="9.html#main-autopage-121">7.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[32]</span> <a id="LWR-ht-cite.0@chrisharmanneo1"></a>哈曼 克. 对新自由主义理论研究的反思（上）[J]. 国外理论动态, 2008(09): 6-12 (引用页: <a href="9.html#main-autopage-122">7.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[33]</span> <a id="LWR-ht-cite.0@chrisharmanneo2"></a>哈曼 克. 对新自由主义理论研究的反思（下）[J]. 国外理论动态, 2008(10): 27-32 (引用页: <a href="9.html#main-autopage-122">7.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[34]</span> <a id="LWR-ht-cite.0@karlvol46a"></a>马克思 卡, 恩格斯 弗. 马克思恩格斯全集: 第 46 卷上册[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 1979 (引用页: <a
+href="11.html#main-autopage-162">9.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[35]</span> <a id="LWR-ht-cite.0@hegelyuanli"></a>黑格尔. 法哲学原理[M]. 范扬, 张企泰, 译. 北京: 商务印书馆, 1979 (引用页: <a href="11.html#main-autopage-162">9.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[36]</span> <a id="LWR-ht-cite.0@maenwen1"></a>马克思 卡, 恩格斯 弗. 马克思恩格斯文集: 第一卷[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 2009 (引用页: <a
+href="11.html#main-autopage-163">9.2</a>, <a href="16.html#main-autopage-499">14.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[37]</span> <a id="LWR-ht-cite.0@wendeerban"></a>文德尔班. 哲学史教程[M]. 罗达仁, 译. 北京: 商务印书馆, 2013 (引用页: <a href="11.html#main-autopage-164">9.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[38]</span> <a id="LWR-ht-cite.0@mamincui"></a>刘建国, 马龙闪. 马克思的预言与俄国村社的历史命运: 对马克思与民粹派通信的解读[J]. 2011(05): 26-29 (引用页: <a href="11.html#main-autopage-164">9.2</a>, <a
+href="11.html#main-autopage-170">9.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[39]</span> <a id="LWR-ht-cite.0@lijingdugang"></a>李静. 杜冈-巴拉诺夫斯基的经济周期理论及其影响[D]. 云南: 云南大学, 2011 (引用页: <a href="11.html#main-autopage-166">9.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[40]</span> <a id="LWR-ht-cite.0@mazhengshi"></a>HOWARD M C, KING J E. A history of Marxian economics: 1883-1929[M]. New Jersey: Princeton University Press, 1989 (引用页: <a
+href="11.html#main-autopage-167">9.3</a>, <a href="11.html#main-autopage-169">9.4</a>, <a href="11.html#main-autopage-170">9.4</a>, <a href="11.html#main-autopage-173">9.5</a>, <a href="11.html#main-autopage-187">9.8.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[41]</span> <a id="LWR-ht-cite.0@bigrussia"></a>沈志华. 一个大国的崛起与崩溃: 苏联历史专题研究（1917-1991）[M]. 北京: 社会科学文献出版社, 2009 (引用页: <a href="11.html#main-autopage-169">9.4</a>, <a
+href="11.html#main-autopage-171">9.4</a>, <a href="11.html#main-autopage-177">9.5</a>, <a href="11.html#main-autopage-183">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[42]</span> <a id="LWR-ht-cite.0@shibaizhuyi"></a>王游. 第一次世界大战期间列宁和普列汉诺夫关于护国主义问题的论战[EB/OL]. 中国俄欧亚研究网. (2014-07-15). <a
+href="http://euroasia.cssn.cn/cbw/cbw_wzsf/201407/t20140715_1781855.shtml" target="_blank" >http://euroasia.cssn.cn/cbw/cbw_wzsf/201407/t20140715_1781855.shtml</a> (引用页: <a href="11.html#main-autopage-171">9.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[43]</span> <a id="LWR-ht-cite.0@lenin42"></a>列宁. 列宁全集: 第 42 卷[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 人民出版社, 1985 (引用页: <a href="11.html#main-autopage-176">9.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[44]</span> <a id="LWR-ht-cite.0@leninlunshe"></a>列宁. 列宁专题文集: 论社会主义[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 人民出版社, 2009 (引用页: <a href="11.html#main-autopage-176">9.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[45]</span> <a id="LWR-ht-cite.0@yanyongfeinep"></a>闫永飞. 苏联社会主义过渡时期的新经济政策[M]. 北京: 社会科学文献出版社, 2017 (引用页: <a href="11.html#main-autopage-179">9.6</a>, <a
+href="11.html#main-autopage-180">9.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[46]</span> <a id="LWR-ht-cite.0@wenyilubiao"></a>闻一. “路标转换派”回俄后的命运[EB/OL]. (2016-08-26). <a href="http://cul.qq.com/a/20160826/005126.htm" target="_blank"
+>http://cul.qq.com/a/20160826/005126.htm</a> (引用页: <a href="11.html#main-autopage-179">9.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[47]</span> <a id="LWR-ht-cite.0@jueyi2"></a>中共中央马克思恩格斯列宁斯大林著作编译局. 苏联共产党代表大会、代表会议和中央全会决议汇编: 第二分册[M]. 北京: 人民出版社, 1964 (引用页: <a
+href="11.html#main-autopage-179">9.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[48]</span> <a id="LWR-ht-cite.0@buhalinwen1"></a>布哈林. 布哈林文选: 上册[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 1981 (引用页: <a href="11.html#main-autopage-180">9.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[49]</span> <a id="LWR-ht-cite.0@buhalinwen2"></a>布哈林. 布哈林文选: 中册[M]. 中共中央马克思恩格斯列宁斯大林著作编译局, 译. 北京: 人民出版社, 1981 (引用页: <a href="11.html#main-autopage-180">9.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[50]</span> <a id="LWR-ht-cite.0@stalin11"></a>布哈林. 斯大林全集: 第 11 卷[M]. 苏共中央马克思恩格斯列宁斯大林研究院, 译. 北京: 人民出版社, 1955 (引用页: <a href="11.html#main-autopage-181">9.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[51]</span> <a id="LWR-ht-cite.0@xulongbinsu"></a>徐隆彬. 对苏联全盘集体化时期富农迁移问题的历史考察[J]. 俄罗斯东欧中亚研究, 2014(06): 67-78 (引用页: <a href="11.html#main-autopage-182">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[52]</span> <a id="LWR-ht-cite.0@wukelanjihuang"></a>李燕. 乌克兰“大饥荒”：不仅是个历史真相问题: 兼析历史问题的政治化[J]. 当代世界社会主义问题, 2012(01): 69-77 (引用页: <a
+href="11.html#main-autopage-182">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[53]</span> <a id="LWR-ht-cite.0@mazhengshi2"></a>霍华德 M C, KING J E. 马克思主义经济学史: 1929-1990[M]. 顾海良, 张新, 译. 北京: 中央编译出版社, 2003 (引用页: <a
+href="11.html#main-autopage-183">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[54]</span> <a id="LWR-ht-cite.0@jueyi4"></a>中共中央马克思恩格斯列宁斯大林著作编译局. 苏联共产党代表大会、代表会议和中央全会决议汇编: 第四分册[M]. 北京: 人民出版社, 1957 (引用页: <a
+href="11.html#main-autopage-183">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[55]</span> <a id="LWR-ht-cite.0@huanglifunep"></a>黄立茀. 新经济政策时期的苏联社会[M]. 北京: 社会科学文献出版社, 2012 (引用页: <a href="11.html#main-autopage-183">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[56]</span> <a id="LWR-ht-cite.0@wuenyuanzhengbian"></a>吴恩远. 苏联“大清洗”问题争辩的症结及意义[J]. 历史研究, 2006(06): 167-179 (引用页: <a href="11.html#main-autopage-183">9.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[57]</span> <a id="LWR-ht-cite.0@chenxintianamerica"></a>陈新田. 列宁“美国式道路”思想述论[J]. 社会科学论坛, 2005(06): 4-6 (引用页: <a href="11.html#main-autopage-186">9.8.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[58]</span> <a id="LWR-ht-cite.0@xingcun"></a>亨利・列斐伏尔. 资本主义的幸存[M]. 米兰, 译. 上海社会科学院出版社, 2024 (引用页: <a href="11.html#main-autopage-190">9.8.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[59]</span> <a id="LWR-ht-cite.0@yiliaoshi"></a>王晓玲. 中国医疗市场政府管制的历史演进及制度反思[J]. 中国经济史研究, 2012(03): 113-119 (引用页: <a href="13.html#main-autopage-207">11.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[60]</span> <a id="LWR-ht-cite.0@boyibo"></a>薄一波. 若干重大决策与事件的回顾（上下）[M]. 北京: 中共党史出版社, 2008 (引用页: <a href="13.html#main-autopage-210">11.1</a>, <a
+href="13.html#main-autopage-211">11.1</a>, <a href="13.html#main-autopage-223">11.2.3</a>, <a href="13.html#main-autopage-225">11.2.4</a>, <a href="13.html#main-autopage-234">11.2.5</a>, <a
+href="14.html#main-autopage-273">12.5.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[61]</span> <a id="LWR-ht-cite.0@sanjiaozhou"></a>黄宗智. 长江三角洲小农家庭与乡村发展[M]. 北京: 中华书局, 1992 (引用页: <a href="13.html#main-autopage-211">11.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[62]</span> <a id="LWR-ht-cite.0@shiyiwu"></a>鄢一龙, 胡鞍钢. 中国十一个五年计划实施情况回顾[J]. 清华大学学报（哲学社会科学版）
+                                                                                                                   , 2012, 27(4): 35-45+158 (引用页: <a
+href="13.html#main-autopage-212">11.1</a>, <a href="13.html#main-autopage-225">11.2.4</a>, <a href="14.html#main-autopage-269">12.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[63]</span> <a id="LWR-ht-cite.0@DZSY201701010"></a>胡安全. 中共八届三中全会与经济体制改进[J]. 当代中国史研究, 2017, 24: 41-49+126 (引用页: <a href="13.html#main-autopage-215">11.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[64]</span> <a id="LWR-ht-cite.0@yangdi"></a>周飞舟, 谭飞智. 当代中国的中央地方关系[M]. 中国社会科学出版社, 2014 (引用页: <a href="13.html#main-autopage-215">11.2.1</a>, <a
+href="13.html#main-autopage-216">11.2.1</a>, <a href="14.html#main-autopage-342">12.9.2</a>, <a href="14.html#main-autopage-344">12.9.2</a>, <a href="15.html#main-autopage-393">13.2.1</a>, <a
+href="15.html#main-autopage-402">13.2.2</a>, <a href="15.html#main-autopage-435">13.3.5</a>, <a href="15.html#main-autopage-445">13.3.7</a>, <a href="15.html#main-autopage-460">13.3.8</a>, <a
+href="15.html#main-autopage-462">13.3.8</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[65]</span> <a id="LWR-ht-cite.0@zhililuoji"></a>周雪光. 中国国家治理的制度逻辑: 一个组织学研究[M]. 生活·读书·新知三联书店, 2017 (引用页: <a href="13.html#main-autopage-216">11.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[66]</span> <a id="LWR-ht-cite.0@DZSY202204015"></a>刘晓泉, 吴焱军. 新中国中央和地方财政关系探析（1949—1959 年）[J]. 当代中国史研究, 2022, 29: 105-119+158-159 (引用页: <a
+href="13.html#main-autopage-218">11.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[67]</span> <a id="LWR-ht-cite.0@wenbaci"></a>温铁军. 八次危机: 中国的真实经验 1949–2009[J]. 2013 (引用页: <a href="13.html#main-autopage-219">11.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[68]</span> <a id="LWR-ht-cite.0@zhangfandang"></a>宋霖. 张恺帆“反党联盟”案考辨[J]. 党史研究与教学, 2000(05): 12-20 (引用页: <a href="13.html#main-autopage-232">11.2.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[69]</span> <a id="LWR-ht-cite.0@zhang1959"></a>宋霖. 张恺帆在 1959 年[J]. 炎黄春秋, 2012(08): 65-71 (引用页: <a href="13.html#main-autopage-232">11.2.5</a>, <a
+href="13.html#main-autopage-233">11.2.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[70]</span> <a id="LWR-ht-cite.0@anhuiliushi"></a>陈者香. 安徽六十年代的“”责任田与七十年代的“大包干”[J]. 百年潮, 2010(12): 55-59 (引用页: <a href="13.html#main-autopage-233">11.2.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[71]</span> <a id="LWR-ht-cite.0@zhangkaifanhuiyi"></a>张恺帆. 张恺帆回忆录[M]. Ed. by 宋霖. With a comment. by 宋霖, 刘思祥. 安徽人民出版社, 2004 (引用页: <a
+href="13.html#main-autopage-235">11.2.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[72]</span> <a id="LWR-ht-cite.0@anhuishengzhi"></a>安徽省地方志编纂委员会. 安徽省志·人口志[M]. 合肥: 安徽人民出版社, 1995 (引用页: <a href="13.html#main-autopage-235">11.2.5</a>, <a
+href="13.html#main-autopage-236">11.2.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[73]</span> <a id="LWR-ht-cite.0@zaihuangchayixing"></a>姚宏志. 1959～1961 年安徽灾荒的差异性分析[J]. 党史研究与教学, 2013(02): 37-41 (引用页: <a href="13.html#main-autopage-236">11.2.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[74]</span> <a id="LWR-ht-cite.0@quxiaohuji"></a>邓敬雷. 取消户籍制度，推动全面改革[EB/OL]. 中国改革论坛. (2015-05-10). <a
+href="http://www.chinareform.org.cn/society/huji/Report/201303/t20130325_163484.htm" target="_blank" >http://www.chinareform.org.cn/society/huji/Report/201303/t20130325_163484.htm</a> (引用页: <a
+href="13.html#main-autopage-239">11.2.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[75]</span> <a id="LWR-ht-cite.0@jingjianzhigong"></a>李若建. 困难时期的精简职工与下放城镇居民[J]. 社会学研究, 2001(06): 31-42 (引用页: <a href="13.html#main-autopage-240">11.2.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[76]</span> <a id="LWR-ht-cite.0@chenyunjihua"></a>朱佳木. 谈谈陈云对计划与市场关系问题的思考[J]. 党的文献, 2000: 8-20 (引用页: <a href="14.html#main-autopage-254">12.2</a>, <a
+href="14.html#main-autopage-266">12.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[77]</span> <a id="LWR-ht-cite.0@yangyuejin"></a>王传东. “洋跃进”问题探析[D]. 中共中央党校, 2009 (引用页: <a href="14.html#main-autopage-265">12.4</a>, <a href="14.html#main-autopage-266">12.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[78]</span> <a id="LWR-ht-cite.0@gaigelicheng"></a>赵紫阳. 改革历程: 完整录音还原历史[M]. 香港: 新世纪出版社, 2009 (引用页: <a href="14.html#main-autopage-268">12.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[79]</span> <a id="LWR-ht-cite.0@taochangsheng"></a>陶昌盛. 中国粮食定价机制研究[D]. 复旦大学, 2004 (引用页: <a href="14.html#main-autopage-274">12.5.1</a>, <a
+href="14.html#main-autopage-292">12.5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[80]</span> <a id="LWR-ht-cite.0@liangshi40"></a>胡小平, 范传棋, 高洪洋. 改革开放 40 年中国粮食价格调控的回顾与展望[J]. 四川师范大学学报（社会科学版）
+                                                                                                                                   , 2018, 45: 23-29 (引用页: <a
+href="14.html#main-autopage-276">12.5.2</a>, <a href="14.html#main-autopage-277">12.5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[81]</span> <a id="LWR-ht-cite.0@shuangguizhi"></a>王德文, 黄季焜. 中国粮食流通体制改革: 双轨过渡与双轨终结[J]. 改革, 2001: 99-106 (引用页: <a href="14.html#main-autopage-277">12.5.2</a>, <a
+href="15.html#main-autopage-380">13.1.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[82]</span> <a id="LWR-ht-cite.0@lumaisg"></a>卢迈. 实行“保量保价”的双轨制: 我国粮食购销体制改革的目标模式[J]. 改革, 1997: 54-57 (引用页: <a href="14.html#main-autopage-277">12.5.2</a>, <a
+href="15.html#main-autopage-369">13.1.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[83]</span> <a id="LWR-ht-cite.0@wangxiandai"></a>汪晖. 当代中国的思想状况与现代性问题[J]. 文艺争鸣, 1998(06): 6-21 (引用页: <a href="14.html#main-autopage-306">12.5.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[84]</span> <a id="LWR-ht-cite.0@laodongzhiduyuanfang"></a>袁方. 中国就业问题和劳动制度改革[J]. 社会学研究, 1992: 1-5 (引用页: <a href="14.html#main-autopage-318">12.7.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[85]</span> <a id="LWR-ht-cite.0@fengyunshi1b"></a>张曙光. 中国经济学风云史: 经济研究所 60 年（上卷（II））[M]. 新加坡: 八方文化创作室, 2017 (引用页: <a href="14.html#main-autopage-319">12.7.4</a>, <a
+href="14.html#main-autopage-323">12.7.5</a>, <a href="14.html#main-autopage-327">12.7.5</a>, <a href="14.html#main-autopage-328">12.7.5</a>, <a href="14.html#main-autopage-333">12.8.2</a>-<a
+href="14.html#main-autopage-335">12.8.2</a>, <a href="14.html#main-autopage-337">12.8.2</a>, <a href="15.html#main-autopage-394">13.2.1</a>, <a href="15.html#main-autopage-395">13.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[86]</span> <a id="LWR-ht-cite.0@wangqiangshehui"></a>汪强. 论我国社会主义市场经济[D]. 中共中央党校, 2012 (引用页: <a href="14.html#main-autopage-321">12.7.5</a>, <a
+href="14.html#main-autopage-337">12.8.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[87]</span> <a id="LWR-ht-cite.0@yangshuanggui"></a>杨继绳. 价格改革: 经济改革中的一步险棋[J]. 炎黄春秋, 2009: 18-23 (引用页: <a href="14.html#main-autopage-321">12.7.5</a>, <a
+href="14.html#main-autopage-326">12.7.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[88]</span> <a id="LWR-ht-cite.0@yaoyang"></a>姚洋. 作为一种分配正义原则的帕累托改进[J]. 学术月刊, 2016: 44-54 (引用页: <a href="14.html#main-autopage-326">12.7.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+                                                                                               : 实践的可行性和内在的保守性[J]. 学术月刊, 2011: 82-90 (引用页: <a href="14.html#main-autopage-326">12.7.5</a>).
+<span class="listmarker">[89]</span> <a id="LWR-ht-cite.0@zhufuqiang"></a>朱富强. 帕累托改进原则能否应用于社会改革？
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[90]</span> <a id="LWR-ht-cite.0@songguiwu"></a>宋圭武. “帕累托最优”质疑[J]. 甘肃理论学刊, 2008: 67-69 (引用页: <a href="14.html#main-autopage-326">12.7.5</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[91]</span> <a id="LWR-ht-cite.0@huilvshi"></a>杨帆. 人民币汇率制度历史研究[J]. 中国经济史研究, 2005: 59-64 (引用页: <a href="14.html#main-autopage-332">12.8.2</a>, <a
+href="14.html#main-autopage-337">12.8.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[92]</span> <a id="LWR-ht-cite.0@guantaohuigai"></a>管涛. 四次人民币汇改的经验与启示[J]. 金融论坛, 2017: 3-8+18 (引用页: <a href="14.html#main-autopage-337">12.8.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[93]</span> <a id="LWR-ht-cite.0@huilv70binggui"></a>邵宇, 陈达飞. 流动性经济学｜人民币汇率 70 年：汇率并轨的始末与纠结[EB/OL]. 澎湃新闻·澎湃商学院. 2019. <a
+href="https://www.thepaper.cn/newsDetail_forward_4033359" target="_blank" >https://www.thepaper.cn/newsDetail_forward_4033359</a> (引用页: <a href="14.html#main-autopage-337">12.8.2</a>, <a
+href="14.html#main-autopage-338">12.8.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[94]</span> <a id="LWR-ht-cite.0@dajueqi"></a>赵燕菁. 大崛起: 中国经济的增长与转型[M]. 中国人民大学出版社, 2023 (引用页: <a href="14.html#main-autopage-338">12.8.2</a>, <a
+href="14.html#main-autopage-356">12.10</a>, <a href="15.html#main-autopage-430">13.3.4</a>, <a href="16.html#main-autopage-501">14.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[95]</span> <a id="LWR-ht-cite.0@cai40"></a>刘尚希. 财政改革四十年的深层逻辑[N/OL]. 经济日报, 2018-09-20(14). <a href="http://views.ce.cn/view/ent/201809/20/t20180920_30347369.shtml" target="_blank"
+>http://views.ce.cn/view/ent/201809/20/t20180920_30347369.shtml</a> (引用页: <a href="14.html#main-autopage-341">12.9.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[96]</span> <a id="LWR-ht-cite.0@bogaidai30"></a>中国工业信息网. 改革开放三十年纪事：试行“拨改贷”[EB/OL]. 中国改革信息库. (2008-09-16). <a href="http://www.reformdata.org/2008/0916/23089.shtml"
+target="_blank" >http://www.reformdata.org/2008/0916/23089.shtml</a> (引用页: <a href="14.html#main-autopage-341">12.9.1</a>, <a href="14.html#main-autopage-352">12.9.4</a>, <a href="14.html#main-autopage-353">12.9.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[97]</span> <a id="LWR-ht-cite.0@majuncaigai"></a>马骏. 中央与地方财政关系的改革[J]. 当代中国研究, 1995 (引用页: <a href="14.html#main-autopage-348">12.9.3</a>, <a
+href="15.html#main-autopage-392">13.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[98]</span> <a id="LWR-ht-cite.0@bogaidaizhaizhuangu"></a>董志凯. 由“拨改贷”到“债转股”
+                                                                                                   : 经济转型中企业投融资方式的变迁 (1978—2015)[J]. 中国经济史研究, 2016(03): 5-15 (引用页: <a
+href="14.html#main-autopage-353">12.9.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[99]</span> <a id="LWR-ht-cite.0@guoyoujinrong"></a>林毅夫, 李志赟. 中国的国有企业与金融体制改革[J]. 经济学, 2005: 913-936 (引用页: <a href="14.html#main-autopage-353">12.9.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[100]</span> <a id="LWR-ht-cite.0@lufengsanci"></a>卢锋. 三次粮食过剩（1984-1998）: 我国粮食流通政策演变的备择解释[R]. 讨论稿. 北京大学中国经济研究中心, 1999 (引用页: <a
+href="15.html#main-autopage-370">13.1.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[101]</span> <a id="LWR-ht-cite.0@6cibodong"></a>温铁军. 中国 50 年来 6 次粮食供求波动分析[J]. 山东省农业管理干部学院学报, 2001: 7-9 (引用页: <a href="15.html#main-autopage-371">13.1.1</a>).
+</p>
+
+
+</li>
+<li>
+<p>
+<span class="listmarker">[102]</span> <a id="LWR-ht-cite.0@wangxiaoluliangshi"></a>王小鲁. 中国粮食市场的波动与政府干预[J]. 经济学（季刊）
+                                                                                                                 , 2001, 1(1): 171-192 (引用页: <a href="15.html#main-autopage-376">13.1.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[103]</span> <a id="LWR-ht-cite.0@caobaoming01"></a>曹宝明. 中国粮食流通市场化改革进程分析[J]. 江苏社会科学, 2001: 23-30 (引用页: <a href="15.html#main-autopage-379">13.1.3</a>, <a
+href="15.html#main-autopage-384">13.1.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[104]</span> <a id="LWR-ht-cite.0@zhuchangkai"></a>魏赤娅, 孙杰. 坚定不移地推进粮食流通体制改革[N]. 科技与经济画报, 1998 (引用页: <a href="15.html#main-autopage-381">13.1.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[105]</span> <a id="LWR-ht-cite.0@dacailianggai"></a>邓大才. 粮改 30 年：农民、市场与国家的博弈与利益重构[EB/OL]. 中国改革论坛. (2015-03-19). <a
+href="http://www.chinareform.org.cn/Economy/Agriculture/Practice/201503/t20150320_220991.htm" target="_blank" >http://www.chinareform.org.cn/Economy/Agriculture/Practice/201503/t20150320_220991.htm</a> (引用页: <a
+href="15.html#main-autopage-386">13.1.3</a>, <a href="15.html#main-autopage-390">13.1.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[106]</span> <a id="LWR-ht-cite.0@zhishenshinei"></a>兰小欢. 置身事内：中国政府与经济发展[M]. 上海人民出版社, 2021 (引用页: <a href="15.html#main-autopage-393">13.2.1</a>, <a
+href="15.html#main-autopage-413">13.2.2</a>, <a href="15.html#main-autopage-414">13.2.2</a>, <a href="15.html#main-autopage-445">13.3.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[107]</span> <a id="LWR-ht-cite.0@difangmeiqian"></a>江大桥. 我们地方没钱: 分税制改革下中央与地方的博弈[EB/OL]. 格隆汇. <a href="https://www.gelonghui.com/p/173177" target="_blank"
+>https://www.gelonghui.com/p/173177</a> (引用页: <a href="15.html#main-autopage-393">13.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[108]</span> <a id="LWR-ht-cite.0@eryuancaizheng"></a>曾晟. 中国经济转型中的二元财政结构研究[D]. 华中科技大学, 2005 (引用页: <a href="15.html#main-autopage-397">13.2.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[109]</span> <a id="LWR-ht-cite.0@xianxiangfenshui"></a>贾康, 白景明. 县乡财政解困与财政体制创新: 经济改革中的一步险棋[J]. 经济研究, 2002: 3-9 (引用页: <a href="15.html#main-autopage-400">13.2.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[110]</span> <a id="LWR-ht-cite.0@CJZK201802012"></a>王振霞. 中国住房制度改革 40 年: 回顾与反思[J]. 财经智库, 2018, 3: 128-136+144. DOI: <a href="https://doi.org/10.20032/j.cnki.cn10-1359/f.2018.02.012"
+target="_blank" >10.20032/j.cnki.cn10-1359/f.2018.02.012</a> (引用页: <a href="15.html#main-autopage-424">13.3.2</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[111]</span> <a id="LWR-ht-cite.0@ZDJJ200804009"></a>张清勇. 纵向财政竞争、讨价还价与中央——地方的土地收入分成——对 20 世纪 80 年代以来土地收入的考察[J]. 制度经济学研究, 2008: 107-127 (引用页: <a
+href="15.html#main-autopage-427">13.3.3</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[112]</span> <a id="LWR-ht-cite.0@2011feiteng"></a>袁一泓. 从沸腾到癫狂: 泡沫背后的中国房地产真相[M]. 山西经济出版社, 2011 (引用页: <a href="15.html#main-autopage-436">13.3.5</a>, <a
+href="15.html#main-autopage-438">13.3.6</a>, <a href="15.html#main-autopage-444">13.3.7</a>, <a href="15.html#main-autopage-448">13.3.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[113]</span> <a id="LWR-ht-cite.0@mingyizhanghu"></a>杨俊. 全面认识养老保险改革中的名义账户制度[N]. 人民日报, 2015-03-02 (引用页: <a href="15.html#main-autopage-441">13.3.6</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[114]</span> <a id="LWR-ht-cite.0@fanjianyong"></a>范剑勇. 四万亿如何改变了中国经济增长动力[EB/OL]. 复旦大学经济学院. (2018-11-16). <a href="https://econ.fudan.edu.cn/info/1024/3148.htm"
+target="_blank" >https://econ.fudan.edu.cn/info/1024/3148.htm</a> (引用页: <a href="15.html#main-autopage-449">13.3.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[115]</span> <a id="LWR-ht-cite.0@wangzhejiang"></a>汪晖, 陶然. 论土地发展权转移与交易的“浙江模式”——制度起源, 操作模式及其重要含义[J]. 管理世界, 2009(8): 39-52 (引用页: <a
+href="15.html#main-autopage-457">13.3.8</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[116]</span> <a id="LWR-ht-cite.0@zengjianzongshu"></a>黄瑾, 陈红霞. 城乡建设用地增减挂钩政策评价——基于文献综述[J]. 中国国土资源经济, 2021 (引用页: <a href="15.html#main-autopage-462">13.3.8</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[117]</span> <a id="LWR-ht-cite.0@wxljintian"></a>王小鲁. 土地财政的昨天、今天和明天[EB/OL]. 爱思想. 2022. <a href="https://www.aisixiang.com/data/138457.html" target="_blank"
+>https://www.aisixiang.com/data/138457.html</a> (引用页: <a href="16.html#main-autopage-473">14.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[118]</span> <a id="LWR-ht-cite.0@piepenburg2022gold"></a>PIEPENBURG M, von GREYERZ E. Gold Matters: Real Solutions to Surreal Risks[M/OL]. Egon von Greyerz &amp; Matthew Piepenburg, 2022.
+<a href="https://books.google.co.jp/books?id=GuwozwEACAAJ" target="_blank" >https://books.google.co.jp/books?id=GuwozwEACAAJ</a> (引用页: <a href="16.html#main-autopage-494">14.6</a>, <a
+href="17.html#main-autopage-527">15.4</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[119]</span> <a id="LWR-ht-cite.0@ZXYJ201404002"></a>张文喜. 所有制与所有权正义: 马克思与“亚当·斯密问题”[J]. 哲学研究, 2014(4): 11-18 (引用页: <a href="16.html#main-autopage-499">14.7</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[120]</span> <a id="LWR-ht-cite.0@JJDK201504024"></a>沃夫冈・斯特里克. 资本主义将如何终结?[J]. 经济导刊, 2015: 84-92 (引用页: <a href="17.html#main-autopage-511">15.1</a>).
+</p>
+
+
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">[121]</span> <a id="LWR-ht-cite.0@streeck2017will"></a>STREECK W. How will capitalism end?: Essays on a failing system[M]. Verso Books, 2017 (引用页: <a href="17.html#main-autopage-511">15.1</a>, <a
+href="17.html#main-autopage-527">15.4</a>).
+</p>
+</li>
+</ul>
+
+<a id="main-autofile-last"></a>
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>

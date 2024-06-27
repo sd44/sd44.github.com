@@ -1,0 +1,5113 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—再论土地金融及个别经济概念 </title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-463"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... chapter 再论土地金融及个别经济概念......
+-->
+<h3 id="autosec-465"><span class="sectionnumber">第十四章&nbsp;&#x2003;</span>再论土地金融及个别经济概念</h3>
+<a id="main-autopage-465"></a>
+<a id="main-autofile-16"></a>
+
+<p>
+近 30 年来，土地金融如此深刻地影响了全国全民，并且下一步改革重点似乎还会是土地，土地已和国运紧密相联。笔者认为有必要在前文基础上，再做总结和展望。
+</p>
+
+<figure id="autoid-28" class="table ">
+<div class="center">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td rowspan="3" class="tdc" style="vertical-align:middle"> 年份 </td>
+<td colspan="2" class="tdc">GDP</td>
+<td colspan="4" class="tdc"> 土地出让收入 </td>
+<td colspan="3" class="tdc"> 财政收入 </td>
+</tr>
+
+
+<tr>
+<td class="tdc tdrulel"> 当年价格 </td>
+<td class="tdc tdruler">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdc"> 较上年 </td>
+</tr>
+
+
+<tr>
+<td class="tdc"> 增长 </td>
+</tr>
+</table>
+
+</td>
+<td class="tdc tdrulel"> 收入 </td>
+<td class="tdc tdrule">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdc"> 较上年 </td>
+</tr>
+
+
+<tr>
+<td class="tdc"> 增长 </td>
+</tr>
+</table>
+
+</td>
+<td class="tdc tdrule">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdc"> 占比 </td>
+</tr>
+
+
+<tr>
+<td class="tdc">GDP</td>
+</tr>
+</table>
+
+</td>
+<td class="tdc tdruler">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdc"> 占比地方 </td>
+</tr>
+
+
+<tr>
+<td class="tdc"> 财政收入 </td>
+</tr>
+</table>
+
+</td>
+<td class="tdc tdrulel"> 全国 </td>
+<td class="tdc tdrule"> 中央 </td>
+<td class="tdc tdruler"> 地方 </td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdc">1988</td>
+<td class="tdc">15180</td>
+<td class="tdc">15180</td>
+<td class="tdc">4.16</td>
+<td class="tdc">24.69%</td>
+<td class="tdc">0.03%</td>
+<td class="tdc">0.26%</td>
+<td class="tdc">2357</td>
+<td class="tdc">775</td>
+<td class="tdc">1582</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1989</td>
+<td class="tdc">17180</td>
+<td class="tdc">13.17%</td>
+<td class="tdc">4.47</td>
+<td class="tdc">7.45%</td>
+<td class="tdc">0.03%</td>
+<td class="tdc">0.24%</td>
+<td class="tdc">2665</td>
+<td class="tdc">823</td>
+<td class="tdc">1842</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1990</td>
+<td class="tdc">18873</td>
+<td class="tdc">9.86%</td>
+<td class="tdc">10.52</td>
+<td class="tdc">135.35%</td>
+<td class="tdc">0.06%</td>
+<td class="tdc">0.54%</td>
+<td class="tdc">2937</td>
+<td class="tdc">992</td>
+<td class="tdc">1945</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1991</td>
+<td class="tdc">22006</td>
+<td class="tdc">16.60%</td>
+<td class="tdc">11.37</td>
+<td class="tdc">8.08%</td>
+<td class="tdc">0.05%</td>
+<td class="tdc">0.51%</td>
+<td class="tdc">3149</td>
+<td class="tdc">938</td>
+<td class="tdc">2211</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1992</td>
+<td class="tdc">27195</td>
+<td class="tdc">23.58%</td>
+<td class="tdc">525</td>
+<td class="tdc">4517.41%</td>
+<td class="tdc">1.93%</td>
+<td class="tdc">20.97%</td>
+<td class="tdc">3483</td>
+<td class="tdc">980</td>
+<td class="tdc">2504</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1993</td>
+<td class="tdc">35673</td>
+<td class="tdc">31.18%</td>
+<td class="tdc">558</td>
+<td class="tdc">6.25%</td>
+<td class="tdc">1.56%</td>
+<td class="tdc">16.45%</td>
+<td class="tdc">4349</td>
+<td class="tdc">958</td>
+<td class="tdc">3391</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1994</td>
+<td class="tdc">48638</td>
+<td class="tdc">36.34%</td>
+<td class="tdc">639</td>
+<td class="tdc">14.56%</td>
+<td class="tdc">1.31%</td>
+<td class="tdc">27.64%</td>
+<td class="tdc">5218</td>
+<td class="tdc">2907</td>
+<td class="tdc">2312</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1995</td>
+<td class="tdc">61340</td>
+<td class="tdc">26.12%</td>
+<td class="tdc">388</td>
+<td class="tdc">-39.33%</td>
+<td class="tdc">0.63%</td>
+<td class="tdc">12.99%</td>
+<td class="tdc">6242</td>
+<td class="tdc">3257</td>
+<td class="tdc">2986</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1996</td>
+<td class="tdc">71814</td>
+<td class="tdc">17.07%</td>
+<td class="tdc">349</td>
+<td class="tdc">-9.96%</td>
+<td class="tdc">0.49%</td>
+<td class="tdc">9.32%</td>
+<td class="tdc">7408</td>
+<td class="tdc">3661</td>
+<td class="tdc">3747</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1997</td>
+<td class="tdc">79715</td>
+<td class="tdc">11.00%</td>
+<td class="tdc">462</td>
+<td class="tdc">32.37%</td>
+<td class="tdc">0.58%</td>
+<td class="tdc">10.44%</td>
+<td class="tdc">8651</td>
+<td class="tdc">4227</td>
+<td class="tdc">4424</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1998</td>
+<td class="tdc">85196</td>
+<td class="tdc">6.88%</td>
+<td class="tdc">508</td>
+<td class="tdc">9.87%</td>
+<td class="tdc">0.60%</td>
+<td class="tdc">10.19%</td>
+<td class="tdc">9876</td>
+<td class="tdc">4892</td>
+<td class="tdc">4984</td>
+</tr>
+
+
+<tr>
+<td class="tdc">1999</td>
+<td class="tdc">90564</td>
+<td class="tdc">6.30%</td>
+<td class="tdc">514</td>
+<td class="tdc">1.31%</td>
+<td class="tdc">0.57%</td>
+<td class="tdc">9.19%</td>
+<td class="tdc">11444</td>
+<td class="tdc">5849</td>
+<td class="tdc">5595</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2000</td>
+<td class="tdc">100280</td>
+<td class="tdc">10.73%</td>
+<td class="tdc">596</td>
+<td class="tdc">15.80%</td>
+<td class="tdc">0.59%</td>
+<td class="tdc">9.30%</td>
+<td class="tdc">13395</td>
+<td class="tdc">6989</td>
+<td class="tdc">6406</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2001</td>
+<td class="tdc">110863</td>
+<td class="tdc">10.55%</td>
+<td class="tdc">1296</td>
+<td class="tdc">117.58%</td>
+<td class="tdc">1.17%</td>
+<td class="tdc">16.61%</td>
+<td class="tdc">16386</td>
+<td class="tdc">8583</td>
+<td class="tdc">7803</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2002</td>
+<td class="tdc">121717</td>
+<td class="tdc">9.79%</td>
+<td class="tdc">2417</td>
+<td class="tdc">86.50%</td>
+<td class="tdc">1.99%</td>
+<td class="tdc">28.38%</td>
+<td class="tdc">18904</td>
+<td class="tdc">10389</td>
+<td class="tdc">8515</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2003</td>
+<td class="tdc">137422</td>
+<td class="tdc">12.90%</td>
+<td class="tdc">5421</td>
+<td class="tdc">124.32%</td>
+<td class="tdc">3.95%</td>
+<td class="tdc">55.04%</td>
+<td class="tdc">21715</td>
+<td class="tdc">11865</td>
+<td class="tdc">9850</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2004</td>
+<td class="tdc">161840</td>
+<td class="tdc">17.77%</td>
+<td class="tdc">6412</td>
+<td class="tdc">18.28%</td>
+<td class="tdc">3.96%</td>
+<td class="tdc">53.91%</td>
+<td class="tdc">26396</td>
+<td class="tdc">14503</td>
+<td class="tdc">11893</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2005</td>
+<td class="tdc">187319</td>
+<td class="tdc">15.74%</td>
+<td class="tdc">5884</td>
+<td class="tdc">-8.24%</td>
+<td class="tdc">3.14%</td>
+<td class="tdc">38.96%</td>
+<td class="tdc">31649</td>
+<td class="tdc">16549</td>
+<td class="tdc">15101</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2006</td>
+<td class="tdc">219439</td>
+<td class="tdc">17.15%</td>
+<td class="tdc">8078</td>
+<td class="tdc">37.29%</td>
+<td class="tdc">3.68%</td>
+<td class="tdc">44.13%</td>
+<td class="tdc">38760</td>
+<td class="tdc">20457</td>
+<td class="tdc">18304</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2007</td>
+<td class="tdc">270092</td>
+<td class="tdc">23.08%</td>
+<td class="tdc">12217</td>
+<td class="tdc">51.24%</td>
+<td class="tdc">4.52%</td>
+<td class="tdc">51.83%</td>
+<td class="tdc">51322</td>
+<td class="tdc">27749</td>
+<td class="tdc">23573</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2008</td>
+<td class="tdc">319245</td>
+<td class="tdc">18.20%</td>
+<td class="tdc">10260</td>
+<td class="tdc">-16.02%</td>
+<td class="tdc">3.21%</td>
+<td class="tdc">35.81%</td>
+<td class="tdc">61330</td>
+<td class="tdc">32681</td>
+<td class="tdc">28650</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2009</td>
+<td class="tdc">348518</td>
+<td class="tdc">9.17%</td>
+<td class="tdc">17180</td>
+<td class="tdc">67.45%</td>
+<td class="tdc">4.93%</td>
+<td class="tdc">52.69%</td>
+<td class="tdc">68518</td>
+<td class="tdc">35916</td>
+<td class="tdc">32603</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2010</td>
+<td class="tdc">412119</td>
+<td class="tdc">18.25%</td>
+<td class="tdc">27464</td>
+<td class="tdc">59.87%</td>
+<td class="tdc">6.66%</td>
+<td class="tdc">67.62%</td>
+<td class="tdc">83102</td>
+<td class="tdc">42488</td>
+<td class="tdc">40613</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2011</td>
+<td class="tdc">487940</td>
+<td class="tdc">18.40%</td>
+<td class="tdc">32126</td>
+<td class="tdc">16.97%</td>
+<td class="tdc">6.58%</td>
+<td class="tdc">61.14%</td>
+<td class="tdc">103874</td>
+<td class="tdc">51327</td>
+<td class="tdc">52547</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2012</td>
+<td class="tdc">538580</td>
+<td class="tdc">10.38%</td>
+<td class="tdc">28042</td>
+<td class="tdc">-12.71%</td>
+<td class="tdc">5.21%</td>
+<td class="tdc">45.91%</td>
+<td class="tdc">117254</td>
+<td class="tdc">56175</td>
+<td class="tdc">61078</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2013</td>
+<td class="tdc">592963</td>
+<td class="tdc">10.10%</td>
+<td class="tdc">43745</td>
+<td class="tdc">56.00%</td>
+<td class="tdc">7.38%</td>
+<td class="tdc">63.39%</td>
+<td class="tdc">129210</td>
+<td class="tdc">60198</td>
+<td class="tdc">69011</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2014</td>
+<td class="tdc">643563</td>
+<td class="tdc">8.53%</td>
+<td class="tdc">34377</td>
+<td class="tdc">-21.41%</td>
+<td class="tdc">5.34%</td>
+<td class="tdc">45.31%</td>
+<td class="tdc">140370</td>
+<td class="tdc">64493</td>
+<td class="tdc">75877</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2015</td>
+<td class="tdc">688858</td>
+<td class="tdc">7.04%</td>
+<td class="tdc">31221</td>
+<td class="tdc">-9.18%</td>
+<td class="tdc">4.53%</td>
+<td class="tdc">37.61%</td>
+<td class="tdc">152269</td>
+<td class="tdc">69267</td>
+<td class="tdc">83002</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2016</td>
+<td class="tdc">746395</td>
+<td class="tdc">8.35%</td>
+<td class="tdc">36462</td>
+<td class="tdc">16.79%</td>
+<td class="tdc">4.89%</td>
+<td class="tdc">41.79%</td>
+<td class="tdc">159605</td>
+<td class="tdc">72366</td>
+<td class="tdc">87239</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2017</td>
+<td class="tdc">832036</td>
+<td class="tdc">11.47%</td>
+<td class="tdc">51984</td>
+<td class="tdc">42.57%</td>
+<td class="tdc">6.25%</td>
+<td class="tdc">56.83%</td>
+<td class="tdc">172593</td>
+<td class="tdc">81123</td>
+<td class="tdc">91469</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2018</td>
+<td class="tdc">919281</td>
+<td class="tdc">10.49%</td>
+<td class="tdc">65096</td>
+<td class="tdc">25.22%</td>
+<td class="tdc">7.08%</td>
+<td class="tdc">66.49%</td>
+<td class="tdc">183360</td>
+<td class="tdc">85456</td>
+<td class="tdc">97903</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2019</td>
+<td class="tdc">986515</td>
+<td class="tdc">7.31%</td>
+<td class="tdc">72581</td>
+<td class="tdc">11.50%</td>
+<td class="tdc">7.36%</td>
+<td class="tdc">71.81%</td>
+<td class="tdc">190390</td>
+<td class="tdc">89309</td>
+<td class="tdc">101081</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2020</td>
+<td class="tdc">1015986</td>
+<td class="tdc">2.99%</td>
+<td class="tdc">84142</td>
+<td class="tdc">15.93%</td>
+<td class="tdc">8.28%</td>
+<td class="tdc">84.02%</td>
+<td class="tdc">182914</td>
+<td class="tdc">82771</td>
+<td class="tdc">100143</td>
+</tr>
+
+
+<tr>
+<td class="tdc">2021</td>
+<td class="tdc">1143670</td>
+<td class="tdc">12.57%</td>
+<td class="tdc">87051</td>
+<td class="tdc">3.46%</td>
+<td class="tdc">7.61%</td>
+<td class="tdc">78.36%</td>
+<td class="tdc">202555</td>
+<td class="tdc">91470</td>
+<td class="tdc">111084</td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+</table>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;14.1：1988–2021 财政及土地出让收入（单位：亿元）
+
+</div>
+
+<a id="tab:19882021"></a>
+
+
+
+<div class="figurecaption">
+
+
+财政收入中不包括国内外债务收入。
+土地出让收入数据，1988-1998 来源于张清勇，1999-2017 来源于《国家土地统计年鉴》，2018-2021 来源于财政部。其余数据来源于国家统计局。
+
+</div>
+
+</div>
+
+</figure>
+<!--
+...... section 王小鲁《土地财政的昨天、今天和明天》......
+-->
+<h4 id="autosec-473"><span class="sectionnumber">14.1&#x2003;</span>王小鲁《土地财政的昨天、今天和明天》</h4>
+<a id="main-autopage-473"></a>
+
+
+
+<p>
+                                                              <sup>[<a href="17.html#LWR-ht-cite.0@wxljintian">117</a>]</sup>。相关历史事件可见本书&nbsp;<a
+关于土地金融的总结，笔者尚未见到比王小鲁论述更为直接和深刻的文章，本节除特殊说明，完全引用王小鲁《土地财政的昨天、今天和明天》
+href="14.html#sec:80tudi">12.10</a>&nbsp; 节、&nbsp;<a href="15.html#sec:92tudi">13.3</a>&nbsp; 节。
+</p>
+
+<p>
+全国土地财政格局迎来了一个大转折。2022 年上半年，全国国有土地出让收入 2.36 万亿元，比上年同期大幅度下降 31%。要判断其原因和未来趋势，需要对土地财政的来龙去脉做一个清晰的梳理。
+</p>
+
+<p>
+一、昨天：土地财政从何而来？
+</p>
+
+<p>
+在旧的计划经济体制下，我国土地不是商品，需要的建设用地由政府从农民手里征用，并进行 <b> 无偿划拨 </b>。
+</p>
+
+<p>
+上世纪 80 年代，少数城市开始尝试 <b> 土地有偿出让 </b> 和 <b> 住房商品化改革 </b>，1990 和 1992 年国务院分别发布了土地出让的暂行条例和暂行管理办法，1993—1994 年开始推行住房商品化改革，土地和住房才开始成为商品。
+</p>
+
+<p>
+但土地交易从一开始并没有按市场原则来设计。地源仍来自政府征收农民的土地，只给很少的补偿（起初按被征土地农作物年产值的三到六倍计算补偿，后有增加，但多数情况下仍然 <b> 严重违背等价交换原则 </b>）。
+</p>
+
+<p>
+政府征收的土地进行初步开发后、通过 <b> 协议方式 </b>（后房地产和商业服务业用地改为“<b> 招拍挂 </b>”方式）有偿出让，<b> 地方政府是唯一的建设用地垄断供应者 </b>。扣除征地补偿和拆迁费用后的土地收入、全部归政府所有。
+</p>
+
+<p>
+按照早期的设计，住房改革实行 <b> 双轨并行 </b> 的体制，为中低收入居民提供 <b> 保障性住房 </b>，为高收入居民提供 <b> 商品住房 </b>。但在实行过程中，地方政府的利益导向使商品房比重越来越大，保障性住房受到挤压。2000 年以后，<b> 商品
+房用地 </b> 的收入越来越成为地方政府重要的收入来源，从此开始了土地财政时期。
+</p>
+
+<p>
+土地财政体制的形成有某种必然性。我国在计划经济体制下，所有资源集中控制在政府手中，企业没有活力，居民收入被压低且增长缓慢。改革之初，为改变这种僵死局面，政府实行了 <b> 大规模的放权让利和其他市场化改革 </b>。此后，企业收入和居民
+收入迅速增长，市场初步形成，经济增长加速、而 <b> 全口径政府收入（起初包括财政预算收入和政府预算外资金收入，后加入土地出让收入和社保基金收入）占 GDP 的比重从 1978 年的 40.2% 直线下降到 1995 年的 15.9%（据国家统计局和财政部数据
+计算）。</b> 在经济逐步走向繁荣的同时，也出现了政府财政困难。<b> 为缓解政府财政资金不足，土地出让收入自然成为地方政府收入的一个补充来源。</b>
+</p>
+
+<p>
+所罗门的魔瓶一旦打开，就很难让其回到瓶子里了。<b> 伴随城市化快速发展，土地收入越来越大，成了地方政府的第二财政。</b>1998 年，全国国有土地出让成交价款约 500 亿元，相当于当年地方财政预算收入的 10%。此后土地出让收入以不可抑制的高
+速度膨胀——2001 年 1300 亿元，接近地方财政收入的 17%；2011 年 3.3 万亿元，相当于地方财政收入的 63%；2021 年 8.7 万亿元，相当于地方财政收入的 78%（均不包括在地方财政预算内）。（具体数据可见笔者整理的表&nbsp;<a
+href="16.html#tab:19882021">14.1</a>&nbsp; <a href="16.html#tab:19882021">1988–2021 财政及土地出让收入（单位：亿元）</a>)
+</p>
+
+<p>
+多年来，它已成为地方政府不可缺少的巨大财源。
+</p>
+
+<p>
+从 2001 到 2021 这 20 年，现价 GDP 年均增长 12.4%，现价全国财政预算收入年均增长 13.4%，而土地出让收入年均增长 23.4%，远超过了经济增长和财政收入增长（据财政部、国土资源部、国家统计局公布数据计算）。
+</p>
+
+<p>
+计算平均地价，2001 年每公顷土地出让收入 143 万元，2011 年为 978 万元，2021 年为 2393 万元。<b>20 年间地价上涨 15.7 倍。</b>
+</p>
+
+<p>
+同期消费价格指数（CPI）只上涨 58%，工业生产者价格指数（PPI）只上涨 38%（据财政部、国土资源部、国家统计局、华经产业研究院数据计算）。
+</p>
+
+<p>
+过高的地价大幅度推高了房价，并改变了国民收入分配格局。由于不包括地价和房价，消费者价格指数（CPI）和生产者价格指数（PPI）已不足以反映真实的通货膨胀率。
+</p>
+
+<p>
+而地价和房价飞速上涨，是几方面影响因素合成的结果。
+</p>
+
+<p>
+从供给侧来说，一个正常因素是 <b> 城市规模经济的溢出效应带来的城市用地和城市周边待开发土地升值。</b>
+</p>
+
+<p>
+从需求侧而言，<b> 城市化快速发展造成的房地产需求上升，而土地资源相对有限，持续拉动了房价和地价上涨。</b>
+</p>
+
+<p>
+第三个因素的作用可能更加突出，即长期以来 <b> 货币增长大幅度快于经济增长，货币超发造成的多余购买力大量流向房地产，造成越买越涨、越涨越买的趋势，成了长期不破的资产泡沫。</b>
+</p>
+
+<p>
+第四个重要影响因素是 <b> 地方政府 </b> 的作用。对地方政府来说，<b> 土地出让收入来得容易，用得方便，监管不严，透明度低，</b> 一方面可以用来搞各种地方政府想搞但没有其他资金来源的投资项目，既包括城市基础设施和其他公共建设，也包括
+政府楼堂馆所等各种自我服务设施，另一方面还可以 <b> 增加包括“三公消费”在内的党政机关行政管理费用。</b>
+</p>
+
+<p>
+<b> 更严重 </b> 的是，<b> 在政府垄断地源的情况下，大量的官商勾结腐败案件都与土地和房地产交易有关，给腐败官员带来了巨额收入，造就了一大批隐性富豪 </b>——在种种利益驱动之下，地方政府可以利用其独占地位，通过控制土地投放量，借“招
+拍挂”尽量抬高地价，以获得最大收益。这也导致政府在资源配置中所占份额不断扩大，挤压了市场配置资源的份额，形成与改革开放前面 20 年的放权让利截然相反的趋势。
+</p>
+
+<p>
+二、今天：土地财政的 4 大负面影响
+</p>
+
+<p>
+由于地价房价不断上涨，土地似乎成了取之不尽用之不竭的财源。<b> 土地财政的基础条件是城市化带来的效率提高，产生了巨大的溢出效应。随着土地资源商品化、资本化，成为巨大的财富源泉，政府的土地收入也确实在过去的经济建设中起了巨大的作
+用，推动了城市建设和基础设施条件快速发展完善，过去 20 年间对保持经济快速增长的作用不可忽视。</b>
+</p>
+
+<p>
+但同时，土地财政体制的 <b> 负面作用 </b> 已经越来越大。
+</p>
+
+<p>
+其一，随着地价不断上涨，推动房价迅速上升，<b> 普通百姓购房、租房负担越来越重。</b>
+</p>
+
+<p>
+2001 年，全国房地产企业的商品住宅平均售价 2017 元/平米，2021 年升至 10396 元/平米，已是原来的 5 倍以上。但这远远没有反映出大城市房价的涨幅。在一线城市，房价涨了几十倍。而此期间，城镇居民人均可支配收入的名义涨幅不到 6 倍。
+</p>
+
+<p>
+北京市四环路到五环路间的房价目前大约在 5–10 万元/平米，2020 年北京市私营企业职工年平均工资 9.06 万元，只够负担 1–2 平米的房价。
+</p>
+
+<p>
+目前大城市有房居民和无房居民的生活冰火两重天，天价住房让外来年轻人望而却步或最终不得不离开。留不住年轻人的城市，未来可能是人口老化、人力资源枯竭的城市。
+</p>
+
+<p>
+其二，<b> 农民合法权益受到侵犯。</b> 宪法规定农村土地为农民集体所有，因此 <b> 农民在符合国家的土地规划用途的条件下、应当有处置属于自己的土地和获得合法收入的权利。城市周边土地大幅度增值，是城市规模经济的溢出效应所致，不应全归农
+民集体或个人，政府有理由通过税收提取土地增值的一个合理部分用于公共目的。</b> 但在现行制度下，如政府以获利为目的，用征地的方式把土地收归国有，独占土地收入，实际是违反宪法的。目前，除一些大城市周边征地有高额补偿，在很多情况下农
+民并未获得足够的补偿。这对农村发展和提高农民的财产收入有严重的不利影响。
+</p>
+
+<p>
+其三，<b> 地价房价的持续畸形上涨扭曲了国民财富分配格局。</b>
+</p>
+
+<p>
+伴随中国几十年来的经济快速发展，居民收入迅速提高，中等收入阶层不断扩大，90 年代的住房改革又把原来的公有住房以低价卖给城镇职工，使他们获得了属于自己的房产。这些本来创造了一个改善收入分配和财富分配、缩小贫富差距的良好条件。
+</p>
+
+<p>
+但过去 20 年，地价房价的过度上涨，在很大程度上打断了这一进程，<b> 实际上形成了对新一代中低收入群体的掠夺 </b>。中年以下的中等收入人群或者背上了沉重的房债，或者成为永久的无房户。房贷和房租大大压缩了他们的消费能力，使他们很多人
+只在名义上属于中等收入阶层，实际生活水平无法提高甚至下降。
+</p>
+
+<p>
+过高的地价和房价还 <b> 推高了商业、服务业和制造业的租金水平，把成本转嫁给各行各业和消费者 </b>，而占人口少数、囤有多套住房的富裕阶层，则可以轻松凭借房价上涨使财富快速升值。因此 <b> 土地财政实际造成了财富的逆向再分配，是导致财
+富占有差距持续扩大和国民经济各行业间苦乐不均的重要原因。</b>
+</p>
+
+<p>
+近年来，全口径政府收入（包括财政预算收入、以土地出让收入为主的政府性基金收入、社保基金收入、国有资本经营收入）和全口径政府支出已分别上升到 GDP 的 35% 左右和 40% 左右，<b> 政府配置资源的程度大体回到了改革前的水平 </b>，其中土
+地出让收入扮演了重要角色。
+</p>
+
+<p>
+<b> 市场配置资源的比重与上世纪 80–90 年代相比、被大大压缩，出现了背离改革大方向的趋势。</b> 这种情况与发达国家政府收入占比高的情况差异很大，后者占比高是因为政府承担了大量公共服务和收入再分配的功能，而我国这样高的占比中很大部分
+是政府直接参与资源配置。
+</p>
+
+<p>
+其四，<b> 地价房价持续上涨和相关的金融扩张导致了越来越大的金融风险。</b>
+</p>
+
+<p>
+2020 年，房地产业创造增加值 7.3 万亿元，占 GDP 的 7%，但 <b> 房地产相关贷款已超过 67 万亿元，占银行贷款总额的 39%，相当于 GDP 的 66%。2020 年我国房地产企业的资产负债率已经高达 80.7%，居民的房贷规模也越来越大
+</b><sup>1</sup>（数据来自国家统计局和郭树清：“完善现代金融监管体系”，2020 年 12 月）。
+</p>
+
+<p>
+<b> 地方政府的高负债也与土地有密切关联。</b> 这样高额的负债还不仅仅是因为 <b> 地价和房价 </b> 越来越高，也是因为 <b> 融资的放大效应 </b>。因为地价不断上涨，变相鼓励了房地产企业用外部融资囤地囤房，地方政府还可以用升值后的土地做
+抵押，借更多的贷款进行新的土地开发和其他投资。<b> 资产泡沫和金融泡沫促使经济继续脱实向虚，对实体经济发展产生挤压作用，并形成了巨大的风险。</b>
+</p>
+
+<p>
+这些越滚越大的债务虽然有价格不断上涨的土地和房屋为抵押，表面上安全，但一旦地价房价由涨转跌，就可能引发坏债连锁反应，引爆金融危机。
+</p>
+
+<p>
+<b> 综上所述，土地财政已经成为一个加剧经济结构失衡和财富分配失衡的因素，土地相关制度亟待改革。</b> 天下没有不散的宴席，今年的土地收入大幅下跌说明，现有的土地财政格局已经维持不下去了。
+</p>
+
+<p>
+三、明天：调整政策，重振改革，化硬着陆为软着陆
+</p>
+
+<p>
+据国家统计局数据，从 1990 年到 2021 年，全国已累计销售新建商品住宅 202 亿平米。房地产企业目前正在施工的房屋面积还有 97 亿多平米，此外，在住房商品化之前和来自非商品房的城镇居民住宅存量估计 90–100 亿平米。待目前施工中的住宅完工后，
+全国城镇住宅城镇居民住宅存量总共将达到 380–390 亿平米。
+</p>
+
+<p>
+按现有城镇人口计算，人均拥有住房面积 41–43 平米（按 42 平米计），已接近发达国家水平，城镇住房建设已经接近饱和。
+</p>
+
+<p>
+假设今后到 2035 年，城镇化率再提高 10 个百分点，达到 75%，城镇人均住房面积从目前的 42 平米提高到 50 平米，城镇充其量还需要新建 150 亿平米住宅。未来 14 年，平均每年只需新建 10.7 亿平米住宅，城镇住房就将完全饱和。
+</p>
+
+<p>
+而过去 3 年，平均每年新开工住宅面积高达 15.9 亿平米。这意味着今后房地产业哪怕只保持现有建设规模不再增长，未来也将出现 <b> 非常严重的住房过剩，每年都会有约 1/3 的新建住房（5 亿平米）卖不出去。相应地，房地产业对土地的需求量也将至少
+下降 1/3（实际下降幅度可能更大，因为房地产企业目前还囤有相当数量的待开发土地），使地方政府的土地收入大幅度缩水。</b>
+</p>
+
+<p>
+据这些情况判断，今年上半年出现的土地出让收入大幅度下降，并非短期波动，很可能代表了土地和房地产市场走势的根本拐点。只是由于今年经济形势不佳，土地需求颓势更加突出。
+</p>
+
+<p>
+在住房和土地需求大幅度下降的情况下，未来经济会发生什么？
+</p>
+
+<p>
+大致会有 <b> 硬着陆 </b> 和 <b> 软着陆 </b> 两种可能。这里先对硬着陆的情况做一些大胆推测。作者希望这只是杞人忧天，推测错误。
+</p>
+
+<p>
+<b> 土地成交可能转向量价齐跌。</b> 地方政府收入大幅度减少，以前那种不计成本、不算回报、寅吃卯粮、大拆大建、为了一时的政绩大手笔投资的格局难以为继，政府消费靠土地收入挥霍、钱权交易靠土地收入大行其道的局面也无法维持。靠政府大规
+模投资拉动经济增长的模式，不再是一个现实选择。
+</p>
+
+<p>
+<b> 地价下降到一定程度，大量以土地为抵押的政府贷款将会成为不良贷款。银行的坏账率会大幅上升。政府债券到期不能兑现的情况可能大量发生。出现较普遍的偿债危机。</b>
+</p>
+
+<p>
+土地收入下降的直接原因是房地产业已进入衰退。今年上半年，房地产业的土地购置面积和土地成交价款分别下降了 48% 和 46%。同期商品住宅销售面积和销售额分别下降 27% 和 32%，意味着房价和销量同步进入下降期。地价下降还有一定的滞后期，但
+估计坚持不下去。房屋销售和房价大幅下降将引发一系列连锁反应，会有相当多的房地产公司倒闭，坏债大量发生。
+</p>
+
+<p>
+房价降到一定程度，一些贷款买房的居民会发现与其继续还贷，还不如 <b> 直接违约，因为市场上的现房可能变得更便宜。</b> 这与当年美国次贷危机的情况相仿，会使银行的处境雪上加霜，坏账进一步增加。政府可以禁止房地产公司降价售房，但房子卖
+不出去，房地产企业倒闭可能更多，对银行的打击可能更大。
+</p>
+
+<p>
+<b> 大银行有政府支持，不会倒闭，但坏债会严重影响资金周转，把影响扩散到实体经济。中小银行将面临严重挑战，对实体经济影响可能更大，可能拖累整体经济进入较长时期的衰退。</b>
+</p>
+
+<p>
+<b> 有些人也许会主张重走大规模货币放水的老路来救经济、拉增长，但可能是一个致命的错误。因为最终需求在消费者一端，没有最终需求回升，大量增加流动性、只会加剧坏债螺旋形攀升。</b>
+</p>
+
+<p>
+上述情况只是一个沙盘推演，作者希望不会发生。现实情况永远比理论推演更复杂多变。
+</p>
+
+<p>
+但一旦发生上述情况，需要有理性的宏观政策应对，同时痛下决心，推进改革。如果应对得当，有可能使硬着陆变成软着陆，可以考虑以下措施。
+</p>
+
+<p>
+<b> 延长还贷，清理坏债，收缩房地产规模，整顿金融，稳定储户，防止挤兑。</b>
+</p>
+
+<p>
+如果发生全面的资金周转困难，货币当局可能需要释放一定量的货币维持资金周转，同时面对企业面临的困难，货币当局可以考虑降息作为一个选项来缓解企业的负担，但同时 <b> 必须坚持货币总量控制，坚决不搞大水漫灌。</b> 利率与货币量的变化之间
+未必是线性负相关关系，不同政策工具的效果可能有很大差异，这方面的问题还有待更深入的研究。
+</p>
+
+<p>
+<b> 财政政策不宜把重点放在扩大政府投资。保护失业者、低收入者和稳住最终需求是当务之急。</b> 强化失业保障，对未被失业保险覆盖的失业者（包括符合常住人口标准的失业外来农民工）进行普遍救济，促进消费需求尽快回升，引领经济回升。
+</p>
+
+<p>
+<b> 政府收购适用的滞销房产，转为廉租房和公租房，并通过政府采购扩大保障性住房建设 </b>；一方面减轻房地产业和银行业受到的冲击，另一方面（更重要的方面））把保障性住房覆盖面扩大到合理水平，分步使保障性住房能够满足城镇低收入和中下
+收入居民的居住需要，应覆盖未取得户籍的城镇常住人口。但整个过程必须公开透明、建立规范，防止幕后交易、私相授受。
+</p>
+
+<p>
+改革土地制度，政府征地仅限于公益性和必须的基础设施建设，并参照市场地价予以补偿。符合土地利用规划的商业性土地需求通过市场满足，不必通过政府征地。允许集体建设用地直接入市。允许农户闲置宅基地在不违反土地规划用途的条件下进行使用
+权的有偿转让，取消对需求方身份的限制。
+</p>
+
+<p>
+<b> 改革土地增值税制度，</b> 政府对土地交易中的大幅度增值部分征收适当比例的土地增值税，用于补充公共服务和社会保障资金的不足。
+</p>
+
+<p>
+政府要过紧日子，压缩不必要和不急需的政府支出，转向量入为出的理财观念，把更多的资源留给市场配置，尽量减轻企业负担，帮助企业渡过难关。实现政府职能转变，政府退出竞争性市场活动，转向以提供公共服务为中心任务。
+</p>
+
+<p>
+<b> 多用普惠政策，少用特惠政策 </b>，对民营企业要一碗水端平，鼓励公平竞争，改善营商环境，坚持市场化改革方向。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-474"></a>
+
+<p>
+<sup>1</sup>&nbsp; 笔者注：2020 年个人住房贷款余额 34.44 万亿元，相当于 GDP 的 34%。
+</p>
+
+
+
+</div>
+<!--
+...... section 土地财政还是土地金融？......
+-->
+<h4 id="autosec-475"><span class="sectionnumber">14.2&#x2003;</span>土地财政还是土地金融？</h4>
+<a id="main-autopage-475"></a>
+
+
+
+<p>
+笔者认为相较于土地财政或者“土地、财政、金融三位一体”，还是直称土地金融为好，这更能说明核心本质。
+</p>
+
+<p>
+重引赵燕菁：
+</p>
+<blockquote>
+
+<p>
+（80 年代初）开发和建设深圳的故事显示，并不是只要有经济活动，就会自发形成基础设施；而是要政府先提供基础设施。中国城市化伟大成就背后的重要原因，就是创造性地发展出一套 <b> 将土地作为信用基础 </b> 的制度——“<b> 土地财政 </b>”，
+也正因如此，<b>“土地财政”乃是一种金融活动。将土地收入视作“财政收入”，暴露出传统经济理论对真实世界的错误观察和认识。</b>
+</p>
+
+<p>
+土地肯定“不具有天然的信用”，所有资产的价值都是未来收益的贴现。土地及附着其上的不动产也是如此。<b> 土地的信用来自附着其上的公共服务给土地带来的现金流。</b>
+</p>
+
+<p>
+只有政府提供了重资产（笔者注：企业不愿投入的、耗资巨大、长周期、低回报等难见市场效益的公共服务），其他社会主体才可能以轻资产启动各类商业模式。<b> 城市化就是资本不断聚集的过程 </b>。
+</p>
+</blockquote>
+
+<p>
+自 70 年代末深圳开始实际实施国有土地有偿使用之初，地方就采用了土地入股、利润分成、卖楼花（房屋预售制）等方式（见&nbsp;<a href="14.html#sec:80tudi">12.10</a>&nbsp; 节）
+                                                                                                              ；而在 1992 年海南岛、北海等房地产泡沫时，金融资本成分更是加
+重，批条、图纸、信贷、炒楼花、炒地皮、炒项目，楼还未建，已可层层转手数次，击鼓传花；之后一直延续低价或零低价出让工业用地换取财政收入，再将之用于七通一平等基建；1998–2004 年不计入赤字的长期建设国债 9100 亿，房地产开始作为超发货
+                                               “<b> 从此开发商（消费者）之间为买地而展开竞争，政府（生产者）坐享生产者剩余。土地成为地方政府最主要的资本来源 </b>”
+币蓄水池，并成为中国面对经济危机的固有路径；2004 年招拍挂 8·31 大限抬高土地转让价格，                                                             ；2008 年 4 万亿投资刺激形成
+                                                                                     （见&nbsp;<a href="15.html#sec:92tudi">13.3</a>&nbsp;
+的大量地方融资平台，以地方政府信用背书，以土地作为信用和货币支撑，以债养债，则进入了完全体的土地金融时代，地方政府债务也节节攀升，面临难以偿付、甚至事实上破产的系统性风险。
+节，表&nbsp;<a href="16.html#tab:19882021">14.1</a>&nbsp;）
+</p>
+
+<p>
+赵燕菁对土地金融成就比较肯定：
+</p>
+<blockquote>
+
+<p>
+           ，原因恰恰离不开“土地财政”这种融资模式，这使得 <b> 中国不必借由外部征服，就可以获得原始资本积累所必需的“初始信用”
+中国之所以能“和平崛起”                                                           。高效率的资本生成，缓解了原始资本积累阶段的信用饥渴，确保了中国经济成为开放的和在全球
+化中获利的一方。</b> 因此，即使处于发展水平较低的城市化初始阶段，中国也比其他任何国家更希望维持现有国际经济秩序，更有动力推动经济全球化。“土地财政”的成功，确保了“和平崛起”成为中国模式的内置选项。
+</p>
+</blockquote>
+
+<p>
+但赵其实也知道 <b> 大多数城市的衰退是必然 </b>：
+</p>
+<blockquote>
+
+<p>
+城市发展的衰退与企业经营的失败在原理上是相同的。能够获得资本，完成市政建设的城市很多；<b> 但能创造足够的收益，持续运转下去的城市却很少。</b> 当城市化转入运营阶段，问题的焦点不再是资本的多少，而是经常性收入是否足以覆盖一般性公
+共服务支出。如果无法获得足够的现金流性收入，之前所有的投资就会转变为无法偿还的债务。正如能盖起厂房的企业很多，但能赚钱的企业没几家。<b> 城市的道理相同，能建设起来的城市很多，但能通过运营最终获利的却很少。</b>
+</p>
+</blockquote>
+
+<p>
+不同于美国的股市，中国找到了自己的信用货币之锚——土地金融，吸纳大量超发货币。而中国超发货币之路，至少在上世纪 70 年代末的“洋跃进”就已经开始，可能是学习了美国 70 年代初的做法。但地方土地金融债务所造成的系统性金融风险已经一触
+即发。
+</p>
+<!--
+...... section 地方债务......
+-->
+<h4 id="autosec-479"><span class="sectionnumber">14.3&#x2003;</span>地方债务</h4>
+<a id="main-autopage-479"></a>
+
+
+
+<figure id="autoid-29" class="table ">
+<div class="center">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td class="tdl"></td>
+<td colspan="6" class="tdc"> 单位：万亿元 </td>
+<td colspan="1" class="tdl"></td>
+<td colspan="6" class="tdc"> 与 GDP 的百分比 </td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdc">2018</td>
+<td class="tdc">2019</td>
+<td class="tdc">2020</td>
+<td class="tdc">2021</td>
+<td class="tdc">2022</td>
+<td class="tdc">2023</td>
+<td class="tdc"></td>
+<td class="tdc">2018</td>
+<td class="tdc">2019</td>
+<td class="tdc">2020</td>
+<td class="tdc">2021</td>
+<td class="tdc">2022</td>
+<td class="tdc">2023</td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdl"> 中央政府 </td>
+<td class="tdc">15</td>
+<td class="tdc">17</td>
+<td class="tdc">21</td>
+<td class="tdc">23</td>
+<td class="tdc">26</td>
+<td class="tdc">29</td>
+<td class="tdc"></td>
+<td class="tdc">16</td>
+<td class="tdc">17</td>
+<td class="tdc">20</td>
+<td class="tdc">20</td>
+<td class="tdc">22</td>
+<td class="tdc">23</td>
+<td class="tdl"><div class="cellcolor" style="background:#FFCCC9 " ></div>
+</td>
+<td class="tdl"><div class="cellcolor" style="background:#FD6864 " ></div>
+</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 地方政府 </td>
+<td class="tdc">18</td>
+<td class="tdc">21</td>
+<td class="tdc">26</td>
+<td class="tdc">30</td>
+<td class="tdc">35</td>
+<td class="tdc">40</td>
+<td class="tdc"></td>
+<td class="tdc">20</td>
+<td class="tdc">22</td>
+<td class="tdc">25</td>
+<td class="tdc">27</td>
+<td class="tdc">30</td>
+<td class="tdc">32</td>
+<td rowspan="-2" class="tdl" style="vertical-align:middle"><div class="cellcolor" style="background:#FFCCC9 " >
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdl"> 官方政 </td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 府债务 </td>
+</tr>
+</table>
+
+</td>
+<td class="tdl"><div class="cellcolor" style="background:#FD6864 " ></div>
+</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 地方政府融资平台 (可能）
+                             </td>
+<td class="tdc">35</td>
+<td class="tdc">40</td>
+<td class="tdc">45</td>
+<td class="tdc">50</td>
+<td class="tdc">57</td>
+<td class="tdc">66</td>
+<td class="tdc"></td>
+<td class="tdc">38</td>
+<td class="tdc">40</td>
+<td class="tdc">44</td>
+<td class="tdc">44</td>
+<td class="tdc">48</td>
+<td class="tdc">53</td>
+<td class="tdl"></td>
+<td class="tdl"><div class="cellcolor" style="background:#FD6864 " ></div>
+</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 政府基金<sup>1</sup></td>
+<td class="tdc">6</td>
+<td class="tdc">7</td>
+<td class="tdc">9</td>
+<td class="tdc">12</td>
+<td class="tdc">14</td>
+<td class="tdc">16</td>
+<td class="tdc"></td>
+<td class="tdc">6</td>
+<td class="tdc">7</td>
+<td class="tdc">9</td>
+<td class="tdc">10</td>
+<td class="tdc">12</td>
+<td class="tdc">13</td>
+<td class="tdl"></td>
+<td rowspan="-4" class="tdl" style="vertical-align:middle"><div class="cellcolor" style="background:#FD6864 " >
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdl">IMF</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 增扩 </td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 政府 </td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 债务 </td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 家庭 </td>
+<td class="tdc">48</td>
+<td class="tdc">55</td>
+<td class="tdc">63</td>
+<td class="tdc">71</td>
+<td class="tdc">73</td>
+<td class="tdc">75</td>
+<td class="tdc"></td>
+<td class="tdc">52</td>
+<td class="tdc">56</td>
+<td class="tdc">62</td>
+<td class="tdc">62</td>
+<td class="tdc">61</td>
+<td class="tdc">61</td>
+<td class="tdl"></td>
+<td class="tdl"><div class="cellcolor" style="background:#34CDF9 " ></div>
+</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 企业 (不包括地方政府融资平台)</td>
+<td class="tdc">105</td>
+<td class="tdc">111</td>
+<td class="tdc">121</td>
+<td class="tdc">128</td>
+<td class="tdc">142</td>
+<td class="tdc">153</td>
+<td class="tdc"></td>
+<td class="tdc">115</td>
+<td class="tdc">112</td>
+<td class="tdc">118</td>
+<td class="tdc">113</td>
+<td class="tdc">119</td>
+<td class="tdc">123</td>
+<td class="tdl"></td>
+<td rowspan="-2" class="tdl" style="vertical-align:middle"><div class="cellcolor" style="background:#34CDF9 " >
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr>
+<td class="tdl"> 私人部 </td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 门债务 </td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl"><b> 备忘项 </b></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 合计 </td>
+<td class="tdc">227</td>
+<td class="tdc">252</td>
+<td class="tdc">285</td>
+<td class="tdc">315</td>
+<td class="tdc">348</td>
+<td class="tdc">380</td>
+<td class="tdc"></td>
+<td class="tdc">248</td>
+<td class="tdc">254</td>
+<td class="tdc">278</td>
+<td class="tdc">277</td>
+<td class="tdc">291</td>
+<td class="tdc">306</td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 广义政府债务 </td>
+<td class="tdc">33</td>
+<td class="tdc">38</td>
+<td class="tdc">47</td>
+<td class="tdc">54</td>
+<td class="tdc">62</td>
+<td class="tdc">69</td>
+<td class="tdc"></td>
+<td class="tdc">36</td>
+<td class="tdc">38</td>
+<td class="tdc">45</td>
+<td class="tdc">47</td>
+<td class="tdc">51</td>
+<td class="tdc">56</td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl">IMF 增扩政府债务 </td>
+<td class="tdc">74</td>
+<td class="tdc">85</td>
+<td class="tdc">101</td>
+<td class="tdc">115</td>
+<td class="tdc">132</td>
+<td class="tdc">151</td>
+<td class="tdc"></td>
+<td class="tdc">80</td>
+<td class="tdc">86</td>
+<td class="tdc">98</td>
+<td class="tdc">101</td>
+<td class="tdc">110</td>
+<td class="tdc">122</td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl">IMF 增扩政府债务（仅地方）
+                              </td>
+<td class="tdc">53</td>
+<td class="tdc">61</td>
+<td class="tdc">71</td>
+<td class="tdc">80</td>
+<td class="tdc">92</td>
+<td class="tdc">106</td>
+<td class="tdc"></td>
+<td class="tdc">58</td>
+<td class="tdc">62</td>
+<td class="tdc">69</td>
+<td class="tdc">70</td>
+<td class="tdc">77</td>
+<td class="tdc">85</td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 名义 GDP</td>
+<td class="tdc">92</td>
+<td class="tdc">99</td>
+<td class="tdc">103</td>
+<td class="tdc">114</td>
+<td class="tdc">120</td>
+<td class="tdc">124</td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdl"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+</table>
+
+<p>
+<sup>1</sup> 政府指导基金和专项建设基金（仅包括社会资本部分）。
+</p>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;14.2：中国非金融部门债务
+
+</div>
+
+<a id="tab:chinadebt"></a>
+
+
+
+<div class="figurecaption">
+
+
+来源：CEIC 数据有限公司；Capital IQ；中国财政部；以及 IMF 工作人员的估计。
+
+</div>
+
+</div>
+
+</figure>
+
+<figure id="autoid-30" class="table ">
+<div class="center">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl">1950s</td>
+<td class="tdl">1960s</td>
+<td class="tdl">1968</td>
+<td class="tdl">1970s</td>
+<td class="tdl">1980s</td>
+<td class="tdl">1986</td>
+<td class="tdl">1990s</td>
+<td class="tdl">2000s</td>
+<td class="tdl">2004</td>
+<td class="tdl">2010s</td>
+<td class="tdl">2019</td>
+<td class="tdl">2020</td>
+<td class="tdl">2021</td>
+<td class="tdl">2022</td>
+</tr>
+
+
+<tr class="hline">
+<td colspan="2" class="tdl"><b> 世界 </b></td>
+<td class="tdl"><b>96.8</b></td>
+<td class="tdl"><b>101.5</b></td>
+<td class="tdl"><b>106.4</b></td>
+<td class="tdl"><b>115</b></td>
+<td class="tdl"><b>144.3</b></td>
+<td class="tdl"><b>156.8</b></td>
+<td class="tdl"><b>180.1</b></td>
+<td class="tdl"><b>196.8</b></td>
+<td class="tdl"><b>198.6</b></td>
+<td class="tdl"><b>219.4</b></td>
+<td class="tdl"><b>228.9</b></td>
+<td class="tdl"><b>258</b></td>
+<td class="tdl"><b>248.1</b></td>
+<td class="tdl"><b>238.1</b></td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 发达经济体 </b></td>
+<td class="tdl"><b>110</b></td>
+<td class="tdl"><b>115.4</b></td>
+<td class="tdl"><b>118.9</b></td>
+<td class="tdl"><b>133.6</b></td>
+<td class="tdl"><b>165.4</b></td>
+<td class="tdl"><b>177.1</b></td>
+<td class="tdl"><b>202</b></td>
+<td class="tdl"><b>229.5</b></td>
+<td class="tdl"><b>225.9</b></td>
+<td class="tdl"><b>267.4</b></td>
+<td class="tdl"><b>268.8</b></td>
+<td class="tdl"><b>301.3</b></td>
+<td class="tdl"><b>290.1</b></td>
+<td class="tdl"><b>277.9</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 欧洲地区 </td>
+<td class="tdl">53.5</td>
+<td class="tdl">68.1</td>
+<td class="tdl">70.7</td>
+<td class="tdl">118.5</td>
+<td class="tdl">144.1</td>
+<td class="tdl">147.3</td>
+<td class="tdl">176.5</td>
+<td class="tdl">214.4</td>
+<td class="tdl">208.6</td>
+<td class="tdl">255.1</td>
+<td class="tdl">246.7</td>
+<td class="tdl">273.6</td>
+<td class="tdl">266.8</td>
+<td class="tdl">254.4</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 日本 </td>
+<td class="tdl">13.1</td>
+<td class="tdl">79.7</td>
+<td class="tdl">127.9</td>
+<td class="tdl">157.5</td>
+<td class="tdl">229.5</td>
+<td class="tdl">242.2</td>
+<td class="tdl">296.1</td>
+<td class="tdl">336.7</td>
+<td class="tdl">333.5</td>
+<td class="tdl">386.9</td>
+<td class="tdl">400.9</td>
+<td class="tdl">442.2</td>
+<td class="tdl">439.8</td>
+<td class="tdl">447.4</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 英国 </td>
+<td class="tdl">134</td>
+<td class="tdl">120.5</td>
+<td class="tdl">129</td>
+<td class="tdl">116.7</td>
+<td class="tdl">118.7</td>
+<td class="tdl">125.7</td>
+<td class="tdl">153.1</td>
+<td class="tdl">205.2</td>
+<td class="tdl">197.3</td>
+<td class="tdl">248.5</td>
+<td class="tdl">240.8</td>
+<td class="tdl">279.1</td>
+<td class="tdl">269.3</td>
+<td class="tdl">252.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 美国 </td>
+<td class="tdl">133.5</td>
+<td class="tdl">140.4</td>
+<td class="tdl">138.7</td>
+<td class="tdl">139.8</td>
+<td class="tdl">163.2</td>
+<td class="tdl">176.8</td>
+<td class="tdl">189.1</td>
+<td class="tdl">218.3</td>
+<td class="tdl">217.7</td>
+<td class="tdl">256</td>
+<td class="tdl">260.3</td>
+<td class="tdl">297.4</td>
+<td class="tdl">283.5</td>
+<td class="tdl">273.9</td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 新兴市场经济体 </b></td>
+<td class="tdl"><b>28.2</b></td>
+<td class="tdl"><b>33.1</b></td>
+<td class="tdl"><b>37.8</b></td>
+<td class="tdl"><b>39.5</b></td>
+<td class="tdl"><b>65.5</b></td>
+<td class="tdl"><b>72.6</b></td>
+<td class="tdl"><b>87.2</b></td>
+<td class="tdl"><b>101.6</b></td>
+<td class="tdl"><b>102.7</b></td>
+<td class="tdl"><b>148.5</b></td>
+<td class="tdl"><b>176.8</b></td>
+<td class="tdl"><b>201.2</b></td>
+<td class="tdl"><b>195.3</b></td>
+<td class="tdl"><b>191.2</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 中国 </td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl">71.3</td>
+<td class="tdl">73.4</td>
+<td class="tdl">97.2</td>
+<td class="tdl">137.9</td>
+<td class="tdl">142.4</td>
+<td class="tdl">211.5</td>
+<td class="tdl">246.8</td>
+<td class="tdl">268.8</td>
+<td class="tdl">264.9</td>
+<td class="tdl">272.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 其他 </td>
+<td class="tdl">28.2</td>
+<td class="tdl">33.1</td>
+<td class="tdl">37.8</td>
+<td class="tdl">39.5</td>
+<td class="tdl">65.7</td>
+<td class="tdl">72.5</td>
+<td class="tdl">85.4</td>
+<td class="tdl">91</td>
+<td class="tdl">91.6</td>
+<td class="tdl">110.6</td>
+<td class="tdl">123.1</td>
+<td class="tdl">141.1</td>
+<td class="tdl">131.8</td>
+<td class="tdl">124.2</td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 低收入发展中国家 </b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b>20.2</b></td>
+<td class="tdl"><b>43.6</b></td>
+<td class="tdl"><b>51.5</b></td>
+<td class="tdl"><b>73.7</b></td>
+<td class="tdl"><b>61.9</b></td>
+<td class="tdl"><b>65.3</b></td>
+<td class="tdl"><b>61.9</b></td>
+<td class="tdl"><b>77.3</b></td>
+<td class="tdl"><b>85.3</b></td>
+<td class="tdl"><b>87.4</b></td>
+<td class="tdl"><b>87.8</b></td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+</table>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;14.3：全球债务总额（占 GDP 百分比，加权平均数）
+
+</div>
+
+<a id="tab:totaldebt"></a>
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl">1950s</td>
+<td class="tdl">1960s</td>
+<td class="tdl">1968</td>
+<td class="tdl">1970s</td>
+<td class="tdl">1980s</td>
+<td class="tdl">1986</td>
+<td class="tdl">1990s</td>
+<td class="tdl">2000s</td>
+<td class="tdl">2004</td>
+<td class="tdl">2010s</td>
+<td class="tdl">2019</td>
+<td class="tdl">2020</td>
+<td class="tdl">2021</td>
+<td class="tdl">2022</td>
+</tr>
+
+
+<tr class="hline">
+<td colspan="2" class="tdl"><b> 世界 </b></td>
+<td class="tdl"><b>56.2</b></td>
+<td class="tdl"><b>39.8</b></td>
+<td class="tdl"><b>36.3</b></td>
+<td class="tdl"><b>33.1</b></td>
+<td class="tdl"><b>47.6</b></td>
+<td class="tdl"><b>54.3</b></td>
+<td class="tdl"><b>62</b></td>
+<td class="tdl"><b>66.5</b></td>
+<td class="tdl"><b>69.8</b></td>
+<td class="tdl"><b>81</b></td>
+<td class="tdl"><b>84.9</b></td>
+<td class="tdl"><b>100.4</b></td>
+<td class="tdl"><b>96</b></td>
+<td class="tdl"><b>92</b></td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 发达经济体 </b></td>
+<td class="tdl"><b>64</b></td>
+<td class="tdl"><b>44.3</b></td>
+<td class="tdl"><b>39.5</b></td>
+<td class="tdl"><b>36.1</b></td>
+<td class="tdl"><b>50.7</b></td>
+<td class="tdl"><b>57.5</b></td>
+<td class="tdl"><b>66.4</b></td>
+<td class="tdl"><b>75.3</b></td>
+<td class="tdl"><b>76.8</b></td>
+<td class="tdl"><b>104.6</b></td>
+<td class="tdl"><b>105.4</b></td>
+<td class="tdl"><b>124.4</b></td>
+<td class="tdl"><b>118.7</b></td>
+<td class="tdl"><b>113.5</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 欧洲地区 </td>
+<td class="tdl">32.5</td>
+<td class="tdl">24.7</td>
+<td class="tdl">25</td>
+<td class="tdl">27.7</td>
+<td class="tdl">47</td>
+<td class="tdl">52.1</td>
+<td class="tdl">67</td>
+<td class="tdl">69.9</td>
+<td class="tdl">69.7</td>
+<td class="tdl">90.9</td>
+<td class="tdl">85.9</td>
+<td class="tdl">99.2</td>
+<td class="tdl">97.3</td>
+<td class="tdl">93.2</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 日本 </td>
+<td class="tdl">13.1</td>
+<td class="tdl">10.1</td>
+<td class="tdl">11.8</td>
+<td class="tdl">23.4</td>
+<td class="tdl">64.3</td>
+<td class="tdl">74</td>
+<td class="tdl">89</td>
+<td class="tdl">166.6</td>
+<td class="tdl">169.5</td>
+<td class="tdl">227.5</td>
+<td class="tdl">236.4</td>
+<td class="tdl">258.7</td>
+<td class="tdl">255.4</td>
+<td class="tdl">261.3</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 英国 </td>
+<td class="tdl">134</td>
+<td class="tdl">81.5</td>
+<td class="tdl">70.9</td>
+<td class="tdl">57.5</td>
+<td class="tdl">40.3</td>
+<td class="tdl">41</td>
+<td class="tdl">38.1</td>
+<td class="tdl">42.6</td>
+<td class="tdl">39.8</td>
+<td class="tdl">84.7</td>
+<td class="tdl">85.5</td>
+<td class="tdl">105.6</td>
+<td class="tdl">105.9</td>
+<td class="tdl">101.4</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 美国 </td>
+<td class="tdl">69.7</td>
+<td class="tdl">54.4</td>
+<td class="tdl">48.7</td>
+<td class="tdl">43.6</td>
+<td class="tdl">51.6</td>
+<td class="tdl">57.7</td>
+<td class="tdl">66.3</td>
+<td class="tdl">64.1</td>
+<td class="tdl">66.1</td>
+<td class="tdl">104.1</td>
+<td class="tdl">108.7</td>
+<td class="tdl">133.5</td>
+<td class="tdl">126.4</td>
+<td class="tdl">121.4</td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 新兴市场经济体 </b></td>
+<td class="tdl"><b>15.5</b></td>
+<td class="tdl"><b>18.8</b></td>
+<td class="tdl"><b>20.6</b></td>
+<td class="tdl"><b>21.4</b></td>
+<td class="tdl"><b>35.6</b></td>
+<td class="tdl"><b>40.2</b></td>
+<td class="tdl"><b>41.5</b></td>
+<td class="tdl"><b>40.9</b></td>
+<td class="tdl"><b>44.1</b></td>
+<td class="tdl"><b>44.3</b></td>
+<td class="tdl"><b>55.7</b></td>
+<td class="tdl"><b>65.8</b></td>
+<td class="tdl"><b>64.8</b></td>
+<td class="tdl"><b>65.2</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 中国 </td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl">21.2</td>
+<td class="tdl">26.9</td>
+<td class="tdl">26.4</td>
+<td class="tdl">44.3</td>
+<td class="tdl">60.4</td>
+<td class="tdl">70.1</td>
+<td class="tdl">71.8</td>
+<td class="tdl">77.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 其他 </td>
+<td class="tdl">15.5</td>
+<td class="tdl">18.8</td>
+<td class="tdl">20.6</td>
+<td class="tdl">21.4</td>
+<td class="tdl">38.6</td>
+<td class="tdl">45.8</td>
+<td class="tdl">46.3</td>
+<td class="tdl">44.7</td>
+<td class="tdl">49</td>
+<td class="tdl">44</td>
+<td class="tdl">52</td>
+<td class="tdl">61.9</td>
+<td class="tdl">58.4</td>
+<td class="tdl">55.3</td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 低收入发展中国家 </b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b>15.6</b></td>
+<td class="tdl"><b>36.2</b></td>
+<td class="tdl"><b>43.2</b></td>
+<td class="tdl"><b>64.8</b></td>
+<td class="tdl"><b>45.8</b></td>
+<td class="tdl"><b>51.2</b></td>
+<td class="tdl"><b>34.8</b></td>
+<td class="tdl"><b>42.9</b></td>
+<td class="tdl"><b>48.5</b></td>
+<td class="tdl"><b>48.5</b></td>
+<td class="tdl"><b>48.4</b></td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+</table>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;14.4：全球公共债务（占 GDP 百分比，加权平均数）
+
+</div>
+
+<a id="tab:publicdebt"></a>
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl">1950s</td>
+<td class="tdl">1960s</td>
+<td class="tdl">1968</td>
+<td class="tdl">1970s</td>
+<td class="tdl">1980s</td>
+<td class="tdl">1986</td>
+<td class="tdl">1990s</td>
+<td class="tdl">2000s</td>
+<td class="tdl">2004</td>
+<td class="tdl">2010s</td>
+<td class="tdl">2019</td>
+<td class="tdl">2020</td>
+<td class="tdl">2021</td>
+<td class="tdl">2022</td>
+</tr>
+
+
+<tr class="hline">
+<td colspan="2" class="tdl"><b> 世界 </b></td>
+<td class="tdl"><b>40.6</b></td>
+<td class="tdl"><b>61.7</b></td>
+<td class="tdl"><b>70</b></td>
+<td class="tdl"><b>81.9</b></td>
+<td class="tdl"><b>96.7</b></td>
+<td class="tdl"><b>102.5</b></td>
+<td class="tdl"><b>118.1</b></td>
+<td class="tdl"><b>130.3</b></td>
+<td class="tdl"><b>128.8</b></td>
+<td class="tdl"><b>138.3</b></td>
+<td class="tdl"><b>144</b></td>
+<td class="tdl"><b>157.6</b></td>
+<td class="tdl"><b>152.1</b></td>
+<td class="tdl"><b>145.7</b></td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 发达经济体 </b></td>
+<td class="tdl"><b>46</b></td>
+<td class="tdl"><b>71.1</b></td>
+<td class="tdl"><b>79.4</b></td>
+<td class="tdl"><b>97.5</b></td>
+<td class="tdl"><b>114.6</b></td>
+<td class="tdl"><b>119.6</b></td>
+<td class="tdl"><b>135.6</b></td>
+<td class="tdl"><b>154.1</b></td>
+<td class="tdl"><b>149.1</b></td>
+<td class="tdl"><b>162.7</b></td>
+<td class="tdl"><b>163.4</b></td>
+<td class="tdl"><b>177</b></td>
+<td class="tdl"><b>171.4</b></td>
+<td class="tdl"><b>164.4</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 欧洲地区 </td>
+<td class="tdl">21</td>
+<td class="tdl">43.3</td>
+<td class="tdl">45.7</td>
+<td class="tdl">90.7</td>
+<td class="tdl">97</td>
+<td class="tdl">95.2</td>
+<td class="tdl">109.5</td>
+<td class="tdl">144.5</td>
+<td class="tdl">138.9</td>
+<td class="tdl">164.2</td>
+<td class="tdl">160.7</td>
+<td class="tdl">174.4</td>
+<td class="tdl">169.4</td>
+<td class="tdl">161.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 日本 </td>
+<td class="tdl"></td>
+<td class="tdl">116.1</td>
+<td class="tdl">116.1</td>
+<td class="tdl">134.1</td>
+<td class="tdl">165.2</td>
+<td class="tdl">168.2</td>
+<td class="tdl">207.1</td>
+<td class="tdl">170.1</td>
+<td class="tdl">164</td>
+<td class="tdl">159.4</td>
+<td class="tdl">164.5</td>
+<td class="tdl">183.5</td>
+<td class="tdl">184.4</td>
+<td class="tdl">186.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 英国 </td>
+<td class="tdl"></td>
+<td class="tdl">55.6</td>
+<td class="tdl">58.1</td>
+<td class="tdl">59.1</td>
+<td class="tdl">78.3</td>
+<td class="tdl">84.6</td>
+<td class="tdl">115</td>
+<td class="tdl">162.5</td>
+<td class="tdl">157.5</td>
+<td class="tdl">163.8</td>
+<td class="tdl">155.3</td>
+<td class="tdl">173.5</td>
+<td class="tdl">163.4</td>
+<td class="tdl">150.8</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 美国 </td>
+<td class="tdl">63.8</td>
+<td class="tdl">86</td>
+<td class="tdl">90</td>
+<td class="tdl">96.1</td>
+<td class="tdl">111.6</td>
+<td class="tdl">119.2</td>
+<td class="tdl">122.8</td>
+<td class="tdl">154.2</td>
+<td class="tdl">151.6</td>
+<td class="tdl">151.9</td>
+<td class="tdl">151.5</td>
+<td class="tdl">163.9</td>
+<td class="tdl">157</td>
+<td class="tdl">152.5</td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 新兴市场经济体 </b></td>
+<td class="tdl"><b>12.6</b></td>
+<td class="tdl"><b>14.3</b></td>
+<td class="tdl"><b>17.2</b></td>
+<td class="tdl"><b>18.1</b></td>
+<td class="tdl"><b>29.9</b></td>
+<td class="tdl"><b>32.4</b></td>
+<td class="tdl"><b>45.7</b></td>
+<td class="tdl"><b>60.7</b></td>
+<td class="tdl"><b>58.6</b></td>
+<td class="tdl"><b>104.2</b></td>
+<td class="tdl"><b>121.2</b></td>
+<td class="tdl"><b>135.4</b></td>
+<td class="tdl"><b>130.5</b></td>
+<td class="tdl"><b>126</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 中国 </td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl">71.3</td>
+<td class="tdl">73.4</td>
+<td class="tdl">86.6</td>
+<td class="tdl">110.9</td>
+<td class="tdl">116.1</td>
+<td class="tdl">167.1</td>
+<td class="tdl">186.4</td>
+<td class="tdl">198.7</td>
+<td class="tdl">193</td>
+<td class="tdl">195</td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl"> 其他 </td>
+<td class="tdl">12.6</td>
+<td class="tdl">14.3</td>
+<td class="tdl">17.2</td>
+<td class="tdl">18.1</td>
+<td class="tdl">27.1</td>
+<td class="tdl">26.7</td>
+<td class="tdl">39.1</td>
+<td class="tdl">46.4</td>
+<td class="tdl">42.6</td>
+<td class="tdl">66.6</td>
+<td class="tdl">71</td>
+<td class="tdl">79.2</td>
+<td class="tdl">73.4</td>
+<td class="tdl">68.9</td>
+</tr>
+
+
+<tr>
+<td colspan="2" class="tdl"><b> 低收入发展中国家 </b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b>4.1</b></td>
+<td class="tdl"><b>4.6</b></td>
+<td class="tdl"><b>4.7</b></td>
+<td class="tdl"><b>7.4</b></td>
+<td class="tdl"><b>8.3</b></td>
+<td class="tdl"><b>8.8</b></td>
+<td class="tdl"><b>16.1</b></td>
+<td class="tdl"><b>14</b></td>
+<td class="tdl"><b>27</b></td>
+<td class="tdl"><b>34.5</b></td>
+<td class="tdl"><b>36.9</b></td>
+<td class="tdl"><b>38.9</b></td>
+<td class="tdl"><b>39.3</b></td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+</table>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;14.5：全球私人债务（占 GDP 百分比，加权平均数）
+
+</div>
+
+
+
+<div class="figurecaption">
+
+
+数据来源：国际货币基金组织全球债务监测报告, 2023<br />
+<a href="https://www.imf.org/-/media/Files/Conferences/2023/2023-09-2023-global-debt-monitor.ashx" target="_blank" >https://www.imf.org/-/media/Files/Conferences/2023/2023-09-2023-global-debt-monitor.ashx</a>
+                                                         <br />
+注意：表头年份列加 ‘s’ 标志的是测算的十年平均值，例如 1950s 表示 1950–1959 年的平均债务水平。
+1/3 的中国私人债务数据为地方政府债务——<b> 地方政府融资平台债务 </b> 和其他 <b> 预算外政府基金债务 </b>。
+
+</div>
+
+<a id="tab:privatedebt"></a>
+
+</div>
+
+</figure>
+
+<p>
+据国际货币基金组织估算，中国地方政府债务（含地方政府融资平台债务、预算外政府激进债务），在 2015 年占当年名义 GDP 58%，2023 年迅速提高至 85%。其他数据可见见表&nbsp;<a href="16.html#tab:chinadebt">14.2</a>&nbsp; <a
+href="16.html#tab:chinadebt"> 中国非金融部门债务 </a>，表&nbsp;<a href="16.html#tab:totaldebt">14.3</a>&nbsp; <a href="16.html#tab:totaldebt"> 全球债务总额（占 GDP 百分比，加权平均数）</a>，表&nbsp;<a
+href="16.html#tab:publicdebt">14.4</a>&nbsp; <a href="16.html#tab:publicdebt"> 全球公共债务（占 GDP 百分比，加权平均数）</a>，表&nbsp;<a href="16.html#tab:privatedebt">14.5</a>&nbsp; <a href="16.html#tab:privatedebt"> 全球
+私人债务（占 GDP 百分比，加权平均数）</a>。
+</p>
+<blockquote>
+
+<p>
+<b> 近几十年来，中国一直是推动全球债务的重要力量 </b>……中国的 <b> 总债务与 GDP 之比 </b> 从 1980 年代中期的 70% 左右（接近当时的新兴市场平均水平）增长到 2022 年的 <b>272%</b>，接近美国，增长了近四倍。不过，以美元计算，中国
+的总债务（47.5 万亿美元）仍明显低于美国（接近 70 万亿美元）。中国债务占 GDP 之比的上升是其他大型经济体所无法比拟的。从 2009 年开始，增幅明显加快，尤其是非金融企业债务……2008-2022 年期间，全球债务与 GDP 之比增长的一半以上可归
+因于中国债务与 GDP 之比的快速上升。<sup>2</sup><a id="main-autopage-486"></a>
+</p>
+</blockquote>
+
+<p>
+世界各国都存在着同样的 <b>“债务型驱动”经济发展 </b> 的问题，借新还旧，发展金融虚拟经济，工业经济也积极的发展金融化部门。美国股市、中国房地产，皆作为信用货币之“锚”。
+</p>
+
+<p>
+“债务型驱动”一般是通过超发货币及其相关形式来实现，下文我们来了解下超发货币吧。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-487"></a>
+
+<p>
+<sup>2</sup>&nbsp;<a href="https://www.imf.org/zh/Blogs/Articles/2023/09/13/global-debt-is-returning-to-its-rising-trend" target="_blank"
+>https://www.imf.org/zh/Blogs/Articles/2023/09/13/global-debt-is-returning-to-its-rising-trend</a>
+</p>
+
+
+
+</div>
+<!--
+...... section 通货膨胀税......
+-->
+<h4 id="autosec-488"><span class="sectionnumber">14.4&#x2003;</span>通货膨胀税</h4>
+<a id="main-autopage-488"></a>
+
+
+
+<p>
+本节和下一节基本概念主要参考了张怀清几篇论文，在此表示感谢。
+</p>
+
+<p>
+<b> 通货膨胀税 </b> 是从宏观经济层次考虑的通货膨胀对货币持有者的影响，<b> 指持有中央银行纸币者由于一般物价上涨（通货膨胀）所受到的损失。</b>
+</p>
+
+<p>
+<b> 引起通货膨胀税的原因很多，并非都是中央银行增加基础货币引起的。</b> 例如，由于石油价格上升等导致的 <b> 成本推动型通货膨胀 </b>，由于支付 <b> 技术进步 </b> 导致的微观经济单位减少对中央银行现金的需求而增加商业银行活期存款（或
+之前支付宝、微信钱包等金融存款方式）导致的 <b> 一般价格水平的上升 </b>。而恶性通货膨胀下，追求效用最大化的微观经济单位在恶性通货膨胀条件下一般减少对中央银行纸币的实际需求，例如发生货币替代，对本国货币需求减少⋯⋯这样中央银行
+铸币税小于通货膨胀税。
+</p>
+<!--
+...... section 铸币税......
+-->
+<h4 id="autosec-489"><span class="sectionnumber">14.5&#x2003;</span>铸币税</h4>
+<a id="main-autopage-489"></a>
+
+
+
+<p>
+在现代经济理论中，<b> 铸币税多指货币发行者由于在货币发行中具有一定程度的市场垄断权力（非完全竞争）而从货币发行中获得的利润，是一种隐形税收。</b> 可以认为铸币税是通货膨胀税的一个子集。
+</p>
+
+<p>
+简单举一闭环例子来说，假设市场总价值变化不大，流通货币 \(x\) 元。央行再发行货币 \(y\) 元，相应支出 \(y\) 元购买商品。长期市场流通循环后，市场价值不变，却已有 \(x+y\) 元货币，通货膨胀率 \(\sfrac {y}{x}\) ，货币贬值 \(\sfrac
+{y}{x+y}\) 。央行通过征税、债券等方式回收货币，但货币整体已贬值，此时央行赚取的并不是超发货币之初的 \(y\) 元，而是回落到 \((1 - 货币贬值率)y\)。
+</p>
+
+<p>
+超发货币使货币贬值，原债务金额不变，但实际价值减少，实际购买力下降，相当于 <b> 债务缩水（比如政府公共债务）</b>，有利于债务人，不利于债权人。这也是所谓“<b> 债务型增长 </b>”的源泉。
+</p>
+
+<p>
+可以这样来简单形象理解：央行依仗垄断权利向全民强制发行 <b> 无息债券 </b>，其中的 <b> 本应支付却未支付的债券利息 </b><sup>3</sup> 便是央行铸币暗税，<b> 其实际收益与临期时长成正比，与周转次数成反比 </b>。越早越先使用这张债券的部
+门，越受益，例如政府、投资家、企业家、金融和土地食利者等；不参与其中投资周转过程的部门，例如只是储蓄或拿死工资的普通人蒙受全部应付未付利息的损失。
+</p>
+
+<p>
+央行《金融知识全民读本》：
+</p>
+<blockquote>
+
+<p>
+<b> 通货膨胀尤其是恶性通货膨胀，总是“劫贫济富”，让穷人更穷，富人更富。</b> 严重时还会引发社会经济和政治的剧烈动荡。
+</p>
+</blockquote>
+
+<p>
+<b> 劫贫济富，这其实是人类从原始社会至今的固有滥觞。这也本属权力的语义范畴——影响和掌控他人的力量。</b>
+</p>
+
+<p>
+以下为张怀清几篇论文的摘选：
+</p>
+<blockquote>
+
+<p>
+不仅金属铸币、中央银行货币的发行产生铸币税，商业银行由于在存款市场具有垄断而获得的利润也可看作是铸币税。不仅如此，还有诸如政府债券铸币税（bond seigniorage）等形式的铸币税。
+</p>
+
+<p>
+随着电子通信技术的发展、金融市场的完善和金融产品的丰富，微观经济单位对中央银行纸币的需求呈现相对减少趋势，不仅商业银行类金融机构正在发行可在一定程度上替代中央银行纸币的货币，其他金融机构发行的金融产品也在很大程度上替代中央银
+行纸币和商业银行负债。
+</p>
+
+<p>
+国际货币基金组织 (IMF) 曾于 1998 年分别考察了欧洲和北美等 21 个发达国家以及亚洲和拉丁美洲等 79 个发展中国家，得出结论: 1980–1995 年期间，发展中国家铸币税收占 GDP 的比重平均在 1.4%–3% 之间，大大高于发达国家平均在 0.64% 左右的
+水平。而中国在同一时期，铸币税占 GDP 的比重平均为 6.52%(Massonetal, 1998)，除了少数几个发生过超级通货膨胀的国家之外，已是世界上最高的国家之一。
+</p>
+
+<p>
+不同的学者利用不同的方法得到的估计有所差异，谢平 (1994) 按照基础货币增量的算法，得出我国 1986–1993 年之间，政府每年得到的货币发行收入占国内生产总值的比重平均为 5.4%；易纲 (1996) 得出 1978–1992 年真实铸币收入平均占 GNP 的 3%
+左右；周立 (2003) 认为 1984–1996 年期间的大部分年份的真实铸币收入占 GDP 的 5%–7%，1993 年和 1996 年达到 8.5%。但无论是哪一种算法得出的结果都远远高于发达国家的平均水平 0.64%，也在很大程度上超出发展中国家的平均水平 1.4%–3%。
+</p>
+</blockquote>
+
+<p>
+另外本国货币如能作为国际货币使用，自然也可向其他国家收取国际铸币税。人民币国际化还任重道远，较多采用货币互换方式，能收取的国际铸币税较少。根据人行《2023 年人民币国际化报告》：
+</p>
+<blockquote>
+
+<p>
+2023 年一季度末，人民币国际化综合指数为 3.26，同比上升 10.2%。同期，美元、欧元、英镑、日元等主要国际货币国际化指数分别为 57.68、22.27、7.66 和 5.48。
+</p>
+
+<p>
+2022 年，人民币跨境收付金额合计为 42.1 万亿元，同比增长 15.1%。其中，实收 20.5 万亿元，同比增长 10.9%；实付 21.6 万亿元，同比增长 19.5%，<b> 收付比为 1:1</b>。
+</p>
+</blockquote>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-493"></a>
+
+<p>
+<sup>3</sup>&nbsp; 具体论述可见张怀清论文《人民银行铸币税的测算和运用:1986–2008》
+</p>
+
+
+
+</div>
+<!--
+...... section 超发货币和居民消费价格指数 CPI ......
+-->
+<h4 id="autosec-494"><span class="sectionnumber">14.6&#x2003;</span>超发货币和居民消费价格指数 CPI</h4>
+<a id="main-autopage-494"></a>
+
+
+
+<p>
+                    <sup>[<a href="17.html#LWR-ht-cite.0@piepenburg2022gold">118</a>]</sup>，美国自 1983 年起，以购房是投资而非消费为由，不再将 <b> 购房价 </b> 计入消费者物价指数 CPI，取而代之的是增长速度
+根据《黄金重要：超现实风险的真实解决方案》
+远低于房价的 <b> 业主等价租金 </b>（owners’equivalent rent, OER，简单理解就是如果房主将房子出租所能获得的租金）
+                                                                         ，由此 CPI 被严重低估。以中国为例，中国重点 50 城租售比自 2019 年后始终在 1:600 以下，且租售偏离程度持续扩大，也就是
+说，租房至少 50 余年才可收回房价，而发达大城市需 60 余年才可收回。
+</p>
+
+<p>
+《黄金重要》摘抄：
+</p>
+<blockquote>
+
+<p>
+美联储多年来一直公开撒谎，淡化真正的通货膨胀……<b>CPI 表是一个公开的骗局 </b>，这允许美国劳工统计局（BLS），因此也允许美联储，<b> 以他们认为合适的方式“报告”通货膨胀 </b>——至少目前是这样。
+</p>
+
+<p>
+如果使用 20 世纪 80 年代美联储 CPI 通胀加权方法衡量今日，那么美国在 2021 年的 CPI 通胀率将接近 15%，而不是报告的 6% 多。
+</p>
+
+<p>
+美联储简单调整了其衡量通货膨胀的 CPI 尺度，有效淡化了 <b> 住房、医疗保健和教育 </b> 方面的成本上升，以衡量消费者价格通货膨胀……简言之，美联储不喜欢用旧的 CPI 尺度来衡量通货膨胀，所以他们简单地用 <b>2+2=2</b> 的 CPI 来代替它。
+</p>
+
+<p>
+同样，美联储为了保持其 <b> 由欠条驱动（即债务驱动）的“复苏”假象 </b>，别无选择，只能 <b> 发明一个可控的（即较低的）CPI 通货膨胀率 </b>，以便使美国国债在与通货膨胀相比较时，看起来对其他债务驱动买家更有适度的吸引力。
+</p>
+
+<p>
+自从尼克松在 1971 年取消美元与黄金挂钩以来，各国货币情况都变得更糟了。<b> 债务和赤字呈指数级增长 </b>，而这种债务政策导致的人为（即 <b> 债务驱动 </b>）市场扩张只能通过被误导的中央银行和商业银行家 <b> 人造货币和相关“解决方案”
+</b> 来实现。所有这些钱都是无中生有的。没有人需要为它工作一分钟，也没有人需要生产单一的商品或服务来反对它。
+</p>
+
+<p>
+<b> 保持债券和债务市场活力的唯一方法是通过“过度印刷”来摧毁国家的基础货币。简而言之，畸形膨胀的市场可能在利率抑制的刀锋下生存，但货币，嗯……他们死在同一把剑下（过度印刷）。</b>
+</p>
+
+<p>
+当然，<b> 这是在吃你的蛋糕，但不是在吃它 </b>……
+</p>
+
+<p>
+<b> 量化宽松只是制造并扩大了有记录以来最大的风险资产泡沫和贫富差距。</b>
+</p>
+
+<p>
+为了进一步欺骗人民，这个“魔术”背后的所谓专家想出了 <b>MMT（即现代货币理论，主张财政赤字货币化。
+                                                   ）</b> 这个舒缓的概念，以使这种腐败的东西看起来更符合逻辑，更正式，甚至更聪明。对政策魔术师来说，这种语义上的技巧并不新鲜。当他们
+需要欺骗人民时，他们会巧妙地从字母表中抽出令人平静的字母，发明一些听起来很有学术性、有效和健全的政策名称，比如 MMT 或 QE（<b> 量化宽松 </b>）。但是，这两个现在常见的政策名称都不过是指 <b> 凭空伪造货币，这是一种公开的荒谬 </b>。
+</p>
+
+<p>
+<b> 今天全球的特点是不顾一切地扩大广义货币供应，以解决不可持续且史无前例的债务水平。这种扭曲而一贯的政策错误，导致了历史上最大的风险资产泡沫……正如历史所提醒的，所有的泡沫都会破灭。</b>
+</p>
+
+<p>
+当股票 <b> 在投机性政策的支持下不合逻辑地上涨时，尽管其政策制定者有信誉的“逻辑”
+                                          ，但事实上没有逻辑，随之而来的极端纸面财富获得了永久甚至稳定的幻觉。</b> 但是，正如我们和赫斯曼当时所警告的那样，今天更是如此，投资者很快就会集体
+                                        “合乎逻辑”的投资者总是忽略了一个历史上被证实的事实，即 <b> 一旦上升的东西崩溃，大部分的财富最终会蒸发掉。</b> 简而言之，风险资产从未变得更有风
+陷入一种错觉，认为他们今天投资组合中的数万亿美元代表着明天的持久购买力。换句话说，
+险。例如，截至目前，全球金融资产的价值（股票、债券和房地产）是 520 万亿美元，是全球 84 万亿美元 GDP 的 <b>6.2 倍 </b>。
+</p>
+
+<p>
+考虑到持续增长和怪诞的债务水平，决策者实际上别无选择，只能膨胀他们的债务。作为聪明的小狐狸，公共政策制定者当然会尽一切努力，故意允许 <b> 通货膨胀（以偿还债务）</b>，同时控制收益率曲线来 <b> 人为抑制利率 </b>，<b> 从而抑制债务
+成本 </b>。同样，这种绝望的利率压制对于爬进 2020 年代的“破产”主权国家来说是必须的。再说一遍：他们别无选择……<b> 摆脱债务的唯一方法是让通胀率高于利率——差距越大，摆脱债务的速度就越快。</b>
+</p>
+
+<p>
+考虑到当前大于 300 万亿美元的全球债务水平，如果允许 <b> 利率自然上升 </b>（即在 <b> 真正的资本主义中 </b>），政府债务的利息支出将在几秒钟内大幅超过 GDP 的 50%，全球债务方和所谓的“经济复苏”将立即以戏剧性的方式结束。
+</p>
+
+<p>
+如果 CPI 通胀率被准确报告，那么虚假的 <b> 美国国债实际收益率将为负值 </b>，美联储通过给这种收益率涂上口红，可以继续依靠更多债务、更“有吸引力”的欠条和更多的欺骗为生。这种隐蔽的通胀欺诈行为让美国能够有效地延长和掩盖历史上史无
+前例的债务狂潮，而美国信贷市场就像一个名副其实的科学怪人一样前进——它已经死了，但仍然在所谓“无通胀”但永久的货币创造的氧气下前进。但即便是弗兰肯斯坦最终也会死去。
+</p>
+</blockquote>
+
+<p>
+就今日世界大国强国实践，尤其是美国而言，超发货币、寅吃卯粮已是长期传统，<b> 报表上的 CPI 指数意图掩盖的是真实通货膨胀、货币发行机构所收取的铸币税、持续破发的国债；超发货币实则是金融虚拟资本（包括房地产，房地产真实属性是金融）
+对其他赛道人民的盘剥。收入不平等加剧、财富极度分化就这样静悄悄地来到了现代社会。</b>
+</p>
+
+<p>
+其实现代国家往往都习以为常施用各种“真实数据烟雾弹”⋯⋯数据完全可以是真实的，但却是在各种特殊统计方法下的真实数据。
+</p>
+<!--
+...... section GDP、GNI 和分配正义......
+-->
+<h4 id="autosec-496"><span class="sectionnumber">14.7&#x2003;</span>GDP、GNI 和分配正义</h4>
+<a id="main-autopage-496"></a>
+
+
+
+<a id="sec:gdp"></a>
+
+<p>
+据国家统计局，
+</p>
+<blockquote>
+
+<p>
+国内生产总值 (Gross Domestic Product，GDP)，是指一个国家或地区所有常住单位在一定时期内生产活动的全部最终成果，等于所有常住单位创造的增加值之和。可见，GDP 强调国内生产，体现的是增加值的生产创造。
+</p>
+
+<p>
+国民总收入 (Gross National Income，GNI)，是指一个国家或地区所有常住单位在一定时期内收入初次分配的最终结果，等于所有常住单位的初次分配收入之和。
+</p>
+
+<p>
+GNI，即在 GDP 的基础上，扣除外国在本国的资本和劳务收入，加上本国从国外获得的资本和劳务收入。
+</p>
+</blockquote>
+
+<p>
+不管 GDP 还是 GNI，都是以 <b> 加总 </b> 方式来衡量国家经济。当代所有国家几乎都热衷于用这两种方式来描述国内经济状况。这两个指标都无法说明、甚至不想说明 <b> 分配不均、贫富差距、社会福利 </b> 这类问题。其实自资本主义发端之初，古
+典（自由主义）经济学家们便惯于使用 <b> 国民经济 </b> 这一加总说法。历史并未改变多少，除去多了很多晦涩难懂、混淆视听的概念。
+</p>
+
+<p>
+如 240 余年前的亚当·斯密《国富论》：
+</p>
+<blockquote>
+
+<p>
+<b> 劳动获得宽裕的报酬 </b>，不仅是一国财富 <b> 不断增加 </b> 的必然结果，同时也是一国财富 <b> 不断增加 </b> 的自然症候。另一方面，<b> 贫穷的劳动阶级生活捉襟见肘 </b>，是一国财富 <b> 停滞 </b> 的自然症候。而 <b> 该阶级人民濒临饿
+死 </b>，是一国财富 <b> 迅速萎缩 </b> 的自然症候。
+</p>
+</blockquote>
+
+<p>
+国民经济的发展（GDP 或 GNI 等）≠ 大部分国民的经济发展 ≠ 国民的幸福。
+</p>
+
+<p>
+恩格斯和马克思分别写到：
+</p>
+<blockquote>
+
+<p>
+这一事实无非是表明：<b> 劳动国民财富这个用语是由于自由主义经济学家努力进行概括才产生的。只要私有制存在一天，这个用语便没有任何意义。</b> 英国人的“国民财富”很多，他们却是世界上最穷的民族……在这种科学看来，社会关系只是为了私
+有制而存在。<a id="main-autopage-499"></a><sup>[<a href="17.html#LWR-ht-cite.0@maenwen1">36</a>]60</sup>
+</p>
+
+<p>
+我们且从当前的国民经济的事实出发。工人生产的财富越多，他的生产的影响和规模越大，他就越贫穷。工人创造的商品越多，他就越变成廉价的商品。<b> 物的世界的增值同人的世界的贬值成正比。</b> 劳动生产的不仅是商品，它还生产作为商品的劳动
+                       <sup>[<a href="17.html#LWR-ht-cite.0@maenwen1">36</a>]156</sup>
+自身和工人，而且是按它一般生产商品的比例生产的。
+</p>
+</blockquote>
+
+<p>
+                              <sup>[<a href="17.html#LWR-ht-cite.0@ZXYJ201404002">119</a>]</sup>：<sup>4</sup>：
+张文喜探讨了《所有制与所有权正义：马克思与“亚当·斯密问题”》
+</p>
+<blockquote>
+
+<p>
+在对斯密等人的评述中，马克思明确指出存在私有财产和工人需要的悖论，认为市民式的自私自利能够保证与公共利益先天和谐，这是一种 <b> 幻象 </b>。斯密的自然自由原理与利益和谐的自由市场学说注定满足不了任何一个阶级的要求：<b> 工人和资
+                       “资本家则是为他的死钱财的赢利而苦恼”</b>(《马克思恩格斯全集》第 3 卷，第 227 页)；因而，
+本家同样苦恼，没有财产的工人是为他的生存而苦恼，                                                  “既然按照斯密的意见，大多数人遭受痛苦的社会是不幸福的，<b> 社会的最富裕状态会造成大多数人
+遭受这种痛苦，而且国民经济学 (总之，私人利益的社会) 是要导致这种最富裕状态，那么国民经济学的目的也就是社会的不幸”。</b>(同上，第 230 页)
+</p>
+
+<p>
+<b> 生产资料私有制给特定的阶级带来的具体结果，在本质上绝不是像斯密所讲的共同富裕，而是两极分化。</b>
+</p>
+</blockquote>
+
+<p>
+1993 年，中国正式采用 GDP 作为经济表现的指标，从此开始了追求 GDP 增速的历史。回到亚当·斯密，中国持续发展可以“先富带动后富”，并且确实使国人生活水平普遍大幅提高。但中国如何应对“财富停滞”时“贫困的劳动阶级生活捉襟见肘”，又如
+何应对经济危机、财富迅速萎缩时的“濒临饿死”呢？现代经济周期不存在持续增长，只有上升和下降交替波动。
+</p>
+
+<p>
+四十多年来，如美国一样，中国刺激经济持续增长多是以 <b> 大规模超发货币 </b> 为主要手段，用基建、房地产等固定资本投资作为货币蓄水池，甚至在某种意义上使固定资本投资本身成为货币。这一政策核心至少自上世纪 70 年代末的“洋跃进”便已出
+现，只是那时候还没有房地产的加入。执着追求 GDP 高增长的是缓解债务压力、保持泡沫不破的不得已选择。
+</p>
+
+<p>
+凯恩斯主义通货膨胀是短期应用经济学，且要求针对经济萧条和上升期适时调整；它对于长期无力，长期应用必然持续集聚毒性。每一次的负债经济增长都必然使将来市场出清、结算埋单时期更加残酷惨痛。
+</p>
+
+<p>
+为缓解今日危机，除非我们能将危机转嫁至他国，甚至参与战争。问题是，太多发达国家也是这样想的——一方面担忧已在世界资本市场长袖善舞的中国经济危机导致世界大经济危机；另一方面希望啃噬世界最大市场之中国的血肉，将自身危机转嫁至中国。
+这里面没有意识形态之争，只有现实利益。
+</p>
+
+<p>
+另外我们的贫富分化已持续加大.
+</p>
+<blockquote>
+
+<p>
+北京大学以全国 25 个省市 160 个区县的 14960 个家庭为基线样本所得的《中国民生发展报告 <b>2015</b>》显示，<b> 最富有的 1% 的家庭占有近 1/3 的全国财产，而底端 25% 的家庭拥有的财产总量只占 1% 左右。</b><a
+id="main-autopage-501"></a><sup>[<a href="17.html#LWR-ht-cite.0@dajueqi">94</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+2023 年贝恩公司与招商银行联合发布《2023 中国私人财富报告》，提到
+</p>
+<blockquote>
+
+<p>
+2022 年，中国个人可投资资产总规模达 278 万亿人民币，2020-2022 年年均复合增速为 7%；到 2024 年底，可投资资产总规模预计将突破 300 万亿关口。
+</p>
+
+<p>
+2022 年，可投资资产在 1,000 万人民币以上的中国高净值人群数量达 316 万人，人均持有可投资资产约 3,183 万人民币，共持有可投资资产 101 万亿人民币，2020-2022 年年均复合增速为 10%；预计未来两年，中国高净值人群数量和持有的可投资资产规
+模将以约 11% 和 12% 的复合增速继续增长。
+</p>
+</blockquote>
+
+<p>
+也就是说在中国，<b>0.22% 的人口（所谓高净值人群）占据了总可投资资产的 31.96%</b>。另外，高净值人群可投资资产增速倍数于 GDP 增速，也意味着财富分化趋势更一步加大。
+</p>
+
+<p>
+相比贝恩和招行报告，瑞士信贷和瑞士银行发布的《2023 年世界财富报告》相对乐观些，但只是相对。中国的百万美元富翁数量已占世界 11%，仅次于美国的 38%。
+</p>
+<blockquote>
+
+<p>
+自 2000 年以来，<b> 中国的财富不平等现象大幅上升 </b>。2000 年 <b> 财富基尼系数为 59.5</b>，稳步上升，<b>2016 年达到 71.7</b>。2000 年，前 1% 人群的财富份额为 20.7%，2021 年为 30.5%，2022 年上升至 31.4%。
+</p>
+
+<p>
+迄今为止美国 <b> 百万美元 </b> 富翁人数最多，为 2270 万，占世界总数的 <b>38.2%</b>。这遥遥领先于排名第二的中国，中国占全球百万富翁总数的 <b>10.5%</b>。在本世纪初，日本的百万富翁数量与美国竞争，之后日本的地位一直在稳步下降，于
+2014 年被中国超越，2022 年仅占百万富翁的 4.6%，首次排在第四位，仅次于法国（4.8%），并受到德国（4.4%）和英国（4.3%）的挑战。
+</p>
+</blockquote>
+
+<figure id="autoid-31" class="table ">
+<div class="center">
+<table>
+
+<tr style="display:none"><th>.</th></tr>
+
+
+<tr class="tbrule">
+<td colspan="1" class="tdc"></td>
+<td colspan="7" class="tdc"><b> 基尼系数 </b></td>
+<td class="tdl"></td>
+<td colspan="7" class="tdc"><b>1% 最富有的人财富占比 </b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"></td>
+<td class="tdl">2000</td>
+<td class="tdl">2005</td>
+<td class="tdl">2010</td>
+<td class="tdl">2015</td>
+<td class="tdl">2020</td>
+<td class="tdl">2021</td>
+<td class="tdl">2022</td>
+<td class="tdl"></td>
+<td class="tdl">2000</td>
+<td class="tdl">2005</td>
+<td class="tdl">2010</td>
+<td class="tdl">2015</td>
+<td class="tdl">2020</td>
+<td class="tdl">2021</td>
+<td class="tdl">2022</td>
+</tr>
+
+
+<tr class="hline">
+<td class="tdl"> 巴西 </td>
+<td class="tdl">84.5</td>
+<td class="tdl">82.7</td>
+<td class="tdl">82.1</td>
+<td class="tdl">88.7</td>
+<td class="tdl">88.9</td>
+<td class="tdl">89.2</td>
+<td class="tdl">88.4</td>
+<td class="tdl"></td>
+<td class="tdl">44.2</td>
+<td class="tdl">45</td>
+<td class="tdl">40.2</td>
+<td class="tdl">48.7</td>
+<td class="tdl">49.5</td>
+<td class="tdl">49.3</td>
+<td class="tdl">48.4</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 美国 </td>
+<td class="tdl">80.6</td>
+<td class="tdl">81.1</td>
+<td class="tdl">84.1</td>
+<td class="tdl">84.9</td>
+<td class="tdl">85</td>
+<td class="tdl">85</td>
+<td class="tdl">83</td>
+<td class="tdl"></td>
+<td class="tdl">32.9</td>
+<td class="tdl">32.8</td>
+<td class="tdl">33.4</td>
+<td class="tdl">34.8</td>
+<td class="tdl">35.3</td>
+<td class="tdl">35.1</td>
+<td class="tdl">34.2</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 印度 </td>
+<td class="tdl">74.6</td>
+<td class="tdl">80.9</td>
+<td class="tdl">82.1</td>
+<td class="tdl">83.3</td>
+<td class="tdl">82.3</td>
+<td class="tdl">82.3</td>
+<td class="tdl">82.6</td>
+<td class="tdl"></td>
+<td class="tdl">33.2</td>
+<td class="tdl">41.9</td>
+<td class="tdl">41.4</td>
+<td class="tdl">42.3</td>
+<td class="tdl">40.5</td>
+<td class="tdl">40.6</td>
+<td class="tdl">41</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 德国 </td>
+<td class="tdl">81.2</td>
+<td class="tdl">82.7</td>
+<td class="tdl">77.4</td>
+<td class="tdl">79.2</td>
+<td class="tdl">77.9</td>
+<td class="tdl">78.8</td>
+<td class="tdl">76.9</td>
+<td class="tdl"></td>
+<td class="tdl">29.1</td>
+<td class="tdl">30.4</td>
+<td class="tdl">25.7</td>
+<td class="tdl">32.1</td>
+<td class="tdl">29.2</td>
+<td class="tdl">31.7</td>
+<td class="tdl">30</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 加拿大 </td>
+<td class="tdl">74.9</td>
+<td class="tdl">73.3</td>
+<td class="tdl">71.7</td>
+<td class="tdl">71.8</td>
+<td class="tdl">71.8</td>
+<td class="tdl">72.6</td>
+<td class="tdl">72.3</td>
+<td class="tdl"></td>
+<td class="tdl">29.1</td>
+<td class="tdl">25.9</td>
+<td class="tdl">22.4</td>
+<td class="tdl">23.3</td>
+<td class="tdl">23.6</td>
+<td class="tdl">25</td>
+<td class="tdl">24.3</td>
+</tr>
+
+
+<tr>
+<td class="tdl"><b> 中国大陆 </b></td>
+<td class="tdl"><b>59.5</b></td>
+<td class="tdl"><b>63.8</b></td>
+<td class="tdl"><b>70</b></td>
+<td class="tdl"><b>71.2</b></td>
+<td class="tdl"><b>70.5</b></td>
+<td class="tdl"><b>70.1</b></td>
+<td class="tdl"><b>70.7</b></td>
+<td class="tdl"><b></b></td>
+<td class="tdl"><b>20.7</b></td>
+<td class="tdl"><b>24.2</b></td>
+<td class="tdl"><b>31.5</b></td>
+<td class="tdl"><b>31.7</b></td>
+<td class="tdl"><b>30.8</b></td>
+<td class="tdl"><b>30.5</b></td>
+<td class="tdl"><b>31.1</b></td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 台湾 </td>
+<td class="tdl">64.7</td>
+<td class="tdl">67.8</td>
+<td class="tdl">72.6</td>
+<td class="tdl">70.5</td>
+<td class="tdl">70.7</td>
+<td class="tdl">70.7</td>
+<td class="tdl">70.5</td>
+<td class="tdl"></td>
+<td class="tdl">24.3</td>
+<td class="tdl">23.6</td>
+<td class="tdl">29.8</td>
+<td class="tdl">26.9</td>
+<td class="tdl">27.3</td>
+<td class="tdl">26.6</td>
+<td class="tdl">26.4</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 法国 </td>
+<td class="tdl">69.7</td>
+<td class="tdl">67</td>
+<td class="tdl">69.8</td>
+<td class="tdl">69.9</td>
+<td class="tdl">70</td>
+<td class="tdl">70.2</td>
+<td class="tdl">70.3</td>
+<td class="tdl"></td>
+<td class="tdl">25.5</td>
+<td class="tdl">21</td>
+<td class="tdl">21</td>
+<td class="tdl">22.3</td>
+<td class="tdl">21.9</td>
+<td class="tdl">22.3</td>
+<td class="tdl">21.2</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 英国 </td>
+<td class="tdl">70.5</td>
+<td class="tdl">67.6</td>
+<td class="tdl">69.1</td>
+<td class="tdl">73</td>
+<td class="tdl">71.7</td>
+<td class="tdl">70.6</td>
+<td class="tdl">70.1</td>
+<td class="tdl"></td>
+<td class="tdl">22.1</td>
+<td class="tdl">20.6</td>
+<td class="tdl">23.6</td>
+<td class="tdl">25</td>
+<td class="tdl">23.1</td>
+<td class="tdl">21.1</td>
+<td class="tdl">20.7</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 西班牙 </td>
+<td class="tdl">65.5</td>
+<td class="tdl">62.2</td>
+<td class="tdl">61.4</td>
+<td class="tdl">69.5</td>
+<td class="tdl">69.1</td>
+<td class="tdl">69.1</td>
+<td class="tdl">68.3</td>
+<td class="tdl"></td>
+<td class="tdl">24.1</td>
+<td class="tdl">18.7</td>
+<td class="tdl">18.5</td>
+<td class="tdl">24.1</td>
+<td class="tdl">22.7</td>
+<td class="tdl">23.1</td>
+<td class="tdl">22.4</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 韩国 </td>
+<td class="tdl">69.7</td>
+<td class="tdl">70.1</td>
+<td class="tdl">74.7</td>
+<td class="tdl">72.4</td>
+<td class="tdl">67.7</td>
+<td class="tdl">68.2</td>
+<td class="tdl">67.9</td>
+<td class="tdl"></td>
+<td class="tdl">21.3</td>
+<td class="tdl">21.8</td>
+<td class="tdl">26</td>
+<td class="tdl">26.9</td>
+<td class="tdl">23.4</td>
+<td class="tdl">24</td>
+<td class="tdl">23.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 意大利 </td>
+<td class="tdl">60.4</td>
+<td class="tdl">59.4</td>
+<td class="tdl">63.1</td>
+<td class="tdl">66.9</td>
+<td class="tdl">66.4</td>
+<td class="tdl">67.2</td>
+<td class="tdl">67.8</td>
+<td class="tdl"></td>
+<td class="tdl">22</td>
+<td class="tdl">18.2</td>
+<td class="tdl">17.4</td>
+<td class="tdl">22.6</td>
+<td class="tdl">21.9</td>
+<td class="tdl">23.3</td>
+<td class="tdl">23.1</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 澳大利亚 </td>
+<td class="tdl">63.7</td>
+<td class="tdl">63.1</td>
+<td class="tdl">63</td>
+<td class="tdl">64.9</td>
+<td class="tdl">65.5</td>
+<td class="tdl">66.2</td>
+<td class="tdl">66.3</td>
+<td class="tdl"></td>
+<td class="tdl">20.5</td>
+<td class="tdl">20</td>
+<td class="tdl">19.2</td>
+<td class="tdl">20.5</td>
+<td class="tdl">20.6</td>
+<td class="tdl">21.8</td>
+<td class="tdl">21.7</td>
+</tr>
+
+
+<tr>
+<td class="tdl"> 日本 </td>
+<td class="tdl">64.5</td>
+<td class="tdl">63.1</td>
+<td class="tdl">62.5</td>
+<td class="tdl">63.6</td>
+<td class="tdl">64.4</td>
+<td class="tdl">64.7</td>
+<td class="tdl">64.8</td>
+<td class="tdl"></td>
+<td class="tdl">20.4</td>
+<td class="tdl">18.8</td>
+<td class="tdl">16.7</td>
+<td class="tdl">18.2</td>
+<td class="tdl">18.1</td>
+<td class="tdl">18.7</td>
+<td class="tdl">18.8</td>
+</tr>
+
+
+<tr class="tbrule" aria-hidden="true">
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+<td class="tdl"></td>
+</tr>
+</table>
+
+
+
+<div class="figurecaption">
+
+
+表&nbsp;14.6：<a id="tab:gini"></a>全球财富不平等趋势
+
+</div>
+
+
+
+<div class="figurecaption">
+
+
+来源：瑞士信贷和瑞士银行《2023 年世界财富报告》
+
+</div>
+
+</div>
+
+</figure>
+
+<p>
+其实走向这样道路，也不能完全归咎于中国自身，因为这是现代世界生产关系的可悲客观规律，不以人民、党派、国家意志为转移！各主要经济体都大差不离（见表&nbsp;<a href="16.html#tab:gini">14.6</a>&nbsp;，但我们的债务增长、超发货币确实走
+得太快了⋯⋯
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-506"></a>
+
+<p>
+<sup>4</sup>&nbsp;<a href="https://www.dswxyjy.org.cn/n1/2019/0617/c427160-31162202.html" target="_blank" >https://www.dswxyjy.org.cn/n1/2019/0617/c427160-31162202.html</a>
+</p>
+
+
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>

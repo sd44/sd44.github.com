@@ -1,0 +1,3111 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—早期苏俄科社实践 </title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-157"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... chapter 早期苏俄科社实践......
+-->
+<h3 id="autosec-159"><span class="sectionnumber">第九章&nbsp;&#x2003;</span>政治经济学视角下的 <br />
+早期苏俄科社实践</h3>
+<a id="main-autopage-159"></a>
+<a id="main-autofile-11"></a>
+
+<a id="chap:russiachina"></a>
+<!--
+...... section 序言......
+-->
+<h4 id="autosec-161"><span class="sectionnumber">9.1&#x2003;</span>序言</h4>
+<a id="main-autopage-161"></a>
+
+
+
+<p>
+苏联问题，无论过去还是现在，东方还是西方都是一个敏感话题。对其研究常常带有各种不同意识形态、政治、经济利益集团的功利目的，在不同时期和环境为不同利益背书；也常被个人主观倾向所利用；在民间个人，则常常被自身迷梦所影响，简单片面的
+赞美或者抨击。
+</p>
+
+<p>
+笔者认为，如果刨除政治经济学，只用其他视角去考察苏联列宁和斯大林统治时期历史的话，无法形成一个完整链条。历史与政治经济学的考察相结合，将更为完整展现苏联早期内在的满满张力——起因、经过、结果、成就、矛盾和不足；认识马克思本人科学
+社会主义思想和早先社会主义国家的问题所在；弄清楚有关社会主义本身的一些问题，比如社会主义与资本主义的关系及其局限和不足；加深历史唯物认识并破除对于救世主或个人的迷信与崇拜⋯⋯总之，这样的考察结果将会在多方面提供更多借鉴和意义。
+</p>
+
+<p>
+本章关于苏联的资料，在政治经济学方面的论据主要取材自批判色彩浓厚的 M. C. 霍华德与 J. E. King 所著《马克思主义经济学史 1883-1929》
+                                                                              、《马克思主义经济学史 1929-1990》
+                                                                                                   ，历史资料多取材于沈志华主编《一个大国的崛起与崩溃——苏联历史专题研
+究 1917-1991》，闫永飞《苏联社会主义过渡时期的新经济政策》，黄立茀主编《新经济政策时期的苏联社会》。这无疑犯了取材样本过少的错误，容易偏颇。但笔者实在无能为力再进行过多展开了。望得到大家建议、批判。
+</p>
+
+<p>
+笔者对所有参考文献并不全然赞同，对个别文献更是批判大于赞同，为此将以上材料进行了 <b> 批判性整合 </b>，融入自己观点。
+</p>
+<!--
+...... section 马克思“科学社会主义”的缺陷......
+-->
+<h4 id="autosec-162"><span class="sectionnumber">9.2&#x2003;</span>马克思“科学社会主义”的缺陷</h4>
+<a id="main-autopage-162"></a>
+
+
+
+<a id="sec:marxkexue"></a>
+
+<p>
+自马克思中学毕业前夕作文《青年在选择职业时的考虑》至其生命终结时未完成的一些作品，我们都可以鲜明看到贯穿马克思思想的一条主线——<b> 社会伦理 </b>。马克思的社会伦理不直接讲求个人伦理，它讲求人的“<b> 社会性 </b>”
+                                                                                                                  。因为“<b> 人的
+本质不是单个人所固有的抽象物，在其现实性上，它是一切社会关系的总和 </b>”。人之恶主要是由综合历史社会关系影响，真正解放的人本质只有在相当和谐的社会才能实现。
+</p>
+
+<p>
+大部分人将马克思学说分为三个部份，哲学、政治经济学、科学社会主义。其中科学社会主义部份描述了一个美丽前景：一个自由人的联合体、自由王国、共产主义社会。但是马克思、恩格斯均没有描述具体实践方式。
+</p>
+
+<p>
+                                          “<b> 这种一切（本）人反对一切人的战争所造成的结果，不是普遍的肯定，而是普遍的否定。</b>”<sup>1</sup> 在这种普遍的否定中，人与人的关系被物与物的关系所
+为什么马克思反对资本主义，马克思在《1857-1858 年经济学手稿》中说过一句话说，
+遮盖，也就是马克思所说的“<b> 资本拜物教 </b>”。
+</p>
+
+<p>
+如何实现从资本主义社会到共产主义社会的转变，马克思在《哥达纲领批判》中给出了一个易懂简洁的说明：首先，是一个“<b> 无产阶级的革命专政 </b>”下的过渡期
+</p>
+<blockquote>
+
+<p>
+（共产主义社会）不是在它自身基础上已经发展了的，恰好相反，是刚刚从资本主义社会中产生出来的，因此它在各方面，在经济、道德和精神方面都还带着它脱胎出来的那个旧社会的痕迹。
+</p>
+
+<p>
+……
+</p>
+
+<p>
+所以，在这里平等的权利按照原则仍然是 <b> 资产阶级权利 </b>，虽然原则和实践在这里已不再互相矛盾，而在商品交换中，等价物的交换只是平均来说才存在，不是存在于每个个别场合。<a id="main-autopage-163"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@maenwen3">3</a>]434</sup>
+</p>
+</blockquote>
+
+<p>
+这就是“<b> 共产主义社会的第一阶段 </b>”，或者称为共产主义的初级阶段，也一般称为 <b> 社会主义社会 </b>，是资本主义到共产主义的过渡阶段，<b> 它仍带有（平均来说）等价交换的资产阶级法权 </b>。
+</p>
+
+<p>
+那么，为什么初级阶段可以发展自资本主义社会呢？
+</p>
+
+<p>
+              <sup>[<a href="17.html#LWR-ht-cite.0@maenwen1">36</a>]538</sup>，等价交换商品成为现实，个人也与一切人普遍异化的同时又与一切人发生关系；同时导致创造最多价值的人反而沦为“没有财产的”
+“生产力的巨大增长和高度发展”                                                                                                                        、“普遍异化”的
+无产阶级，与资产阶级对立。马克思政治经济学基于历史唯物对资本主义的破坏性分析鞭辟入里，但是他求得建设性的共产主义自身却并不是历史唯物的，而是伦理价值目的论，并且是彻底偏离了“科学”二字的伦理价值目的论。
+</p>
+
+<p>
+他的不科学成分笔者总结如下：
+</p>
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 人是动物的一种，马恩学说夸大了人相对于动物的优越性。他最终要实现的是人超越动物性和原始性，使人类与自然中的天空大地等一体。笔者记得马恩也都曾在文章或书信中说过这是个永远无法到达但可无限趋近的
+最终阶段，并非是要人性完全超越动物性<sup>2</sup>。但这点其实并不是最重要，我们接着看。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 《资本论》第一卷是马克思对资本主义一般规律的现实考察，主要基于曼彻斯特大工厂生产模式。在《资本论》第三卷中加入了金融资本、土地、平均利润率的考量，天才地、先驱地批判了金融资本。但最终还是小看
+了资本主义的“革命性”和“进步性”，就如后现代主义代表人物之一利奥塔所认为的：<b> 就当前而言，资本主义可以消融一切对立和异己的东西，能够吞噬一切。</b>
+</p>
+<p>
+                            “<b> 无论哪一个社会形态，在它所能容纳的全部生产力发挥出来以前，是决不会灭亡的；而新的更高的生产关系，在它的物质存在条件在旧社会的胎胞里成熟以前，是决不会出现的。</b>”结合历
+其实马克思自己也在《< 政治经济学批判 > 序言》中说过：
+史经验和当今现实，资本主义仍在发展，仍未发挥其全部生产力，那么在此情况下“新的更高的生产关系”是否会产生，统治阶级是否是无产阶级呢？答案是不言自明的。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 即使按照马克思对于历史唯物的考察，或者按照列宁、斯大林颇有争议的“五段论”去考察人类历史，我们不无悲伤地发现，从奴隶社会至资本主义社会，每种巨大的社会变迁中，每一个新兴的、替代了之前上层阶级
+的阶级，无一不是代表了比旧上层阶级更为先进的生产力、更为强劲的经济增长。但这种新上层阶级的兴起是较为 <b> 历史自然形成 </b>，与旧上层阶级的 <b> 融合、过渡 </b> 一般也较为和谐，有时甚至是直接脱胎于旧上层阶级。而“无产阶级专政”首
+先是由理论指导，并非像马克思所说“现实的运动”；其次为了实践它所需要的暴力实在是太暴力了。
+</p>
+</li>
+</ul>
+
+<p>
+综上，马克思的共产主义确实是一种基于马克思强烈“改造世界”、解放全人类愿望、偏离了科学的价值目的论。
+</p>
+
+<p>
+笔者认为，马克思这一仍带有“空想社会主义”色彩的伦理目的论与希腊哲学家苏格拉底有着同样的结构，而不是柏拉图。
+</p>
+<blockquote>
+
+<p>
+(苏格拉底关于善的知识）包括两个有重大意义的先决条件：一个是心理学上的，即明显的唯理智论；另一个是伦理学上的，即明显的幸福论……
+</p>
+
+<p>
+就此苏格拉底把世俗说教的一般道德提高到科学的水平。<a id="main-autopage-164"></a><sup>[<a href="17.html#LWR-ht-cite.0@wendeerban">37</a>]113</sup>
+</p>
+</blockquote>
+
+<p>
+苏格拉底认为美德即智慧，恶源于无知，试图将德性等同于客观规律，借此让人类世界成为一个幸福的伦理世界，并为贯彻这一信念而殉葬。马克思很可能也是如此，最终导致不管他怎样为“科学”一词辩护，这都使其难以摆脱“目的论”的范畴。
+</p>
+
+<p>
+马克思晚年关注过俄国革命的可能，与俄国民粹派有过交流，提出过资本主义不发达国家跨越资本主义“卡夫丁峡谷”的猜想，但这一猜想并非是有集体土地基础和意识的俄国可以独立革命成功；而是俄国革命的最终成功仍要依托于“<b> 西方发达国家无
+产阶级革命的呼应 </b>”。
+              <sup>[<a href="17.html#LWR-ht-cite.0@mamincui">38</a>]</sup>帕尔乌斯和托洛茨基所提“<b> 不断革命论 </b>”的革命动力学也正是因此建筑于西方革命成功，这是 <b> 必要条件 </b>。
+</p>
+
+<p>
+需要注意的是，这里批判的是马克思科学社会主义中的“科学”，不是彻底否定历史唯物主义，更不是全盘否定马克思。没有任何一人的社科理论可以健全，我们要辩证看待，取其精华，去其糟粕，辩证发展。马克思对于资本主义的考量至今仍有巨大意义，
+甚至直接应验；科学社会主义中也提供了些理念、理想和具体方法，只是我们将更加负重前行。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-165"></a>
+
+<p>
+<sup>1</sup>&nbsp; 括号中的文字为笔者所加。这句话的前半句起源于英国哲学家托马斯·霍布斯<sup>[<a href="17.html#LWR-ht-cite.0@karlvol46a">34</a>]531</sup>，发展自对马克思具有重大影响的德国哲学家黑格尔“市民社会是个人私利的战场，
+                                                                 <sup>[<a href="17.html#LWR-ht-cite.0@hegelyuanli">35</a>]309</sup>。
+是一切人反对一切人的战场，同样，市民社会也是私人利益跟特殊公共事务冲突的舞台，并且是它们二者共同跟国家的最高观点和制度冲突的舞台。”
+</p>
+
+<p>
+<sup>2</sup>&nbsp; 笔者已不记得马恩类似话语出现在哪几篇文献里，印象里马克思在论述康德时有提到过，恩格斯一封书信中比较直接提出，如有读者知晓还望告知。
+</p>
+
+
+
+</div>
+<!--
+...... section 杜冈-巴拉诺夫斯基对苏俄的影响......
+-->
+<h4 id="autosec-166"><span class="sectionnumber">9.3&#x2003;</span>杜冈-巴拉诺夫斯基对苏俄的影响</h4>
+<a id="main-autopage-166"></a>
+
+
+
+<p>
+杜冈-巴拉诺夫斯基被霍华德和 King 高度称赞，他早期是一个“合法马克思主义者”，后来转变为寻求“社会合作”的资产阶级自由派，因而被列宁批判为“自由派教授”。因他的这种转变、列宁对他的批评以及俄语受众小等原因，他也常常被国人忽视。
+</p>
+
+<p>
+霍华德和 King 认为杜冈-巴拉诺夫斯基在 <b> 十九世纪末二十世纪初 </b> 的观点，直接或间接影响了托洛茨基、列宁、布哈林、普列奥布拉任斯基、斯大林等人。笔者认为，如不了解杜冈-巴拉诺夫斯基理论，便缺失了苏联、特别是斯大林时期痴迷于重工
+业发展的 <b> 重要思想历史源头 </b>。
+</p>
+
+<p>
+杜冈-巴拉诺夫斯基通过对马克思《资本论》第二卷“再生产图式”的批判和推演，得出：在 <b> 减少奢侈品消费，限制社会消费 </b> 的情况下，将节约出来的这部分资本 <b> 投资于生产部类 </b>，可以扩大社会再生产。加强机器等促使 <b> 资本有机构
+成提高 </b> 的应用，可以使扩大再生产 <b> 对劳动力的需求降低 </b>，而不是像马克思所说一样随之增长，如此 <b> 消费部类 </b> 的消费需求也可以继续降低。
+                                                                                      “也就是说，<b> 社会财富增加，社会收入（人的工资）减少，也是可能的 </b>”
+                                                                                                                              ，相比于消
+                        <sup>[<a href="17.html#LWR-ht-cite.0@lijingdugang">39</a>]</sup>霍华德和 King 将其结论进一步总结为“<b> 剩余价值的实现越来越独立于消费需求 </b>”
+费需求，“生产资料需求更大程度上决定了社会生产”。                                                                                                               。
+</p>
+
+<p>
+杜冈-巴拉诺夫斯基提出“<b> 不平衡与综合发展 </b>”。各国发展条件、经济制度不一，但资本主义对于无限生产的欲望已经使当前形成一个 <b> 世界市场 </b>，各国也均要通过这个世界市场彼此发生联系。
+</p>
+
+<p>
+俄国是世界市场中一个落后于发达国家的“<b> 后发国家 </b>”。
+</p>
+<blockquote>
+
+<p>
+发端于彼得大帝时期的俄国，<b> 现代化是生存的必然选择 </b>。……新型生产必须在 <b> 大规模工厂 </b> 中进行，以便有效地利用进口技术。仅 <b> 商业资本家 </b> 拥有资源和能力来筹办新工厂。由于提供自由劳动力的国内市场并不存在，因此，
+<b> 国家 </b> 有必要进行 <b> 直接干预 </b>，以提供 <b> 强制劳动 </b>。
+</p>
+
+<p>
+            “<b> 后发者 </b>”发展模式明显与 <b> 英国 </b> 模式不同，……后发国家的工业化缺乏自发性，国家行为发挥了支配性的作用，非资本主义制度与资本主义关系 <b> 结合 </b> 在一起，公开的 <b> 强制补充了市场训诫 </b>，
+杜冈-巴拉诺夫斯基认识到，
+技术引进发挥了重要作用。他强调，<b> 俄国工业资本主义的发展意味着整个俄国经济日益融入世界市场 </b>。<a id="main-autopage-167"></a><sup>[<a href="17.html#LWR-ht-cite.0@mazhengshi">40</a>]174-175</sup>
+</p>
+</blockquote>
+
+<p>
+                                                 “粮食危机后”斯大林的 <b> 抑农重工 </b> 思想。后来布哈林反对普列奥布拉任斯基、斯大林等人应用“<b> 杜冈主义 </b>”
+杜冈强调国家规训下的现代化工业是“后发”俄国唯一出路的论调，奠定了列宁、托洛茨基、普列奥布拉任斯基、                                                                 ，希望 <b> 工农
+均衡发展 </b>。
+</p>
+
+<p>
+杜冈的思想中，已经有了民族国家与全球化的张力。布哈林对此理论的延伸加强堪称经典，并且远远超越苏联时代。直至 1985 年广场协议之后几年学界才开始重建民族国家与全球化理论，但似乎并未脱离布哈林的理论框架。
+</p>
+<!--
+...... section 二十世纪初至十月革命的俄国......
+-->
+<h4 id="autosec-168"><span class="sectionnumber">9.4&#x2003;</span>二十世纪初至十月革命的俄国</h4>
+<a id="main-autopage-168"></a>
+<blockquote>
+
+<p>
+（十九世纪末、二十世纪初）绝大多数东方国家 <b> 不具有 </b> 被马克思称为资本主义曙光的种种有利条件（即地理环境、金矿、奴隶贸易、殖民地等），相反却普遍受到先进资本主义国家的压迫、排挤和剥削（它们是作为被剥夺者而纳入现代资本主义经
+济体系的）这一客观原因外，更主要的则在于东方社会自身的历史条件。<a id="main-autopage-169"></a><sup>[<a href="17.html#LWR-ht-cite.0@bigrussia">41</a>]2-3</sup>
+</p>
+</blockquote>
+
+<p>
+俄国是一个半亚洲式的、落后沙皇专制下的小农国家，他的农业国性质以及知识分子阶层的崛起，使其受马克思影响较深，对马克思所说“<b> 资本主义制度所带来的一切极端不幸的灾难 </b>”，尤其是资本主义原始积累对农民的极强压迫剥削，带有较深
+  <sup>[<a href="17.html#LWR-ht-cite.0@mazhengshi">40</a>]137</sup>。
+恐惧。
+</p>
+<blockquote>
+
+<p>
+1917 年之前，作为社会主义 <b> 必要的前提条件，一个充分发展的资本主义 </b> 是无论如何也不可避免的。<b> 所有的非农民政党都赞同资产阶级民主革命 </b>，认为它是落后的沙皇俄国 <b> 唯一可能的革命形式 </b>。<a
+id="main-autopage-170"></a><sup>[<a href="17.html#LWR-ht-cite.0@mazhengshi">40</a>]86</sup>
+</p>
+</blockquote>
+
+<p>
+早期俄国民粹主义者，希望借助“农村公社”集体化与西方相异的特质，实行 <b> 土地国有化 </b>，试图不经过资本主义发达阶段直接跨入社会主义社会，并与晚年马克思、恩格斯有过直接的交流。晚年马克思和恩格斯在否定后，又考虑了跨越“卡夫卡峡
+                                    <sup>[<a href="17.html#LWR-ht-cite.0@mamincui">38</a>]</sup>
+谷”的可能，但这一可能建立在俄国无产阶级革命与西方无产阶级革命的彼此呼应。
+</p>
+
+<p>
+“俄国马克思主义之父”普列汉诺夫从历史唯物主义出发批判民粹主义者，认为 <b> 俄国社会主义革命的必要历史前提为资产阶级民主革命 </b>，针对如何尽快过渡到社会主义，提出了资产阶级民主革命和社会主义革命“<b> 两阶段论 </b>”
+                                                                                                                    。其中，资产
+阶级民主革命阶段，无产阶级成立独立政治组织保护自己权益，并与资产阶级结成同盟。如果在这一进程中资产阶级抵制无产阶级，已经壮大的无产阶级则进行夺权斗争。
+</p>
+
+<p>
+笔者认为可以将《1883-1929》的评价可以总结如下，两阶段论的缺陷在于它 <b> 匮乏阶级动力学 </b>，过于重视政治而忽视了经济，忽视了俄国落后资产阶级的革命意向并没有这么强烈；甚至因为落后而依附于旧有沙皇专制统治阶级。此种情景下，无产
+阶级如何接受并超越第一阶段中的实际从属地位呢？
+</p>
+
+<p>
+普列汉诺夫将实现社会主义为目标的所有理念称为“<b> 代数学 </b>”，将这些人中所产生的派系、理论差别称为“<b> 算术 </b>”，从而将社会民主党、孟什维克、布尔什维克和社会革命党（民粹主义政党）于 1917 年前长期求同存异地联系在一起。
+</p>
+
+<p>
+继承普列汉诺夫衣钵的孟什维克，在演化过程中于 1905 年走向了支持资产阶级领导权，削弱无产阶级，社会主义政党负责对政府施加压力的道路。
+</p>
+<blockquote>
+
+<p>
+早在 1905 年革命之后，孟什维克就逐渐形成了关于俄国未来革命的理论。他们认为，在俄国这样一个经济落后的国家里，革命的任务是为资本主义的充分发展开辟道路。而既然革命是资产阶级民主性质的，那么就 <b> 应该由资产阶级来领导 </b>，来掌握
+政权。社会主义政党将实行对资产阶级政府 <b> 施加压力 </b> 的政策，以争取实现工人阶级和劳动人民的经济要求和政治要求，为向社会主义过渡创造条件。二月革命中，孟什维克实践了这一理论，认为立宪民主党是“最有资格执政的民主派”
+                                                                                                                 。<b> 政权
+应该集中在由自由主义政党的代表组织的政府手中。</b> 至于社会革命党，1905 年革命的结局使它得出了与孟什维克类似的结论。在二月革命中，社会革命党人起先是尽量避免掌握权力，继而又同孟什维克一起，与立宪民主党实行合作。<a
+id="main-autopage-171"></a><sup>[<a href="17.html#LWR-ht-cite.0@bigrussia">41</a>]38</sup>
+</p>
+</blockquote>
+
+<p>
+列宁在不同时期吸收了不同派别学说，对于社会现实变化极为敏感，并在政治表现上极为果决。针对右倾资本主义思想，列宁提出激进的“<b> 工农民主专政 </b>”
+                                                                            。托洛茨基提出了更为激进的“<b> 不断革命论 </b>”
+                                                                                                        ，倡导“<b> 资产阶级革命嵌入社会主
+义革命 </b>”
+        ，在阶级动力学和一系列先知色彩的预测上表现突出，在 1917 年与列宁走到了一起。两者均提出联合农民的具体纲领，列宁在 1914 年起就采取了“<b> 革命失败主义 </b>”——“这次战争是帝国主义之间因分赃不均而爆发的，战争并不符合
+                                                         <sup>[<a href="17.html#LWR-ht-cite.0@shibaizhuyi">42</a>]</sup>
+工人的利益，无产阶级只是在给资产阶级白白充当炮灰而已，因此，应变帝国主义战争为国内战争，乘机推翻本国资产阶级政权。”
+</p>
+
+<p>
+更直接的描述：与主张“<b> 护国战争 </b>”的绝对多数社会革命党、立宪自由派和孟什维克相反，<b> 列宁主张俄国投降，目的在于将俄国战争失败的压力转变为国内工农无产阶级革命的动能，其和平政策赢得了相当民心和军心。</b>
+</p>
+
+<p>
+1917 年的俄国，形势复杂、风云变幻、莫名吊诡，难以用常识和理智去理解。二月革命突然爆发，
+                                             “伊里奇的梦醒了”
+                                                     ，当时本已对社会主义掌权绝望的列宁立刻展开一系列操作，在党内外多次以小博大、以少博多，审时度势、勇猛坚定，或许还要加上运气，
+数次力挽狂澜。这段历史建议直接观看《一个大国的崛起与崩溃》。
+</p>
+
+<p>
+1918 年 1 月 5 日下午 4 点布尔什维克十月底在彼得格勒武装夺权后成立政权。但即使如此，布尔什维克在 11 月 12 日选举出的立宪会议代表名单中，仍然只占据 \(\mathbf {24\%}\) 的份额。这使布尔什维克更加强烈意识到自己无法在立宪会议中占据主
+导地位，于是继续采取一系列悍然措施，甚至逮捕与会代表。<b>1 月 5 日下午 4 点立宪会议召开，1 月 6 日凌晨 4 点与会代表被驱离，当天宣布解散⋯⋯</b>1 月 10 日，全俄苏维埃第三次代表大会开幕，并取代了立宪会议的职能，通过了《被剥削劳动人民
+权利宣言》。
+</p>
+
+<p>
+没有充分理由相信列宁是一个投机机会主义者，或是窃国犯。相反，列宁始终是一个坚定的马克思主义者。站在当时列宁视角来看，如果不采取断然措施，立刻夺取政权，那么俄国革命的胜利果实必然是直接送入资产阶级政权之手，所谓起监督权的社会主
+义成分只能越来越稀薄和边缘化，如此绝不会出现普列汉诺夫所说第二阶段——社会主义革命阶段。另外，作为一个政治家，待时而果决行动是优点而非缺点。
+</p>
+<!--
+...... section 十月革命之后到新经济政策......
+-->
+<h4 id="autosec-172"><span class="sectionnumber">9.5&#x2003;</span>十月革命之后到新经济政策</h4>
+<a id="main-autopage-172"></a>
+<blockquote>
+
+<p>
+面对 1917 年以后的困难，布尔什维克完全可能 <b> 没有任何社会主义式的解决方法 </b>，这也许是我们在理解共产主义经济学具有的理论上的不稳定和冲突的特征时，需要考虑的最重要的因素。<b> 革命政权继承了一个濒临崩溃的经济 </b>。1914 年后
+成年男性人口中的 <b> 三分之一 </b>，被动员起来参与到战争中，落后的俄国经济已经极其脆弱，很难承受一场全面的战争。革命和内战更是毁灭性的。假设 1913 年工业产出指数为 100，1917 年下降到 75，1921 年为 31，而农业生产在 1917 年下降为
+90，四年后下降到 60。在俄国内战期间，在 <b> 西方资本主义国家的封锁下 </b>，俄国的对外贸易事实上几乎完全中止。随后的 <b> 复苏十分迅速 </b>，工业和农业指数在 1928 年分别上升到 133 和 125。然而，将 1913 至 1928 年作为一个整体来看，
+<b> 俄国仍然远远落后于西方 </b>。与 1870 年至 1913 年 2.5% 的年增长率相比，这一时期的年产出增长率只有极低的 0.8%，前一个时期人口的年增长率为 0.9%，但在 1913 年后下降到 0.3%。<a id="main-autopage-173"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@mazhengshi">40</a>]286-287</sup>
+</p>
+</blockquote>
+
+<p>
+《1881-1929》将苏联在 1917 年革命成功后到 1929 年之间的苏联经济史分为了三个不同的过渡阶段，笔者沿用这种划分，并将其与其他参考文献有关内容批判整合如下：
+</p>
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 1917 年 10 月到 1918 年 6 月：农民夺取了土地，但却是 <b> 以传统公社原则进行了重新分配，使新政府颁布的土地国有化法令成为多余，并降低了生产率 </b>。实行的少数工业国有化大多是 <b> 地方行为 </b>，
+并实行了“<b> 工人控制 </b>”，私人资本家受 <b> 工厂委员会和当地布尔什维克官员 </b> 监督。列宁将其描述为和公社国家结合的“<b> 国家资本主义 </b>”。
+</p>
+<p>
+列宁在《<b> 论“左派”幼稚病和小资产阶级性 </b>》中，对要求更为激进实行全面社会主义的“左派”进行了批判，其中列宁观点主要是：
+</p>
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">(a)</span> <b> 从投降派转向护国派。</b> 俄帝国主义时代，采取投降主义，是因为这是非正义的、帝国主义间的战争。如果此时支持战争则会有利于帝国主义，损害社会主义发展。
+                                                                                                                   “1917 年 10 月 25 日以后我们是护国派⋯⋯
+必须保卫社会主义祖国”。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">(b)</span> <b> 进一步完全打倒资产阶级和彻底消除怠工的政策是幼稚的。之前 </b> 采取这样措施是为在政治局面中占据主导地位，<b> 掌权后 </b> 所面临的则是综合现实状况，身为执政党要贴合实际，采取过渡策略。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">(c)</span> 列宁在多方面论述了 <b> 国家资本主义的必要性 </b>，苏联的“<b> 计划 </b>”特征也初具雏形。
+</p>
+<blockquote>
+<p>
+<b> 国家资本主义 </b> 较之我们苏维埃共和国目前的情况，将是一个 <b> 进步 </b>。如果 <b> 国家资本主义 </b> 在半年左右能在我国建立起来，那将是一个 <b> 很大的胜利 </b>，那将极其可靠地保证 <b> 社会主义 </b> 一年以后在我国最终地 <b>
+巩固起来而立于不败之地 </b>。
+</p>
+</blockquote>
+<p>
+如果不采取 <b> 国家资本主义 </b>，那么小农国家内占优势的 <b> 小资产阶级投机商（尤其是投机粮商）</b> 将既与国家资本主义作斗争，也将与社会主义作斗争。
+</p>
+<p>
+在工农领导和监督下的国家资本主义，通过 <b> 正确计算和分配 </b> 将为一种保障。应仿效 <b> 德国国家资本主义 </b>。
+</p>
+<blockquote>
+<p>
+如果德国无产阶级革命胜利，那么就能轻而易举地一下子击破任何帝国主义的蛋壳（笔者按：意即世界社会主义的胜利将不需面对大的困难）……如果德国革命迟迟不“诞生”，我们的任务就是要学习德国人的国家资本主义，全力仿效这种 <b> 国家资本主
+义 </b>，要不惜采用 <b> 独裁 </b> 的方法加紧仿效，甚于当年的彼得”。
+</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 1918 年 6 月到 1921 年初：<b> 国有化和紧缩经济 </b>。为应对协约国和国内白军武装压力，实行 <b> 战时共产主义 </b> : <b> 试图征收农民全部剩余价值，优先恢复工业 </b>，导致 1921 年苏联爆发大饥荒，爆发
+<b>50 多起大规模农民起义，工业也处于瘫痪状态 </b>；<b> 取消 </b> 公用事业、住房、铁路交通和基本食物配给的 <b> 收费 </b>；工业品 <b> 不通过货币 </b> 而是进行直接配置，工资以 <b> 实物 </b> 发放；对城市劳动力实行 <b> 军事纪律 </b>；
+<b> 工人阶级的自治从属于等级制的控制 </b>；对反革命分子实施“<b> 红色恐怖 </b>”。
+</p>
+<p>
+战时共产主义政策可化为两阶段：前段时具有政治、战时经济方面的 <b> 客观合理性 </b>；后段的 <b> 军事管制 </b> 则是向共产主义过渡的一次 <b> 失败的主观尝试 </b>。列宁自述：
+</p>
+<blockquote>
+<p>
+由于我们 <b> 企图过渡到共产主义 </b>。到 1921 年春天我们就在经济战线上遭受了 <b> 严重的失败 </b>，这次失败比高尔察克、邓尼金或皮尔苏茨基使我们遭受的任何失败都要 <b> 严重得多，危险得多 </b>。这次失败表现在：我们上层制定的经济政
+策同下层脱节，它没有促成生产力的提高，而 <b> 提高生产力本是我们党纲规定的紧迫的基本任务 </b>。<a id="main-autopage-176"></a><sup>[<a href="17.html#LWR-ht-cite.0@lenin42">43</a>]184</sup>
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 1921 年初：列宁得出结论，“<b> 要么是经济政策的根本改变，要么是他的政府被暴力推翻 </b>”。开始实行 <b> 新经济政策 </b>，列宁将这一阶段视为“<b> 过渡性的混合体制 </b>”，并认为“现在我们处于必须
+<b> 再后退 </b> 一些的境地，不仅要退到 <b> 国家资本主义 </b> 上去，而且要退到 <b> 由国家调节商业和货币流通 </b>。<sup>[<a href="17.html#LWR-ht-cite.0@leninlunshe">44</a>]283</sup> 。
+                                                                        ”
+</p>
+<blockquote>
+<p>
+新经济政策并不是一开始就是完善的政策体系，而是通过 <b> 不断的摸索、实践 </b> 逐步完善起来的。这里最重要的是对 <b> 市场机制 </b> 的认识，也就是说，<b> 在社会主义经济建设中是否允许引进市场机制。</b><a
+id="main-autopage-177"></a><sup>[<a href="17.html#LWR-ht-cite.0@bigrussia">41</a>]144-145</sup>
+</p>
+</blockquote>
+<p>
+新经济政策的主要内容有：恢复了农民对于农业 <b> 剩余交易的权力 </b>，将征收余粮改为 <b> 粮食税 </b>，商业、农业可以 <b> 雇佣劳工 </b>；对中小手工业企业实行 <b> 非国有化 </b>，<b> 大力发展合作社 </b>；把企业交付 <b> 租赁 </b>，鼓
+励 <b> 合资企业 </b> 和敦促共产主义者“<b> 学会贸易 </b>”，<b> 保留国有工业尤其是大工业的控制 </b> 而不松手，涌现一批辛迪加、托拉斯；恢复 <b> 商品、货币、市场、价值、金融机制 </b>，允许 <b> 私人资本 </b>。
+</p>
+<p>
+联共（布）第十三次代表大会中，列宁说“正如所预料的那样，私人资本并没有投入生产（因为全部工业的 \(\sfrac {9}{10}\) 已掌握在国家手中）      ”中后期开始逐步 <b> 加强对私人资本和富农的打压 </b>，逐步加强 <b> 国家计划职能和
+                                                                           ，而投入了商业。
+集中化 </b>。
+</p>
+<p>
+一个新资产阶层“<b> 耐普曼 </b><sup>3</sup>”产生了，列宁采取了 <b> 利用且限制 </b> 的态度，至 30 年代左右斯大林消除了耐普曼。
+</p>
+<p>
+1923 年，因国家对工、农产品价格的调控过度，爆发“<b> 剪刀差危机 </b>”，工业品价格相对于农产品来说过高，富农、投机商利用这一政策作为工农中间商赚取差价，<b> 农民不愿在市场出售粮食 </b>。1927 年末到 1928 年春又发生了“<b> 粮食危机
+</b>”“<b> 粮食罢工 </b>”，农民藏起粮食，不愿把粮食交给国家，农产品供应不足。
+</p>
+</li>
+</ul>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-178"></a>
+
+<p>
+<sup>3</sup>&nbsp; 耐普曼：俄文 <kbd>Нэпман</kbd> 的音译，字面意思是新经济政策的狂热爱好者，实际上是指新经济政策后城市中新兴起来的工商业私营业主。列宁用“耐普曼”一词表达对他们的嘲讽。
+</p>
+
+
+
+</div>
+<!--
+...... section 新经济政策时期的争论......
+-->
+<h4 id="autosec-179"><span class="sectionnumber">9.6&#x2003;</span>新经济政策时期的争论</h4>
+<a id="main-autopage-179"></a>
+
+
+
+<p>
+苏联新经济政策前后历经了列宁和斯大林两位统治者，源于杜冈思想之 <b> 苏联必须大力发展大机器工业是党内绝大多数共识 </b>。但围绕如何调节工农之间的强烈矛盾，避免工农撕裂，对农业部门的经济支持力度多大，苏联发生多次激烈争论，形成派
+别之争。
+</p>
+
+<p>
+以下只介绍主要流派的主要思想以及以斯大林为首的联共（布）中央的应对：
+</p>
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 资产阶级知识分子和党派要求支持新经济政策，进而和平演变至资本主义。特别是“<b> 路标转换派 </b>”号召放弃与苏维埃政权的对抗状态，转而加入此时苏维埃社会主义建设中去。列宁采取了欢迎并警惕的态
+度<sup>[<a href="17.html#LWR-ht-cite.0@yanyongfeinep">45</a>]2.1 节 </sup>，斯大林权力稳固后持谴责态度，并于 1934 年开始对其逮捕、清洗。
+                                                                                                         <sup>[<a href="17.html#LWR-ht-cite.0@wenyilubiao">46</a>]</sup>
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 1923 年秋，针对新经济政策，<b> 托洛茨基反对派 </b> 形成。
+</p>
+<p>
+托洛茨基提出“<b> 工业专政 </b>”，奥布拉任斯基提出“社会主义原始积累”等“<b> 超工业化 </b>”观点<sup>[<a href="17.html#LWR-ht-cite.0@yanyongfeinep">45</a>]2.2 节 </sup>。两种观点都基于错综复杂矛盾下 <b> 一国不可能建成社会主
+义，且具急迫性 </b>。
+</p>
+<p>
+托派提出，工农业价格剪刀差问题，根本上乃是党的错误政策和错误领导之下的工农业产品价格比例失调，富商、耐普曼等私人资本从中获取绝大部分利润是次要原因。
+</p>
+<p>
+托派着重于从 <b> 工业分配领域 </b> 中获取利润，具体内容：进一步大力加强国家计划对国有化工业的扶持，进一步加速工业发展，工业地位要高于金融、农业，提升工人无产阶级政治地位及待遇、福利，排挤削弱私人资本，对富农、私人资本征收重税，
+贫农免税，用出口粮食的外汇来购买国外原材料和先进工业机器。压低农产品收购价格、抬高工业品价格。
+</p>
+<p>
+<b> 随着工业的发展，农民转变为无产者、农业工人，国民经济发展将具有统一基础。结果是全面国有化和集中制 </b>，私人资本和前资本主义成分被消除。我们可以从中明显看到杜冈-巴拉诺夫斯基的影响。若非如此，则俄国国有工业发展无法获得足够剩
+余，俄国农民的阶级分化将加剧，私人资本会扩大市场影响，俄国将走上资本主义道路。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 联共（布）中央多数和斯大林、布哈林对托洛茨基反对派提出批评。他们认为危机的原因是国家扶持下的工业恢复速度优先于农业恢复速度，合作社和国营商业未能有效起到工农联结作用，应该 <b> 优先帮助和支持农
+民经济的恢复 </b>。新经济政策中本应以恢复工业品价格为目标的 <b> 托拉斯、辛迪加走向反面，错误利用垄断优势抬高流通价格，获得利润。</b> 工业利润不应从之前的 <b> 分配 </b> 领域，而应从 <b> 生产 </b> 领域获得，如提高劳动生产率、降低
+杂费开支、缩减流通环节等等。认为托派意见低估了农民经济，<b> 将农民经济看作被剥削的“殖民地”</b>，这会有害于国家政治和经济。
+</p>
+<p>
+笔者认为，联共（布）中央此时论断更为正确性。托洛茨基反对派的意见正是人为应用的造成大量失地农民的资本原始积累，毫无疑问会进一步加大农村矛盾，破坏工农联盟，理论上过于简单莽撞和一厢情愿。但是斯大林在“粮食危机”后学习贯彻的正是这
+种“应用杜冈主义”的托洛茨基反对派意见。
+</p>
+<p>
+1925 年 4 月联共（布）第十四次代表会议根据莫洛托夫报告决议<sup>[<a href="17.html#LWR-ht-cite.0@jueyi2">47</a>]538-550</sup>，认为应当进一步 <b> 提高和恢复整个农民经济 </b>。对歉收地区农户、贫困农户继续加强国家扶持。提高农业商
+品化，消除农村中的战时共产主义残余，停止以行政手段对付私营商业和富农等。
+</p>
+<blockquote>
+<p>
+需要采取法律的（特别是经济的）措施，向那些在农村中放高利贷和对贫农进行奴役性剥削的富农进行斗争。……党和苏维埃国家的基本的实际任务，就是通过发展农村合作化（机器协作社、供耕社、牲畜管理联合社等等）的办法全力促进劳动农户的联合
+……尽力支持和巩固大规模的国营农业——国营农场。国营农场应当成为经营大规模的先进经济的榜样，并给予周围农民以经济和文化上的帮助……继续支持集体农庄运动（农业协作社，农业劳动组合，农业公社等等），因为在联合起来的农户和雇农完全
+自愿参加的条件下，这一运动正在有效的发展着。”
+</p>
+</blockquote>
+<p>
+具体措施有减税赋、增加农业贷款、降低农业贷款利率，降低工业品价格，将一些国家土地转交给农民使用等等。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 会议之后，以 <b> 季诺维也夫和加米涅夫为首，以列宁格勒为阵地的新反对派 </b> 形成。
+</p>
+<p>
+季诺维也夫和加米涅夫为首的新反对派不同意决议，主张加强与资本主义的斗争。他们认为 1925 年以来的新经济政策已经退却太多，国家资本主义走强，社会主义成分正在成长但远未成长，在整体向资本主义让步。富农力量依托政策变得过于强大，应当在
+农村挑起阶级斗争，依靠贫农消灭农村中的剥削阶级——富农分子。<a id="main-autopage-180"></a><sup>[<a href="17.html#LWR-ht-cite.0@yanyongfeinep">45</a>]2.4.2 节 </sup>
+</p>
+<p>
+1926 年春夏，新反对派与托洛茨基反对派结盟，组成 <b> 反对派联盟 </b>。
+</p>
+<p>
+反对派联盟观点主要还是托洛茨基式的，要求 <b> 对富裕农村地区加征税收，进一步加快工业化的发展速度，扩大日用品生产，提高日用工业品价格和工人工资等，“工人专政”、“社会主义原始积累”成为联盟共同认知。</b>
+</p>
+<p>
+可能因组织压力越来越巨大，反对派联盟为争取地位进行了一系列 <b> 跨越党组织的宣传和集会 </b>。1927 年 9 月份秘密印刷散布《反对派政纲》
+                                                                          ；将反对政府的意见扩大至国际社会；11 月 7 日十月革命十周年纪念日，在莫斯科、列宁格勒组织游行示威，
+被政府驱散；11 月 14 日，中央委员会和中央监察委员会将托洛茨基和季诺维也夫等人开除出党；11 月 16 日，托派越飞自杀，临终遗言埋怨托洛茨基不如列宁果决、不敢为天下先。托洛茨基、季诺维也夫、加米涅夫在越飞葬礼上发表讲话，号召队列士兵对
+前军事委员会主席托洛茨基致敬“乌拉”，士兵无动于衷，这基本上宣告反对派联盟已无力翻盘。
+</p>
+<p>
+托洛茨基于 1929 年 1 月被驱逐出苏联，1940 年 8 月在墨西哥寓所被暗杀。季诺维也夫和加米涅夫于 1936 年 8 月被枪毙。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 布哈林集团。
+</p>
+<p>
+布哈林具有早期联共（布）领导人所缺乏的温柔浪漫色彩。他认为当前社会主义还是落后的，整合资本主义的过程应该 <b> 慢一点 </b>，一步步来。
+</p>
+<p>
+1925 年 4 月，他号召农民“<b> 发财吧，积累吧 </b>”，借助于富农经济的提升，国家从富农中取得资金来发展中农、贫农。这进一步退却的“新经济政策”思想立足点，在于“<b> 我们还没有力量什么都自己干 </b>”。
+                                                                                                               <sup>[<a
+href="17.html#LWR-ht-cite.0@buhalinwen1">48</a>]368-371</sup>
+</p>
+<p>
+                                                                                                              <sup>[<a
+1926 年 2 月，布哈林提出“总的说来，在我们这里，阶级斗争会趋于消失，但这并不意味着在一定时间内它不会尖锐起来⋯⋯而相反地，会趋于尖锐化，因而在这个一定阶段，我们的任务就是要在这种尖锐的阶级斗争中以相应的方式行事。”
+href="17.html#LWR-ht-cite.0@buhalinwen2">49</a>]18-19</sup> 这一观点被中央评价为“<b> 阶级斗争熄灭论 </b>”。
+</p>
+<p>
+布哈林总体上希望 <b> 工农平衡 </b>，农业是全部经济的基础。应当提高粮食收购价格，发展小农经济。相比于 <b> 集体农庄 </b>，<b> 合作社 </b> 才是当前小农经济现实状况下，农民走向社会主义的 <b> 主要道路 </b>。合作社的发展将为农民提供
+更多个人利益，表明社会主义体制的优越性，使农民自愿进入这一体系，富农合作社也将长入到这一体系，从而在未来将农民引入集体耕作。这一观点被中央评价为“<b> 富农和平长入社会主义 </b>”。
+</p>
+<p>
+1928 年的粮食危机，使布哈林集团形成并明朗化。1928 年 1 月，中央采取旨在打击富农和投机商的“非常措施”。1928 年 4 月 13 日起，布哈林集团和斯大林矛盾公开化、尖锐化，双方贯彻和加强了之前的观点。斯大林坚持 <b> 工农业剪刀差，快速工业
+化，大力发展重工业，农业集体化，农业“贡税”论 </b>。笔者赞同布哈林观点，此时斯大林就是“<b> 托洛茨基主义 </b>”。斯大林提出了坚持 <b> 农业“贡税”</b> 的必要性：
+</p>
+<blockquote>
+<p>
+农民不仅向国家缴纳一般的税，即直接税和间接税，而且他们在购买工业品时还因为价格较高而多付一些钱，这是第一；而在出卖农产品时多少要少得一些钱，这是第二。这是为了发展为全国（包括农民在内）服务的工业而向农民征收的一种额外税。这是
+一种类似“<b> 贡税 </b>”的东西，是一种类似超额税的东西；为了保持并加快工业发展的现有速度，保证工业满足全国的需要，继续提高农村物质生活水平，然后完全取消这种额外税，消除城乡间的“<b> 剪刀差 </b>”
+                                                                                                          ，我们 <b> 不得不暂时 </b> 征收
+这种税。<a id="main-autopage-181"></a><sup>[<a href="17.html#LWR-ht-cite.0@stalin11">50</a>]139-140</sup>
+</p>
+<p>
+也许为了更加“慎重”起见，应当延缓重工业的发展，把主要是供应农民市场的轻工业变成我国工业的基础吧？无论如何不应当！这样做就是 <b> 自杀 </b>，就是破坏我国全部工业，连轻工业在内。这样做就是离开我国工业化的口号，<b> 把我国变成世界
+资本主义经济体系的附庸 </b>。
+</p>
+</blockquote>
+<p>
+1929 年 11 月，布哈林被解除联共（布）中央政治局委员和《真理报》主编职务。1937 年布哈林以“人民公敌”的罪名被捕入狱并被开除出苏联共产党。1938 年 3 月 15 日，布哈林与集团内李可夫等人被枪决。
+</p>
+</li>
+</ul>
+
+<p>
+斯大林通过在政治对手之间的合纵连横，逐个扫清了他们。
+</p>
+
+<p>
+笔者认为，除重要的个人权力欲望以外，以上所述几位对马克思颇有研究的苏联领导人其实有一条共通的认识——他们都明晓苏俄历史缺少了重要的一环——<b> 发达资本主义 </b>！
+</p>
+
+<p>
+布哈林与斯大林决裂的根本原因，也不是表面上斯大林、托洛茨基和联共（布）中央指责他的“阶级斗争熄灭论”和“富农和平长入社会主义”，而是因为他们对于 <b> 苏联经济发展的急迫性 </b> 认识不同。
+</p>
+
+<p>
+列宁、托洛茨基、中后期斯大林等人认为在苏联强烈内忧外患、时刻面临政权颠覆危险的紧急情况下，必须抓紧改革，必须强力发展生产力！哪怕是以工农剪刀差为代价。而布哈林希望的则是社会普适的、
+                                                                                         “渐渐地”发展。对于当前急迫性和发展快慢的认识
+不同，使他们走向了最终的决裂。
+</p>
+<!--
+...... section 斯大林模式......
+-->
+<h4 id="autosec-182"><span class="sectionnumber">9.7&#x2003;</span>斯大林模式</h4>
+<a id="main-autopage-182"></a>
+
+
+
+<p>
+随着斯大林领袖地位的进一步稳固，斯大林模式开始逐渐成型。
+</p>
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> “<b> 围攻富农 </b>”的政策受到一些富农激烈反抗——放火、煽动、阻碍粮食收购、甚至暗杀，
+                                                                                  “粮食收购危机”被认为是富农对苏维埃的反抗。1929 年，政策转为 <b> 全盘集体化 </b> 和 <b> 消灭作为阶级的富农
+</b>；全乡全村土地纳入集体农庄；全国 3%–5% 的农民被划为富农，不允许富农加入集体农庄，并将其土地、机器、财产收归集体农庄；将富农、反抗粮食收购和集体农庄的家庭大规模迁徙至偏远、恶劣地区。在实际执行过程中，富农家庭的划分被严重扩
+大。从 1930 至 1932 年全盘集体化结束，被迁徙富农家庭约为 <b>40 万户 </b>，人数约为 <b>180 万人 </b>。
+                                                                    <sup>[<a href="17.html#LWR-ht-cite.0@xulongbinsu">51</a>]</sup>
+</p>
+<p>
+1932-1933 年，苏联爆发大饥荒，当前学界大多数认可乌克兰“大饥荒”死亡人数在 <b>300 万 </b> 左右，约占苏联饥荒中死亡总数的 <b> 一半 </b>。
+                                                                                    <sup>[<a href="17.html#LWR-ht-cite.0@wukelanjihuang">52</a>]</sup>
+</p>
+<p>
+苏联体制下的官僚刻板追求数字政绩是富农迁徙扩大化以及大饥荒的主要原因之一。为什么在苏联这种极权体制下，容易产生无视大量人民生命安危和伦理道德的官僚化，这需要很大重视和反思。笔者认为，简单将其评断为意识形态宣传的群体化错误，而
+不从 <b> 个人、人性 </b> 上找原因，远不能达到全面和深刻的水平。两方面都要深刻反思。
+</p>
+<p>
+合作社系统所属机器拖拉机站和维修空间移交给全苏机器拖拉机站总管理局；扩大 <b> 预购合同制 </b>，1933 年预购合同制转为 <b> 义务交售制 </b>，定额上交农产品，剩余产品归集体农庄和个人所有，使集体农庄和个人获得了更多利润。
+</p>
+<p>
+斯大林实现了苏联式的资本原始积累。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 斯大林模式也取得一些飞速发展，以下内容摘自多个文献。
+</p>
+<blockquote>
+<p>
+1931 年苏联购买的机器设备约占世界机器设备出口总量的 30%，到 1932 年这一比重上升为 50%。1929-1933 年，苏联用于购买机器设备的外汇开支达 60.1 亿卢布。<a id="main-autopage-183"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@bigrussia">41</a>]277</sup>
+</p>
+<p>
+正当大萧条席卷西方资本主义经济时，苏联经济的增长率急剧提高。1928 至 1937 年间，工业生产增长 <b>3 倍 </b>，从不足国民生产的 1/3 发展到接近 1/2。1937 至 1953 年间，工业再次增长 <b> 两倍 </b> 多，到斯大林去世时接近于总产出的 60%。
+这一切只有通过 <b> 大规模投资 </b> 才会成为可能。每年平均有 20% 以上的产出用于积累，<b> 工人与农民的消费显著下降 </b>；工人的实际工资直到 20 世纪 50 年代初才再度达到 1928 年的水平，而农民的生活水平下降得更多，需要更长的时间恢复
+     <sup>[<a href="17.html#LWR-ht-cite.0@mazhengshi2">53</a>]31</sup>
+到原有水平。
+</p>
+<p>
+                                     ）<b> 苏联已从旧俄时代的落后的小农国家变为技术和经济最发达的先进国家之一 </b>……<b> 苏联已由农业国变为工业国 </b>，从而巩固了 <b> 国家在经济上的独立 </b>，因为苏联
+（1933 年 1 月 10 日，联席会议决议在对第一个五年计划总结中提到，
+已经能够在本国的企业内生产大部分必须的设备。……<b> 苏联已由小农国家变成了拥有规模最大的农业的国家 </b>……<b> 失业现象已经消失 </b>……（因欧美经济大萧条影响）在美国，根据官方统计，但是加工工业中的在业人数，就由 1928 年的 850
+万人减少到 1932 年的 550 万人。而根据美国劳工联合会的统计，美国整个工业中的失业人数，在 1932 年底已经达到 <b>1200 万 </b> 人……在英国，根据官方统计，失业人数由 1928 年的 129 万人增加到 1932 年的 <b>280 万 </b> 人。在德国，根据官
+方统计，失业人数由 1928 年的 1376000 人增加到 1932 年的 <b>550 万 </b> 人。
+                                                      <sup>[<a href="17.html#LWR-ht-cite.0@jueyi4">54</a>]321-329</sup>
+</p>
+<p>
+到 1934 年，<b> 社会主义成分的比重 </b>，在国民收入中已占 99.1%，在工业总产值中已占 99.8%，在农业总产值中已占 98.5%，在商业企业零售商品流转额中已占 100%。
+                                                                                               <sup>[<a href="17.html#LWR-ht-cite.0@huanglifunep">55</a>]5.4.2 节
+</sup>
+</p>
+</blockquote>
+<p>
+这时候其实走的正是应用杜冈“<b> 社会财富增加，社会收入（消费）减少 </b>”的道路。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 1929 年，除住房建设合作社所有的住房以外，一切住房都转变为 <b> 国家所有制 </b>，并逐渐形成党对住房事业的高度集中管理。并且国家对 <b> 住房建设合作社 </b> 的扶持逐年减少。
+</p>
+<p>
+1937 年，第二个五年计划完成时，住房租赁合作社和住房建设合作社及其联社被撤销，由地方苏维埃和国家机关及工业企业直接管理国有住房。<b> 百分之百国有化 </b>。党高度集中的管理最终形成，成为高度集中的指令性计划经济的一个组成部
+分。<sup>[<a href="17.html#LWR-ht-cite.0@huanglifunep">55</a>]第 7 章末 </sup> 。
+</p>
+<p>
+但是 <b> 工人的等级化以及官僚的等级化 </b> 在住房方面也有明显体现，其中官僚整体待遇比工人待遇要好得多。但斯大林时期官僚主义并未形成自成自治体系，斯大林倾向于瓦解分裂官僚体系，勃列日涅夫时期才是官僚主义巅峰。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 在考察受斯大林执政期间迫害致死和间接致死的具体人数上，常掺杂过多集团的功利目的或个人主观随意。有彻底妖魔化，也有为其辩护甚至美化的倾向，可谓光怪陆离。其实不管这个数字是 800 万还是 2000 万，
+<b> 无论如何也无法否定斯大林时期存在暴力极权、反人道和邪恶的一面 </b>。
+</p>
+<p>
+                                                  <sup>[<a href="17.html#LWR-ht-cite.0@wuenyuanzhengbian">56</a>]</sup>可谓是一篇雄文，推荐大家观看。1937-1938 年确实是大清洗
+关于大清洗断代和具体迫害致死人数，笔者倾向于吴恩远的观点。吴恩远《苏联“大清洗”问题争辩的症结及意义》
+运动高潮，这点是共识。吴也在《苏联“三十年代大清洗”人数考》一文中列举斯大林其他时期政治镇压的数据。
+</p>
+<blockquote>
+<p>
+1937-1938 年的大清洗运动虽然只有一年多时间，但仅以死刑犯为例，被判 <b> 死刑 </b> 的政治犯人数约 <b>68.2 万 </b>，占 1921-1940 年判死刑的政治犯总人数 <b>749421</b> 人的 91%，占 1930-1950 年代被判死刑 786098 人的 87%，也就是约占
+“整个斯大林时代”被判死刑总人数的 90%，更占马文认定的大清洗年代被判死刑总人数的 99% 以上（1935 年仅有 1229 人判死刑，1936 年为 1118 人，1939 年为 2552 人）。
+</p>
+</blockquote>
+<p>
+另外，1937-1938 年，按吴的数据，以政治镇压罪名被逮捕的政治犯人数为 <b>130-150 万 </b>。整个斯大林时期，被判刑的政治犯人数为 <b>380 万 </b> 左右。
+</p>
+<p>
+斯大林发起的大清洗及一系列扩大化运动，波及党政军及文化、科学、艺术行业，使苏联政治学、经济学发展从此迟滞，斯大林本人的极权统治得以建立。其积极性的一面就是通过这些恐怖统治手段，工业劳动纪律得以增强，农村反抗难以再兴风浪，官僚的
+反对意见日渐消失、高度围绕斯大林极权中心。“大清洗”的政策宣传使一些平民、贫民反倒对其充满热情和希望。苏联进入斯大林个人崇拜时期。
+</p>
+<p>
+据赫鲁晓夫和一些文章，斯大林临终前曾想 <b> 再次发动一场针对官僚的“大清洗”</b>⋯⋯
+</p>
+</li>
+</ul>
+<!--
+...... section 早中期苏联科社实践总结......
+-->
+<h4 id="autosec-185"><span class="sectionnumber">9.8&#x2003;</span>早中期苏联科社实践总结</h4>
+<a id="main-autopage-185"></a>
+
+
+
+<a id="sec:sushijian"></a>
+
+<p>
+笔者认为，列宁、托洛茨基、奥布拉任斯基、1928 年后的斯大林其实具有着一贯性和连续性。这种一贯性基于杜冈-巴拉诺夫斯基的理论和马克思历史唯物主义以及科社理论的认识。
+</p>
+
+<p>
+<b> 马克思历史唯物要求社会主义的建立要以“生产力的巨大增长和高度发展为前提”，就是建立在资本主义发达条件下 </b>，这一点也被俄国十九世纪末、二十世纪初大部分党派和知识分子认同。苏联领导人一方面具有对历史唯物主义的深刻认识，另一
+方面在十月革命时便有着对历史唯物主义的背离。当然，这种背离在马克思论述科社时便已存在。
+</p>
+<!--
+...... subsection 苏联领导人对马克思思想的正反应用......
+-->
+<h5 id="autosec-186"><span class="sectionnumber">9.8.1&#x2003;</span>苏联领导人对马克思思想的正反应用</h5>
+<a id="main-autopage-186"></a>
+
+
+
+<a id="subsec:shenkerenshi"></a>
+
+<p>
+                                        。文章中观点可以总结为，<b> 落后、物质条件不足的俄国所取得的革命胜利，战胜了教条的马克思历史唯物主义。</b> 葛兰西错了，<b> 苏俄正因违背了历史唯物主义才在
+十月革命胜利后，葛兰西立刻写了一篇热情洋溢的文章——《反 < 资本论 > 的革命》
+建国之初就深深埋下这一祸根。</b>
+</p>
+
+<p>
+在苏俄领导人仓促上台后，面对着极为恶劣的环境，没有丰富的资本主义物质条件，苏俄无法成为一个真正的社会主义国家，在国内外的夹攻中甚至会在很短的时间内覆灭。在资本主义发达、世界经济市场已经形成的情况下，一国也无法建成社会主义，对
+后发达国家来说这更是艰难。列宁、托洛茨基、奥布拉任斯基、中后期斯大林均持有这种基于历史唯物主义的共同认识。<b> 因此他们更为急迫的想要获得资本发达，为此不惜代价。</b>
+</p>
+
+<p>
+在农村问题上，二十世纪早期列宁真正想要的是沙皇俄国推动激进的“<b> 美国式道路 </b>”
+                                             <sup>[<a href="17.html#LWR-ht-cite.0@chenxintianamerica">57</a>]</sup>。直接来说，就是列宁希望 <b> 土地国有化，更为彻底的消除传统地主、农奴主、
+土地贵族等落后生产方式，获取大量失地农民支持，然后国家将土地无偿或低价转给资本主义生产方式的农场主，实现资本发达化、大量农民无产化的发达资本主义生产方式 </b>。如果再直接些表述的话，列宁希望沙俄采用马克思批判的鲜血淋漓的 <b>
+资本主义原始积累 </b>。为此，俄国不仅可以实现资本发达的条件，也可以大幅增进社会主义夺权的动力。
+</p>
+
+<p>
+列宁认为，保守改良的“<b> 普鲁士道路 </b>”——人人皆有田可种，对于农民占比 \(\sfrac {4}{5}\) ，且贫农为绝大多数的小农经济苏俄来说，只能是生产方式的倒退，不管这田地是归农民个人私有还是全部归国家。
+</p>
+
+<p>
+如前所述，列宁除战时共产主义阶段的失败尝试以外，一直希望实现的是愈加强大的国家资本主义，这也是马恩学说中的“<b> 物质基础 </b>”。
+</p>
+
+<p>
+至于托洛茨基，他其实对工农矛盾有着深刻认识，但寄希望于“不断革命论”：
+</p>
+<blockquote>
+
+<p>
+落后俄国的工人阶级有可能先于工业发达国家的无产阶级获取政权。然而，在托洛茨基看来，在孤立的状况下，是无法维持这一政权的。<b> 最终，必然和农民发生冲突 </b>，因为 <b> 农民对无产阶级专政的支持只限于完成土地革命。维护无产阶级统治所
+要求的集体主义措施，将导致与农民的分道扬镳 </b>，无产阶级掌握政权措施的结果，将会同时削弱这种统治的非无产阶级基础。在此意义上，<b> 土地问题既是俄国社会主义革命的最大帮手，也是它的一个主要挑战者。</b>
+</p>
+
+<p>
+不断革命论结果陷入矛盾之中，只有革命超越了民族的界限，并且 <b> 成为世界范围内持续的“不断的”革命时，这个矛盾才可能解决。</b><a id="main-autopage-187"></a><sup>[<a href="17.html#LWR-ht-cite.0@mazhengshi">40</a>]224-225</sup>
+</p>
+</blockquote>
+
+<p>
+托洛茨基试图通过“<b> 不断革命论 </b>”：将阶级斗争推入扩大至西方，西方无产阶级力量强大后，世界无产阶级联盟，反过来哺育落后俄国，来消解社会主义革命中的剪刀差问题。但托洛茨基对于西方无产阶级胜利的论断相当不成熟，一厢情愿。
+</p>
+
+<p>
+前文已经论述过杜冈-巴拉诺夫斯基限制消费扩大生产的观点，托洛茨基“超工业化”的观点，之后斯大林也在相当程度上吸取了托派观点。笔者在这里作进一步说明。
+</p>
+
+<p>
+<b> 世界市场资本主义价值规律仍在制约苏俄，斯大林多次承认这点，克里夫和沃勒斯坦也是因此论述苏联的国家性质是国家资本主义。</b>
+</p>
+
+<p>
+苏联作为一个贫农、中农占绝大部分人口比的落后小农经济国家，其意识形态面临世界政治、经济封锁、军事侵犯以及威胁，如果苏联（资本）经济不发达，则无法免除沦为“<b> 资本主义国家附庸 </b>”的命运，甚至“<b> 等同于自杀 </b>”
+                                                                                                                    。而国内层出
+不穷的农业危机、农民叛乱、官僚离心也常使苏维埃政权濒临毁灭的危险，从而使苏联领导人在内忧外患之下高度精神紧张和敏感。
+</p>
+
+<p>
+另外对于苏联这一后发国家来说，已不具备早先英美等资本主义发达国家类似的优势条件。发展轻工业是西方资本主义发达国家的早期路径。轻工业企业使用劳动力相对少，并且西方轻工企业数量多，发达程度高。对于苏联这类后发国家来说，几乎已经无
+法再从轻工业中获取世界市场的价值优势。
+</p>
+
+<p>
+苏联重工业本身也不占价值优势，但是通过压低农业品价格、实现农业集体化、从农民中游离出农业工人和工业工人，减少农民和工人收入，从古拉格和大迁徙中获取廉价劳动力及集约化土地等一系列措施可以获取大量超额利润。再将这部分利润附加上大
+量国家资本，重点投入到资本密集、人力密集的重工业，辅以计划和联合，将 <b> 使苏联重工业取得世界市场的价值优势 </b>。从而重工业可以反哺农业集体化以及苏联经济、工人农民，苏联将成为强于资本主义国家的社会主义国家。
+</p>
+
+<p>
+不管用怎样的理论去维护“社会主义原始积累”
+                    、   ，它所遵照和向往的仍绝对属于获取“<b> 资本主义原始积累 </b>”
+                     “贡税”                                 ，只是这种积累前面冠以了“<b> 国家 </b>”
+                                                                                  ，由苏维埃社会主义国家掌握一切生产资料，对资本予以调节，对工农有一定的回馈。苏
+联其实不可避免的成为恩格斯五六十年前所说的“<b> 总资本家 </b>”。
+</p>
+
+<p>
+斯大林的政策，即使在政权稳固、全盘集体化、重工业得以迅速发展，成为欧洲第一强国、世界第二强国后，仍然忽略了工农收入、特别是农民的等比例发展。在他生命的尽头，仍想再次激进加速重工业发展⋯⋯
+</p>
+<!--
+...... subsection 苏联的国家性质......
+-->
+<h5 id="autosec-188"><span class="sectionnumber">9.8.2&#x2003;</span>苏联的国家性质</h5>
+<a id="main-autopage-188"></a>
+
+
+
+<p>
+如果具有政治经济学基础和客观态度，便知苏联确实是一种 <b> 国家资本主义与社会主义的混合经济，其中国家资本主义占据绝对主导地位 </b>，并且斯大林采取了暴力集权统治。全盘否定他的小社会主义性质或大资本主义性质，都是显著错误。如果将
+其视为 17、18、19 世纪的生产方式，则更是愚蠢无知，或者包藏祸心。如前所述，其实苏联在相当多层面尊重资本价值规律、尊重历史唯物主义，才走向这样道路。
+</p>
+
+<p>
+整个过程像是一个笑话。本为反对资本主义鲜血淋漓“资本积累”的国家，因强烈的革命理想，居然走上在某些方面比资本主义还要资本主义的“原始积累”道路。虽然无法否认斯大林全世界无产阶级胜利的革命理想⋯⋯
+</p>
+
+<p>
+斯大林模式中社会主义指令性经济这只“<b> 看得见的手 </b>”总有一天要面对资本主义市场这只“<b> 看不见的手 </b>”的挑战。计划经济中的官僚、技术专家制定全国计划的各方面欠缺都将强烈暴露出来。软预算约束<sup>4</sup>、一些部门为完成硬
+性计划指标牺牲质量、各产业部门优先级的人力调节、官僚的贪腐等⋯⋯其实在马克思、恩格斯的科学社会主义中，也并不是由一个鲜明的上层国家机器来行使“计划”职能⋯⋯回首恩格斯在《反杜林论》中的两段话，读者们，你们怎么想呢？
+</p>
+<blockquote>
+
+<p>
+<b> 资本主义生产方式 </b> 起初排挤工人，现在却在 <b> 排挤资本家 </b> 了，完全像对待工人那样把他们赶到过剩人口中去，虽然暂时还没有把他们赶到产业后备军中去。
+</p>
+
+<p>
+但是，<b> 无论向股份公司的转变，还是向国家财产的转变，都没有消除生产力的资本属性。</b> 在股份公司的场合，这一点是十分明显的。而现代国家也只是资产阶级社会为了维护资本主义生产方式的一般外部条件使之不受工人和个别资本家的侵犯而建
+立的组织。
+</p>
+
+<p>
+<b> 现代国家，不管它的形式如何，本质上都是资本主义的机器，资本家的国家，理想的总资本家。它越是把更多的生产力据为己有，就越是成为真正的总资本家，越是剥夺更多的公民。工人仍然是雇佣劳动者、无产者。资本关系并没有被消灭，反而被推到
+了顶点。</b>
+</p>
+</blockquote>
+
+<p>
+而在我们去考察历史上各个社会主义国家时，甚至可能不得不去思考这些国家，是否是“<b> 党取代阶级 </b>”、或“<b> 党的机关取代了党 </b>”、或 <b> 知识分子和农民联盟而不是无产阶级 </b> 取得胜利、或 <b> 其他强力社会主义国家军事和政治压
+力下的本国改制 </b>。马克思的科学社会主义理论可能有个巨大错误——<b> 工人阶级并不代表更为先进生产力和生产关系 </b>。
+</p>
+
+<p>
+其实列宁自己也否定工人阶级至上主义，所以要由先锋队引导。
+</p>
+<blockquote>
+
+<p>
+列裴伏尔同意列宁的观点，工人阶级是革命行动的基础，但自身有局限性，革命依靠工人阶级和其他社会阶级和阶层的联盟，而且“工人阶级只有在各种力量处于一种特定的平衡并且有一种富有首创精神的 <b> 政治思想引导 </b> 时，它才发挥革命性作
+用”。<a id="main-autopage-190"></a><sup>[<a href="17.html#LWR-ht-cite.0@zhangxiaoyi">5</a>]</sup>
+</p>
+
+<p>
+（列裴伏尔就此认为，）因此革命只能随形势而动，也就是在某些阶级关系中完成，这时农民与知识分子都进入这些关系的整体中来。<b> 工人阶级本身并不是革命的，也不造就革命，也不为自己革命。个人阶级的革命性本质或革命的自然属性并不存在。
+</b><sup>[<a href="17.html#LWR-ht-cite.0@xingcun">58</a>]127</sup>
+</p>
+</blockquote>
+
+<p>
+列宁在沙俄时期就因其激进的社会主义理论受到党内外的质疑，其中亚·萨·马尔丁诺夫曾引用恩格斯《德国农民战争》中的一段历史唯物主义文本来反对列宁观点，现在看来，恩格斯这段话仍是振聋发聩，有效的切中了问题所在，并具普世意义，有必要全部
+引用。
+</p>
+<blockquote>
+
+<p>
+对于 <b> 激进派的领袖 </b> 来说，最糟糕的事情莫过于在运动还没有达到成熟的地步，还没有使他所代表的阶级具备进行统治的条件，而且也不可能去实行为维持这个阶级的统治所必须贯彻的各项措施的时候，就被迫出来掌握政权。
+</p>
+
+<p>
+他 <b> 所能 </b> 做的事，并不取决于他的意志，而取决于不同阶级之间对立的发展程度，取决于历来决定阶级对立发展程度的物质生活条件、生产关系和交换关系的发展程度。
+</p>
+
+<p>
+他 <b> 所应 </b> 做的事，他那一派要求他做的事，也并不取决于他，而且也不取决于阶级斗争及其条件的发展程度；他不得不恪守自己一向鼓吹的理论和要求，而这些理论和要求又并不是产生于当时社会各阶级相互对立的态势以及当时生产关系和交换关
+系的或多或少是偶然的状况，而是产生于他对于社会运动和政治运动的一般结果所持的或深或浅的认识。
+</p>
+
+<p>
+于是他就不可避免地陷入一种无法摆脱的进退维谷的境地：他 <b> 所能 </b> 做的事，同他迄今为止的全部行动，同他的原则以及他那一派的直接利益是互相矛盾的；而他 <b> 所应 </b> 做的事，则是无法办到的。总而言之，他被迫不代表自己那一派，不
+代表自己的阶级，<b> 而去代表在当时运动中已经具备成熟的统治条件的那个阶级 </b>。他不得不为运动本身的利益而维护一个 <b> 异己阶级 </b> 的利益，不得不以 <b> 空话和诺言 </b> 来对自己的阶级进行搪塞，声称那个 <b> 异己阶级 </b> 的利益
+就是本阶级的利益。谁要是陷入这种窘境，那就无可挽回地要遭到失败。<a id="main-autopage-191"></a><sup>[<a href="17.html#LWR-ht-cite.0@maenwen3">3</a>]303-304</sup>
+</p>
+</blockquote>
+
+<p>
+按照马恩唯物主义来说，从没有什么 <b> 救世主 </b>，社会的形态和发展使个人只可有限改进，违背历史唯物，则将面临失败命运。对于 <b> 救世主 </b> 的幻想，往往来源于人类自欺的迷梦。每个人生活在这风雨雷电变幻莫测的人世间，都会有这样那样
+不切实际的迷梦，这迷梦来自于个人试图超脱现实困境的希望，是种自我保护机制。但若要真正的认清和改良现实，恐怕就要求人自身尽量将这迷梦的成分缩微，直面惨淡人生，正视淋漓鲜血，为客观真实腾出更多的位置。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-192"></a>
+
+<p>
+<sup>4</sup>&nbsp; 软预算约束：指当一个经济组织遇到财务上的困境时，借助外部组织的救助得以继续生存这一经济现象。
+</p>
+
+
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>

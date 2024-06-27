@@ -1,0 +1,3212 @@
+
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="孙滨（蛋疼的蛋蛋）" />
+<meta name="generator" content="LaTeX Lwarp package" />
+<meta name="description" content="A description." />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> 梦园呓语——我的三观独白—计划经济时期 1949-1978</title>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<script>
+// Lwarp MathJax emulation code
+//
+// Based on code by Davide P. Cervone.
+// Equation numbering: https://github.com/mathjax/MathJax/issues/2427
+// Starred and ifnextchar macros: https://github.com/mathjax/MathJax/issues/2428
+// \left, \right delimiters: https://github.com/mathjax/MathJax/issues/2535
+//
+// Modified by Brian Dunn to adjust equation numbering and add subequations.
+//
+// LaTeX can use \seteqnumber{subequations?}{section}{number} before each equation.
+// subequations? is 0 usually, 1 if inside subequations.
+// section is a string printed as-is, or empty.
+// number is auto-incremented by MathJax between equations.
+//
+MathJax = {
+     subequations: "0",
+     section: "",
+     loader: {
+          load: ['[tex]/tagformat', '[tex]/textmacros'],
+     },
+     startup: {
+          ready() {
+              //       These would be replaced by import commands if you wanted to make
+              //       a proper extension.
+              const Configuration = MathJax._.input.tex.Configuration.Configuration;
+              const CommandMap = MathJax._.input.tex.SymbolMap.CommandMap;
+              const Macro = MathJax._.input.tex.Symbol.Macro;
+              const TexError = MathJax._.input.tex.TexError.default;
+              const ParseUtil = MathJax._.input.tex.ParseUtil.default;
+              const expandable = MathJax._.util.Options.expandable;
+
+
+              //       Insert the replacement string into the TeX string, and check
+              //       that there haven't been too many maxro substitutions (prevents
+              //       infinite loops).
+              const useArgument = (parser, text) => {
+                   parser.string = ParseUtil.addArgs(parser, text, parser.string.slice(parser.i));
+                   parser.i = 0;
+                   if (++parser.macroCount > parser.configuration.options.maxMacros) {
+                        throw new TexError('MaxMacroSub1',
+                        'MathJax maximum macro substitution count exceeded; ' +
+                        'is there a recursive macro call?');
+                   }
+              }
+
+
+              //       Create the command map for:
+              //            \ifstar, \ifnextchar, \ifblank, \ifstrequal, \gsub, \seteqnumber
+              new CommandMap('Lwarp-macros', {
+                   ifstar: 'IfstarFunction',
+                   ifnextchar: 'IfnextcharFunction',
+                   ifblank: 'IfblankFunction',
+                   ifstrequal: 'IfstrequalFunction',
+                   gsubstitute: 'GsubstituteFunction',
+                   seteqnumber: 'SeteqnumberFunction'
+              }, {
+                   //       This function implements an ifstar macro.
+                   IfstarFunction(parser, name) {
+                        const resultstar = parser.GetArgument(name);
+                        const resultnostar = parser.GetArgument(name);
+                        const star = parser.GetStar();                     // true if there is a *
+                        useArgument(parser, star ? resultstar : resultnostar);
+                   },
+
+
+                   //       This function implements an ifnextchar macro.
+                   IfnextcharFunction(parser, name) {
+                        let whichchar = parser.GetArgument(name);
+                        if (whichchar.match(/^(?:0x[0-9A-F]+|[0-9]+)$/i)) {
+                            // $ syntax highlighting
+                            whichchar = String.fromCodePoint(parseInt(whichchar));
+                        }
+                        const resultnextchar = parser.GetArgument(name);
+                        const resultnotnextchar = parser.GetArgument(name);
+                        const gotchar = (parser.GetNext() === whichchar);
+                        useArgument(parser, gotchar ? resultnextchar : resultnotnextchar);
+                   },
+
+
+                   // This function implements an ifblank macro.
+                   IfblankFunction(parser, name) {
+                        const blankarg = parser.GetArgument(name);
+                        const resultblank = parser.GetArgument(name);
+                        const resultnotblank = parser.GetArgument(name);
+                        const isblank = (blankarg.trim() == "");
+                        useArgument(parser, isblank ? resultblank : resultnotblank);
+                   },
+
+
+                   // This function implements an ifstrequal macro.
+                   IfstrequalFunction(parser, name) {
+                        const strequalfirst = parser.GetArgument(name);
+                        const strequalsecond = parser.GetArgument(name);
+                        const resultequal = parser.GetArgument(name);
+                        const resultnotequal = parser.GetArgument(name);
+                        const isequal = (strequalfirst == strequalsecond);
+                        useArgument(parser, isequal ? resultequal : resultnotequal);
+                   },
+
+
+                   // This function implements a gsub macro.
+                   GsubstituteFunction(parser, name) {
+                        const gsubfirst = parser.GetArgument(name);
+                        const gsubsecond = parser.GetArgument(name);
+                        const gsubthird = parser.GetArgument(name);
+                        let gsubresult=gsubfirst.replace(gsubsecond, gsubthird);
+                        useArgument(parser, gsubresult);
+                   },
+
+
+                   //       This function modifies the equation numbers.
+                   SeteqnumberFunction(parser, name) {
+                            //   Get the macro parameters
+                            const star = parser.GetStar();                    // true if there is a *
+                            const optBrackets = parser.GetBrackets(name);     // contents of optional brackets
+                            const newsubequations = parser.GetArgument(name);    // the subequations argument
+                            const neweqsection = parser.GetArgument(name);    // the eq section argument
+                            const neweqnumber = parser.GetArgument(name);     // the eq number argument
+                            MathJax.config.subequations=newsubequations ;     // a string with boolean meaning
+                            MathJax.config.section=neweqsection ;             // a string with numeric meaning
+                            parser.tags.counter = parser.tags.allCounter = neweqnumber ;
+                   }
+
+
+              });
+
+
+              //       Create the Lwarp-macros package
+              Configuration.create('Lwarp-macros', {
+                   handler: {macro: ['Lwarp-macros']}
+              });
+
+
+              MathJax.startup.defaultReady();
+
+
+              // For forward references:
+              MathJax.startup.input[0].preFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            MathJax.config.subequations = math.inputData.recompile.subequations;
+                            MathJax.config.section = math.inputData.recompile.section;
+                   }
+              });
+              MathJax.startup.input[0].postFilters.add(({math}) => {
+                   if (math.inputData.recompile){
+                            math.inputData.recompile.subequations = MathJax.config.subequations;
+                            math.inputData.recompile.section = MathJax.config.section;
+                   }
+              });
+
+
+                   // For \left, \right with unicode-math:
+                   const {DelimiterMap} = MathJax._.input.tex.SymbolMap;
+                   const {Symbol} = MathJax._.input.tex.Symbol;
+                   const {MapHandler} = MathJax._.input.tex.MapHandler;
+                   const delimiter = MapHandler.getMap('delimiter');
+                   delimiter.add('\\lBrack', new Symbol('\\lBrack', '\u27E6'));
+                   delimiter.add('\\rBrack', new Symbol('\\rBrack', '\u27E7'));
+                   delimiter.add('\\lAngle', new Symbol('\\lAngle', '\u27EA'));
+                   delimiter.add('\\rAngle', new Symbol('\\rAngle', '\u27EB'));
+                   delimiter.add('\\lbrbrak', new Symbol('\\lbrbrak', '\u2772'));
+                   delimiter.add('\\rbrbrak', new Symbol('\\rbrbrak', '\u2773'));
+                   delimiter.add('\\lbag', new Symbol('\\lbag', '\u27C5'));
+                   delimiter.add('\\rbag', new Symbol('\\rbag', '\u27C6'));
+                   delimiter.add('\\llparenthesis', new Symbol('\\llparenthesis', '\u2987'));
+                   delimiter.add('\\rrparenthesis', new Symbol('\\rrparenthesis', '\u2988'));
+                   delimiter.add('\\llangle', new Symbol('\\llangle', '\u2989'));
+                   delimiter.add('\\rrangle', new Symbol('\\rrangle', '\u298A'));
+                   delimiter.add('\\Lbrbrak', new Symbol('\\Lbrbrak', '\u27EC'));
+                   delimiter.add('\\Rbrbrak', new Symbol('\\Rbrbrak', '\u27ED'));
+                   delimiter.add('\\lBrace', new Symbol('\\lBrace', '\u2983'));
+                   delimiter.add('\\rBrace', new Symbol('\\rBrace', '\u2984'));
+                   delimiter.add('\\lParen', new Symbol('\\lParen', '\u2985'));
+                   delimiter.add('\\rParen', new Symbol('\\rParen', '\u2986'));
+                   delimiter.add('\\lbrackubar', new Symbol('\\lbrackubar', '\u298B'));
+                   delimiter.add('\\rbrackubar', new Symbol('\\rbrackubar', '\u298C'));
+                   delimiter.add('\\lbrackultick', new Symbol('\\lbrackultick', '\u298D'));
+                   delimiter.add('\\rbracklrtick', new Symbol('\\rbracklrtick', '\u298E'));
+                   delimiter.add('\\lbracklltick', new Symbol('\\lbracklltick', '\u298F'));
+                   delimiter.add('\\rbrackurtick', new Symbol('\\rbrackurtick', '\u2990'));
+                   delimiter.add('\\langledot', new Symbol('\\langledot', '\u2991'));
+                   delimiter.add('\\rangledot', new Symbol('\\rangledot', '\u2992'));
+                   delimiter.add('\\lparenless', new Symbol('\\lparenless', '\u2993'));
+                   delimiter.add('\\rparengtr', new Symbol('\\rparengtr', '\u2994'));
+                   delimiter.add('\\Lparengtr', new Symbol('\\Lparengtr', '\u2995'));
+                   delimiter.add('\\Rparenless', new Symbol('\\Rparenless', '\u2996'));
+                   delimiter.add('\\lblkbrbrak', new Symbol('\\lblkbrbrak', '\u2997'));
+                   delimiter.add('\\rblkbrbrak', new Symbol('\\rblkbrbrak', '\u2998'));
+                   delimiter.add('\\lvzigzag', new Symbol('\\lvzigzag', '\u29D8'));
+                   delimiter.add('\\rvzigzag', new Symbol('\\rvzigzag', '\u29D9'));
+                   delimiter.add('\\Lvzigzag', new Symbol('\\Lvzigzag', '\u29DA'));
+                   delimiter.add('\\Rvzigzag', new Symbol('\\Rvzigzag', '\u29DB'));
+                   delimiter.add('\\lcurvyangle', new Symbol('\\lcurvyangle', '\u29FC'));
+                   delimiter.add('\\rcurvyangle', new Symbol('\\rcurvyangle', '\u29FD'));
+                   delimiter.add('\\Vvert', new Symbol('\\Vvert', '\u2980'));
+          }       // ready
+     },           // startup
+
+
+     tex: {
+          packages: {'[+]': ['tagformat', 'Lwarp-macros', 'textmacros']},
+          tags: "ams",
+                   tagformat: {
+                            number: function (n) {
+                                 if(MathJax.config.subequations==0)
+                                     return(MathJax.config.section + n);
+                                 else
+                                     return(MathJax.config.section + String.fromCharCode(96+n));
+                            },
+                   },
+     }
+}
+</script>
+
+
+<script
+          id="MathJax-script"
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+></script>
+
+
+</head>
+<body>
+
+
+
+<a id="main-autopage-200"></a>
+<nav class="topnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+
+<div class="bodyandsidetoc">
+<div class="sidetoccontainer">
+
+
+
+<nav class="sidetoc">
+
+
+
+<div class="sidetoctitle">
+
+<p>
+<span class="sidetocthetitle"> 梦园呓语 <br />
+我的三观独白 </span>
+</p>
+
+<p>
+Contents
+</p>
+</div>
+
+
+
+<div class="sidetoccontents">
+
+<p>
+<a href="index.html" class="linkhome" >
+Home</a>
+</p>
+
+<p>
+<a href="index.html#autosec-5" class="tocchapter" >
+目录 </a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-9" class="tocchapter" >
+序言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-17" class="tocchapter" >
+鸣谢</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-21" class="tocpart" >
+<span class="sectionnumber">I</span>&#x2003;空间生产</a>
+</p>
+
+
+
+<p>
+<a href="3.html#autosec-22" class="tocchapter" >
+<span class="sectionnumber">1</span>&#x2003;济南市丁家庄城中村照片集</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-41" class="tocchapter" >
+<span class="sectionnumber">2</span>&#x2003;济南市丁家庄城中村见闻散记</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-42" class="tocsection" >
+<span class="sectionnumber">2.1</span>&#x2003;城中村的简单概念</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-46" class="tocsection" >
+<span class="sectionnumber">2.2</span>&#x2003;背景介绍</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-48" class="tocsection" >
+<span class="sectionnumber">2.3</span>&#x2003;初见</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-49" class="tocsection" >
+<span class="sectionnumber">2.4</span>&#x2003;黑夜与清晨</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-50" class="tocsection" >
+<span class="sectionnumber">2.5</span>&#x2003;医疗保健和社会保障</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-51" class="tocsection" >
+<span class="sectionnumber">2.6</span>&#x2003;何不食肉糜</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-52" class="tocsection" >
+<span class="sectionnumber">2.7</span>&#x2003;过往的宅田基地之殇</a>
+</p>
+
+
+
+<p>
+<a href="4.html#autosec-53" class="tocsection" >
+<span class="sectionnumber">2.8</span>&#x2003;希望的贫民窟与绝望的贫民窟</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-58" class="tocchapter" >
+<span class="sectionnumber">3</span>&#x2003;马克思主义视角的空间生产摘抄</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-59" class="tocsection" >
+<span class="sectionnumber">3.1</span>&#x2003;恩格斯《论住宅问题》</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-61" class="tocsection" >
+<span class="sectionnumber">3.2</span>&#x2003;列斐伏尔</a>
+</p>
+
+
+
+<p>
+<a href="5.html#autosec-63" class="tocsection" >
+<span class="sectionnumber">3.3</span>&#x2003;大卫·哈维</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-69" class="tocpart" >
+<span class="sectionnumber">II</span>&#x2003;杂思</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-70" class="tocchapter" >
+<span class="sectionnumber">4</span>&#x2003;生命</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-72" class="tocsection" >
+<span class="sectionnumber">4.1</span>&#x2003;关于无国界医生的一场争议</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-74" class="tocsection" >
+<span class="sectionnumber">4.2</span>&#x2003;“科学”的优生学绝育论</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-76" class="tocsection" >
+<span class="sectionnumber">4.3</span>&#x2003;被漠然视之的生命权</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-77" class="tocsection" >
+<span class="sectionnumber">4.4</span>&#x2003;20 世纪的战争</a>
+</p>
+
+
+
+<p>
+<a href="6.html#autosec-80" class="tocsection" >
+<span class="sectionnumber">4.5</span>&#x2003;人相食</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-85" class="tocchapter" >
+<span class="sectionnumber">5</span>&#x2003;工作制</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-86" class="tocsection" >
+<span class="sectionnumber">5.1</span>&#x2003;传统超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-87" class="tocsection" >
+<span class="sectionnumber">5.2</span>&#x2003;新型超时加班企业</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-88" class="tocsection" >
+<span class="sectionnumber">5.3</span>&#x2003;工作时长立法</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-89" class="tocsection" >
+<span class="sectionnumber">5.4</span>&#x2003;超时加班的危害和原理</a>
+</p>
+
+
+
+<p>
+<a href="7.html#autosec-92" class="tocsection" >
+<span class="sectionnumber">5.5</span>&#x2003;工时改革问题的民族国家与全球化困局</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-97" class="tocpart" >
+<span class="sectionnumber">III</span>&#x2003;国际政经</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-98" class="tocchapter" >
+<span class="sectionnumber">6</span>&#x2003;罗斯福新政与凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-101" class="tocsection" >
+<span class="sectionnumber">6.1</span>&#x2003;罗斯福新政</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-107" class="tocsection" >
+<span class="sectionnumber">6.2</span>&#x2003;凯恩斯主义</a>
+</p>
+
+
+
+<p>
+<a href="8.html#autosec-108" class="tocsection" >
+<span class="sectionnumber">6.3</span>&#x2003;从垄断资本主义到国家垄断资本主义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-114" class="tocchapter" >
+<span class="sectionnumber">7</span>&#x2003;新自由主义札记</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-115" class="tocsection" >
+<span class="sectionnumber">7.1</span>&#x2003;新自由主义的概念</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-118" class="tocsection" >
+<span class="sectionnumber">7.2</span>&#x2003;哈维对新自由主义实践的批判</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-122" class="tocsection" >
+<span class="sectionnumber">7.3</span>&#x2003;新自由主义的实质</a>
+</p>
+
+
+
+<p>
+<a href="9.html#autosec-125" class="tocsection" >
+<span class="sectionnumber">7.4</span>&#x2003;联合国债务与人权独立专家报告</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-150" class="tocchapter" >
+<span class="sectionnumber">8</span>&#x2003;维基解密、阿桑奇与西方政治</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-151" class="tocsection" >
+<span class="sectionnumber">8.1</span>&#x2003;维基解密简述</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-152" class="tocsection" >
+<span class="sectionnumber">8.2</span>&#x2003;希拉里邮件门事件</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-153" class="tocsection" >
+<span class="sectionnumber">8.3</span>&#x2003;维基解密的理念</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-154" class="tocsection" >
+<span class="sectionnumber">8.4</span>&#x2003;维基解密的缺陷及问题</a>
+</p>
+
+
+
+<p>
+<a href="10.html#autosec-155" class="tocsection" >
+<span class="sectionnumber">8.5</span>&#x2003;希拉里邮件门之后</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-160" class="tocchapter" >
+<span class="sectionnumber">9</span>&#x2003;早期苏俄科社实践</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-161" class="tocsection" >
+<span class="sectionnumber">9.1</span>&#x2003;序言</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-162" class="tocsection" >
+<span class="sectionnumber">9.2</span>&#x2003;马克思“科学社会主义”的缺陷</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-166" class="tocsection" >
+<span class="sectionnumber">9.3</span>&#x2003;杜冈-巴拉诺夫斯基对苏俄的影响</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-168" class="tocsection" >
+<span class="sectionnumber">9.4</span>&#x2003;二十世纪初至十月革命的俄国</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-172" class="tocsection" >
+<span class="sectionnumber">9.5</span>&#x2003;十月革命之后到新经济政策</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-179" class="tocsection" >
+<span class="sectionnumber">9.6</span>&#x2003;新经济政策时期的争论</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-182" class="tocsection" >
+<span class="sectionnumber">9.7</span>&#x2003;斯大林模式</a>
+</p>
+
+
+
+<p>
+<a href="11.html#autosec-185" class="tocsection" >
+<span class="sectionnumber">9.8</span>&#x2003;早中期苏联科社实践总结</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-196" class="tocpart" >
+<span class="sectionnumber">IV</span>&#x2003;平民视角下的中国</a>
+</p>
+
+
+
+<p>
+<a href="12.html#autosec-197" class="tocchapter" >
+<span class="sectionnumber">10</span>&#x2003;关于中国的前言</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-203" class="tocchapter" >
+<span class="sectionnumber">11</span>&#x2003;计划经济时期 1949–1978</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-204" class="tocsection" >
+<span class="sectionnumber">11.1</span>&#x2003;社会主义过渡时期 1949–1956</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-214" class="tocsection" >
+<span class="sectionnumber">11.2</span>&#x2003;红色社会主义社会时期 1957–1978 年</a>
+</p>
+
+
+
+<p>
+<a href="13.html#autosec-244" class="tocsection" >
+<span class="sectionnumber">11.3</span>&#x2003;计划经济时期的成就</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-250" class="tocchapter" >
+<span class="sectionnumber">12</span>&#x2003;市场经济过渡时期 1978–1992</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-251" class="tocsection" >
+<span class="sectionnumber">12.1</span>&#x2003;时代背景</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-253" class="tocsection" >
+<span class="sectionnumber">12.2</span>&#x2003;整体意识形态转变</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-260" class="tocsection" >
+<span class="sectionnumber">12.3</span>&#x2003;领导制度改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-264" class="tocsection" >
+<span class="sectionnumber">12.4</span>&#x2003;计划经济与市场经济的分歧</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-271" class="tocsection" >
+<span class="sectionnumber">12.5</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-308" class="tocsection" >
+<span class="sectionnumber">12.6</span>&#x2003;城市改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-310" class="tocsection" >
+<span class="sectionnumber">12.7</span>&#x2003;企业改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-330" class="tocsection" >
+<span class="sectionnumber">12.8</span>&#x2003;金融改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-339" class="tocsection" >
+<span class="sectionnumber">12.9</span>&#x2003;财政改革</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-355" class="tocsection" >
+<span class="sectionnumber">12.10</span>&#x2003;土地财政</a>
+</p>
+
+
+
+<p>
+<a href="14.html#autosec-361" class="tocsection" >
+<span class="sectionnumber">12.11</span>&#x2003;权力寻租、官倒和腐败</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-367" class="tocchapter" >
+<span class="sectionnumber">13</span>&#x2003;市场经济体制时期 1992–</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-368" class="tocsection" >
+<span class="sectionnumber">13.1</span>&#x2003;农业改革</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-391" class="tocsection" >
+<span class="sectionnumber">13.2</span>&#x2003;分税制</a>
+</p>
+
+
+
+<p>
+<a href="15.html#autosec-416" class="tocsection" >
+<span class="sectionnumber">13.3</span>&#x2003;土地金融</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-466" class="tocchapter" >
+<span class="sectionnumber">14</span>&#x2003;再论土地金融及个别经济概念</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-473" class="tocsection" >
+<span class="sectionnumber">14.1</span>&#x2003;王小鲁《土地财政的昨天、今天和明天》</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-475" class="tocsection" >
+<span class="sectionnumber">14.2</span>&#x2003;土地财政还是土地金融？</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-479" class="tocsection" >
+<span class="sectionnumber">14.3</span>&#x2003;地方债务</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-488" class="tocsection" >
+<span class="sectionnumber">14.4</span>&#x2003;通货膨胀税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-489" class="tocsection" >
+<span class="sectionnumber">14.5</span>&#x2003;铸币税</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-494" class="tocsection" >
+<span class="sectionnumber">14.6</span>&#x2003;超发货币和居民消费价格指数 CPI</a>
+</p>
+
+
+
+<p>
+<a href="16.html#autosec-496" class="tocsection" >
+<span class="sectionnumber">14.7</span>&#x2003;GDP、GNI 和分配正义</a>
+</p>
+
+
+
+<p>
+<a href="index.html#autosec-510" class="tocchapter" >
+<span class="sectionnumber">15</span>&#x2003;中国未来怎么走？</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-511" class="tocsection" >
+<span class="sectionnumber">15.1</span>&#x2003;背景：资本主义民主国家危机的共性</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-513" class="tocsection" >
+<span class="sectionnumber">15.2</span>&#x2003;大国大城 = 超级资本原始积累</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-526" class="tocsection" >
+<span class="sectionnumber">15.3</span>&#x2003;建立健全政策提案的不可行性报告</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-527" class="tocsection" >
+<span class="sectionnumber">15.4</span>&#x2003;谨防影子政府</a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-529" class="tocchapter" >
+插图索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-530" class="tocchapter" >
+表格索引 </a>
+</p>
+
+
+
+<p>
+<a href="17.html#autosec-531" class="tocpart" >
+参考文献 </a>
+</p>
+
+
+
+</div>
+
+</nav>
+
+</div>
+
+
+
+<main class="bodycontainer">
+
+
+
+<section class="textbody">
+
+<h1> 梦园呓语 <br />
+我的三观独白 </h1>
+
+<!--MathJax customizations:-->
+<div data-nosnippet
+      style="display:none"
+>
+
+\(\newcommand{\footnotename}{footnote}\)
+
+\(\def \LWRfootnote {1}\)
+
+\(\newcommand {\footnote }[2][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\newcommand {\footnotemark }[1][\LWRfootnote ]{{}^{\mathrm {#1}}}\)
+
+\(\let \LWRorighspace \hspace \)
+
+\(\renewcommand {\hspace }{\ifstar \LWRorighspace \LWRorighspace }\)
+
+\(\newcommand {\mathnormal }[1]{{#1}}\)
+
+\(\newcommand \ensuremath [1]{#1}\)
+
+\(\newcommand {\LWRframebox }[2][]{\fbox {#2}} \newcommand {\framebox }[1][]{\LWRframebox } \)
+
+\(\newcommand {\setlength }[2]{}\)
+
+\(\newcommand {\addtolength }[2]{}\)
+
+\(\newcommand {\setcounter }[2]{}\)
+
+\(\newcommand {\addtocounter }[2]{}\)
+
+\(\newcommand {\arabic }[1]{}\)
+
+\(\newcommand {\number }[1]{}\)
+
+\(\newcommand {\noalign }[1]{\text {#1}\notag \\}\)
+
+\(\newcommand {\cline }[1]{}\)
+
+\(\newcommand {\directlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\luatexdirectlua }[1]{\text {(directlua)}}\)
+
+\(\newcommand {\protect }{}\)
+
+\(\def \LWRabsorbnumber #1 {}\)
+
+\(\def \LWRabsorbquotenumber &quot;#1 {}\)
+
+\(\newcommand {\LWRabsorboption }[1][]{}\)
+
+\(\newcommand {\LWRabsorbtwooptions }[1][]{\LWRabsorboption }\)
+
+\(\def \mathchar {\ifnextchar &quot;\LWRabsorbquotenumber \LWRabsorbnumber }\)
+
+\(\def \mathcode #1={\mathchar }\)
+
+\(\let \delcode \mathcode \)
+
+\(\let \delimiter \mathchar \)
+
+\(\def \oe {\unicode {x0153}}\)
+
+\(\def \OE {\unicode {x0152}}\)
+
+\(\def \ae {\unicode {x00E6}}\)
+
+\(\def \AE {\unicode {x00C6}}\)
+
+\(\def \aa {\unicode {x00E5}}\)
+
+\(\def \AA {\unicode {x00C5}}\)
+
+\(\def \o {\unicode {x00F8}}\)
+
+\(\def \O {\unicode {x00D8}}\)
+
+\(\def \l {\unicode {x0142}}\)
+
+\(\def \L {\unicode {x0141}}\)
+
+\(\def \ss {\unicode {x00DF}}\)
+
+\(\def \SS {\unicode {x1E9E}}\)
+
+\(\def \dag {\unicode {x2020}}\)
+
+\(\def \ddag {\unicode {x2021}}\)
+
+\(\def \P {\unicode {x00B6}}\)
+
+\(\def \copyright {\unicode {x00A9}}\)
+
+\(\def \pounds {\unicode {x00A3}}\)
+
+\(\let \LWRref \ref \)
+
+\(\renewcommand {\ref }{\ifstar \LWRref \LWRref }\)
+
+\( \newcommand {\multicolumn }[3]{#3}\)
+
+\(\require {textcomp}\)
+
+\(\newcommand {\intertext }[1]{\text {#1}\notag \\}\)
+
+\(\let \Hat \hat \)
+
+\(\let \Check \check \)
+
+\(\let \Tilde \tilde \)
+
+\(\let \Acute \acute \)
+
+\(\let \Grave \grave \)
+
+\(\let \Dot \dot \)
+
+\(\let \Ddot \ddot \)
+
+\(\let \Breve \breve \)
+
+\(\let \Bar \bar \)
+
+\(\let \Vec \vec \)
+
+\(\newcommand {\LWRsfrac }[2][/]{{}^\LWRsfracnumerator \!#1{}_{#2}}\)
+
+\(\newcommand {\sfrac }[2][]{\def \LWRsfracnumerator {#2}\LWRsfrac }\)
+
+\(\let \symnormal \mathit \)
+
+\(\let \symliteral \mathrm \)
+
+\(\let \symbb \mathbb \)
+
+\(\let \symbbit \mathbb \)
+
+\(\let \symcal \mathcal \)
+
+\(\let \symscr \mathscr \)
+
+\(\let \symfrak \mathfrak \)
+
+\(\let \symsfup \mathsf \)
+
+\(\let \symsfit \mathit \)
+
+\(\let \symbfsf \mathbf \)
+
+\(\let \symbfup \mathbf \)
+
+\(\newcommand {\symbfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symbfcal \mathcal \)
+
+\(\let \symbfscr \mathscr \)
+
+\(\let \symbffrak \mathfrak \)
+
+\(\let \symbfsfup \mathbf \)
+
+\(\newcommand {\symbfsfit }[1]{\boldsymbol {#1}}\)
+
+\(\let \symup \mathrm \)
+
+\(\let \symbf \mathbf \)
+
+\(\let \symit \mathit \)
+
+\(\let \symtt \mathtt \)
+
+\(\let \symbffrac \mathbffrac \)
+
+\(\newcommand {\mathfence }[1]{\mathord {#1}}\)
+
+\(\newcommand {\mathover }[1]{#1}\)
+
+\(\newcommand {\mathunder }[1]{#1}\)
+
+\(\newcommand {\mathaccent }[1]{#1}\)
+
+\(\newcommand {\mathbotaccent }[1]{#1}\)
+
+\(\newcommand {\mathalpha }[1]{\mathord {#1}}\)
+
+\(\def\upAlpha{\unicode{x0391}}\)
+
+\(\def\upBeta{\unicode{x0392}}\)
+
+\(\def\upGamma{\unicode{x0393}}\)
+
+\(\def\upDigamma{\unicode{x03DC}}\)
+
+\(\def\upDelta{\unicode{x0394}}\)
+
+\(\def\upEpsilon{\unicode{x0395}}\)
+
+\(\def\upZeta{\unicode{x0396}}\)
+
+\(\def\upEta{\unicode{x0397}}\)
+
+\(\def\upTheta{\unicode{x0398}}\)
+
+\(\def\upVartheta{\unicode{x03F4}}\)
+
+\(\def\upIota{\unicode{x0399}}\)
+
+\(\def\upKappa{\unicode{x039A}}\)
+
+\(\def\upLambda{\unicode{x039B}}\)
+
+\(\def\upMu{\unicode{x039C}}\)
+
+\(\def\upNu{\unicode{x039D}}\)
+
+\(\def\upXi{\unicode{x039E}}\)
+
+\(\def\upOmicron{\unicode{x039F}}\)
+
+\(\def\upPi{\unicode{x03A0}}\)
+
+\(\def\upVarpi{\unicode{x03D6}}\)
+
+\(\def\upRho{\unicode{x03A1}}\)
+
+\(\def\upSigma{\unicode{x03A3}}\)
+
+\(\def\upTau{\unicode{x03A4}}\)
+
+\(\def\upUpsilon{\unicode{x03A5}}\)
+
+\(\def\upPhi{\unicode{x03A6}}\)
+
+\(\def\upChi{\unicode{x03A7}}\)
+
+\(\def\upPsi{\unicode{x03A8}}\)
+
+\(\def\upOmega{\unicode{x03A9}}\)
+
+\(\def\itAlpha{\unicode{x1D6E2}}\)
+
+\(\def\itBeta{\unicode{x1D6E3}}\)
+
+\(\def\itGamma{\unicode{x1D6E4}}\)
+
+\(\def\itDigamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\itDelta{\unicode{x1D6E5}}\)
+
+\(\def\itEpsilon{\unicode{x1D6E6}}\)
+\(\def\itZeta{\unicode{x1D6E7}}\)
+
+\(\def\itEta{\unicode{x1D6E8}}\)
+
+\(\def\itTheta{\unicode{x1D6E9}}\)
+
+\(\def\itVartheta{\unicode{x1D6F3}}\)
+
+\(\def\itIota{\unicode{x1D6EA}}\)
+
+\(\def\itKappa{\unicode{x1D6EB}}\)
+
+\(\def\itLambda{\unicode{x1D6EC}}\)
+
+\(\def\itMu{\unicode{x1D6ED}}\)
+
+\(\def\itNu{\unicode{x1D6EE}}\)
+
+\(\def\itXi{\unicode{x1D6EF}}\)
+
+\(\def\itOmicron{\unicode{x1D6F0}}\)
+
+\(\def\itPi{\unicode{x1D6F1}}\)
+
+\(\def\itRho{\unicode{x1D6F2}}\)
+
+\(\def\itSigma{\unicode{x1D6F4}}\)
+
+\(\def\itTau{\unicode{x1D6F5}}\)
+
+\(\def\itUpsilon{\unicode{x1D6F6}}\)
+
+\(\def\itPhi{\unicode{x1D6F7}}\)
+
+\(\def\itChi{\unicode{x1D6F8}}\)
+
+\(\def\itPsi{\unicode{x1D6F9}}\)
+
+\(\def\itOmega{\unicode{x1D6FA}}\)
+
+\(\def\upalpha{\unicode{x03B1}}\)
+
+\(\def\upbeta{\unicode{x03B2}}\)
+
+\(\def\upvarbeta{\unicode{x03D0}}\)
+
+\(\def\upgamma{\unicode{x03B3}}\)
+
+\(\def\updigamma{\unicode{x03DD}}\)
+
+\(\def\updelta{\unicode{x03B4}}\)
+
+\(\def\upepsilon{\unicode{x03F5}}\)
+
+\(\def\upvarepsilon{\unicode{x03B5}}\)
+
+\(\def\upzeta{\unicode{x03B6}}\)
+
+\(\def\upeta{\unicode{x03B7}}\)
+
+\(\def\uptheta{\unicode{x03B8}}\)
+
+\(\def\upvartheta{\unicode{x03D1}}\)
+
+\(\def\upiota{\unicode{x03B9}}\)
+
+\(\def\upkappa{\unicode{x03BA}}\)
+
+\(\def\upvarkappa{\unicode{x03F0}}\)
+
+\(\def\uplambda{\unicode{x03BB}}\)
+
+\(\def\upmu{\unicode{x03BC}}\)
+
+\(\def\upnu{\unicode{x03BD}}\)
+
+\(\def\upxi{\unicode{x03BE}}\)
+
+\(\def\upomicron{\unicode{x03BF}}\)
+
+\(\def\uppi{\unicode{x03C0}}\)
+
+\(\def\upvarpi{\unicode{x03D6}}\)
+
+\(\def\uprho{\unicode{x03C1}}\)
+
+\(\def\upvarrho{\unicode{x03F1}}\)
+
+\(\def\upsigma{\unicode{x03C3}}\)
+
+\(\def\upvarsigma{\unicode{x03C2}}\)
+
+\(\def\uptau{\unicode{x03C4}}\)
+
+\(\def\upupsilon{\unicode{x03C5}}\)
+
+\(\def\upphi{\unicode{x03D5}}\)
+
+\(\def\upvarphi{\unicode{x03C6}}\)
+
+\(\def\upchi{\unicode{x03C7}}\)
+
+\(\def\uppsi{\unicode{x03C8}}\)
+
+\(\def\upomega{\unicode{x03C9}}\)
+
+\(\def\italpha{\unicode{x1D6FC}}\)
+
+\(\def\itbeta{\unicode{x1D6FD}}\)
+
+\(\def\itvarbeta{\unicode{x03D0}}\)
+
+\(\def\itgamma{\unicode{x1D6FE}}\)
+
+\(\def\itdigamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\itdelta{\unicode{x1D6FF}}\)
+
+\(\def\itepsilon{\unicode{x1D716}}\)
+
+\(\def\itvarepsilon{\unicode{x1D700}}\)
+
+\(\def\itzeta{\unicode{x1D701}}\)
+
+\(\def\iteta{\unicode{x1D702}}\)
+
+\(\def\ittheta{\unicode{x1D703}}\)
+
+\(\def\itvartheta{\unicode{x1D717}}\)
+
+\(\def\itiota{\unicode{x1D704}}\)
+
+\(\def\itkappa{\unicode{x1D705}}\)
+
+\(\def\itvarkappa{\unicode{x1D718}}\)
+
+\(\def\itlambda{\unicode{x1D706}}\)
+
+\(\def\itmu{\unicode{x1D707}}\)
+
+\(\def\itnu{\unicode{x1D708}}\)
+
+\(\def\itxi{\unicode{x1D709}}\)
+
+\(\def\itomicron{\unicode{x1D70A}}\)
+
+\(\def\itpi{\unicode{x1D70B}}\)
+
+\(\def\itvarpi{\unicode{x1D71B}}\)
+
+\(\def\itrho{\unicode{x1D70C}}\)
+
+\(\def\itvarrho{\unicode{x1D71A}}\)
+
+\(\def\itsigma{\unicode{x1D70E}}\)
+
+\(\def\itvarsigma{\unicode{x1D70D}}\)
+
+\(\def\ittau{\unicode{x1D70F}}\)
+
+\(\def\itupsilon{\unicode{x1D710}}\)
+
+\(\def\itphi{\unicode{x1D719}}\)
+
+\(\def\itvarphi{\unicode{x1D711}}\)
+
+\(\def\itchi{\unicode{x1D712}}\)
+
+\(\def\itpsi{\unicode{x1D713}}\)
+
+\(\def\itomega{\unicode{x1D714}}\)
+
+\(\let \lparen (\)
+
+\(\let \rparen )\)
+
+\(\newcommand {\cuberoot }[1]{\,{}^3\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\fourthroot }[1]{\,{}^4\!\!\sqrt {#1}}\,\)
+
+\(\newcommand {\longdivision }[1]{\mathord {\unicode {x027CC}#1}}\)
+
+\(\newcommand {\mathcomma }{,}\)
+
+\(\newcommand {\mathcolon }{:}\)
+
+\(\newcommand {\mathsemicolon }{;}\)
+
+\(\newcommand {\overbracket }[1]{\mathinner {\overline {\ulcorner {#1}\urcorner }}}\)
+
+\(\newcommand {\underbracket }[1]{\mathinner {\underline {\llcorner {#1}\lrcorner }}}\)
+
+\(\newcommand {\overbar }[1]{\mathord {#1\unicode {x00305}}}\)
+
+\(\newcommand {\ovhook }[1]{\mathord {#1\unicode {x00309}}}\)
+
+\(\newcommand {\ocirc }[1]{\mathord {#1\unicode {x0030A}}}\)
+
+\(\newcommand {\candra }[1]{\mathord {#1\unicode {x00310}}}\)
+
+\(\newcommand {\oturnedcomma }[1]{\mathord {#1\unicode {x00312}}}\)
+
+\(\newcommand {\ocommatopright }[1]{\mathord {#1\unicode {x00315}}}\)
+
+\(\newcommand {\droang }[1]{\mathord {#1\unicode {x0031A}}}\)
+
+\(\newcommand {\leftharpoonaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\rightharpoonaccent }[1]{\mathord {#1\unicode {x020D1}}}\)
+
+\(\newcommand {\vertoverlay }[1]{\mathord {#1\unicode {x020D2}}}\)
+
+\(\newcommand {\leftarrowaccent }[1]{\mathord {#1\unicode {x020D0}}}\)
+
+\(\newcommand {\annuity }[1]{\mathord {#1\unicode {x020E7}}}\)
+
+\(\newcommand {\widebridgeabove }[1]{\mathord {#1\unicode {x020E9}}}\)
+
+\(\newcommand {\asteraccent }[1]{\mathord {#1\unicode {x020F0}}}\)
+
+\(\newcommand {\threeunderdot }[1]{\mathord {#1\unicode {x020E8}}}\)
+
+\(\newcommand {\Bbbsum }{\mathop {\unicode {x2140}}\limits }\)
+
+\(\newcommand {\oiint }{\mathop {\unicode {x222F}}\limits }\)
+
+\(\newcommand {\oiiint }{\mathop {\unicode {x2230}}\limits }\)
+
+\(\newcommand {\intclockwise }{\mathop {\unicode {x2231}}\limits }\)
+
+\(\newcommand {\ointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\ointctrclockwise }{\mathop {\unicode {x2233}}\limits }\)
+
+\(\newcommand {\varointclockwise }{\mathop {\unicode {x2232}}\limits }\)
+
+\(\newcommand {\leftouterjoin }{\mathop {\unicode {x27D5}}\limits }\)
+
+\(\newcommand {\rightouterjoin }{\mathop {\unicode {x27D6}}\limits }\)
+
+\(\newcommand {\fullouterjoin }{\mathop {\unicode {x27D7}}\limits }\)
+
+\(\newcommand {\bigbot }{\mathop {\unicode {x27D8}}\limits }\)
+
+\(\newcommand {\bigtop }{\mathop {\unicode {x27D9}}\limits }\)
+
+\(\newcommand {\xsol }{\mathop {\unicode {x29F8}}\limits }\)
+
+\(\newcommand {\xbsol }{\mathop {\unicode {x29F9}}\limits }\)
+
+\(\newcommand {\bigcupdot }{\mathop {\unicode {x2A03}}\limits }\)
+
+\(\newcommand {\bigsqcap }{\mathop {\unicode {x2A05}}\limits }\)
+
+\(\newcommand {\conjquant }{\mathop {\unicode {x2A07}}\limits }\)
+
+\(\newcommand {\disjquant }{\mathop {\unicode {x2A08}}\limits }\)
+
+\(\newcommand {\bigtimes }{\mathop {\unicode {x2A09}}\limits }\)
+
+\(\newcommand {\modtwosum }{\mathop {\unicode {x2A0A}}\limits }\)
+
+\(\newcommand {\sumint }{\mathop {\unicode {x2A0B}}\limits }\)
+
+\(\newcommand {\intbar }{\mathop {\unicode {x2A0D}}\limits }\)
+
+\(\newcommand {\intBar }{\mathop {\unicode {x2A0E}}\limits }\)
+
+\(\newcommand {\fint }{\mathop {\unicode {x2A0F}}\limits }\)
+
+\(\newcommand {\cirfnint }{\mathop {\unicode {x2A10}}\limits }\)
+
+\(\newcommand {\awint }{\mathop {\unicode {x2A11}}\limits }\)
+
+\(\newcommand {\rppolint }{\mathop {\unicode {x2A12}}\limits }\)
+
+\(\newcommand {\scpolint }{\mathop {\unicode {x2A13}}\limits }\)
+
+\(\newcommand {\npolint }{\mathop {\unicode {x2A14}}\limits }\)
+
+\(\newcommand {\pointint }{\mathop {\unicode {x2A15}}\limits }\)
+
+\(\newcommand {\sqint }{\mathop {\unicode {x2A16}}\limits }\)
+
+\(\newcommand {\intlarhk }{\mathop {\unicode {x2A17}}\limits }\)
+
+\(\newcommand {\intx }{\mathop {\unicode {x2A18}}\limits }\)
+
+\(\newcommand {\intcap }{\mathop {\unicode {x2A19}}\limits }\)
+
+\(\newcommand {\intcup }{\mathop {\unicode {x2A1A}}\limits }\)
+
+\(\newcommand {\upint }{\mathop {\unicode {x2A1B}}\limits }\)
+
+\(\newcommand {\lowint }{\mathop {\unicode {x2A1C}}\limits }\)
+
+\(\newcommand {\bigtriangleleft }{\mathop {\unicode {x2A1E}}\limits }\)
+
+\(\newcommand {\zcmp }{\mathop {\unicode {x2A1F}}\limits }\)
+
+\(\newcommand {\zpipe }{\mathop {\unicode {x2A20}}\limits }\)
+
+\(\newcommand {\zproject }{\mathop {\unicode {x2A21}}\limits }\)
+
+\(\newcommand {\biginterleave }{\mathop {\unicode {x2AFC}}\limits }\)
+
+\(\newcommand {\bigtalloblong }{\mathop {\unicode {x2AFF}}\limits }\)
+
+\(\newcommand {\arabicmaj }{\mathop {\unicode {x1EEF0}}\limits }\)
+
+\(\newcommand {\arabichad }{\mathop {\unicode {x1EEF1}}\limits }\)
+
+\(\require {colortbl}\)
+
+\(\let \LWRorigcolumncolor \columncolor \)
+
+\(\renewcommand {\columncolor }[2][named]{\LWRorigcolumncolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigrowcolor \rowcolor \)
+
+\(\renewcommand {\rowcolor }[2][named]{\LWRorigrowcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\let \LWRorigcellcolor \cellcolor \)
+
+\(\renewcommand {\cellcolor }[2][named]{\LWRorigcellcolor [#1]{#2}\LWRabsorbtwooptions }\)
+
+\(\newcommand {\tothe }[1]{^{#1}}\)
+
+\(\newcommand {\raiseto }[2]{{#2}^{#1}}\)
+
+\(\newcommand {\LWRsiunitxEND }{}\)
+
+\(\def \LWRsiunitxang #1;#2;#3;#4\LWRsiunitxEND {\ifblank {#1}{}{\num {#1}\degree }\ifblank {#2}{}{\num {#2}^{\unicode {x2032}}}\ifblank {#3}{}{\num {#3}^{\unicode {x2033}}}}\)
+
+\(\newcommand {\ang }[2][]{\LWRsiunitxang #2;;;\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxdistribunit {}\)
+
+\(\newcommand {\LWRsiunitxENDTWO }{}\)
+
+\(\def \LWRsiunitxprintdecimalsubtwo #1,#2,#3\LWRsiunitxENDTWO {\ifblank {#1}{0}{\mathrm {#1}}\ifblank {#2}{}{{\LWRsiunitxdecimal }\mathrm {#2}}}\)
+
+\(\def \LWRsiunitxprintdecimalsub #1.#2.#3\LWRsiunitxEND {\LWRsiunitxprintdecimalsubtwo #1,,\LWRsiunitxENDTWO \ifblank {#2}{}{{\LWRsiunitxdecimal }\LWRsiunitxprintdecimalsubtwo #2,,\LWRsiunitxENDTWO }}\)
+
+\(\newcommand {\LWRsiunitxprintdecimal }[1]{\LWRsiunitxprintdecimalsub #1...\LWRsiunitxEND }\)
+
+\(\def \LWRsiunitxnumplus #1+#2+#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxprintdecimal {#1}}{\ifblank {#1}{\LWRsiunitxprintdecimal {#2}}{\LWRsiunitxprintdecimal {#1}\unicode {x02B}\LWRsiunitxprintdecimal
+{#2}}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumminus #1-#2-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumplus #1+++\LWRsiunitxEND }{\ifblank {#1}{}{\LWRsiunitxprintdecimal {#1}}\unicode {x02212}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit
+}}\)
+
+\(\def \LWRsiunitxnumpmmacro #1\pm #2\pm #3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumminus #1---\LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\def \LWRsiunitxnumpm #1+-#2+-#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpmmacro #1\pm \pm \pm \LWRsiunitxEND }{\LWRsiunitxprintdecimal {#1}\unicode {x0B1}\LWRsiunitxprintdecimal {#2}\LWRsiunitxdistribunit }}\)
+
+\(\newcommand {\LWRsiunitxnumscientific }[2]{\ifblank {#1}{}{\ifstrequal {#1}{-}{-}{\LWRsiunitxprintdecimal {#1}\times }}10^{\LWRsiunitxprintdecimal {#2}}\LWRsiunitxdistribunit }\)
+
+\(\def \LWRsiunitxnumD #1D#2D#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumpm #1+-+-\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumd #1d#2d#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumD #1DDD\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumE #1E#2E#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumd #1ddd\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnume #1e#2e#3\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnumE #1EEE\LWRsiunitxEND }{\mathrm {\LWRsiunitxnumscientific {#1}{#2}}}}\)
+
+\(\def \LWRsiunitxnumx #1x#2x#3x#4\LWRsiunitxEND {\ifblank {#2}{\LWRsiunitxnume #1eee\LWRsiunitxEND }{\ifblank {#3}{\LWRsiunitxnume #1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND }{\LWRsiunitxnume
+#1eee\LWRsiunitxEND \times \LWRsiunitxnume #2eee\LWRsiunitxEND \times \LWRsiunitxnume #3eee\LWRsiunitxEND }}}\)
+
+\(\newcommand {\num }[2][]{\LWRsiunitxnumx #2xxxxx\LWRsiunitxEND }\)
+
+\(\newcommand {\si }[2][]{\mathrm {\gsubstitute {#2}{~}{\,}}}\)
+
+\(\def \LWRsiunitxSIopt #1[#2]#3{\def \LWRsiunitxdistribunit {\,\si {#3}}{#2}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\LWRsiunitxSI }[2]{\def \LWRsiunitxdistribunit {\,\si {#2}}\num {#1}\def \LWRsiunitxdistribunit {}}\)
+
+\(\newcommand {\SI }[2][]{\ifnextchar [{\LWRsiunitxSIopt {#2}}{\LWRsiunitxSI {#2}}}\)
+
+\(\newcommand {\numlist }[2][]{\text {#2}}\)
+
+\(\newcommand {\numrange }[3][]{\num {#2}\ \LWRsiunitxrangephrase \ \num {#3}}\)
+
+\(\newcommand {\SIlist }[3][]{\text {#2}\,\si {#3}}\)
+
+\(\newcommand {\SIrange }[4][]{\num {#2}\,#4\ \LWRsiunitxrangephrase \ \num {#3}\,#4}\)
+
+\(\newcommand {\tablenum }[2][]{\mathrm {#2}}\)
+
+\(\newcommand {\ampere }{\mathrm {A}}\)
+
+\(\newcommand {\candela }{\mathrm {cd}}\)
+
+\(\newcommand {\kelvin }{\mathrm {K}}\)
+
+\(\newcommand {\kilogram }{\mathrm {kg}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\mole }{\mathrm {mol}}\)
+
+\(\newcommand {\second }{\mathrm {s}}\)
+
+\(\newcommand {\becquerel }{\mathrm {Bq}}\)
+
+\(\newcommand {\degreeCelsius }{\unicode {x2103}}\)
+
+\(\newcommand {\coulomb }{\mathrm {C}}\)
+
+\(\newcommand {\farad }{\mathrm {F}}\)
+
+\(\newcommand {\gray }{\mathrm {Gy}}\)
+
+\(\newcommand {\hertz }{\mathrm {Hz}}\)
+
+\(\newcommand {\henry }{\mathrm {H}}\)
+
+\(\newcommand {\joule }{\mathrm {J}}\)
+
+\(\newcommand {\katal }{\mathrm {kat}}\)
+
+\(\newcommand {\lumen }{\mathrm {lm}}\)
+
+\(\newcommand {\lux }{\mathrm {lx}}\)
+
+\(\newcommand {\newton }{\mathrm {N}}\)
+
+\(\newcommand {\ohm }{\mathrm {\Omega }}\)
+
+\(\newcommand {\pascal }{\mathrm {Pa}}\)
+
+\(\newcommand {\radian }{\mathrm {rad}}\)
+
+\(\newcommand {\siemens }{\mathrm {S}}\)
+
+\(\newcommand {\sievert }{\mathrm {Sv}}\)
+
+\(\newcommand {\steradian }{\mathrm {sr}}\)
+
+\(\newcommand {\tesla }{\mathrm {T}}\)
+
+\(\newcommand {\volt }{\mathrm {V}}\)
+
+\(\newcommand {\watt }{\mathrm {W}}\)
+
+\(\newcommand {\weber }{\mathrm {Wb}}\)
+
+\(\newcommand {\day }{\mathrm {d}}\)
+
+\(\newcommand {\degree }{\mathrm {^\circ }}\)
+
+\(\newcommand {\hectare }{\mathrm {ha}}\)
+
+\(\newcommand {\hour }{\mathrm {h}}\)
+
+\(\newcommand {\litre }{\mathrm {l}}\)
+
+\(\newcommand {\liter }{\mathrm {L}}\)
+
+\(\newcommand {\arcminute }{^\prime }\)
+
+\(\newcommand {\minute }{\mathrm {min}}\)
+
+\(\newcommand {\arcsecond }{^{\prime \prime }}\)
+
+\(\newcommand {\tonne }{\mathrm {t}}\)
+
+\(\newcommand {\astronomicalunit }{au}\)
+
+\(\newcommand {\atomicmassunit }{u}\)
+
+\(\newcommand {\bohr }{\mathit {a}_0}\)
+
+\(\newcommand {\clight }{\mathit {c}_0}\)
+
+\(\newcommand {\dalton }{\mathrm {D}_\mathrm {a}}\)
+
+\(\newcommand {\electronmass }{\mathit {m}_{\mathrm {e}}}\)
+
+\(\newcommand {\electronvolt }{\mathrm {eV}}\)
+
+\(\newcommand {\elementarycharge }{\mathit {e}}\)
+
+\(\newcommand {\hartree }{\mathit {E}_{\mathrm {h}}}\)
+
+\(\newcommand {\planckbar }{\mathit {\unicode {x210F}}}\)
+
+\(\newcommand {\angstrom }{\mathrm {\unicode {x212B}}}\)
+
+\(\let \LWRorigbar \bar \)
+
+\(\newcommand {\bar }{\mathrm {bar}}\)
+
+\(\newcommand {\barn }{\mathrm {b}}\)
+
+\(\newcommand {\bel }{\mathrm {B}}\)
+
+\(\newcommand {\decibel }{\mathrm {dB}}\)
+
+\(\newcommand {\knot }{\mathrm {kn}}\)
+
+\(\newcommand {\mmHg }{\mathrm {mmHg}}\)
+
+\(\newcommand {\nauticalmile }{\mathrm {M}}\)
+
+\(\newcommand {\neper }{\mathrm {Np}}\)
+
+\(\newcommand {\yocto }{\mathrm {y}}\)
+
+\(\newcommand {\zepto }{\mathrm {z}}\)
+
+\(\newcommand {\atto }{\mathrm {a}}\)
+
+\(\newcommand {\femto }{\mathrm {f}}\)
+
+\(\newcommand {\pico }{\mathrm {p}}\)
+
+\(\newcommand {\nano }{\mathrm {n}}\)
+
+\(\newcommand {\micro }{\mathrm {\unicode {x00B5}}}\)
+
+\(\newcommand {\milli }{\mathrm {m}}\)
+
+\(\newcommand {\centi }{\mathrm {c}}\)
+
+\(\newcommand {\deci }{\mathrm {d}}\)
+
+\(\newcommand {\deca }{\mathrm {da}}\)
+
+\(\newcommand {\hecto }{\mathrm {h}}\)
+
+\(\newcommand {\kilo }{\mathrm {k}}\)
+
+\(\newcommand {\mega }{\mathrm {M}}\)
+
+\(\newcommand {\giga }{\mathrm {G}}\)
+
+\(\newcommand {\tera }{\mathrm {T}}\)
+
+\(\newcommand {\peta }{\mathrm {P}}\)
+
+\(\newcommand {\exa }{\mathrm {E}}\)
+
+\(\newcommand {\zetta }{\mathrm {Z}}\)
+
+\(\newcommand {\yotta }{\mathrm {Y}}\)
+
+\(\newcommand {\percent }{\mathrm {\%}}\)
+
+\(\newcommand {\meter }{\mathrm {m}}\)
+
+\(\newcommand {\metre }{\mathrm {m}}\)
+
+\(\newcommand {\gram }{\mathrm {g}}\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\of }[1]{_{\mathrm {#1}}}\)
+
+\(\newcommand {\squared }{^2}\)
+
+\(\newcommand {\square }[1]{\mathrm {#1}^2}\)
+
+\(\newcommand {\cubed }{^3}\)
+
+\(\newcommand {\cubic }[1]{\mathrm {#1}^3}\)
+
+\(\newcommand {\per }{\,\mathrm {/}}\)
+
+\(\newcommand {\celsius }{\unicode {x2103}}\)
+
+\(\newcommand {\fg }{\femto \gram }\)
+
+\(\newcommand {\pg }{\pico \gram }\)
+
+\(\newcommand {\ng }{\nano \gram }\)
+
+\(\newcommand {\ug }{\micro \gram }\)
+
+\(\newcommand {\mg }{\milli \gram }\)
+
+\(\newcommand {\g }{\gram }\)
+
+\(\newcommand {\kg }{\kilo \gram }\)
+
+\(\newcommand {\amu }{\mathrm {u}}\)
+
+\(\newcommand {\pm }{\pico \metre }\)
+
+\(\newcommand {\nm }{\nano \metre }\)
+
+\(\newcommand {\um }{\micro \metre }\)
+
+\(\newcommand {\mm }{\milli \metre }\)
+
+\(\newcommand {\cm }{\centi \metre }\)
+
+\(\newcommand {\dm }{\deci \metre }\)
+
+\(\newcommand {\m }{\metre }\)
+
+\(\newcommand {\km }{\kilo \metre }\)
+
+\(\newcommand {\as }{\atto \second }\)
+
+\(\newcommand {\fs }{\femto \second }\)
+
+\(\newcommand {\ps }{\pico \second }\)
+
+\(\newcommand {\ns }{\nano \second }\)
+
+\(\newcommand {\us }{\micro \second }\)
+
+\(\newcommand {\ms }{\milli \second }\)
+
+\(\newcommand {\s }{\second }\)
+
+\(\newcommand {\fmol }{\femto \mol }\)
+
+\(\newcommand {\pmol }{\pico \mol }\)
+
+\(\newcommand {\nmol }{\nano \mol }\)
+
+\(\newcommand {\umol }{\micro \mol }\)
+
+\(\newcommand {\mmol }{\milli \mol }\)
+
+\(\newcommand {\mol }{\mol }\)
+
+\(\newcommand {\kmol }{\kilo \mol }\)
+
+\(\newcommand {\pA }{\pico \ampere }\)
+
+\(\newcommand {\nA }{\nano \ampere }\)
+
+\(\newcommand {\uA }{\micro \ampere }\)
+
+\(\newcommand {\mA }{\milli \ampere }\)
+
+\(\newcommand {\A }{\ampere }\)
+
+\(\newcommand {\kA }{\kilo \ampere }\)
+
+\(\newcommand {\ul }{\micro \litre }\)
+
+\(\newcommand {\ml }{\milli \litre }\)
+
+\(\newcommand {\l }{\litre }\)
+
+\(\newcommand {\hl }{\hecto \litre }\)
+
+\(\newcommand {\uL }{\micro \liter }\)
+
+\(\newcommand {\mL }{\milli \liter }\)
+
+\(\newcommand {\L }{\liter }\)
+
+\(\newcommand {\hL }{\hecto \liter }\)
+
+\(\newcommand {\mHz }{\milli \hertz }\)
+
+\(\newcommand {\Hz }{\hertz }\)
+
+\(\newcommand {\kHz }{\kilo \hertz }\)
+
+\(\newcommand {\MHz }{\mega \hertz }\)
+
+\(\newcommand {\GHz }{\giga \hertz }\)
+
+\(\newcommand {\THz }{\tera \hertz }\)
+
+\(\newcommand {\mN }{\milli \newton }\)
+
+\(\newcommand {\N }{\newton }\)
+
+\(\newcommand {\kN }{\kilo \newton }\)
+
+\(\newcommand {\MN }{\mega \newton }\)
+
+\(\newcommand {\Pa }{\pascal }\)
+
+\(\newcommand {\kPa }{\kilo \pascal }\)
+
+\(\newcommand {\MPa }{\mega \pascal }\)
+
+\(\newcommand {\GPa }{\giga \pascal }\)
+
+\(\newcommand {\mohm }{\milli \ohm }\)
+
+\(\newcommand {\kohm }{\kilo \ohm }\)
+
+\(\newcommand {\Mohm }{\mega \ohm }\)
+
+\(\newcommand {\pV }{\pico \volt }\)
+
+\(\newcommand {\nV }{\nano \volt }\)
+
+\(\newcommand {\uV }{\micro \volt }\)
+
+\(\newcommand {\mV }{\milli \volt }\)
+
+\(\newcommand {\V }{\volt }\)
+
+\(\newcommand {\kV }{\kilo \volt }\)
+
+\(\newcommand {\W }{\watt }\)
+
+\(\newcommand {\uW }{\micro \watt }\)
+
+\(\newcommand {\mW }{\milli \watt }\)
+
+\(\newcommand {\kW }{\kilo \watt }\)
+
+\(\newcommand {\MW }{\mega \watt }\)
+
+\(\newcommand {\GW }{\giga \watt }\)
+
+\(\newcommand {\J }{\joule }\)
+
+\(\newcommand {\uJ }{\micro \joule }\)
+
+\(\newcommand {\mJ }{\milli \joule }\)
+
+\(\newcommand {\kJ }{\kilo \joule }\)
+
+\(\newcommand {\eV }{\electronvolt }\)
+
+\(\newcommand {\meV }{\milli \electronvolt }\)
+
+\(\newcommand {\keV }{\kilo \electronvolt }\)
+
+\(\newcommand {\MeV }{\mega \electronvolt }\)
+
+\(\newcommand {\GeV }{\giga \electronvolt }\)
+
+\(\newcommand {\TeV }{\tera \electronvolt }\)
+
+\(\newcommand {\kWh }{\kilo \watt \hour }\)
+
+\(\newcommand {\F }{\farad }\)
+
+\(\newcommand {\fF }{\femto \farad }\)
+
+\(\newcommand {\pF }{\pico \farad }\)
+
+\(\newcommand {\K }{\mathrm {K}}\)
+
+\(\newcommand {\dB }{\mathrm {dB}}\)
+
+\(\newcommand {\kibi }{\mathrm {Ki}}\)
+
+\(\newcommand {\mebi }{\mathrm {Mi}}\)
+
+\(\newcommand {\gibi }{\mathrm {Gi}}\)
+
+\(\newcommand {\tebi }{\mathrm {Ti}}\)
+
+\(\newcommand {\pebi }{\mathrm {Pi}}\)
+
+\(\newcommand {\exbi }{\mathrm {Ei}}\)
+
+\(\newcommand {\zebi }{\mathrm {Zi}}\)
+
+\(\newcommand {\yobi }{\mathrm {Yi}}\)
+
+\(\let \unit \si \)
+
+\(\let \qty \SI \)
+
+\(\let \qtylist \SIlist \)
+
+\(\let \qtyrange \SIrange \)
+
+\(\let \numproduct \num \)
+
+\(\let \qtyproduct \SI \)
+
+\(\let \complexnum \num \)
+
+\(\newcommand {\complexqty }[3][]{(\complexnum {#2})\si {#3}}\)
+
+\(\newcommand {\LWRsubmultirow }[2][]{#2}\)
+
+\(\newcommand {\LWRmultirow }[2][]{\LWRsubmultirow }\)
+
+\(\newcommand {\multirow }[2][]{\LWRmultirow }\)
+
+\(\newcommand {\mrowcell }{}\)
+
+\(\newcommand {\mcolrowcell }{}\)
+
+\(\newcommand {\STneed }[1]{}\)
+
+\(\newcommand {\toprule }[1][]{\hline }\)
+
+\(\let \midrule \toprule \)
+
+\(\let \bottomrule \toprule \)
+
+\(\def \LWRbooktabscmidruleparen (#1)#2{}\)
+
+\(\newcommand {\LWRbooktabscmidrulenoparen }[1]{}\)
+
+\(\newcommand {\cmidrule }[1][]{\ifnextchar (\LWRbooktabscmidruleparen \LWRbooktabscmidrulenoparen }\)
+
+\(\newcommand {\morecmidrules }{}\)
+
+\(\newcommand {\specialrule }[3]{\hline }\)
+
+\(\newcommand {\addlinespace }[1][]{}\)
+
+\(\let \symsf \symsfit \)
+
+\(\def\Alpha{\unicode{x1D6E2}}\)
+
+\(\def\Beta{\unicode{x1D6E3}}\)
+
+\(\def\Gamma{\unicode{x1D6E4}}\)
+
+\(\def\Digamma{\mathit{\unicode{x03DC}}}\)
+
+\(\def\Delta{\unicode{x1D6E5}}\)
+
+\(\def\Epsilon{\unicode{x1D6E6}}\)
+
+\(\def\Zeta{\unicode{x1D6E7}}\)
+
+\(\def\Eta{\unicode{x1D6E8}}\)
+
+\(\def\Theta{\unicode{x1D6E9}}\)
+
+\(\def\Vartheta{\unicode{x1D6F3}}\)
+
+\(\def\Iota{\unicode{x1D6EA}}\)
+
+\(\def\Kappa{\unicode{x1D6EB}}\)
+
+\(\def\Lambda{\unicode{x1D6EC}}\)
+
+\(\def\Mu{\unicode{x1D6ED}}\)
+
+\(\def\Nu{\unicode{x1D6EE}}\)
+
+\(\def\Xi{\unicode{x1D6EF}}\)
+
+\(\def\Omicron{\unicode{x1D6F0}}\)
+
+\(\def\Pi{\unicode{x1D6F1}}\)
+
+\(\def\Rho{\unicode{x1D6F2}}\)
+
+\(\def\Sigma{\unicode{x1D6F4}}\)
+
+\(\def\Tau{\unicode{x1D6F5}}\)
+
+\(\def\Upsilon{\unicode{x1D6F6}}\)
+
+\(\def\Phi{\unicode{x1D6F7}}\)
+
+\(\def\Chi{\unicode{x1D6F8}}\)
+
+\(\def\Psi{\unicode{x1D6F9}}\)
+
+\(\def\Omega{\unicode{x1D6FA}}\)
+
+\(\def\alpha{\unicode{x1D6FC}}\)
+
+\(\def\beta{\unicode{x1D6FD}}\)
+
+\(\def\varbeta{\unicode{x03D0}}\)
+
+\(\def\gamma{\unicode{x1D6FE}}\)
+
+\(\def\digamma{\mathit{\unicode{x03DD}}}\)
+
+\(\def\delta{\unicode{x1D6FF}}\)
+
+\(\def\epsilon{\unicode{x1D716}}\)
+
+\(\def\varepsilon{\unicode{x1D700}}\)
+
+\(\def\zeta{\unicode{x1D701}}\)
+
+\(\def\eta{\unicode{x1D702}}\)
+
+\(\def\theta{\unicode{x1D703}}\)
+
+\(\def\vartheta{\unicode{x1D717}}\)
+
+\(\def\iota{\unicode{x1D704}}\)
+
+\(\def\kappa{\unicode{x1D705}}\)
+
+\(\def\varkappa{\unicode{x1D718}}\)
+
+\(\def\lambda{\unicode{x1D706}}\)
+
+\(\def\mu{\unicode{x1D707}}\)
+
+\(\def\nu{\unicode{x1D708}}\)
+
+\(\def\xi{\unicode{x1D709}}\)
+
+\(\def\omicron{\unicode{x1D70A}}\)
+
+\(\def\pi{\unicode{x1D70B}}\)
+
+\(\def\varpi{\unicode{x1D71B}}\)
+
+\(\def\rho{\unicode{x1D70C}}\)
+
+\(\def\varrho{\unicode{x1D71A}}\)
+
+\(\def\sigma{\unicode{x1D70E}}\)
+
+\(\def\varsigma{\unicode{x1D70D}}\)
+
+\(\def\tau{\unicode{x1D70F}}\)
+
+\(\def\upsilon{\unicode{x1D710}}\)
+
+\(\def\phi{\unicode{x1D719}}\)
+
+\(\def\varphi{\unicode{x1D711}}\)
+
+\(\def\chi{\unicode{x1D712}}\)
+
+\(\def\psi{\unicode{x1D713}}\)
+
+\(\def\omega{\unicode{x1D714}}\)
+
+\(\def \LWRsiunitxrangephrase { \protect \mbox {to} }\)
+
+\(\def \LWRsiunitxdecimal {.}\)
+
+</div>
+<!--
+...... chapter 计划经济时期 1949--1978 ......
+-->
+<h3 id="autosec-202"><span class="sectionnumber">第十一章&nbsp;&#x2003;</span>计划经济时期 1949–1978</h3>
+<a id="main-autopage-202"></a>
+<a id="main-autofile-13"></a>
+<!--
+...... section 社会主义过渡时期 1949--1956 ......
+-->
+<h4 id="autosec-204"><span class="sectionnumber">11.1&#x2003;</span>社会主义过渡时期 1949–1956</h4>
+<a id="main-autopage-204"></a>
+
+
+
+<a id="sec:hongguodu"></a>
+
+<p>
+1949 年 10 月新中国成立到 1956 年社会主义改造基本完成，是新民主主义社会向社会主义社会过渡时期。
+</p>
+
+<p>
+经济恢复 3 年，1952 年底，中共中央提出了党在过渡时期的总路线，明确规定：党在这个过渡时期的总路线和总任务，是要在一个相当长的时期内，<b> 逐步实现国家的社会主义工业化，并逐步实现国家对农业、对手工业和对资本主义工商业的社会主义改
+造。</b>”
+</p>
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 1950 年 2 月 13 日至 15 日，第一次全国财经会议，中央统管全国财政收支、国家国营贸易和物资调度，稳定金融物价，具体实施中实行了严格的公粮入库制度。薄一波认为这是新中国财经战线三大战役中的第一次大
+战役。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 1950 年 3 月 16 日，第一次全国统战会议，人民民主统一战线。针对党内左倾倾向，毛泽东提出现阶段是工人阶级、农民阶级、小资产阶级和民族资产阶级四个阶级的联盟，应求得四个阶级的共同解放。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 1950 年夏，淮河发大水，灾情严重。农田受灾面积达 4687 万亩，灾民约 1300 多万人，倒塌房屋 89 万余间。以淮河为起点开展了对全国大江大河的治理。
+</p>
+<p>
+史实部分参考樊宪雷《20 世纪 50 年代至 60 年代初我国兴修水利的探索实践及其基本经验》。
+</p>
+<blockquote>
+<p>
+在 1950 年至 1952 年 3 年中，国家用于以大江大河治理为主的水利建设的投资共约 7 亿元，占预算内基本建设投资的 10％，对全国 2.4 万多公里的重要堤防进行了修整，3 年内直接参加水利工程的人员有 2000 万人，完成土方 17 亿多。如此大规模的以大
+江大河治理为主的水利建设，改变了新中国成立前河道失修的状态，基本上解除了我国人民几千年所受洪水灾害的严重威胁，保证了大部地区农业生产和人民生活的安全。
+</p>
+</blockquote>
+<p>
+防汛为主的水利工程之后延伸至以增产增收为目的的农田灌溉水利建设。
+</p>
+<blockquote>
+<p>
+水利部提出，“1953 年以及今后的农田水利工作的方向”，“应该着重开展群众性的各种小型水利，整顿现有水利设施，加强灌溉管理，发掘潜在力量，以扩大灌溉面积”。
+</p>
+</blockquote>
+<p>
+从治淮到全国大兴农田水利，最后犯了大跃进错误。
+</p>
+<p>
+新中国经济相当薄弱，城市经济自身都面临劳动力过剩问题，无法吸纳小农经济下农村严重过剩劳动力。大兴农田水利是 <b> 巨型以工代赈 </b> 工程。一方面，从农村中析出大量剩余劳动力参与基础工程建设，对这部分人发放劳务报酬，农村农民生活压
+力得以减轻。另一方面，以过剩劳动力替代基础建设中耗资巨大的固定资本投资。笔者认为，这是一次后发国家中国尝试 <b> 弯道超车的巨型社会制度实验 </b>。如果可行，可将这种 <b> 以工代赈的群众性运动 </b> 推广至其他全国性大规模基建，并大
+力发展经济。可惜尝试的结果可能是失败的。
+</p>
+<p>
+大兴水利至今已有 70 余年，不管中国的意识形态有何变化，大规模固定资本投资始终是中国求得经济发展的主要依赖路径之一，1992 年之后，房地产也列入了其中。
+</p>
+<p>
+笔者还认为读者还需关注一点，毛泽东在他整个执政生涯里虽犯了一些错误，但始终没有开展直接的、血淋淋的创造大量失地农民，将其挤入城市的资本原始积累。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 1952 年 3 月，“五反”运动中，全国范围内形成了一个反对资本家“五毒”行为的斗争高潮。1952 年 10 月，五反运动结束，中共中央转批的廖鲁言报告中指出
+</p>
+<blockquote>
+<p>
+根据华北、东北、华东、西北、中南 5 大区 67 个城市和西南全区的统计，参加“五反”运动的工商户总计 999707 户，受到刑事处分的只有 1509 人，仅占总数的 0.15%，其中判处死刑和死缓的仅 19 人，占判刑总数的 1.26%。
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 中国计划经济时代医疗制度是贯穿计划经济时期时期的，因此做下全面陈述。以下内容根据王晓玲《中国医疗市场政府管制的历史演进及制度反思》<a id="main-autopage-207"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@yiliaoshi">59</a>]</sup>：
+</p>
+<p>
+1951 年起开始对工商业职工及其供养的直系家属实行源自企业纯收入的 <b> 劳保医疗 </b>。1952 年底，全国 90% 以上的地区建立了县级卫生机构，县级卫生院达到 2123 所。政府在 1952 年，1960 年和 1972 年三次大幅降低医疗价格收费标准，低于成
+本部分进行财政补贴。1952 年，开始实行针对国家工作人员的 <b> 公费医疗 </b>，后于 1953 年扩大至大学和专科院校。1955 年在山西省高平县率先实行了医疗合作社和生产合作社相结合的 <b> 集体医疗 </b> 保健制度，标志着我国农村正式出现具有保
+险性质的 <b> 合作医疗 </b> 制度。1968 年，毛泽东批示了湖北省长阳县乐园人民公社举办合作医疗的经验，<b> 合作医疗 </b> 制度在全国蓬勃发展起来。计划经济时期禁止私人资本进入医院。
+</p>
+<p>
+毛泽东以领袖强力推动了农村医疗水平。主要是医疗巡回队下农村和培养保健员（赤脚医生）。据时任卫生部长钱信忠回忆：
+</p>
+<blockquote>
+<p>
+在 1965 年 1 月三届全国人大第一次会议期间，毛主席又当面指示过，并批评“<b> 卫生部想不想面向工农兵 </b>”
+                                                            ，“<b> 为什么把医学教育年限搞的那么长!</b>”……我于当月 20 日，向毛主席呈上报告，决定在 15 所医学院中开办三年制的班，为农村培
+养医生，毛主席于第二天就作了“同意照办”的批示。
+</p>
+<p>
+1965 年 2 月 6 日中共中央下发了对卫生部关于组织高级医务人员下农村和为农村培养医生报告的批示，至 4 月初，全国各地就有 1500 个医疗队，18600 名医务人员下到农村，卫生部还派了两名司局长分赴四川、广西等地检查贯彻执行情况，全国上下掀起
+了一个 <b> 下农村巡回医疗 </b> 和 <b> 为农村培养卫生人员 </b> 的高潮，其声势之大，是前所未有的。
+</p>
+</blockquote>
+<p>
+                                                             “中国农村实行的合作医疗制度是 <b> 发展中国家群体解决卫生保障的唯一范例 </b>”
+医疗全覆盖至农村，这在中国历史上史无前例，乃至于后无来者。1980 年，在世界卫生组织和世界银行共同发布的一份考察报告中称，                                          。80 年代初，由于农村联产承包制
+的推行，农业最小单位由农村合作社转为家庭，“赤脚医生”和农村合作医疗退出历史。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">6.</span> 第一个五年计划（1953-1957）出台，首要重点发展重工业。
+</p>
+<blockquote>
+<p>
+“一五”计划的主要指标是：五年内经济和文化教育建设总支出为 766.4 亿元……其中，基本建设的投资总额为 427.4 亿元，占 55.8%，其余 44.2% 的资金计 339 亿元，用于基础建设所要的资源勘探、工程设计和器材储备等；工业交通运输和邮电业的设备
+大修、技术组织措施、新产品试制等；各经济部门的流通资金；经济和文化事业，培养专业干部等。
+</p>
+<p>
+基本建设投资 427.4 亿元的分配是：工业部门为 248.5 亿元，占 58.2%；农、林、水部门为 32.6 亿元，占 7.6%；运输邮电业为 82.2 亿元，占 19.2%；文教卫生部门为 30.8 亿元，占 7.2%。
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">7.</span> 1953 年 2 月 15 日，中央正式决议，重点发展以土地入股为特点的农业生产合作社，左倾右倾均要不得，另外推广国营农场。1953 年底到 1955 年春这一年半的时间里，合作社数量就由 1.4 万个发展到 67 万个。1956
+年 1 月，中央发布《1956–1957 年全国农业发展纲要（草案）
+                                 》，强调完成初级合作社到高级合作社的升级。1956 年底，全国建成 75.6 万个农业生产合作社，高级社农户占农户总数的 88.8%。这标志着中国农村在生产资料所有制方面的社会主义改造基本完
+成，实现了对农村史无前例的全面管控。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">8.</span> 1953 年 10 月，国家对粮、油、棉统购统销。1955 年 3 月 3 日，国务院发出《关于迅速布置粮食购销工作，安定农民生产情绪的紧急指示》，决定实行粮食“三定”（定产、定购、定销）。薄一波写到：
+</p>
+<blockquote>
+<p>
+继稳定物价、统一全国财经工作之后，被称为新中国财经战线上的第二次大战役的，就是 1953 年开始的对粮食等主要农产品实行 <b> 统购统销 </b>。到 1985 年改行 <b> 粮棉合同定购 </b> 制度为止，这个在特定条件下开始实行的农产品统购制度，持续
+时间长达 32 年之久。而统销制度的一些基本内容现在还在持续进行。<a id="main-autopage-210"></a><sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]255</sup>
+</p>
+</blockquote>
+<p>
+关于统购统销的研究存在多方论述，田锡全论文《粮食统购统销制度研究的回顾与思考》有对各方观点的理论综述。
+</p>
+<p>
+统购统销出台的背景如薄所说：1952 年粮食丰收，但粮食收支赤字较大；经济作物比粮食作物利润高；私营粮商的行价比政府征购牌价高 20%–30%。笔者想，显而易见，征购不畅最主要的原因归根到底还是征购价格低。
+</p>
+<p>
+1953 年 10 月 2 日晚，陈云在政治局扩大会议上作报告，其中最重要一点是 <b> 粮食征购不足将导致物价整体上涨、工人工资上涨、继而使工业生产、预算、建设计划均受损。且人人囤积，形势会日益紧张严峻。</b> 笔者认为陈云的分析是正确的，并且符
+合马克思、前期苏联的认识。
+</p>
+<p>
+陈云在会上直言采用这种方式的代价是可能会有小部分农民闹事。可见《陈云文集》第二卷 1953 年 10 月 10 日《实行粮食统购统销》，报告中也陈述了他预想的另七种方法的优劣，可见陈原文，薄一波也赞美陈云这份报告的切实有力。
+</p>
+<blockquote>
+<p>
+我这个人不属于” 激烈派”，总是希望抵抗少一点。我现在是挑着一担” 炸药”，<b> 前面是“黑色炸药”        。</b> 如果搞不到粮食，整个市场就要波动；如果采取征购的办法，农民又可能反对。两个中间要选择一个，都是危险家伙。现在的
+                                                  ，后面是“黄色炸药”
+问题是要确实把粮食买到，如果办法不可行，落空了，我可以肯定地讲，粮食市场一定要混乱。这可不是开玩笑的事情。
+</p>
+</blockquote>
+<p>
+任何国家政策的制定首先要立足于现实状况，而现实状况有时无法给出正确答案。关于农业，新中国与二十世纪初俄国面临同样问题，我们都没有大规模资本原始积累形成农业工业化（
+                                                                                “美国式道路”
+                                                                                      ）这一条件。陈云所述、薄一波评价“两个炸弹中的选择”
+便是为了发展工业化而苦力维持小农经济的现实实践。这真的难以说是国家的错误，而更像是整个人类世界客观局限和绝望，从全球到各国家到每个个人，有时候都会面对这种可怕可悲选择的境地⋯⋯
+</p>
+<p>
+也如薄一波所说，虽然党内外批评和反对苏联利用剪刀差的一些具体做法，但仍然“<b> 在实际上无法同剪刀差真正决裂 </b>”
+                                                            。<a id="main-autopage-211"></a><sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]281</sup>黄宗智认为“三农政
+                                       <sup>[<a href="17.html#LWR-ht-cite.0@sanjiaozhou">61</a>]175</sup> ，国家依靠农村合作社等集体模式获得了对农村前所未有的强力管理，另外在国家对合作
+策不仅把小农家庭农场经济纳入国家计划，实际上还强有力地把农民推向集体化的道路。”
+社提供优惠政策，及农民个人无法承担征购巨大压力的情况下，使农民主动融入合作社。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">9.</span> 1953 年 6 月，中共中央起草《关于利用、限制、改造资本主义工商业的意见》。1954 年 9 月 2 日，政务院颁布《公私合营工业企业暂行条例》。1955 年 10 月全国工商联合会议通过了《告全国工商界书》。1956 年初，
+全国范围出现社会主义改造高潮，资本主义工商业实现了全行业公私合营。这也是薄一波所说新中国财经战线三大战役中的第三次大战役。<sup>1</sup>
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">10.</span> 1956 年是“一五”计划第四年，在这一年全国工农业总产值已经完成整个“一五”计划指标。工业方面总产值平均年增长 19.2%，超过目标 14.7%。在 1957 年“一五计划”完成时，农业方面：
+</p>
+<blockquote>
+<p>
+农业增长率为 4.5%，虽然完成了计划指标 (4.3%) ，但是与工业高速增长相比明显滞后。这也造成了农村购买力增长缓慢，原计划农村购买力增长 100%，实际上只增长 20%，大大低于计划目标。<a id="main-autopage-212"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@shiyiwu">62</a>]</sup>
+</p>
+</blockquote>
+</li>
+</ul>
+
+<p>
+1956 年的国民收入中，有 92.9% 来自于公有制经济（国营、合作社、公私合营），这标志着中国已经从新民主主义社会过渡到社会主义社会。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-213"></a>
+
+<p>
+<sup>1</sup>&nbsp;1966 年 9 月，在原定的向资本家支付定息的年限已满后，政府决定不再支付定息，公私合营的企业由此变成了完全社会主义性质的全民所有制的国营企业。
+</p>
+
+
+
+</div>
+<!--
+...... section 红色社会主义社会时期 1957--1978 年......
+-->
+<h4 id="autosec-214"><span class="sectionnumber">11.2&#x2003;</span>红色社会主义社会时期 1957–1978 年</h4>
+<a id="main-autopage-214"></a>
+
+
+
+<p>
+笔者将 1957–1978 年称为红色社会主义社会时期。
+</p>
+<!--
+...... subsection 财政体制改进......
+-->
+<h5 id="autosec-215"><span class="sectionnumber">11.2.1&#x2003;</span>财政体制改进</h5>
+<a id="main-autopage-215"></a>
+
+
+
+<p>
+                                  <sup>[<a href="17.html#LWR-ht-cite.0@DZSY201701010">63</a>]</sup>，中央和地方权利分配变化可看周飞舟和谭飞智所著《当代中国中央地方关系》
+关于这一时期的具体历史事件可看胡安全《中共八届三中全会与经济体制改进》                                                                                                  <sup>[<a
+href="17.html#LWR-ht-cite.0@yangdi">64</a>]</sup>。
+</p>
+
+<p>
+关于中央集权和给地方放权、分权的内在张力：
+</p>
+<blockquote>
+
+<p>
+中国政体的突出特点是 <b> 以中央政府为中心的一统体制 </b>，即中央政府对其广大国土及居住其上的民众、各个领域和方面有着最高和最终的决定权。在这一前提下，中国国家治理的一个深刻矛盾是 <b> 一统体制与有效治理之间的矛盾 </b>，集中表
+现在 <b> 中央管辖权与地方治理权间的紧张和不兼容 </b>：前者趋于权力、资源向上集中，从而削弱了地方政府解决实际问题的能力，即这一体制的有效治理能力；而后者又常常表现为各行其是、偏离失控，对一统体制的中央核心产生威胁。在一统体制
+中，这一矛盾无法得到根本解决，只能在动态中寻找某种暂时的平衡点。国家治理逻辑在很大程度上是针对这一矛盾而演化发展起来的，体现在一整套制度设施和应对机制之上。<a id="main-autopage-216"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@zhililuoji">65</a>]</sup>
+</p>
+
+<p>
+地方权力过大，容易造成中央的政令不通，在极端的情况下造成“诸侯政治”甚至地方割据和国家分裂；而中央实行过度的集权又容易使得整个政治和经济体制陷于僵化，难以对地方出现的问题进行灵活和适当的反应和处理，地方的小问题往往容易蔓延和
+发展成为全国性的大问题，从而也威胁到政权和国家的稳定。所谓“<b> 一放就乱、一收就死 </b>”就是指的这种状况。
+                                                         <sup>[<a href="17.html#LWR-ht-cite.0@yangdi">64</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+根据万其刚《当代中国财税法制的历史及其发展》：
+</p>
+<blockquote>
+
+<p>
+                                  《关于统一管理 1950 年度财政收支的决定》，核心内容就是 <b> 把财政收支权集中于中央 </b>。随着整个经济形势的好转，逐步实行“<b> 划分收支、分级管理体制 </b>”
+政务院 1950 年 3 月颁布的《关于统一国家财政经济工作的决定》、                                                                                        。1951 年 3 月政
+务院颁布《关于 1951 年度财政收支系统划分的决定》，把国家财政分为 <b> 中央、大行政区和省（市）三级 </b>。初步建立起“<b> 统收统支、总额分成 </b>”的集权型财政体制。
+</p>
+</blockquote>
+
+<p>
+1957 年 11 月，国务院颁发《关于改进财政管理体制的规定》，决定从 1958 年起，实行“<b> 以收定支，三年不变 </b>”
+                                                                  （1958 年 4 月改为“<b> 五年不变 </b>”
+                                                                                             ）的体制。中央政府开始全面下放权限，建立起了“<b> 块块为主、条块结合 </b>”的计划体
+制，规定各省市自治区可以对本地区的工农业生产指标进行调整，可以安排本地区的建设投资和人力、财力、物力以及公共事业项目。这是新中国历史上的 <b> 第一次大规模放权 </b> 的变革。各省开始追求建立独立完整工业体系，地方可以自主基建投资
+等。企业管理方面，央企下放 88%。对企业管理的指标性计划从 12 个减少为 4 个。
+</p>
+
+<p>
+官僚主义抬头，地方第一次开始 <b> 指标锦标赛 </b>，1958–1960 年，各地纷纷上马各大中型项目，重复基建，重工业增长了 2.33 倍，轻工业增长了 47%，农业下降了 22.7%。大跃进开始，“浮夸风”等五风盛行，造成恶劣后果。
+</p>
+
+<p>
+因五风盛行、大跃进、地方大干快上等，中央暂时收权：
+</p>
+<blockquote>
+
+<p>
+“以收定支，五年不变”仅执行不到一年就难以为继。1958 年 9 月，国务院通过《关于进一步改进财政管理体制和改进银行信贷管理体制的几项规定（草案修改稿）》，决定从 1959 年起，实行“收支下放，计划包干，地区调剂，总额分成，一年一变”的财
+政管理体制，简称“<b> 总额分成，一年一变 </b>”。
+</p>
+
+<p>
+对地方的机动财力进行了适当压缩，将特定收入之外的其余地方财政收入捆在一起按照核定的比例由中央和地方实行总额分成，把基本建设支出由中央专案拨款改为列入地方预算支出，参与收入分成，加上预算指标一年一定，中央适当地集中了财力，属于
+<b>“高度集中”体制下的“部分分权”模式 </b>。但是，由于“大跃进”对经济工作的影响、中苏关系逐渐交恶及严重的自然灾害，1959 年地方上仍然存在财权相对下放较多、财力分散、财政管理松软等问题。<a id="main-autopage-218"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@DZSY202204015">66</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+从 1961 年到 1966 年，中央在行政和经济管理上 <b> 重新“收权”</b>，对于恢复国民经济的作用明显。
+</p>
+
+<p>
+“文化大革命”开始后，中央提出 <b> 以“块块”为主 </b> 的管理国民经济的基本思路，是“大跃进”时期之后的 <b> 第二次大规模“放权”</b>。大量精简、合并中央机构，下放 85% 的部属企业到地方。扩大地方基建投资的管理权；中央统配和部管物
+资由 1966 年的 579 种减为 1972 年的 217 种，同时下放企业的物资分配和供应权限给地方。
+</p>
+
+<p>
+1973 年 1 月 2 日，国家计委向国务院提交《关于增加设备进口、扩大经济交流的请示报告》，正式提出“<b> 四三方案 </b>”。建议利用西方资本主义危机红利，引进 <b>43 亿美元的西方成套设备 </b> 来调整中国工业结构，布局相对集中的 <b> 沿海主要
+工业城市 </b>，以调整国内“缺重少轻”的工业结构。由此开始了新中国的第二轮仍然维持自主性的对外开放。
+</p>
+<blockquote>
+
+<p>
+统计表明了周恩来总理提出的“四三方案”的实施情况：中国从六十年代中后期到七十年代用延期付款和利用中国银行外汇存款等方式，大规模引进的机械设备价值高达 42.4 亿美元。同期，中国马上就出现了与 20 世纪 50 年代初期第一次面向苏东“对外
+开放”的“一五”计划完成后类似的问题：国家进行扩大再生产的投资能力严重不足。特别是 1974 年以后，财政赤字连续突破 100 亿元，而当时的财政总规模还不到 800 亿元。<a id="main-autopage-219"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@wenbaci">67</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+1974 年，财政困难，<b> 中央收权 </b>，回归“<b> 总额分成，一年一变 </b>”。第三次知青上山下乡。
+</p>
+<!--
+...... subsection 赫鲁晓夫的秘密报告......
+-->
+<h5 id="autosec-220"><span class="sectionnumber">11.2.2&#x2003;</span>赫鲁晓夫的秘密报告</h5>
+<a id="main-autopage-220"></a>
+
+
+
+<p>
+对于新中国这一历史阶段的理解，必须加入对赫鲁晓夫秘密报告影响的认识。
+</p>
+
+<p>
+1956 年 2 月 25 日，赫鲁晓夫在苏共第二十次代表大会上作了《关于个人崇拜及其后果》的“秘密报告”，大力批判了斯大林，斯大林模式中一些残酷问题暴露出来，共产主义世界受到极大冲击，波兰发生波兹南事件，匈牙利发生十月事件，拥有绝大部份法
+国知识分子的法共有半数以上党员退党，其中一些理论家后来成为后现代主义的中坚力量。
+</p>
+
+<p>
+毛泽东对斯大林的评价是功过三七分，功大于过。<sup>2</sup> 笔者认为，毛泽东与斯大林之间存在分歧和矛盾，但这种分歧和矛盾是建立在两人同一个社会理想的框架之下，并且在当时“<b> 苏联的今天就是我们的明天 </b>”语境之下，斯大林的被批判
+使毛泽东感觉到了沉重的危机，阶级斗争的这根弦更加紧绷起来，<b> 整治党内外，达成建设社会主义、迈向共产主义的统一共识 </b> 成为毛泽东的首要目标。但是也要考虑在历史语境下，当时世界各国各派领导人的神经都高度敏感和紧张。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-221"></a>
+
+<p>
+<sup>2</sup>&nbsp; 此类文献较多，可简单参考 <a href="https://www.wxyjs.org.cn/mzdyj/201802/t20180208_236685.htm" target="_blank" >https://www.wxyjs.org.cn/mzdyj/201802/t20180208_236685.htm</a>。
+</p>
+
+
+
+</div>
+<!--
+...... subsection 整风到反右派......
+-->
+<h5 id="autosec-222"><span class="sectionnumber">11.2.3&#x2003;</span>整风到反右派</h5>
+<a id="main-autopage-222"></a>
+
+
+
+<p>
+据中共中央文献研究室编写的《毛泽东传（1949-1976）》，1956 年下半年开始，
+</p>
+<blockquote>
+
+<p>
+在半年内，全国各地，大大小小，大约有一万多工人罢工，一万多学生罢课。从 1956 年 10 月起，广东、河南、安徽、浙江、江西、山西、河北、辽宁等省，还发生了部分农民要求退社的情况。
+</p>
+</blockquote>
+
+<p>
+1957 年 4 月 27 日，中央起草了《中央关于整风运动的指示（初稿）》，决定在全党的范围内“重新进行一次普遍的、深入的反官僚主义、反宗派主义、反主观主义的整风运动”。5 月 4 日，毛泽东起草《关于继续组织党外人士对党政所犯错误缺点展开批评的
+指示》，20 余年后邓小平、薄一波对于此时毛泽东的评价应是正确的——毛泽东此时确实是将党内官僚、宗派、主观问题当作社会波动的主因，想依靠开放批评来进行党内整治。
+</p>
+
+<p>
+不久党外人士的批评中开始出现很小部分反共反社会主义思想，5 月 15 日，毛写了《事情正在起变化》
+                                                ，认为一些右派正在猖狂进攻。6 月 8 日，毛为中央起草了《关于组织力量准备反击右派分子进攻的指示》
+                                                                                                 ，直言中国如果不反右，将可能面临匈牙利十月事
+件⋯⋯到 1958 年 8 月为止，这一年半的时间里，本是党外批评人士采用的“大鸣、大放”形式被借用过来，成为“<b> 大鸣、大放、大争辩、大字报 </b>”
+                                                                              ，发动反右派斗争。据官方公布，这一运动中全国实际划归右派分子 55 万多人，其中绝大多数人被错划。
+</p>
+
+<p>
+薄一波认为，1956 年 9 月党的第八次全国代表大会正确提出的“<b> 国内的主要矛盾，已经是人民对于建立先进的工业国的要求同落后的农业国的现实之间的矛盾，已经是人民对于经济文化迅速发展的需要同当前经济文化不能满足人民需要的状况之间的矛
+盾 </b>”被 1957 年 9 月到 10 月 9 日召开的第八届中央委员会第三次会议上“<b> 无产阶级和资产阶级的矛盾，社会主义道路和资本主义道路的矛盾，毫无疑问，这是我国社会的主要矛盾。</b>”错误取代。自社会主义改造完成后，更应依靠法治解决社会
+矛盾，而非群众性阶级斗争。自 1958 年到 1978 年十一届三中全会的 20 年，党和国家错误实行了群众性“以阶级斗争为纲”的方针。<a id="main-autopage-223"></a><sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]620-632</sup>
+</p>
+<!--
+...... subsection 浮夸风、命令风、共产风、生产瞎指挥风、干部特权风......
+-->
+<h5 id="autosec-224"><span class="sectionnumber">11.2.4&#x2003;</span>浮夸风、命令风、共产风、生产瞎指挥风、干部特权风</h5>
+<a id="main-autopage-224"></a>
+
+
+
+<p>
+在经历了一年半左右的对“反冒进”的批评和提出大跃进之后，1958 年 5 月 5 日至 23 日召开的中共八大二次会议上提出“鼓足干劲、力争上游、多快好省地建设社会主义”的 <b> 总路线 </b>，在钢铁等重要工业品的产量上赶超英美成为一个目标，笔者认
+为这标志着在中央政府层面上正式开展大跃进运动。虚报目标并次次层层地加码，
+                                   “浮夸风”盛行。薄一波认为农业上的“浮夸风”形成的盲目乐观又导致了国家转向工业，形成了工业上的“浮夸风”
+                                                                                      ，导致举国上下“以钢为纲”的大炼钢铁，农村砸锅进行土
+法小高炉炼钢，钢企不重安全和质量地快速出钢。
+</p>
+<blockquote>
+
+<p>
+1958 年 8 月中共中央通过了国家计委重新拟定的《关于第二个五年计划的意见》(1958–1962 年的国家计划，这也是真正开始实施的计划)，提出了天方夜谭的高指标，冒进指数<sup>3</sup><a id="main-autopage-225"></a>达到 354.6%，基本建设投资
+                                                  <sup>[<a href="17.html#LWR-ht-cite.0@shiyiwu">62</a>]</sup>
+规模是“一五”时期的 7.8 倍，工业总产值增长速度是 4.9 倍，农业总产值增长速度是 6.7 倍。
+</p>
+
+<p>
+由于“大跃进”浮夸风的影响，1959 年全国定产指标为 5000 亿斤原粮，而 1959、1960、1961 年的实产量分别只为 3400 亿斤、2870 亿斤、2950 亿斤。三年平均实产比 1957 年减少 827.6 亿斤，但平均年征粮食却比 1957 年增加了 95.8 亿斤，相当多的地
+方购了农民的“过头粮”。<sup>4</sup><sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]278</sup>
+</p>
+</blockquote>
+
+<p>
+浮夸风的盛行，使中央盲目乐观，认为“共产主义在我国的实现已经不是什么遥远将来的事情了”        。浮夸风导致的现实具体因素方面，薄一波书中认为是大兴农田水利要求有 <b> 更为行之有效的基层组织结构管理 </b>，对基层组织结构
+                                          ，又刮起了“共产风”
+规模提出了较高要求。
+</p>
+
+<p>
+                                                                      <sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]728-730</sup> 1958 年 8 月 17 日到 30 日，中央政治局
+1958 年 3 月 20 日成都会议通过，4 月 8 日政治局会议批准的《中共中央关于把小型的农业合作社适当地合并为大社的意见》佐证了这点。
+扩大会议通过《关于在农村建立人民公社问题的决议》。9 月 1 日《红旗》杂志第七期中的嵖岈山卫星农业社模式推广至全国。生产生活资料公有，公社命令式调拨农民人力、物力、财力，吃饭不要钱<sup>5</sup>，个别公社收缴了农户土地、房屋、资金、
+粮食⋯⋯邓书杰写到
+</p>
+<blockquote>
+
+<p>
+到 1958 年 10 月底，全国农村就实现了人民公社化。全国原有的 74 万多个农业生产合作社，此时改组成了 2.6 万多个人民公社，加入公社的农户达 1.2 亿，占总农户数的 99% 以上。
+</p>
+</blockquote>
+
+<p>
+农村人民公社兴起的同时，城市人民公社也开始兴起。据邓书杰：
+</p>
+<blockquote>
+
+<p>
+到 1960 年 7 月底，在全国 190 个大中城市中，已经建立了 1064 个人民公社，基本上实现了城市人民公社化。
+</p>
+</blockquote>
+
+<p>
+为实现“15 年赶超英国”的强国梦，新中国实现了对农村前所未有的集权管理——政社合一的“人民公社”。
+</p>
+
+<p>
+人民公社所问题的宏观根源究竟是什么？其实早在 1958 年 11 月 2 日至 10 日召开的第一次郑州会议上已经由毛泽东本人提出答案，并在 1958 年 11 月 28 日至 12 月 10 日的中共八届六中全会得到深化。八届六中全会作出《关于人民公社若干问题的决议》
+                                                                                                                                      ，
+提出了问题的根源。笔者认为时至今日这仍然接近标准答案，并且标志着中央正式开始“纠左”。
+</p>
+<blockquote>
+
+<p>
+人民公社目前基本上仍然是 <b> 集体所有制 </b> 的经济组织。农业生产合作社变为人民公社，<b> 不等于由集体所有制变为全民所有制，更不等于由社会主义变为共产主义。生产关系一定要适合生产力的性质。</b> 无论由社会主义的集体所有制向社会主
+义的全民所有制过渡，还是由社会主义向共产主义过渡，都 <b> 必须以一定程度的生产力的发展为基础 </b>。
+</p>
+</blockquote>
+
+<p>
+笔者在苏联一章阐述过马克思的科学社会主义的目的论和空想成分，马克思的历史唯物主义足以对他的共产主义作出批判，在此不再赘述。除此之外，这一时期的冒进无视了历史唯物主义中所要求的 <b> 生产力和生产关系等物质基础 </b>；混淆了 <b> 社
+会主义初级阶段 </b> 和 <b> 共产主义社会 </b>；混淆了 <b> 集体所有制 </b> 和 <b> 全民所有制 </b>。
+</p>
+
+<p>
+人民公社的实质仍是集体所有制，集体所有制的权力主体不是公社全民，而是集体组织。这一环境之下政社合一的集体组织是公社，以及可直接命令调拨公社财产的县级及以上国家机构，官僚具有的强大权力和自身欲望是人民公社问题一个需要探讨的重要
+问题。
+</p>
+
+<p>
+另一方面，马克思的一些文章中已经作出一些判断，特别是在《哥达纲领批判》这一科学社会主义重要纲领文件中，沉重批判了拉萨尔为首的德国社会主义工人党。
+                                                                       《纲领中》明确提出共产主义第一阶段（即社会主义阶段）仍是按劳分配和“带有经济、道德、
+精神方面的资本主义痕迹”，
+            “仍带有资产阶级权利”，                                。<a id="main-autopage-228"></a><sup>[<a href="17.html#LWR-ht-cite.0@maenwen3">3</a>]435</sup>苏联列宁、斯大林
+                       “权利决不能超出社会的经济结构以及由经济结构制约的社会的文化发展。”
+均犯过冒进错误，很遗憾当时中国未能从苏联历史经验中吸取足够教训。
+</p>
+
+<p>
+更为遗憾的是党中央未能发展和坚持《决议》的正确看法。1959 年 7 月 2 日至 8 月 1 日，中共中央政治局在江西庐山召开扩大会议。会议初期朱德、周小舟、周慧等对公共食堂提出一些反对意见。7 月 14 日，因彭德怀写信给毛泽东，更为激进提出左倾错
+误。7 月 21 日，张闻天在会议上讲话肯定和支持彭德怀观点。7 月 23 日，毛泽东发表长篇讲话，对左右两派“各打五十大板”
+                                                              。23 日当晚，支持“纠左”的彭德怀、张闻天、黄克诚、周小舟、周惠等人于黄克诚住处发牢骚，张闻天说出“像斯大林晚年”等
+话。后被互相检举揭发，自此本次大会正式从“纠左”转向“反右”，且左倾错误继续扩大化。
+</p>
+
+<p>
+另外笔者想提一点，据《重整河山 1950-1959》与《动荡年代 1960-1969》一书，
+</p>
+<blockquote>
+
+<p>
+（农村人民公社）大办公共食堂、幼儿园、托儿所、幸福院等公共事业。截至 1958 年末，全国农村共建立公共食堂 340 多万个，托儿组织 340 多万个，幸福院 15 万所。
+</p>
+
+<p>
+（城市人民公社）在这些基本实现了城市人民公社化的大中城市中，共计有 850 万闲散劳动力被安置就业，占这些城市闲散劳动力总人数的 87%；共计兴办了 7.6 万个居民公共食堂，就餐人数达 1700 万；8.8 万个托儿所，入托儿童为 365 万；还建立了 8.9
+万个服务站。
+</p>
+</blockquote>
+
+<p>
+虽然这些“大跃进”充满了主观期望与客观生产力不足的矛盾、大规模调用各方民众资源等问题，但也由此可见毛泽东的政治理想和抱负。
+</p>
+
+<p>
+1959–1961 年<sup>6</sup><a id="main-autopage-229"></a>，三年困难时期，岁大饥，人相食，饿死者以千万计。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-230"></a>
+
+<p>
+<sup>3</sup>&nbsp; 原文注释：冒进指数是指本计划期的指标值相当于上一个计划期实际值的百分比，该比值越高，说明制定的计划越冒进，反之，越保守。
+</p>
+
+
+<p>
+<sup>4</sup>&nbsp; 过头粮：中国在粮食争购工作中，对农业生产单位征购超过其实际负担能力的那部分粮食。1991 年版胡绳所著《中国共产党的七十年》数据与薄相同。
+</p>
+
+
+<p>
+<sup>5</sup>&nbsp; 薄一波写道，国家统计局 1960 年 1 月报告，参加公共食堂吃饭的约 4 亿人，占人民公社总人数的 72.6%。
+</p>
+
+
+<p>
+<sup>6</sup>&nbsp; 一说是 1958–1962 年大饥荒。
+</p>
+
+
+
+</div>
+<!--
+...... subsection 大跃进中后期的安徽省......
+-->
+<h5 id="autosec-231"><span class="sectionnumber">11.2.5&#x2003;</span>大跃进中后期的安徽省</h5>
+<a id="main-autopage-231"></a>
+
+
+
+<p>
+笔者之所以选择安徽大跃进问题单独论述，原因有四：一、机缘巧合，笔者最先接触这方面的史料。二、综合各方观点，安徽省总饿死人数不及四川省、位居全国各省第二，但是饿死人比例居各省最高，且行政主官主动推波助澜。三、安徽在大跃进前后出过
+两个上达天听的大人物，一个张恺帆，一个曾希圣，两人均具各方面代表性。四、安徽省官方较为尊重这段历史，地方志、论文等文献资料较为健全。
+</p>
+
+<p>
+曾希圣于 1952 年 1 月–1962 年 2 月任职安徽省委第一任书记，1960 年 10 月，兼任中共中央华东局第二书记、中共山东省委第一书记<sup>7</sup>，也曾任济南军区政治委员等职。大跃进时期曾希圣在土法炼钢、水利和粮食方面均大搞“浮夸风”。
+</p>
+<blockquote>
+
+<p>
+1958 年安徽产粮 <b>167.9 亿斤 </b>，却被浮夸虚报成 <b>450 亿斤 </b>(指标更高，是 494 亿斤)，谎报了 <b>2.68 倍 </b>。<a id="main-autopage-232"></a><sup>[<a href="17.html#LWR-ht-cite.0@zhangfandang">68</a>]</sup>
+</p>
+
+<p>
+                                          “超额完成 <b>720 亿斤 </b>”! 这一严重浮夸的高指标，是 1959 年实际产量 (<b>140.2 亿斤 </b>) 的 <b>5.14 倍 </b>！虽然当年征购粮是 <b>70.94 亿斤 </b> 还不到指
+在上下不讲真话的氛围中，1959 年安徽粮食生产任务，于 3 月 30 日向全省宣布：
+                                                      <sup>[<a href="17.html#LWR-ht-cite.0@zhang1959">69</a>]</sup>
+标的 9.9%，但却占实际产量的 50.6%。为此，安徽人民蒙受了巨大的痛苦，出现了严重的饿、病、逃、荒、死。
+</p>
+</blockquote>
+
+<p>
+张恺帆 1959 年时任安徽省委书记处书记之一，安徽省副省长，7 月去兼任县委书记的巣县和老家无为县考察饿死人情况后，未经组织程序、自作主张、暂停无为县公共食堂，放赈救济粮。无为县问题也得到了时任安徽省书记处候补书记、副省长陆学斌的支
+持。此事被上报至庐山会议后，受到严厉批评。在随后 8 月、9 月召开的两次安徽省委会议上两人被定性为“张恺帆、陆学斌反党联盟”。
+</p>
+
+<p>
+据张回忆录的记录整理者宋霖：
+</p>
+<blockquote>
+
+<p>
+7 月 9 日，张恺帆给省委和曾希圣写报告，报告无为情况和即将实行的“<b> 三还原 </b>”措施：1. 吃饭还原，停办公共食堂; 2. 自留地还原; 3. 房屋还原，让农民回自己家居住。并于当晚严令县委立即付诸实施，他说：“救人要紧!”
+</p>
+
+<p>
+7 月 10 日至 12 日，库存的 150 万斤大米和 300 万斤稻谷，迅速发往农村; 30 万斤黄豆加工成豆腐、豆浆，供应浮肿病人和没有奶喝的婴儿；设法弄来的一批肉食品，供应给病人。此举拯救了数十万濒临死亡的人民的生命。
+</p>
+
+<p>
+为此，两个多月后，张恺帆全家跌入苦难，六个亲人惨死……后来平反时统计：仅无为一县，因张恺帆事件受株连被批斗、被处理的县、社、队党员、干部和群众，共达 28741 人。<a id="main-autopage-233"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@zhang1959">69</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+因笔者资料有限，不知酷爱仕途的曾希圣为何突然在 1960 年底开始转向，顶着重压积极实施“责任田”，笔者愿意相信曾希圣此时已无法再承受良心的拷问。
+</p>
+
+<p>
+老农刘庆兰父子 1956 年起先后上山独立垦荒，4 年“共向集体无偿缴纳上交粮食 4716 斤（平均每年 1179 斤）
+                                                           ”。<sup>[<a href="17.html#LWR-ht-cite.0@anhuiliushi">70</a>]</sup>刘庆兰的事迹引发曾希圣极大兴趣，后经毛泽东“同意试验”
+                                                                                                                                                      ，在湖北
+进行“计划统一、分配统一、大农活和技术性农活统一、用水和管水统一、抗灾统一”等“五个统一”之下的“责任田”推广。
+</p>
+<blockquote>
+
+<p>
+它一问世就很受农民欢迎，全国不少地方都程度不同地实行起来。比如，当时搞各种形式包产到户的，安徽全省达 80%，甘肃临夏地区达 74%，浙江新昌县、四川江北县达到达 70%，广西龙胜县达 42.3%，福建连城县达 42%，贵州全省达 40%，广东、湖
+南、河北和东北三省也都出现了这种形式。据估计，当时全国实行包产到户的约占 20%。<a id="main-autopage-234"></a><sup>[<a href="17.html#LWR-ht-cite.0@boyibo">60</a>]1078</sup>
+</p>
+</blockquote>
+
+<p>
+据张恺帆回忆：
+</p>
+<blockquote>
+
+<p>
+我想，造成这种局面，高征购、浮夸风是主要原因，但办食堂，层层克扣，也是重要原因之一。江苏早就把食堂停办了，与各省比较，安徽食堂持续的时间太久了，后果是惨痛的——在 1962 年七千人大会上，刘少奇同志参加安徽组讨论，追问安徽饿死了多
+少人，第一次报 40 万，后来追问紧了，报到 400 万。实际上约有 500 万人。<a id="main-autopage-235"></a><sup>[<a href="17.html#LWR-ht-cite.0@zhangkaifanhuiyi">71</a>]344</sup>
+</p>
+</blockquote>
+
+<p>
+张恺帆的 500 万数据可由以下官方数据佐证，据《安徽省志·人口志》所载表 1-1-14，安徽省总人口在 1959–1961 年间 <b> 负增长 406 万 </b>，仅 1960 年就比 1959 年负增长 11.21%，减少 <b>3839979 人 </b>，
+                                                                                                                                     <sup>[<a
+href="17.html#LWR-ht-cite.0@anhuishengzhi">72</a>]27</sup>；表 2-1-18 记载 1960 年实际死亡人数据为 <b>2218280 人 </b>，死亡率为 68.58‰，书中还就此写到“<b> 此为年报统计数，人口实际损失更大 </b>”
+                                                                                                                                                     ，1960 年的死亡比例远高于之前的
+                                                                                   <sup>[<a href="17.html#LWR-ht-cite.0@anhuishengzhi">72</a>]95-96</sup>
+建国后最高峰——1959 年的 16.72‰。从 1961 年至 1985 年，安徽省年死亡人数再也未超过 300000 人，死亡比例最高为 1964 年的 8.6‰。
+</p>
+
+<p>
+安徽省志 1958 年数据显示溺婴死亡 10159 人，1959-1961 年未提供溺婴数据⋯⋯<sup>[<a href="17.html#LWR-ht-cite.0@anhuishengzhi">72</a>]108</sup>根据周曼《三年困难时期安徽人口变动研究》，“关于安徽省的婴儿死亡率，也没有找到确切的
+数据。安徽与河南同属重灾区，再根据两省死亡率的比较，安徽省的婴儿死亡率可能会高于河南省（河南省 1960 年婴儿死亡率为 <b>276.8‰</b>），但确切数据无法估计。”
+</p>
+<blockquote>
+
+<p>
+1960 年，人口死亡异常，死亡率在 10% 以上的有太和县（163.47‰）、无为县（158.29‰）、宣城县（147.26‰）、毫县（145.95‰）、宿县（130.32‰）、凤阳县（119.46‰）、阜阳县（118.31‰）、肥东县（113.31‰）、五河县（108.71‰）等 9 个县，死
+亡率最低的是合肥市（11.27‰）。<a id="main-autopage-236"></a><sup>[<a href="17.html#LWR-ht-cite.0@anhuishengzhi">72</a>]98</sup>
+</p>
+
+<p>
+（安徽省）各市县地方志关于人口死亡率的数据普遍（比《省人口志》）<b> 更高 </b>。以宣城县为例，安徽省《人口志》显示，1960 年全县人口的出生率为 4.57‰，死亡率为 163.47‰，两相比较，人口自然增长率为 <b>-142.69‰</b>。
+                                                                                                                              《宣城县志》没
+有显示当年全县人口出生率和死亡率数据，但提供了人口自然增长率数据，为 <b>-205.88‰</b>。
+                                                  <sup>[<a href="17.html#LWR-ht-cite.0@zaihuangchayixing">73</a>]</sup>
+</p>
+</blockquote>
+
+<p>
+笔者认为同样要引起注意的是，据《安徽省志·人口志》
+                        ，在“大跃进”拨乱反正 3 年后的 1964 年仍出现了 1.81% 的负增长。书中解释是 1964 年全国第二次人口普查时，各地虚报人口获取利益的现象被纠正。如果将 1964 年纠正的负增长给到之前几年，死
+亡数据可能更加惨烈。
+</p>
+
+<p>
+据姚宏志论文《1959–1961 年安徽灾荒的差异性分析》，安徽省大饥荒时期烤烟、棉花等经济作物国家统购价格下降 20%，改种粮食较多。文中引述的韩敏、王朔柏和陈意新等人的调查结果显示，宗族关系中官僚多的村庄受灾影响小；外派官僚取代原生宗
+族领袖的村庄受灾影响大；原生宗族领袖和宗族关系未变的村庄受灾影响小（采用偷稻种、瞒产、藏粮、对外守口如瓶等方式）⋯⋯
+</p>
+
+<p>
+曾希圣在 1962 年七千人大会上受到批判，较多人——包括薄一波和陈者香等，说曾希圣是因这时的“单干风”而被调离安徽，笔者持不同意见。当时情景是 1962 年 1 月 30 日七千人大会续开“出气会”
+                                                                                                   ，分派刘少奇、周恩来、邓小平、朱德、陈云等领导人再
+次分赴几个省区大组，组织开展地委和县委干部对省委书记的“出气会”，且主要矛头均集中在“大跃进”错误。各省委书记捶胸顿足者有，嚎啕大哭者有，安徽省委第一书记曾希圣被批判的主要错误是他的饿死人掩盖子问题。
+</p>
+
+<p>
+此时并没有批判“单干风”一事，邓子恢、陈云等人在七千人大会同样主张搞“单干风”
+                                      ，毛泽东后派田家英进行责任田调查；
+                                                      “单干风”是在同年 8 月北戴河会议转向继续阶级斗争路线后才被定性的。笔者就此认为曾希圣被调离的主要原因绝不是“责任田”
+                                                                                                                 ，
+就是“掩盖子”。
+</p>
+
+<p>
+曾希圣力主推行“责任田”有功，但又何必将其粉饰为神呢？
+                          “出气会”初期依然死扛强硬“掩盖子”
+                                           ，他能算是个神吗？即使经过了中国历史几千年的教训，国民仍常常打破一个偶像后，又树立起一个新的偶像来。什么时候，我们才能学会客观求真、实事求
+是与就事论事呢？其实就算是张恺帆，笔者也觉要敬佩他停办食堂、开仓赈粮等英雄事迹和操守，但也莫要让其成神。我们要看的、要评价的应当是人所做之事，而非赋予人一个刻板标签⋯⋯对于神圣者和偶像的崇拜，无外乎是将本人无力之事寄托于他人，
+个人人格在此情境下无论如何也是残缺的。
+</p>
+
+<p>
+这次始于 1 月 30 日的“出气会”
+                  ，高层领导的参与除了为打破僵局、对省委书记展开批判外还有一个作用，就是防止批判扩大至对一些省委书记更为严重的追责，如入狱、枪毙，隐含得更深层原因可能是将部分中央应付责任转移到省委一级。笔者一家之言，
+不可轻信，还要批判性吸收为好。
+</p>
+
+<p>
+只是，曾希圣，你后来真的悔过了么？
+</p>
+
+<p>
+最后，笔者也向曾希圣道一声歉意。本书前后虽批评很多人，但只细述了他一人的过失并不留情地抨击。在时代的大背景下，曾希圣也只是个浮萍。笔者细述他的深层目的不是将安徽省大饥荒归咎于他个人，而是他前后的故事均较有代表性，更希望官民皆
+以史为鉴，引以为戒。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-237"></a>
+
+<p>
+<sup>7</sup>&nbsp;1961 年 1 月曾希圣主动申请辞去山东省委第一书记职务。普遍说法是曾希圣希望大搞“责任田”
+                                                                ，无心兼任两省第一书记。另一说法是中央监察委员会针对安徽省饿死人进行的调查促使曾希圣辞职，这一说法可见尹曙生所作《曾希圣是
+如何掩盖严重灾荒的》<a href="http://www.yhcqw.com/33/10039_2.html" target="_blank" >http://www.yhcqw.com/33/10039_2.html</a>
+</p>
+
+
+
+</div>
+<!--
+...... subsection 对“大跃进”的补救措施及反思......
+-->
+<h5 id="autosec-238"><span class="sectionnumber">11.2.6&#x2003;</span>对“大跃进”的补救措施及反思</h5>
+<a id="main-autopage-238"></a>
+
+
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 李若建论文《权力与人性：大跃进时期公共食堂研究》将此时国人分为六个阶层：高级、中级、基层官员、利益相关民众和利益不相关民众，分别就权力和人性两方面展开论述。笔者认为这是一篇不可多得的客观雄文
+文，建议大家阅读。李若建另一篇《理性与良知：“大跃进”时期的县级官员》则说明了县官的生态环境、务虚正职与务实副职的差别和一些县长的英雄事迹，前文于无意中也引用了李若建《困难时期的精简职工与下放城镇居民》。我们还有一些负责任的官
+员、专家、学者和人民背负着国计民生的伟大理想和目标，向他们致敬。因笔者知识面狭窄，无法将他们姓名一一道出，还请读者自我发掘。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 1960 年 11 月 3 日，中共中央向各级党组织发出《关于农村人民公社当前政策问题的紧急指示信》
+                                                                                    （简称十二条）和《中共中央关于贯彻执行“紧急指示信”的指示》
+                                                                                                                 ，反五风，清理“一平二调”
+                                                                                                                             ，反对五风，明确“以生
+产队为基础的 <b> 三级所有制 </b>（公社、生产大队、生产队），是现阶段人民公社的根本制度”，城乡精简，“允许社员经营少量的自留地和小规模的家庭副业”等。被庐山会议中断的“纠左”重新起步，笔者不再赘述。
+</p>
+<p>
+经过“五风大跃进”，国家吸取了蔑视客观生产力的教训，即使在“文化大革命”时仍要“促生产”，各行业、特别是农业虽再发生过动荡，但再无这样强度的惨剧发生。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 城乡二元结构对立进一步加强，城市向农村逆向迁移。
+</p>
+<blockquote>
+<p>
+1956 年秋天，由于过激的合作化运动加上自然灾害，导致不少省份粮食歉收、农民吃饭成问题，安徽、河南等省出现大量农民外流，进城寻求就业机会。在这种情况下，12 月《国务院关于防止农村人口盲目外流的指示》出台，防止农村农民进城就业。
+</p>
+<p>
+            ）1958 年 1 月 9 日，全国人民代表大会常务委员会第九十一次会议通过并颁布了新中国 <b> 第一部户籍制度 </b>《中华人民共和国户口登记条例》……正式确立了户口迁移审批制度和凭证落户制度。以这个条例为标志，中国
+（出台一系列此类政策之后，
+政府开始对人口自由流动实行严格限制和政府管制……第一次明确将城乡居民区分为“农业户口”和“非农业户口”两种不同户籍。严格限制农村农民迁往城镇，限制城市间人口流动，在城市与农村之间构筑了一道高墙，城乡分离的“二元经济模式”因此
+而生成。
+</p>
+<p>
+                                                 。<b> 严格限制户口迁移 </b>，特别是严格限制农民向城市迁移，控制农村人口流人城市，<b> 压缩城市人口 </b>，包括精简职工、知识青年上山下乡、干部
+户籍制度变化第二阶段：(1958 年-1978 年)，这一时期包括大跃进、三年困难时期和十年“文革”
+下放农村等，出现了人类历史上罕见的人口 <b> 从城市迁往农村的反向运动 </b>，形成了一整套严格的户籍管理制度。<a id="main-autopage-239"></a><sup>[<a href="17.html#LWR-ht-cite.0@quxiaohuji">74</a>]</sup>
+</p>
+</blockquote>
+<p>
+上一段所述精简职工方面，
+</p>
+<blockquote>
+<p>
+（大跃进时期的大招工）使得工人数从 1957 年的 3101 万增加到 1960 年的 5969 万，增长 92.5%。职工人数的增加，特别是从农村招收的职工，给城镇带来了大批的人口，1957-1960 年间，中国的城镇人口从 9949 万增加到 13073 万，其中由农村迁入城
+镇的大约 2218 万。
+</p>
+<p>
+当粮食危机越来越严重时候，许多城市已经面临几乎没有库存的窘境，1960 年底全国 82 个大中城市的库存粮食只有正常水平的 \(\sfrac {1}{3}\) 。1960 年 6 月北京、天津和辽宁的几个主要城市的库存粮食几乎没有，只能维持不到 10 天的供应，上海的
+大米库存已经没有，天天告急。
+</p>
+<p>
+有关的统计，在 1961-1963 年间，压缩下放 2500 万城镇人口，精减职工 1833 万人，被精减的职工中，大部分也被下放到农村，少数转为城镇集体企业工人，还有少数流浪到边疆地区，在当地谋生。<a id="main-autopage-240"></a><sup>[<a
+href="17.html#LWR-ht-cite.0@jingjianzhigong">75</a>]</sup>
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 1962 年 1 月 11 日至 2 月 7 日，扩大的中央工作会议在北京举行，俗称“七千人大会”。七千人大会是一次纠左的、带有很多正面影响的会议，同时也是一场涉及政治、经济、权力纠葛的复杂会议。
+</p>
+<p>
+刘少奇代表中央政府引一老农的话“三分天灾，七分人祸”，也引用毛泽东说过几次的“指头论”对左的做法进行了批评，毛泽东带头进行了自我批评，众高层官员也开展批评和自我批评。
+</p>
+<p>
+1962 年 2 月 21 日至 23 日，刘少奇主持召开中共中央政治局常委扩大会议（西楼会议）。深化和发展了七千人大会的“民主集中制”之风。七千人大会和西楼会议奠定了此后半年的进步纠左基调。
+</p>
+<p>
+邓子恢会后继续着力于推广“责任田”和“包产到户”。7 月作出《关于农业问题的报告》。
+</p>
+<p>
+1962 年 2 月 27 日，王稼祥、刘宁一、伍修权联名给中央写信，分析了资本主义和社会主义阵营间、社会主义主义阵营内部趋于缓和，提倡对国外援助要量力而行。
+</p>
+<p>
+“1962 年 4 月 27 日，中共中央根据扩大的中央工作会议的精神，发出《关于加速进行党员、干部甄别工作的通知》”，邓小平主持了这次会议，并推动平反工作展开，”到 1962 年 8 月，全国已有 600 万干部和党员得到了平反”。
+</p>
+<p>
+1962 年 6 月，彭德怀上书“八万言书”。
+</p>
+</li>
+</ul>
+<!--
+...... subsection 继续阶级斗争......
+-->
+<h5 id="autosec-241"><span class="sectionnumber">11.2.7&#x2003;</span>继续阶级斗争</h5>
+<a id="main-autopage-241"></a>
+
+
+
+<p>
+虽然此后一直坚持阶级斗争，但再也不敢像“五风”盛行时那样破坏生产了。
+</p>
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 七千人大会的胜利成果只维持很短时间，1962 年 8 月在北戴河召开的中共中央会议和 9 月召开的中共八届十中全会上，重提“无产阶级和资产阶级之间的阶级斗争、社会主义道路和资本主义这两条道路的斗争。”
+</p>
+<p>
+陈云、邓子恢和田家英经调查后支持“包产到户”
+                     “责任田”
+                         ，因此被定为“单干风”
+                                   ；刘少奇、周恩来、陈云等对经济困难形势的判断等被定为“黑暗风”
+                                                                 ；王稼祥等被定为“三和一少”
+                                                                              ；之前的右派分子甄别平凡工作、彭德怀此时的申诉信、
+                                                                                                      《刘志丹》一书牵
+连的习仲勋、贾拓夫、刘景范等分别被定为“翻案风”。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 此后的历史，笔者认为已经乏善可陈。1963–1966 年指向基层的“四清”，即城乡社会主义教育运动。1966–1976 年的“文化大革命”。阶级斗争，一抓就灵；发动群众斗群众、官僚，发动官僚斗官僚⋯⋯
+</p>
+<p>
+
+
+</p>
+</li>
+</ul>
+<!--
+...... subsection 笔者个人总结......
+-->
+<h5 id="autosec-242"><span class="sectionnumber">11.2.8&#x2003;</span>笔者个人总结</h5>
+<a id="main-autopage-242"></a>
+
+
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> 对唯物史观有基本了解的人都可以认识到，客观事物的发展不以人的主观意志为转移，1965 年 2 月 11 日，毛泽东在与苏联大使柯西金谈话时，主动提到“我对不以人民、党派和政府意志为转移，甚至不以个人意志为
+转移的历史进程感兴趣。事件的过程都是被生存的客观法则所决定的。”毛泽东也知道。
+</p>
+<p>
+但理论是抽象、枯燥、片面、书面的；而现实是综合、立体、具体、生动鲜活的；政治又是现实实践的，交织着种种人性私欲。正如扉页引用的黑格尔话语“人民和政府从来就没有从历史中学到任何东西⋯⋯”
+</p>
+<p>
+中国这一段历史犯有一些与苏联异曲同工的错误，可见前文&nbsp;<a href="11.html#sec:marxkexue">9.2</a>&nbsp; 节 <a href="11.html#sec:marxkexue"> 马克思“科学社会主义”的缺陷 </a>，&nbsp;<a
+href="11.html#sec:sushijian">9.8</a>&nbsp; 节 <a href="11.html#sec:sushijian"> 早中期苏联科社实践总结 </a>。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 空怀理想无论如何也接不了地气，它也不能成为善的代名词，实事求是是行动主义的必要前提、目标和标准。为了遥远伦理道德理想（空想社会主义）无视当前阶段的伦理道德——甚至肆无忌惮剥夺生命，这本身就是
+一个悖论。如钱理群所说
+</p>
+<blockquote>
+<p>
+至善至美的理想社会，只能存在于彼岸世界，是一个可望不可及的远方目标。它的存在，使人们永远也不会满足于现状，从而加强对现实的批判和改造力量。但这种改造、变革的努力，只能使此岸世界不断改善，不断趋向、接近理想，却永远也不会达到至
+善至美的理想境界。任何将彼岸世界此岸化的努力，都会给人类带来灾难，<b> 天堂的现实化就是地狱 </b>。
+</p>
+</blockquote>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> “民主集中制”是显明的“民主的集中制”，集中制为主。笔者认可中国必须实行集中制。诸侯纷争一直是中国历史上朝代灭亡前的必然现象，乃至动因，不可不吸取这个教训。
+</p>
+<p>
+党和国家的高层领导人的回忆录中常提加强法制和民主（
+                        “法制”今日应当变更为“法治”
+                                      ），但是问题在于，集中制为主下，民主与法治的成份到底该有个怎样的度，怎样去确定度？历史唯物主义是极为宏观的理论，它缺乏对微观层面的考量，实质上历史唯
+物主义本身就轻视上层建筑。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 官僚考核制度长远以来一直是各个国家的重大问题，它常常是唯上而不唯下、爱官而不爱民。我们该怎样发展官僚考核制度，是党和国家的重大课题。另外，这一阶段官员腐败和其他权力犯罪现象往往是被过于低估的。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 雪崩之下，没有一片雪花是无辜的。这段时期中，雪崩是主因、是制度，雪花是次次因、是人性。这段动荡年代的种种人性体现足以给我们太多的警醒和教训，一些人是那样的残忍、残酷、蔑视生命、伦理、公理。人的
+本质就是会这样么？
+</p>
+<p>
+再怎样的铁房子里，总有几线阳光照入，也总有并不算多的人如星般闪耀。联合国多年来一直倡导个人主观能动性，便是想要个人突破各种枷锁限制，最终使一个个进步的个人们彼此聚合为有力的、进步的和超越的群体。我们应当发展个人主观能动性，保
+持对人性恶的一面的警惕并敢于去对抗恶一些，有时甚至要为此抱有一种悲剧意识，只是这确实太理想化、太苛求了⋯⋯
+</p>
+</li>
+</ul>
+<!--
+...... section 计划经济时期的成就......
+-->
+<h4 id="autosec-244"><span class="sectionnumber">11.3&#x2003;</span>计划经济时期的成就</h4>
+<a id="main-autopage-244"></a>
+
+
+
+<p>
+本节部分内容来自李慎明文章《正确评价改革开放前后两个历史时期》。
+</p>
+
+<ul class="enumerate" style="list-style-type:none">
+
+
+<li>
+<p>
+<span class="listmarker">1.</span> “实现和巩固了全国范围（除台湾等岛屿以外）的国家统一，根本改变了旧中国四分五裂的局面。实现和巩固了全国各族人民的大团结，形成和发展了五十多个民族平等互助的社会主义民族关系。战胜了帝国主义、霸
+权主义的侵略、破坏和武装挑衅，维护了国家的安全和独立，胜利地进行了保卫祖国边疆的斗争。”
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">2.</span> 排除种种干扰重返联合国。由于毛泽东关于“三个世界”划分理论的正确指导，我国与美国、欧洲诸国和日本等主要国家的外交关系取得突破性进展，成功打破外部霸权主义和强权政治对我国的严酷封锁，真正跨入了
+大国的行列，并迎来和平与发展的时代主题。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">3.</span> 1949 年，中国人口 5.4 亿，人均预期寿命不足 35 岁。1976 年，人口 9.3 亿，人均预期寿命 64.6 岁，人口数量增长近 4 亿，预期寿命增长近 30 岁。当然，这里也有之前战乱动荡，底子过于薄弱的加成。
+</p>
+<p>
+新中国成立后，中央将扫盲列为成人教育的首位，并在 1952 年，成立了“中央扫除文盲工作委员会”
+                                               ，积极推行“速成识字法”
+                                                          。1956 年 3 月 29 日，中共中央和国务院发布《扫除文盲的决定》
+                                                                                             ，将扫盲提高到了空前的高度，第一次把扫盲作为国家发展大计。
+1960 年 5 月 11 日，中共中央发布了《关于推广注音识字的指示》。
+</p>
+<p>
+解放初期文盲率 80%，1964 年 15 岁以上人口文盲率 56.8%，1982 年 34.5%。<sup>8</sup>
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">4.</span> 在经济落后的条件下，以严重城乡二元对立为代价，保证了高积累和优先快速发展重工业，建立了比较完整的独立的工业体系和基础设施。
+</p>
+<p>
+根据中共十一届六中全会《关于建国以来党的若干历史问题的决议》：
+</p>
+<blockquote>
+<p>
+一九八〇年同完成经济恢复的一九五二年相比，全国工业固定资产按原价计算，增长二十六倍多，达到四千一百多亿元；棉纱产量增长三点五倍，达到二百九十三万吨；原煤产量增长八点四倍，达到六亿二千万吨；发电量增长四十倍，达到三千多亿度；原
+油产量达到一亿零五百多万吨；钢产量达到三千七百多万吨；机械工业产值增长五十三倍，达到一千二百七十多亿元。在辽阔的内地和少数民族地区，兴建了一批新的工业基地。国防工业从无到有地逐步建设起来。资源勘探工作成绩很大。铁路、公路、水
+运、空运和邮电事业，都有很大的发展。
+</p>
+<p>
+……
+</p>
+<p>
+我们现在（80 年代初）赖以进行现代化建设的物质技术基础，很大一部分是这个期间建设起来的；全国经济文化建设等方面的骨干力量和他们的工作经验，大部分也是在这个期间培养和积累起来的。这是这个期间党的工作的主导方面。
+</p>
+</blockquote>
+<p>
+在毛泽东时期，我国从一个落后的农业国跻身为世界第六大工业国。
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">5.</span> 独立自主、自力更生研发出“两弹一星一潜艇”
+                                                       。1964 年 10 月，我国第一颗原子弹爆炸成功。1966 年 12 月，我国第一颗氢弹原理试验爆炸成功。1970 年 4 月，我国第一颗人造卫星发射成功。1971 年 9 月，我国第一
+艘核潜艇下水，并于 1974 年 8 月，正式加入人民海军战斗序列。在成熟的核潜艇的基础上，1981 年 4 月，我国第一艘战略核潜艇下水，使陆海空全都具备了第二次核反击能力。
+</p>
+<p>
+邓小平 1988 年明确指出，“如果六十年代以来中国没有原子弹、氢弹，没有发射卫星，中国就不能叫有重要影响的大国，就没有现在这样的国际地位。”
+</p>
+</li>
+<li>
+
+
+<p>
+<span class="listmarker">6.</span> 政治层面上前所未有的管控能力。计划经济时期通过“政社合一”人民公社体制实现了对农村前所未有、甚至可能后不见来者的资源管控能力。一切资源，包括“国有”和“集体”土地、企业、
+                                                                                                                       ，事实上均被政府所垄断，
+为之后的市场经济时期提供了多方面可以运作的巨额红利空间。
+</p>
+<p>
+因城市经济不可承受的压力，20 世纪 60 年代初和三次知青下乡等以千万人为单位的城市向农民的劳动力逆向转移，没有这样管控能力和“信仰”加成其实是办不到的，只是“信仰”在现实面前逐次衰减⋯⋯
+</p>
+</li>
+</ul>
+
+<p>
+下一章我们来探讨中国市场经济体制过渡时期 1978–1992 年。
+</p>
+<div role="note" class="footnotes">
+
+<a id="main-autopage-246"></a>
+
+<p>
+<sup>8</sup>&nbsp; 参考黄晨熹《19642̃005 年我国人口受教育状况的变动》
+</p>
+
+
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<footer>
+
+<p>
+回到 <a href="index.html" class="linkhome" >
+Home</a>&#x2003;&#x2003;<a href="mailto:sd44sd44@yeah.net" target="_blank" >sd44sd44@yeah.net</a> &#x2003;&#x2003;<a href="http://sd44.github.io" target="_blank" >http://sd44.github.io</a><br />
+欢迎转载，转载请注明本链接地址，最好再通知我一下，让我高兴高兴，哈哈。
+</p>
+
+</footer>
+
+
+
+<nav class="botnavigation"><a href="index.html" class="linkhome" >
+Home</a></nav>
+
+</body>
+</html>
