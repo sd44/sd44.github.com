@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title>Django Allauth / Ninja 后端 搭配 Tanstack 前端的避坑 Tips</title>
+      <link href="/2025/07/31/allauth-and-tanstack/"/>
+      <url>/2025/07/31/allauth-and-tanstack/</url>
+      
+        <content type="html"><![CDATA[<p>后端：Django Allauth Headless + Ninja API 前端： Tanstack Start +Query + Orval +</p><p>在这篇文章中，我想与大家分享我使用 <code>Django Allauth</code>无头（<code>Headless</code>）后端认证，与<code>TanStack Start</code>前端结合使用的经验和心得。我今年才刚刚学习 Web 编程，定有不少错漏，还望读者指正。</p><h2 id="演示项目代码库">演示项目代码库</h2><p><a href="https://github.com/sd44/django-allauth">https://github.com/sd44/django-allauth</a></p><h2 id="项目背景">项目背景</h2><blockquote><p>Life is short, you need Python</p></blockquote><p>虽然目前前后端分离架构正被 <code>TypeScript</code>一体化框架（如<code>Next.js</code>/<code>Tanstack Start</code>等）冲击，特别是在要求全栈协作、类型一致性、小团队敏捷项目上，但我仍爱 PythonDjango 的简洁清晰、快速开发和易于维护。本文无意也无力讨论架构的优劣，就此打住吧。</p><p><code>Django Allauth</code> 与 <code>NextAuth.js</code>,<code>Better Auth</code>都提供多种认证方式（如手机号码、邮箱、通行密钥、数十种社交账户认证等）。但官方<code>Allauth Headless</code> +<code>React SPA</code>示例仍然是 JS，而非 TS 代码；网络上也缺乏<code>Allauth</code>对接 <code>SSR</code>（如<code>Tanstack</code>, <code>Next.js</code>）的教程。本文便由此而生，但限于篇幅，只提出个别避坑指南。</p><h2 id="技术栈">技术栈</h2><ul><li>后端：<code>Django</code>, <code>Django Allauth</code>,<code>Django Ninja</code></li><li>前端：<code>React</code> 和 <code>TanStack Start/Query</code></li><li>数据库：<code>Django</code>支持的多种数据库均可，Django 也提供了近乎完美的数据库迁移指令</li></ul><h2 id="步骤概述">步骤概述</h2><h3 id="设置-django-后端">1. 设置 Django 后端</h3><p>首先，安装 Django 和 Django Allauth, DjangoNinja 等，参见官方文档和代码库 <code>backend/pyproject.toml</code>,<code>backend/mysite/settings.py</code>。</p><p>settings.py 中需要注意如下几点。 </p><figure class="highlight objc"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[rectangle setX: <span class="number">10</span> y: <span class="number">10</span> width: <span class="number">20</span> height: <span class="number">20</span>];</span><br></pre></td></tr></tbody></table></figure> <p></p><h3 id="配置-django-allauth-路由">2. 配置 Django Allauth 路由</h3><p>在 urls.py 中添加 Allauth 的 URL 路由：</p><p>from django.urls import path, include</p><p>urlpatterns = [ # … path(‘accounts/’, include(‘allauth.urls’)), #…]</p><h3 id="创建前端项目">3. 创建前端项目</h3><p>使用 Create React App 创建前端项目：</p><p>npx create-react-app my-app</p><p>安装 TanStack Query：</p><p>npm install <span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span></p><h3 id="使用-tanstack-进行认证">4. 使用 TanStack 进行认证</h3><p>在前端中，使用 TanStack 来处理 API 请求和认证。</p><p>import { useQuery, useMutation } from ‘<span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span>’; importaxios from ‘axios’;</p><p>const login = async (credentials) =&gt; { const response = awaitaxios.post(‘/accounts/login/’, credentials); return response.data;};</p><p>const useLogin = () =&gt; { return useMutation(login); };</p><h3 id="完成认证流程">5. 完成认证流程</h3><p>在组件中调用 useLogin，并处理登录信息。</p><p>import React, {useState} from ‘react’; import {useLogin} from‘./api’; // 假设你的用法 import {useQueryClient} from ‘<span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span>’;</p><p>const LoginForm = () =&gt; { const queryClient = useQueryClient();const mutation = useLogin(); const [email, setEmail] = useState(’‘);const [password, setPassword] = useState(’’);</p><p>const handleSubmit = async (event) =&gt; { event.preventDefault();mutation.mutate({email, password}, { onSuccess: () =&gt; {//登录成功后缓存用户数据 queryClient.invalidateQueries([‘user’]);},onError: (error) =&gt; {console.error(“Login failed:”, error);}, });};</p>return (<form onsubmit="{handleSubmit}">&lt;input type=“email” value={email} onChange={(e) =&gt;setEmail(e.target.value)} required /&gt; &lt;input type=“password”value={password} onChange={(e) =&gt; setPassword(e.target.value)}required /&gt; <button type="submit">Login</button></form><p>); };</p><h2 id="总结">总结</h2><p>通过结合 Django Allauth 的强大功能与 TanStack的灵活性，我成功实现了一个高效、安全的无头认证系统。这个组合不仅提升了开发效率，也使得前端开发变得更加顺畅。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>老人与海 双语对照 + 词汇中文注解 pdf</title>
+      <link href="/2025/07/31/the-old-man-and-the-sea/"/>
+      <url>/2025/07/31/the-old-man-and-the-sea/</url>
+      
+        <content type="html"><![CDATA[<p>2024 年，我用 LaTeX 排版了《老人与海双语对照 + 词汇中文注解》pdf，其中生词以初中生学力为基准，并献给我的儿女子墨、子韩和伟大的 <a href="https://forum.freemdict.com/t/topic/35199">FREEMDICT</a> 。</p><p>请点击链接下载 <a href="https://github.com/sd44/old-man-and-sea">项目源代码及 PDF</a></p><p>隐藏福利： 《1984》双语对照在 以上链接<code>1984</code>文件夹下</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习方法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 学习方法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>我的书《梦园呓语 —— 我的三观独白》</title>
       <link href="/2025/04/22/%E6%88%91%E7%9A%84%E4%B9%A6%E3%80%8A%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E2%80%94%E2%80%94%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD%E3%80%8B/"/>
       <url>/2025/04/22/%E6%88%91%E7%9A%84%E4%B9%A6%E3%80%8A%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E2%80%94%E2%80%94%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD%E3%80%8B/</url>

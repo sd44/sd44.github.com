@@ -1,0 +1,432 @@
+<!DOCTYPE HTML>
+<html>
+<head><!-- hexo injector head_begin start --><script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="utf-8">
+  
+  <title>Django Allauth / Ninja 后端 搭配 Tanstack 前端的避坑 Tips | 蛋疼的蛋蛋的老窝</title>
+  <meta name="author" content="蛋疼的蛋蛋">
+  
+  <meta name="description" content="胡说八道大放厥词者，忽悠理论发起者，蛋疼的无畏战士，后现代，摄影批评，社会学">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Django Allauth / Ninja 后端 搭配 Tanstack 前端的避坑 Tips"/>
+  <meta property="og:site_name" content="蛋疼的蛋蛋的老窝"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="蛋疼的蛋蛋的老窝" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cerulean.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+<body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">蛋疼的蛋蛋的老窝</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>文章
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/dingjia" title="我的电子书 《梦园呓语——我的三观独白》">
+			  <i class="fa fa-comment"></i>梦园呓语
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+    <div class="content">
+      
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Django Allauth / Ninja 后端 搭配 Tanstack 前端的避坑 Tips</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>后端：Django Allauth Headless + Ninja API 前端： Tanstack Start +
+Query + Orval +</p>
+<p>在这篇文章中，我想与大家分享我使用 <code>Django Allauth</code>
+无头（<code>Headless</code>）后端认证，与
+<code>TanStack Start</code>前端结合使用的经验和心得。我今年才刚刚学习 Web 编程，定有不少错漏，还望读者指正。</p>
+<h2 id="演示项目代码库">演示项目代码库</h2>
+<p><a href="https://github.com/sd44/django-allauth">https://github.com/sd44/django-allauth</a></p>
+<h2 id="项目背景">项目背景</h2>
+<blockquote>
+<p>Life is short, you need Python</p>
+</blockquote>
+<p>虽然目前前后端分离架构正被 <code>TypeScript</code>
+一体化框架（如<code>Next.js</code>/<code>Tanstack Start</code>等）冲击，特别是在要求全栈协作、类型一致性、小团队敏捷项目上，但我仍爱 Python
+Django 的简洁清晰、快速开发和易于维护。本文无意也无力讨论架构的优劣，就此打住吧。</p>
+<p><code>Django Allauth</code> 与 <code>NextAuth.js</code>,
+<code>Better Auth</code>都提供多种认证方式（如手机号码、邮箱、通行密钥、数十种社交账户认证等）。但官方
+<code>Allauth Headless</code> +
+<code>React SPA</code>示例仍然是 JS，而非 TS 代码；网络上也缺乏<code>Allauth</code>
+对接 <code>SSR</code>（如<code>Tanstack</code>, <code>Next.js</code>）
+的教程。本文便由此而生，但限于篇幅，只提出个别避坑指南。</p>
+<h2 id="技术栈">技术栈</h2>
+<ul>
+<li>后端：<code>Django</code>, <code>Django Allauth</code>,
+<code>Django Ninja</code></li>
+<li>前端：<code>React</code> 和 <code>TanStack Start/Query</code></li>
+<li>数据库：<code>Django</code>支持的多种数据库均可，Django 也提供了近乎完美的数据库迁移指令</li>
+</ul>
+<h2 id="步骤概述">步骤概述</h2>
+<h3 id="设置-django-后端">1. 设置 Django 后端</h3>
+<p>首先，安装 Django 和 Django Allauth, Django
+Ninja 等，参见官方文档和代码库 <code>backend/pyproject.toml</code>,
+<code>backend/mysite/settings.py</code>。</p>
+<p>settings.py 中需要注意如下几点。 </p><figure class="highlight objc"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[rectangle setX: <span class="number">10</span> y: <span class="number">10</span> width: <span class="number">20</span> height: <span class="number">20</span>];</span><br></pre></td></tr></tbody></table></figure> 
+<p></p>
+<h3 id="配置-django-allauth-路由">2. 配置 Django Allauth 路由</h3>
+<p>在 urls.py 中添加 Allauth 的 URL 路由：</p>
+<p>from django.urls import path, include</p>
+<p>urlpatterns = [ # … path(‘accounts/’, include(‘allauth.urls’)), #
+…]</p>
+<h3 id="创建前端项目">3. 创建前端项目</h3>
+<p>使用 Create React App 创建前端项目：</p>
+<p>npx create-react-app my-app</p>
+<p>安装 TanStack Query：</p>
+<p>npm install <span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span></p>
+<h3 id="使用-tanstack-进行认证">4. 使用 TanStack 进行认证</h3>
+<p>在前端中，使用 TanStack 来处理 API 请求和认证。</p>
+<p>import { useQuery, useMutation } from ‘<span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span>’; import
+axios from ‘axios’;</p>
+<p>const login = async (credentials) =&gt; { const response = await
+axios.post(‘/accounts/login/’, credentials); return response.data;
+};</p>
+<p>const useLogin = () =&gt; { return useMutation(login); };</p>
+<h3 id="完成认证流程">5. 完成认证流程</h3>
+<p>在组件中调用 useLogin，并处理登录信息。</p>
+<p>import React, {useState} from ‘react’; import {useLogin} from
+‘./api’; // 假设你的用法 import {useQueryClient} from ‘<span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span>’;</p>
+<p>const LoginForm = () =&gt; { const queryClient = useQueryClient();
+const mutation = useLogin(); const [email, setEmail] = useState(’‘);
+const [password, setPassword] = useState(’’);</p>
+<p>const handleSubmit = async (event) =&gt; { event.preventDefault();
+mutation.mutate({email, password}, { onSuccess: () =&gt; {//
+登录成功后缓存用户数据 queryClient.invalidateQueries([‘user’]);},
+onError: (error) =&gt; {console.error(“Login failed:”, error);}, });
+};</p>
+return (
+<form onsubmit="{handleSubmit}">
+&lt;input type=“email” value={email} onChange={(e) =&gt;
+setEmail(e.target.value)} required /&gt; &lt;input type=“password”
+value={password} onChange={(e) =&gt; setPassword(e.target.value)}
+required /&gt; <button type="submit">Login</button>
+</form>
+<p>); };</p>
+<h2 id="总结">总结</h2>
+<p>通过结合 Django Allauth 的强大功能与 TanStack
+的灵活性，我成功实现了一个高效、安全的无头认证系统。这个组合不仅提升了开发效率，也使得前端开发变得更加顺畅。</p>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+		
+
+    <div class="recommended_posts">
+        <h1>Recommended Posts</h1>
+        <ul>
+            
+                <li><a href="http://sd44.github.io/2025/07/31/the-old-man-and-the-sea/">老人与海 双语对照 + 词汇中文注解 pdf</a></li>
+            
+                <li><a href="http://sd44.github.io/2025/04/22/%E6%88%91%E7%9A%84%E4%B9%A6%E3%80%8A%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E2%80%94%E2%80%94%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD%E3%80%8B/">我的书《梦园呓语 —— 我的三观独白》</a></li>
+            
+                <li><a href="http://sd44.github.io/2024/06/25/%E5%A6%82%E4%BD%95%E7%BC%96%E8%BE%91%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B9%A6/">如何编辑自己的书</a></li>
+            
+                <li><a href="http://sd44.github.io/2024/06/22/yiwang/">被现代经济学 &#34;遗忘&#34; 的经济学理论（一）</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/09/19/%E7%A9%BA%E9%97%B4%E7%94%9F%E4%BA%A7%E4%B9%8B%E4%B8%81%E5%AE%B6%E5%BA%84%E5%9F%8E%E4%B8%AD%E6%9D%91%EF%BC%88%E4%B8%80%EF%BC%89/">空间生产之丁家庄城中村（一）</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/09/16/%E7%A9%BA%E9%97%B4%E7%94%9F%E4%BA%A7%E4%B9%8B%E5%9F%8E%E4%B8%AD%E6%9D%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">空间生产之曾经的城中村的基本概念</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/09/10/%E8%81%94%E5%90%88%E5%9B%BD%E5%80%BA%E5%8A%A1%E4%B8%8E%E4%BA%BA%E6%9D%83%E9%97%AE%E9%A2%98%E7%8B%AC%E7%AB%8B%E4%B8%93%E5%AE%B6%E7%9A%84%E5%8E%86%E5%B9%B4%E6%8A%A5%E5%91%8A%E6%91%98%E6%8A%84/">联合国债务与人权问题独立专家的历年报告摘抄</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/08/31/%E6%9C%89%E5%85%B3%E4%B8%AD%E5%9B%BD%EF%BC%88%E4%B8%80%EF%BC%89/">有关中国（一）</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/08/23/yangyuzhen/">推荐杨宇振所著《资本空间化 —— 资本积累、城镇化与空间生产》</a></li>
+            
+        </ul>
+    </div>
+
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+          <li class="next"><a href="/2025/07/31/the-old-man-and-the-sea/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "sd44",
+	       repo: "sd44.github.com",
+		   client_id: "ab7ce3ed7ff8a2d3fae1",
+           client_secret: "126c9caf215e5571b35c521e60c346ba274f7347",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "Django Allauth / Ninja 后端 搭配 Tanstack 前端的避坑 Tips",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2025-07-31 
+	</div>
+	
+
+	<!-- categories -->
+    
+
+	<!-- tags -->
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+
+    </div>
+  </div>
+  <div class="container-narrow">
+    <footer> <p>
+  &copy; 2025 蛋疼的蛋蛋
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+</html>
