@@ -1,0 +1,391 @@
+<!DOCTYPE HTML>
+<html>
+<head><!-- hexo injector head_begin start --><script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+<!-- hexo injector head_begin end -->
+  <meta charset="utf-8">
+  
+  <title>Taro React + graphql Codegen + urql 客户端实例 | 蛋疼的蛋蛋的老窝</title>
+  <meta name="author" content="蛋疼的蛋蛋">
+  
+  <meta name="description" content="胡说八道大放厥词者，忽悠理论发起者，蛋疼的无畏战士，后现代，摄影批评，社会学">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Taro React + graphql Codegen + urql 客户端实例"/>
+  <meta property="og:site_name" content="蛋疼的蛋蛋的老窝"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="蛋疼的蛋蛋的老窝" type="application/atom+xml">
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cerulean.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+
+<body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">蛋疼的蛋蛋的老窝</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>文章
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/dingjia" title="我的电子书 《梦园呓语——我的三观独白》">
+			  <i class="fa fa-comment"></i>梦园呓语
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+    <div class="content">
+      
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Taro React + graphql Codegen + urql 客户端实例</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p><code>Tarojs</code>支持 react / vue, 因此配置 <code>graphql</code>较为简单，以下以 <code>urql</code> 客户端为例</p>
+<h2 id="%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3" tabindex="-1">参考文档</h2>
+<ol>
+<li><a href="https://nearform.com/open-source/urql/docs/basics/react-preact/">https://nearform.com/open-source/urql/docs/basics/react-preact/</a></li>
+<li><a href="https://nearform.com/open-source/urql/docs/basics/typescript-integration/">https://nearform.com/open-source/urql/docs/basics/typescript-integration/</a></li>
+</ol>
+<h2 id="%E5%AE%89%E8%A3%85" tabindex="-1">安装</h2>
+<h3 id="%E7%B2%BE%E7%AE%80%E5%91%BD%E4%BB%A4" tabindex="-1">精简命令</h3>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install --save urql</span><br><span class="line">npm install -D graphql typescript @graphql-codegen/cli @graphql-codegen/client-preset</span><br></pre></td></tr></tbody></table></figure>
+<span id="more"></span>
+<h2 id="%E9%85%8D%E7%BD%AE-codegen-%E7%94%9F%E6%88%90%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81" tabindex="-1">配置 Codegen 生成客户端代码</h2>
+<figure class="highlight javascript"><figcaption><span>codegen.ts</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="attr">config</span>: <span class="title class_">CodegenConfig</span> = {</span><br><span class="line">  <span class="attr">schema</span>: <span class="string">"http://localhost:3000/graphql"</span>,</span><br><span class="line">  <span class="attr">documents</span>: [<span class="string">"src/schema/*.graphql"</span>, <span class="string">"src/schema/*.ts"</span>],</span><br><span class="line">  <span class="attr">ignoreNoDocuments</span>: <span class="literal">true</span>, <span class="comment">// for better experience with the watcher</span></span><br><span class="line">  <span class="attr">generates</span>: {</span><br><span class="line">    <span class="string">"./src/gql/"</span>: {</span><br><span class="line">      <span class="attr">preset</span>: <span class="string">"client"</span>,</span><br><span class="line">      <span class="attr">plugins</span>: [],</span><br><span class="line">      <span class="attr">config</span>: {</span><br><span class="line">        <span class="attr">useTypeImports</span>: <span class="literal">true</span>,</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> config</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><figcaption><span>package.json</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// "scripts": {</span></span><br><span class="line">    <span class="string">"codegen"</span>: <span class="string">"graphql-codegen"</span>,</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// }</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="%E9%85%8D%E7%BD%AE-urql" tabindex="-1">配置 urql</h2>
+<figure class="highlight javascript"><figcaption><span>src/app.tsx</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { <span class="title class_">Client</span>, <span class="title class_">Provider</span> <span class="keyword">as</span> <span class="title class_">UrqlProvider</span>, cacheExchange, fetchExchange } <span class="keyword">from</span> <span class="string">'urql'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// dev.ts 中配置了 /graphql 代理，生产环境请改为线上 GraphQL 地址，以免出现跨域问题</span></span><br><span class="line"><span class="keyword">const</span> client = <span class="keyword">new</span> <span class="title class_">Client</span>({</span><br><span class="line">  <span class="attr">url</span>: <span class="string">'/graphql'</span>,</span><br><span class="line">  <span class="attr">exchanges</span>: [cacheExchange, fetchExchange],</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">props: { children: React.ReactNode }</span>) {</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;<span class="name">UrqlProvider</span> <span class="attr">value</span>=<span class="string">{client}</span>&gt;</span>{props.children}<span class="tag">&lt;/<span class="name">UrqlProvider</span>&gt;</span></span>; </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>为避免浏览器提供 CORS 跨域错误，配置 <code>GraphQL</code> 代理服务器</p>
+<figure class="highlight javascript"><figcaption><span>config/dev.ts</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// h5部分加入 devServer</span></span><br><span class="line"><span class="comment">// h5: {</span></span><br><span class="line">    <span class="attr">devServer</span>: {</span><br><span class="line">      <span class="attr">proxy</span>: {</span><br><span class="line">        <span class="string">'/graphql'</span>: {</span><br><span class="line">          <span class="attr">target</span>: <span class="string">'http://localhost:3000'</span>,</span><br><span class="line">          <span class="attr">changeOrigin</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">secure</span>: <span class="literal">false</span>,</span><br><span class="line">        },</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line"> <span class="comment">// },</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="graphql-%E8%B0%83%E7%94%A8%E7%A4%BA%E4%BE%8B" tabindex="-1">GraphQl 调用示例</h2>
+<figure class="highlight javascript"><figcaption><span>src/schema/home.ts</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { useQuery } <span class="keyword">from</span> <span class="string">"urql"</span></span><br><span class="line"><span class="keyword">import</span> { graphql } <span class="keyword">from</span> <span class="string">"~/gql"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> fetchTabs = <span class="title function_">graphql</span>(<span class="string">`</span></span><br><span class="line"><span class="string">  query FetchTabs {</span></span><br><span class="line"><span class="string">    litemallCategory(</span></span><br><span class="line"><span class="string">      orderBy: { sortOrder: { direction: asc, priority: 10 } }</span></span><br><span class="line"><span class="string">      where: { level: { eq: "L1" } }</span></span><br><span class="line"><span class="string">      limit: 8</span></span><br><span class="line"><span class="string">    ) {</span></span><br><span class="line"><span class="string">      id</span></span><br><span class="line"><span class="string">      name</span></span><br><span class="line"><span class="string">      iconUrl</span></span><br><span class="line"><span class="string">    }</span></span><br><span class="line"><span class="string">  }</span></span><br><span class="line"><span class="string">`</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">fetchTabList</span>(<span class="params"></span>) {</span><br><span class="line">  <span class="keyword">const</span> [{data}] = <span class="title function_">useQuery</span>({ <span class="attr">query</span>: fetchTabs })</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> data</span><br><span class="line">  <span class="comment">// 直接返回数据可以如下，但没有类型：</span></span><br><span class="line">  <span class="comment">// return data?.litemallCategory</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> fetchNewGoods = <span class="title function_">graphql</span>(<span class="string">`</span></span><br><span class="line"><span class="string">  query FetchNewGoods($limit: Int!, $offset: Int!) {</span></span><br><span class="line"><span class="string">    litemallGoods(</span></span><br><span class="line"><span class="string">      orderBy: { sortOrder: { direction: asc, priority: 10 } }</span></span><br><span class="line"><span class="string">      where: { isOnSale: { eq: true }, isNew: { eq: true } }</span></span><br><span class="line"><span class="string">      limit: $limit</span></span><br><span class="line"><span class="string">      offset: $offset</span></span><br><span class="line"><span class="string">    ) {</span></span><br><span class="line"><span class="string">      id</span></span><br><span class="line"><span class="string">      goodsSn</span></span><br><span class="line"><span class="string">      name</span></span><br><span class="line"><span class="string">      categoryId</span></span><br><span class="line"><span class="string">      gallery</span></span><br><span class="line"><span class="string">      keywords</span></span><br><span class="line"><span class="string">      brief</span></span><br><span class="line"><span class="string">      picUrl</span></span><br><span class="line"><span class="string">      shareUrl</span></span><br><span class="line"><span class="string">      isNew</span></span><br><span class="line"><span class="string">      isHot</span></span><br><span class="line"><span class="string">      unit</span></span><br><span class="line"><span class="string">      counterPrice</span></span><br><span class="line"><span class="string">      retailPrice</span></span><br><span class="line"><span class="string">      detail</span></span><br><span class="line"><span class="string">    }</span></span><br><span class="line"><span class="string">  }</span></span><br><span class="line"><span class="string">`</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">fetchNewGoodsList</span>(<span class="params">limit: number, offset: number</span>) {</span><br><span class="line">  <span class="keyword">const</span> [{data}] = <span class="title function_">useQuery</span>({</span><br><span class="line">    <span class="attr">query</span>: fetchNewGoods, <span class="attr">variables</span>: { limit, offset }</span><br><span class="line">  })</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> data</span><br><span class="line">  <span class="comment">// 直接返回数据可以如下，但没有类型：</span></span><br><span class="line">  <span class="comment">// return data?.litemallGoods</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="%E5%AE%8C%E6%88%90" tabindex="-1">完成</h2>
+<p>写完 <code>GraphQL</code>语句后，运行 <code>npm codegen</code>，即可在 <code>src/gql/</code> 下生成相应的类型代码。</p>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+		
+
+    <div class="recommended_posts">
+        <h1>Recommended Posts</h1>
+        <ul>
+            
+                <li><a href="http://sd44.github.io/2025/08/03/zibei/">告别自卑，超越自我：阿德勒《自卑与超越》</a></li>
+            
+                <li><a href="http://sd44.github.io/2025/07/31/allauth-and-tanstack/">Django Allauth / Ninja 后端 搭配 Tanstack 前端的避坑 Tips</a></li>
+            
+                <li><a href="http://sd44.github.io/2025/07/31/the-old-man-and-the-sea/">老人与海 双语对照 + 词汇中文注解 pdf</a></li>
+            
+                <li><a href="http://sd44.github.io/2025/04/22/%E6%88%91%E7%9A%84%E4%B9%A6%E3%80%8A%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E2%80%94%E2%80%94%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD%E3%80%8B/">我的书《梦园呓语 —— 我的三观独白》</a></li>
+            
+                <li><a href="http://sd44.github.io/2024/06/25/%E5%A6%82%E4%BD%95%E7%BC%96%E8%BE%91%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B9%A6/">如何编辑自己的书</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/09/19/%E7%A9%BA%E9%97%B4%E7%94%9F%E4%BA%A7%E4%B9%8B%E4%B8%81%E5%AE%B6%E5%BA%84%E5%9F%8E%E4%B8%AD%E6%9D%91%EF%BC%88%E4%B8%80%EF%BC%89/">空间生产之丁家庄城中村（一）</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/09/16/%E7%A9%BA%E9%97%B4%E7%94%9F%E4%BA%A7%E4%B9%8B%E5%9F%8E%E4%B8%AD%E6%9D%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">空间生产之曾经的城中村的基本概念</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/09/10/%E8%81%94%E5%90%88%E5%9B%BD%E5%80%BA%E5%8A%A1%E4%B8%8E%E4%BA%BA%E6%9D%83%E9%97%AE%E9%A2%98%E7%8B%AC%E7%AB%8B%E4%B8%93%E5%AE%B6%E7%9A%84%E5%8E%86%E5%B9%B4%E6%8A%A5%E5%91%8A%E6%91%98%E6%8A%84/">联合国债务与人权问题独立专家的历年报告摘抄</a></li>
+            
+                <li><a href="http://sd44.github.io/2018/08/31/%E6%9C%89%E5%85%B3%E4%B8%AD%E5%9B%BD%EF%BC%88%E4%B8%80%EF%BC%89/">有关中国（一）</a></li>
+            
+        </ul>
+    </div>
+
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+          <li class="next"><a href="/2025/08/03/zibei/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "sd44",
+	       repo: "sd44.github.com",
+		   client_id: "ab7ce3ed7ff8a2d3fae1",
+           client_secret: "126c9caf215e5571b35c521e60c346ba274f7347",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "Taro React + graphql Codegen + urql 客户端实例",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2025-09-01 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/%E7%BC%96%E7%A8%8B/">编程<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+
+    </div>
+  </div>
+  <div class="container-narrow">
+    <footer> <p>
+  &copy; 2025 蛋疼的蛋蛋
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+  </div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+</html>

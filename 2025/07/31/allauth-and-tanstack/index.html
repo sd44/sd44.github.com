@@ -146,81 +146,70 @@
 	<div class="mypage">		
 	  		
 
-	  <p>后端：Django Allauth Headless + Ninja API 前端： Tanstack Start +
-Query + Orval +</p>
-<p>在这篇文章中，我想与大家分享我使用 <code>Django Allauth</code>
-无头（<code>Headless</code>）后端认证，与
-<code>TanStack Start</code>前端结合使用的经验和心得。我今年才刚刚学习 Web 编程，定有不少错漏，还望读者指正。</p>
-<h2 id="演示项目代码库">演示项目代码库</h2>
+	  <p>在这篇文章中，我想与大家分享我使用 <code>Django Allauth</code> 无头（<code>Headless</code>）后端认证，与 <code>TanStack Start</code>前端结合使用的经验和心得。我今年才刚刚学习 Web 编程，定有不少错漏，还望读者指正。</p>
+<h2 id="%E6%BC%94%E7%A4%BA%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%BA%93" tabindex="-1">演示项目代码库</h2>
 <p><a href="https://github.com/sd44/django-allauth">https://github.com/sd44/django-allauth</a></p>
-<h2 id="项目背景">项目背景</h2>
+<h2 id="%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF" tabindex="-1">项目背景</h2>
 <blockquote>
 <p>Life is short, you need Python</p>
 </blockquote>
-<p>虽然目前前后端分离架构正被 <code>TypeScript</code>
-一体化框架（如<code>Next.js</code>/<code>Tanstack Start</code>等）冲击，特别是在要求全栈协作、类型一致性、小团队敏捷项目上，但我仍爱 Python
-Django 的简洁清晰、快速开发和易于维护。本文无意也无力讨论架构的优劣，就此打住吧。</p>
-<p><code>Django Allauth</code> 与 <code>NextAuth.js</code>,
-<code>Better Auth</code>都提供多种认证方式（如手机号码、邮箱、通行密钥、数十种社交账户认证等）。但官方
-<code>Allauth Headless</code> +
-<code>React SPA</code>示例仍然是 JS，而非 TS 代码；网络上也缺乏<code>Allauth</code>
-对接 <code>SSR</code>（如<code>Tanstack</code>, <code>Next.js</code>）
-的教程。本文便由此而生，但限于篇幅，只提出个别避坑指南。</p>
-<h2 id="技术栈">技术栈</h2>
+<p>虽然目前前后端分离架构正被 <code>TypeScript</code> 一体化框架（如<code>Next.js</code>/<code>Tanstack Start</code>等）冲击，特别是在要求全栈协作、类型一致性、小团队敏捷项目上，但我仍爱 Python Django 的简洁清晰、快速开发和易于维护。本文无意也无力讨论架构的优劣，就此打住吧。</p>
+<p><code>Django Allauth</code> 与 <code>NextAuth.js</code>, <code>Better Auth</code>都提供多种认证方式（如手机号码、邮箱、通行密钥、数十种社交账户认证等）。但官方 <code>Allauth Headless</code> + <code>React SPA</code>示例仍然是 JS，而非 TS 代码；网络上也缺乏<code>Allauth</code> 对接 <code>Tanstack/Next SSR</code>前端的教程。本文便由此而生，但限于篇幅，只提出个别避坑指南，并不完整。</p>
+<span id="more"></span>
+<h2 id="%E6%8A%80%E6%9C%AF%E6%A0%88" tabindex="-1">技术栈</h2>
 <ul>
-<li>后端：<code>Django</code>, <code>Django Allauth</code>,
-<code>Django Ninja</code></li>
-<li>前端：<code>React</code> 和 <code>TanStack Start/Query</code></li>
-<li>数据库：<code>Django</code>支持的多种数据库均可，Django 也提供了近乎完美的数据库迁移指令</li>
+<li>后端：<code>Django</code>, <code>Django Allauth</code>, <code>Django Ninja</code></li>
+<li>前端：<code>React</code>, <code>TanStack Start/Query</code>, <code>Orval</code></li>
+<li>数据库：<code>Django</code>支持的多种数据库均可，它也提供了近乎完美的数据库迁移指令</li>
 </ul>
-<h2 id="步骤概述">步骤概述</h2>
-<h3 id="设置-django-后端">1. 设置 Django 后端</h3>
-<p>首先，安装 Django 和 Django Allauth, Django
-Ninja 等，参见官方文档和代码库 <code>backend/pyproject.toml</code>,
-<code>backend/mysite/settings.py</code>。</p>
-<p>settings.py 中需要注意如下几点。 </p><figure class="highlight objc"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[rectangle setX: <span class="number">10</span> y: <span class="number">10</span> width: <span class="number">20</span> height: <span class="number">20</span>];</span><br></pre></td></tr></tbody></table></figure> 
-<p></p>
-<h3 id="配置-django-allauth-路由">2. 配置 Django Allauth 路由</h3>
-<p>在 urls.py 中添加 Allauth 的 URL 路由：</p>
-<p>from django.urls import path, include</p>
-<p>urlpatterns = [ # … path(‘accounts/’, include(‘allauth.urls’)), #
-…]</p>
-<h3 id="创建前端项目">3. 创建前端项目</h3>
-<p>使用 Create React App 创建前端项目：</p>
-<p>npx create-react-app my-app</p>
-<p>安装 TanStack Query：</p>
-<p>npm install <span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span></p>
-<h3 id="使用-tanstack-进行认证">4. 使用 TanStack 进行认证</h3>
-<p>在前端中，使用 TanStack 来处理 API 请求和认证。</p>
-<p>import { useQuery, useMutation } from ‘<span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span>’; import
-axios from ‘axios’;</p>
-<p>const login = async (credentials) =&gt; { const response = await
-axios.post(‘/accounts/login/’, credentials); return response.data;
-};</p>
-<p>const useLogin = () =&gt; { return useMutation(login); };</p>
-<h3 id="完成认证流程">5. 完成认证流程</h3>
-<p>在组件中调用 useLogin，并处理登录信息。</p>
-<p>import React, {useState} from ‘react’; import {useLogin} from
-‘./api’; // 假设你的用法 import {useQueryClient} from ‘<span class="citation" data-cites="tanstack/react-query">@tanstack/react-query</span>’;</p>
-<p>const LoginForm = () =&gt; { const queryClient = useQueryClient();
-const mutation = useLogin(); const [email, setEmail] = useState(’‘);
-const [password, setPassword] = useState(’’);</p>
-<p>const handleSubmit = async (event) =&gt; { event.preventDefault();
-mutation.mutate({email, password}, { onSuccess: () =&gt; {//
-登录成功后缓存用户数据 queryClient.invalidateQueries([‘user’]);},
-onError: (error) =&gt; {console.error(“Login failed:”, error);}, });
-};</p>
-return (
-<form onsubmit="{handleSubmit}">
-&lt;input type=“email” value={email} onChange={(e) =&gt;
-setEmail(e.target.value)} required /&gt; &lt;input type=“password”
-value={password} onChange={(e) =&gt; setPassword(e.target.value)}
-required /&gt; <button type="submit">Login</button>
-</form>
-<p>); };</p>
-<h2 id="总结">总结</h2>
-<p>通过结合 Django Allauth 的强大功能与 TanStack
-的灵活性，我成功实现了一个高效、安全的无头认证系统。这个组合不仅提升了开发效率，也使得前端开发变得更加顺畅。</p>
+<h2 id="%E6%AD%A5%E9%AA%A4%E6%A6%82%E8%BF%B0" tabindex="-1">步骤概述</h2>
+<h3 id="1.-%E8%AE%BE%E7%BD%AE-django-%E5%90%8E%E7%AB%AF" tabindex="-1">1. 设置 Django 后端</h3>
+<h4 id="%E5%AE%89%E8%A3%85%E5%90%8E%E7%AB%AF" tabindex="-1">安装后端</h4>
+<p><code>Django</code> 和 <code>Django Allauth</code>, <code>Django Ninja</code> 等的安装，参见官方文档和代码库 <code>backend/pyproject.toml</code>, <code>backend/mysite/settings.py</code>。</p>
+<p>Django 提供总体管理，Ninja 提供其他自定义 API。其中 <code>settings.py</code> 中需要注意如下几点。</p>
+<h4 id="%E5%89%8D%E5%90%8E%E7%AB%AF%E3%80%81%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%A6%82github-google%E7%AD%89%E7%9B%B8%E5%85%B3-url-%E9%85%8D%E7%BD%AE%E5%BF%85%E9%A1%BB%E5%AE%8C%E5%85%A8%E4%B8%80%E8%87%B4%3A" tabindex="-1">前后端、社交账户如 GitHub Google 等相关 URL 配置必须完全一致:</h4>
+<ul>
+<li>协议（<code>http</code>与<code>https</code> 不同）</li>
+<li>域名（<code>localhost</code>与<code>127.0.0.1</code> 不同）</li>
+<li>端口（<code>3000</code>、<code>8000</code> 不同）</li>
+<li>路径，包含或不包含最后的 <code>/</code>不同</li>
+</ul>
+<h4 id="cors%E5%92%8Ccsrf%E5%AE%89%E5%85%A8%E8%AE%BE%E7%BD%AE" tabindex="-1">CORS 和 CSRF 安全设置</h4>
+<p>我前端服务器端口为 3000</p>
+<figure class="highlight python"><figcaption><span>CORS 和 CSRF 安全设置</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DANGER: allow all origins</span></span><br><span class="line"><span class="comment"># CORS_ALLOW_ALL_ORIGINS: bool</span></span><br><span class="line"></span><br><span class="line">CORS_ALLOWED_ORIGINS = [</span><br><span class="line">    <span class="string">"http://localhost:3000"</span>,</span><br><span class="line">    <span class="string">"http://127.0.0.1:3000"</span>,</span><br><span class="line">]</span><br><span class="line"><span class="comment"># CORS_ALLOWED_ORIGINS_REGEXES = [</span></span><br><span class="line"><span class="comment">#     r"^http://localhost:\d+$",</span></span><br><span class="line"><span class="comment">#     r"^http://127\.0\.0\.1:\d+$",</span></span><br><span class="line"><span class="comment"># ]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> corsheaders.defaults <span class="keyword">import</span> default_headers</span><br><span class="line"></span><br><span class="line"><span class="comment"># 除默认设置外，加入一些allauth中的特定headers</span></span><br><span class="line">CORS_ALLOW_HEADERS = (</span><br><span class="line">    *default_headers,</span><br><span class="line">    <span class="string">"x-session-token"</span>,</span><br><span class="line">    <span class="string">"x-email-verification-key"</span>,</span><br><span class="line">    <span class="string">"x-password-reset-key"</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">CORS_ALLOW_CREDENTIALS = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CSRF_TRUSTED_ORIGINS: list of strings</span></span><br><span class="line">CSRF_TRUSTED_ORIGINS = [</span><br><span class="line">    <span class="string">"http://localhost:3000"</span>,</span><br><span class="line">    <span class="string">"http://127.0.0.1:3000"</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一些教程推荐开发环境设置如下内容，但实际上并不必要。</span></span><br><span class="line"><span class="comment"># https://pypi.org/project/django-cors-headers/</span></span><br><span class="line"><span class="comment"># SESSION_COOKIE_SAMESITE = 'None'  # Allow cross-site cookies</span></span><br><span class="line"><span class="comment"># CSRF_COOKIE_SAMESITE = 'None'  # Allow cross-site CSRF cookies</span></span><br><span class="line"><span class="comment"># CSRF_COOKIE_SECURE = False  # 开发时关闭CSRF保护，避免跨域问题；生产环境中https应设置为True</span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="%E9%85%8D%E7%BD%AEallauth-%E5%92%8C-ninja-%E6%8F%90%E4%BE%9B-openapi-%E6%96%87%E4%BB%B6" tabindex="-1">配置 AllAuth 和 Ninja 提供 openapi 文件</h4>
+<p>安装 PyYAML 依赖，并配置如下，以便提供<code>/_allauth/openapi.yaml</code>, <code>/_allauth/openapi.json</code> and <code>/_allauth/openapi.html</code></p>
+<figure class="highlight python"><figcaption><span>AllAuth</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HEADLESS_SERVE_SPECIFICATION = <span class="literal">True</span> <span class="comment"># </span></span><br><span class="line">HEADLESS_SPECIFICATION_TEMPLATE_NAME = <span class="string">"headless/spec/swagger_cdn.html"</span> <span class="comment"># Redoc</span></span><br><span class="line"><span class="comment"># HEADLESS_SPECIFICATION_TEMPLATE_NAME = "headless/spec/redoc_cdn.html" # Swagger</span></span><br></pre></td></tr></tbody></table></figure>
+<p>Ninja OpenApi 文件则是 <code>/api/openapi.json</code></p>
+<h3 id="2.-%E5%88%9B%E5%BB%BA%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE" tabindex="-1">2. 创建前端项目</h3>
+<h4 id="%E5%AE%89%E8%A3%85" tabindex="-1">安装</h4>
+<p>前端安装见相关文档和我的代码库 <code>frontend/package.json</code>，略。虽然我使用的是<code>Tanstack Start</code>，但想必 <code>Next.js</code> 中也有类似功能实现。</p>
+<h4 id="%E9%80%9A%E8%BF%87-openapi-%E6%96%87%E4%BB%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B" tabindex="-1">通过 OpenApi 文件自动生成接口和类型</h4>
+<p>有很多软件包可以实现根据 OpenApi 文件生成相应类型和接口，我选用了功能强大的<code>Orval</code>，可方便结合<code>Axios</code>与<code>Tanstack Query</code>，参考如下配置:</p>
+<figure class="highlight javascript"><figcaption><span>frontend/orval.config.ts</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">BASE_URL</span> = <span class="string">'http://localhost:8000'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> {</span><br><span class="line">  <span class="attr">ninjaFile</span>: {</span><br><span class="line">    <span class="attr">output</span>: {</span><br><span class="line">      <span class="attr">mode</span>: <span class="string">'single'</span>,</span><br><span class="line">      <span class="attr">target</span>: <span class="string">'src/openapi/ninja.ts'</span>,</span><br><span class="line">      <span class="attr">baseUrl</span>: <span class="variable constant_">BASE_URL</span>,</span><br><span class="line">      <span class="attr">schemas</span>: <span class="string">'src/openapi/ninjaModel'</span>,</span><br><span class="line">      <span class="attr">client</span>: <span class="string">'react-query'</span>,</span><br><span class="line">      <span class="attr">mock</span>: <span class="literal">false</span>, </span><br><span class="line">      <span class="comment">// biome: true, 我使用的 biome lint</span></span><br><span class="line">      <span class="attr">override</span>: {</span><br><span class="line">        <span class="attr">mutator</span>: {</span><br><span class="line">          <span class="attr">path</span>: <span class="string">'./src/utils/custom-instance.ts'</span>,</span><br><span class="line">          <span class="attr">name</span>: <span class="string">'customInstance'</span>,</span><br><span class="line">        },</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">    <span class="attr">input</span>: {</span><br><span class="line">      <span class="attr">target</span>: <span class="string">`<span class="subst">${BASE_URL}</span>/api/openapi.json`</span>,</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line"></span><br><span class="line">  <span class="attr">allauthFile</span>: {</span><br><span class="line">    <span class="attr">output</span>: {</span><br><span class="line">      <span class="attr">mode</span>: <span class="string">'single'</span>,</span><br><span class="line">      <span class="attr">target</span>: <span class="string">'src/openapi/allauth.ts'</span>,</span><br><span class="line">      <span class="attr">baseUrl</span>: <span class="variable constant_">BASE_URL</span>,</span><br><span class="line">      <span class="attr">schemas</span>: <span class="string">'src/openapi/allAuthModel'</span>,</span><br><span class="line">      <span class="attr">client</span>: <span class="string">'react-query'</span>,</span><br><span class="line">      <span class="attr">mock</span>: <span class="literal">false</span>, <span class="comment">// <span class="doctag">TODO:</span> 暂时不懂mock</span></span><br><span class="line">      <span class="attr">override</span>: {</span><br><span class="line">        <span class="attr">mutator</span>: {</span><br><span class="line">          <span class="attr">path</span>: <span class="string">'./src/utils/custom-instance.ts'</span>,</span><br><span class="line">          <span class="attr">name</span>: <span class="string">'customInstance'</span>,</span><br><span class="line">        },</span><br><span class="line">      },</span><br><span class="line">    },</span><br><span class="line">    <span class="attr">input</span>: {</span><br><span class="line">      <span class="attr">target</span>: <span class="string">`<span class="subst">${BASE_URL}</span>/_allauth/openapi.json`</span>,</span><br><span class="line">    },</span><br><span class="line">  },</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+<p>运行<code>orval</code>命令就会自动生成了</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bunx orval</span><br><span class="line"><span class="comment"># npx orval</span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="%E8%8E%B7%E5%8F%96-csrftoken" tabindex="-1">获取 CSRFToken</h4>
+<p><code>OAuth</code> 除个别 <code>GET</code> 操作外，基本都需要同步传递 <code>CSRFToken</code>，默认存储在 cookie 中。因此我们需要获取它，并将其放入默认的 Http 客户端实例中。</p>
+<p><code>Tanstack start</code> 提供有 <code>getCookie</code>函数，我们直接使用。</p>
+<figure class="highlight javascript"><figcaption><span>frontend/lib/cookies.ts</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> { createServerFn } <span class="keyword">from</span> <span class="string">'@tanstack/react-start'</span>;</span><br><span class="line"><span class="keyword">import</span> { getCookie } <span class="keyword">from</span> <span class="string">'@tanstack/react-start/server'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// <span class="doctag">BUG:</span> Tanstack getCookie Must be in serverFn https://github.com/TanStack/router/issues/4022#issuecomment-3019980723</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getCSRFTokenByCookie = <span class="title function_">createServerFn</span>({ <span class="attr">method</span>: <span class="string">'GET'</span> }).<span class="title function_">handler</span>(<span class="title function_">async</span> () =&gt; {</span><br><span class="line">  <span class="comment">// Note: 如果获取csrfToken之前没有 get 服务端 url，可能会导致csrfToken为 null 或过期失效</span></span><br><span class="line">  <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">'http://localhost:8000/_allauth/browser/v1/config'</span>);</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">await</span> <span class="title function_">getCookie</span>(<span class="string">'csrftoken'</span>)) || <span class="string">''</span>;</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="http-verb%E6%90%BA%E5%B8%A6csrftoken" tabindex="-1">Http Verb 携带 CSRFToken</h4>
+<figure class="highlight javascript"><figcaption><span>frontend/utils/custom-instance.ts</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> csrftoken = <span class="keyword">await</span> <span class="title function_">getCSRFTokenByCookie</span>();</span><br><span class="line"><span class="comment">// console.log("csrftoken", csrftoken);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (csrftoken) {</span><br><span class="line">  config.<span class="property">headers</span>[<span class="string">'X-CSRFToken'</span>] = csrftoken; <span class="comment">// <span class="doctag">TODO:</span> 只针对browser client， app client应当设置X-Session-Cookie</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7-auth-redirect" tabindex="-1">社交账户 Auth Redirect</h4>
+<p>由于社交账户认证重定向会导致用户面临重定向（302），因此此调用仅在浏览器中可用，并且必须以同步（非 XHR）方式调用, <code>enctype</code> 为 <code>application/x-www-form-urlencoded</code>.这也就意味着<code>Orval</code>生成的<code>axios/fetch</code> 等异步 JS 调用方式无法使用，需要我们自己实现，如下代码源于 <code>AllAuth React-SPA</code> 官方示例：</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">export function postForm(action: string, data: Record&lt;string, string&gt;) {</span><br><span class="line">  const f = document.createElement(<span class="string">'form'</span>);</span><br><span class="line">  f.method = <span class="string">'POST'</span>;</span><br><span class="line">  f.action = action;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (const key of Object.keys(data)) {</span><br><span class="line">    const d = document.createElement(<span class="string">'input'</span>);</span><br><span class="line">    d.<span class="built_in">type</span> = <span class="string">'hidden'</span>;</span><br><span class="line">    d.name = key;</span><br><span class="line">    d.value = data[key];</span><br><span class="line">    f.appendChild(d);</span><br><span class="line">  }</span><br><span class="line">  document.body.appendChild(f);</span><br><span class="line">  f.submit();</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB" tabindex="-1">路由守卫</h4>
+<p>传统的路由守卫过于笨重，注册、登录、注销、用户认证状态等集于一身，现在已经是 5202 年了，我们使用更现代更低耦合的方法吧。幸好 <code>Tanstack Start</code> 提供了强大的路由功能可以方便完成以上功能。。</p>
+<p>在根路由上下文中存储当前 <code>session</code> ，以获取用户状态：</p>
+<figure class="highlight javascript"><figcaption><span>frontend/src/router.tsx</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">createTanStackRouter</span>({</span><br><span class="line">  routeTree,</span><br><span class="line">  <span class="attr">context</span>: {</span><br><span class="line">    queryClient,</span><br><span class="line">    <span class="attr">sessionData</span>: <span class="literal">null</span>,</span><br><span class="line">  },</span><br><span class="line">  <span class="comment">// ... ...</span></span><br><span class="line">}),</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight javascript"><figcaption><span>frontend/src/routes/__route.tsx</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">Route</span> = createRootRouteWithContext&lt;{</span><br><span class="line">  <span class="attr">queryClient</span>: <span class="title class_">QueryClient</span>;</span><br><span class="line">  <span class="attr">sessionData</span>: <span class="title class_">Awaited</span>&lt;<span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> getUserSession&gt;&gt;[<span class="string">'sessionData'</span>] | <span class="literal">null</span>;</span><br><span class="line">}&gt;()({</span><br><span class="line">  <span class="attr">beforeLoad</span>: <span class="title function_">async</span> ({ context }) =&gt; {</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'in beforeLoad, context: '</span>, context);</span><br><span class="line">    <span class="keyword">const</span> getSession = <span class="keyword">await</span> context.<span class="property">queryClient</span>.<span class="title function_">fetchQuery</span>({</span><br><span class="line">      <span class="attr">queryKey</span>: [<span class="string">'user'</span>],</span><br><span class="line">      <span class="attr">queryFn</span>: <span class="function">() =&gt;</span> <span class="title function_">getUserSession</span>(), <span class="comment">// getUserSession 是 Orval自动生成的接口</span></span><br><span class="line">    }); <span class="comment">// we're using react-query for caching, see router.tsx</span></span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">'getSession: '</span>, getSession);</span><br><span class="line">    <span class="keyword">return</span> { <span class="attr">sessionData</span>: getSession.<span class="property">sessionData</span> };</span><br><span class="line">  },</span><br></pre></td></tr></tbody></table></figure>
+<p>如此，我们就可以在每个路由获取上下文中的当前 session 数据，已确定用户是否登陆。如</p>
+<figure class="highlight javascript"><figcaption><span>frontend/src/routes/index.tsx</span></figcaption><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">Route</span> = <span class="title function_">createFileRoute</span>(<span class="string">'/'</span>)({</span><br><span class="line">  <span class="attr">loader</span>: <span class="function">(<span class="params">{ context }</span>) =&gt;</span> {</span><br><span class="line">    <span class="comment">// console.log('context in index.tsx loader: ', context);</span></span><br><span class="line">    <span class="keyword">return</span> context.<span class="property">sessionData</span>;</span><br><span class="line">  },</span><br><span class="line">  <span class="attr">component</span>: <span class="title class_">Home</span>,</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
+<p>除获取用户信息外 <code>index.tsx</code> 文件中，还有其他相关内容，这里尤其注意 登录、注销、注册等操作完成后使 <code>queryClient</code> 之前获取的相应数据失效，必要时也要使路由失效（例如注销操作）。可详细看下 <code>index.tsx</code>, 在此不表。</p>
+<h2 id="%E6%80%BB%E7%BB%93" tabindex="-1">总结</h2>
+<p>祝您开发过程更加顺畅。</p>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/markdown-it-texmath/css/texmath.min.css">
 	  
 	</div>
 
@@ -232,13 +221,15 @@ required /&gt; <button type="submit">Login</button>
         <h1>Recommended Posts</h1>
         <ul>
             
+                <li><a href="http://sd44.github.io/2025/09/01/tarojs-graphql/">Taro React + graphql Codegen + urql 客户端实例</a></li>
+            
+                <li><a href="http://sd44.github.io/2025/08/03/zibei/">告别自卑，超越自我：阿德勒《自卑与超越》</a></li>
+            
                 <li><a href="http://sd44.github.io/2025/07/31/the-old-man-and-the-sea/">老人与海 双语对照 + 词汇中文注解 pdf</a></li>
             
                 <li><a href="http://sd44.github.io/2025/04/22/%E6%88%91%E7%9A%84%E4%B9%A6%E3%80%8A%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E2%80%94%E2%80%94%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD%E3%80%8B/">我的书《梦园呓语 —— 我的三观独白》</a></li>
             
                 <li><a href="http://sd44.github.io/2024/06/25/%E5%A6%82%E4%BD%95%E7%BC%96%E8%BE%91%E8%87%AA%E5%B7%B1%E7%9A%84%E4%B9%A6/">如何编辑自己的书</a></li>
-            
-                <li><a href="http://sd44.github.io/2024/06/22/yiwang/">被现代经济学 &#34;遗忘&#34; 的经济学理论（一）</a></li>
             
                 <li><a href="http://sd44.github.io/2018/09/19/%E7%A9%BA%E9%97%B4%E7%94%9F%E4%BA%A7%E4%B9%8B%E4%B8%81%E5%AE%B6%E5%BA%84%E5%9F%8E%E4%B8%AD%E6%9D%91%EF%BC%88%E4%B8%80%EF%BC%89/">空间生产之丁家庄城中村（一）</a></li>
             
@@ -247,8 +238,6 @@ required /&gt; <button type="submit">Login</button>
                 <li><a href="http://sd44.github.io/2018/09/10/%E8%81%94%E5%90%88%E5%9B%BD%E5%80%BA%E5%8A%A1%E4%B8%8E%E4%BA%BA%E6%9D%83%E9%97%AE%E9%A2%98%E7%8B%AC%E7%AB%8B%E4%B8%93%E5%AE%B6%E7%9A%84%E5%8E%86%E5%B9%B4%E6%8A%A5%E5%91%8A%E6%91%98%E6%8A%84/">联合国债务与人权问题独立专家的历年报告摘抄</a></li>
             
                 <li><a href="http://sd44.github.io/2018/08/31/%E6%9C%89%E5%85%B3%E4%B8%AD%E5%9B%BD%EF%BC%88%E4%B8%80%EF%BC%89/">有关中国（一）</a></li>
-            
-                <li><a href="http://sd44.github.io/2018/08/23/yangyuzhen/">推荐杨宇振所著《资本空间化 —— 资本积累、城镇化与空间生产》</a></li>
             
         </ul>
     </div>
@@ -260,9 +249,9 @@ required /&gt; <button type="submit">Login</button>
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-        
+				
+		<li class="prev"><a href="/2025/08/03/zibei/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -344,12 +333,37 @@ required /&gt; <button type="submit">Login</button>
 
 	<!-- categories -->
     
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/%E7%BC%96%E7%A8%8B/">编程<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
 
 	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/%E7%BC%96%E7%A8%8B/">编程<span>1</span></a></li>
+
+    </ul>
+	</div>
 	
 
 	<!-- toc -->
 	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%BC%94%E7%A4%BA%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%BA%93"><span class="toc-article-text">演示项目代码库</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF"><span class="toc-article-text">项目背景</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="toc-article-text">技术栈</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%AD%A5%E9%AA%A4%E6%A6%82%E8%BF%B0"><span class="toc-article-text">步骤概述</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1.-%E8%AE%BE%E7%BD%AE-django-%E5%90%8E%E7%AB%AF"><span class="toc-article-text">1. 设置 Django 后端</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%AE%89%E8%A3%85%E5%90%8E%E7%AB%AF"><span class="toc-article-text">安装后端</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E3%80%81%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7%E5%A6%82github-google%E7%AD%89%E7%9B%B8%E5%85%B3-url-%E9%85%8D%E7%BD%AE%E5%BF%85%E9%A1%BB%E5%AE%8C%E5%85%A8%E4%B8%80%E8%87%B4:"><span class="toc-article-text">前后端、社交账户如 GitHub Google 等相关 URL 配置必须完全一致:</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#cors%E5%92%8Ccsrf%E5%AE%89%E5%85%A8%E8%AE%BE%E7%BD%AE"><span class="toc-article-text">CORS 和 CSRF 安全设置</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E9%85%8D%E7%BD%AEallauth-%E5%92%8C-ninja-%E6%8F%90%E4%BE%9B-openapi-%E6%96%87%E4%BB%B6"><span class="toc-article-text">配置 AllAuth 和 Ninja 提供 openapi 文件</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2.-%E5%88%9B%E5%BB%BA%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE"><span class="toc-article-text">2. 创建前端项目</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-article-text">安装</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E9%80%9A%E8%BF%87-openapi-%E6%96%87%E4%BB%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B"><span class="toc-article-text">通过 OpenApi 文件自动生成接口和类型</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E8%8E%B7%E5%8F%96-csrftoken"><span class="toc-article-text">获取 CSRFToken</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#http-verb%E6%90%BA%E5%B8%A6csrftoken"><span class="toc-article-text">Http Verb 携带 CSRFToken</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E7%A4%BE%E4%BA%A4%E8%B4%A6%E6%88%B7-auth-redirect"><span class="toc-article-text">社交账户 Auth Redirect</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%E8%B7%AF%E7%94%B1%E5%AE%88%E5%8D%AB"><span class="toc-article-text">路由守卫</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-article-text">总结</span></a></li></ol>
+		</div>
 	
 	</div>
 	
