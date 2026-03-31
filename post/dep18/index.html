@@ -1,0 +1,382 @@
+<!doctype html><html lang=zh-CN data-theme=light><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#222" media="(prefers-color-scheme: light)"><meta name=generator content="Hugo 0.159.1"><link rel="shortcut icon" type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/x-icon href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=16x16 href=/imgs/icons/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/imgs/icons/favicon.ico><link rel=apple-touch-icon sizes=180x180 href=/imgs/icons/favicon_apple_dan.ico><meta itemprop=name content="DEP-18（草稿）打包方式"><meta itemprop=description content="一直在蛋疼，从未休止过"><meta name=description content="一直在蛋疼，从未休止过"><meta itemprop=datePublished zgotmplz><meta itemprop=dateModified zgotmplz><meta itemprop=image content="/imgs/dandan_avatar.jpg"><meta itemprop=keywords content="linux,debian"><meta property="og:type" content="article"><meta property="og:title" content="DEP-18（草稿）打包方式"><meta property="og:description" content="一直在蛋疼，从未休止过"><meta property="og:image" content="/imgs/dandan_avatar.jpg"><meta property="og:image:width" content="312"><meta property="og:image:height" content="312"><meta property="og:image:type" content="image/jpeg/png/svg/jpg"><meta property="og:url" content="/post/dep18/"><meta property="og:site_name" content="蛋疼的蛋蛋的老窝"><meta property="og:locale" content="zh-CN"><meta property="article:author" content="蛋疼的蛋蛋"><meta property="article:published_time" content="2026-01-25 10:58:17 +0800 CST"><meta property="article:modified_time" content="2026-01-25 10:58:17 +0800 CST"><link type=text/css rel=stylesheet href=https://cdn.staticfile.net/font-awesome/6.7.2/css/all.min.css><link type=text/css rel=stylesheet href=https://cdn.staticfile.net/animate.css/3.1.1/animate.min.css><link type=text/css rel=stylesheet href=https://cdn.staticfile.net/viewerjs/1.11.6/viewer.min.css><link rel=stylesheet href="/css/main.min.css?=1774972105"><style type=text/css>.post-footer hr:after{content:"~ 我可是有底线的哟 ~"}.flinks-list-footer hr:after{content:"~ 我可是有底线的哟 ~"}</style><link rel=stylesheet type=text/css href="/css/custom_style.css?=1774972105"><script type=text/javascript>(function(){localDB={set:function(e,t,n){if(n===0)return;const s=new Date,o=n*864e5,i={value:t,expiry:s.getTime()+o};localStorage.setItem(e,JSON.stringify(i))},get:function(e){const t=localStorage.getItem(e);if(!t)return 0[0];const n=JSON.parse(t),s=new Date;return s.getTime()>n.expiry?(localStorage.removeItem(e),0[0]):n.value}},theme={active:function(){const e=localDB.get("theme");if(e==null)return;theme.toggle(e),window.matchMedia("(prefers-color-scheme: dark)").addListener(function(e){theme.toggle(e.matches?"dark":"light")})},toggle:function(e){document.documentElement.setAttribute("data-theme",e),localDB.set("theme",e,2);const t=document.querySelector("iframe.giscus-frame");if(t){const n={setConfig:{theme:e}};t.contentWindow.postMessage({giscus:n},"https://giscus.app")}}},theme.active()})(window)</script><script type=text/javascript>document.addEventListener("DOMContentLoaded",()=>{var e=document.createElement("script");e.charset="UTF-8",e.src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js",e.async=!1,e.defer=!0,document.head.appendChild(e),e.onload=function(){NexT.utils.fmtBusuanzi()}})</script><title>DEP-18（草稿）打包方式 - 蛋疼的蛋蛋的老窝</title><noscript><link rel=stylesheet href=/css/noscript.css></noscript></head><body itemscope itemtype=http://schema.org/WebPage class=use-motion><div class=headband></div><main class=main><header class=header itemscope itemtype=http://schema.org/WPHeader><div class=header-inner><div class=site-brand-container><div class=site-nav-toggle><div class=toggle aria-label role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div></div><div class=site-meta><a href=/ class=brand rel=start><i class=logo-line></i><h1 class=site-title>蛋疼的蛋蛋的老窝</h1><i class=logo-line></i></a><p class=site-subtitle itemprop=description>我的精神家园</p></div><div class=site-nav-right><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class=site-nav><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href=/ class=hvr-icon-pulse rel=section><i class="fa fa-home hvr-icon"></i>首页</a></li><li class="menu-item menu-item-about"><a href=/about/ class=hvr-icon-pulse rel=section><i class="fa fa-user hvr-icon"></i>关于</a></li><li class="menu-item menu-item-works"><a href=/about/ class="menus-parent hvr-icon-pulse" rel=section><i class="fa fa-book hvr-icon"></i>我的作品
+<span class=menu-item-shrink-icon><i class="fa fa-angle-right"></i></span></a><ul class=menu-children><li class=menu-child-item><a href=/post/%E6%88%91%E7%9A%84%E4%B9%A6%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD/ class=hvr-icon-pulse rel=section><i class="fa hvr-icon"></i>梦园呓语</a></li><li class=menu-child-item><a href=/post/grammar-club/ class=hvr-icon-pulse rel=section><i class="fa hvr-icon"></i>英语语法笔记</a></li><li class=menu-child-item><a href=/post/%E5%88%9D%E4%B8%AD%E7%89%A9%E7%90%86%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ class=hvr-icon-pulse rel=section><i class="fa hvr-icon"></i>初中物理基础知识</a></li><li class=menu-child-item><a href=/post/wanguifei/ class=hvr-icon-pulse rel=section><i class="fa hvr-icon"></i>朱见深与万贞儿</a></li><li class=menu-child-item><a href=/post/the-old-man-and-the-sea/ class=hvr-icon-pulse rel=section><i class="fa hvr-icon"></i>老人与海 双语对照+词汇注解</a></li></ul></li><li class="menu-item menu-item-archives"><a href=/archives/ class=hvr-icon-pulse rel=section><i class="fa fa-archive hvr-icon"></i>归档
+<span class=badge>62</span></a></li><li class="menu-item menu-item-commonweal"><a href=/404.html class=hvr-icon-pulse rel=section><i class="fa fa-heartbeat hvr-icon"></i>公益 404</a></li><li class="menu-item menu-item-flinks"><a href=/flinks.html class=hvr-icon-pulse rel=section><i class="fa fa-thumbs-up hvr-icon"></i>友情链接</a></li><li class="menu-item menu-item-search"><a role=button class="popup-trigger hvr-icon-pulse"><i class="fa fa-search fa-fw hvr-icon"></i>搜索</a></li></ul></nav><div class=search-pop-overlay><div class="popup search-popup"><div class=search-header><span class=search-icon><i class="fa fa-search"></i></span><div class=search-input-container><input autocomplete=off autocapitalize=off maxlength=80 placeholder=搜索... spellcheck=false type=search class=search-input></div><span class=popup-btn-close role=button><i class="fa fa-times-circle"></i></span></div><div class="search-result-container no-result"><div class=search-result-icon><i class="fa fa-spinner fa-pulse fa-5x"></i></div></div></div></div></div><div class="toggle sidebar-toggle" role=button><span class=toggle-line></span>
+<span class=toggle-line></span>
+<span class=toggle-line></span></div><aside class=sidebar><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class=sidebar-nav><li class=sidebar-nav-toc>文章目录</li><li class=sidebar-nav-overview>站点概览</li></ul><div class=sidebar-panel-container><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><nav id=TableOfContents><ul><li><a href=#参考文档>参考文档</a></li><li><a href=#salsa>Salsa</a></li><li><a href=#准备工作>准备工作</a></li><li><a href=#导入仓库>导入仓库</a><ul><li><a href=#获取已在-debian-仓库中的软件包源代码>获取已在 Debian 仓库中的软件包源代码</a></li><li><a href=#import-from-tarballs>Import from tarballs</a></li><li><a href=#import-from-an-upstream-git-repository>Import from an upstream git repository</a></li><li><a href=#if-there-is-no-upstream>If there is no upstream</a></li><li><a href=#初始化-debian-目录>初始化 debian 目录</a></li></ul></li><li><a href=#补丁和构建>补丁和构建</a></li><li><a href=#用-gbp-dch-管理-debianchangelog>用 gbp dch 管理 debian/changelog</a><ul><li><a href=#常用操作流程>常用操作流程</a></li></ul></li></ul></nav></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author site-overview-item animated" itemprop=author itemscope itemtype=http://schema.org/Person><img class=site-author-image itemprop=image alt=蛋疼的蛋蛋 src=/imgs/img-lazy-loading.gif data-src=/imgs/dandan_avatar.jpg><p class=site-author-name itemprop=name>蛋疼的蛋蛋</p><div class=site-description itemprop=description>一直在蛋疼，从未休止过</div></div><div class="site-state-wrap site-overview-item animated"><nav class=site-state><div class="site-state-item site-state-posts"><a href=/archives/><span class=site-state-item-count>62</span>
+<span class=site-state-item-name>日志</span></a></div><div class="site-state-item site-state-categories"><a href=/categories/><span class=site-state-item-count>13</span>
+<span class=site-state-item-name>分类</span></a></div><div class="site-state-item site-state-tags"><a href=/tags/><span class=site-state-item-count>69</span>
+<span class=site-state-item-name>标签</span></a></div></nav></div><div class="links-of-social site-overview-item animated"><span class=links-of-social-item><a href=https://github.com/sd44 title="Github → https://github.com/sd44" rel=noopener class=hvr-icon-pulse target=_blank><i class="fab fa-github fa-fw hvr-icon"></i>
+Github
+</a></span><span class=links-of-social-item><a href=https://www.zhihu.com/people/sd44 title="知乎 → https://www.zhihu.com/people/sd44" rel=noopener class=hvr-icon-pulse target=_blank><i class="fa fa-book fa-fw hvr-icon"></i>
+知乎</a></span></div><div class="cc-license animated" itemprop=license><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans class=cc-opacity rel=noopener target=_blank title=共享知识><img src=/imgs/img-lazy-loading.gif data-src=/imgs/cc/big/by_nc_sa.svg alt=共享知识></a></div><div class="links-of-blogroll site-overview-item animated"><div class=links-of-blogroll-title><i class="fa fa-globe fa-fw"></i>
+友情链接</div><ul class=links-of-blogroll-list><li class=links-of-blogroll-item><a href=https://gitee.com/hugo-next/hugo-theme-next title=https://gitee.com/hugo-next/hugo-theme-next target=_blank>Hugo-NexT</a></li><li class=links-of-blogroll-item><a href=https://lisenhui.cn title=https://lisenhui.cn target=_blank>凡梦星尘空间站</a></li></ul></div></div></div></div><div id=siteinfo-card-widget class=sidebar-card-widget><div class=item-headline><i class="fas fa-chart-line"></i>
+<span>网站资讯</span></div><div class=siteinfo><div class=siteinfo-item><div class=item-name><i class="fa-solid fa-calendar-check"></i>已运行：</div><div class=item-count id=runTimes data-publishdate="2017-07-06 00:41:16 +0800 CST"></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-user"></i>总访客数：</div><div class=item-count id=busuanzi_value_site_uv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fas fa fa-eye"></i>页面浏览：</div><div class=item-count id=busuanzi_value_site_pv><i class="fa fa-sync fa-spin"></i></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-font"></i>总字数：</div><div class=item-count id=wordsCount data-count=187048></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-mug-hot"></i>阅读约：</div><div class=item-count id=readTimes data-times=406></div></div><div class=siteinfo-item><div class=item-name><i class="fa fa-clock-rotate-left"></i>最后更新于：</div><div class=item-count id=last-push-date data-lastpushdate="2026-03-30 22:54:39 +0800 CST"></div></div></div></div></aside><div class=sidebar-dimmer></div></header><div class=tool-buttons><div id=goto-comments class="button goto-comments" title=直达评论><i class="fas fa-comments"></i></div><div id=toggle-theme class=button title=深浅模式切换><i class="fas fa-adjust"></i></div><div class=back-to-top role=button title=返回顶部><i class="fa fa-arrow-up"></i>
+<span>0%</span></div></div><div class=reading-progress-bar></div><a role=button class="book-mark-link book-mark-link-fixed"></a><a href=https://github.com/sd44 rel="noopener external nofollow noreferrer" target=_blank title="在 GitHub 上关注我" class="exturl github-corner"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0 0 115 115h15l12 27L250 250V0z"/><path d="M128.3 109C113.8 99.7 119 89.6 119 89.6 122 82.7 120.5 78.6 120.5 78.6 119.2 72 123.4 76.3 123.4 76.3 127.3 80.9 125.5 87.3 125.5 87.3 122.9 97.6 130.6 101.9 134.4 103.2" fill="currentColor" style="transform-origin:130px 106px" class="octo-arm"/><path d="M115 115C114.9 115.1 118.7 116.5 119.8 115.4l13.9-13.8C136.9 99.2 139.9 98.4 142.2 98.6 133.8 88 127.5 74.4 143.8 58 148.5 53.4 154 51.2 159.7 51 160.3 49.4 163.2 43.6 171.4 40.1 171.4 40.1 176.1 42.5 178.8 56.2 183.1 58.6 187.2 61.8 190.9 65.4 194.5 69 197.7 73.2 200.1 77.6 213.8 80.2 216.3 84.9 216.3 84.9 212.7 93.1 206.9 96 205.4 96.6 205.1 102.4 203 107.8 198.3 112.5 181.9 128.9 168.3 122.5 157.7 114.1 157.9 116.9 156.7 120.9 152.7 124.9L141 136.5C139.8 137.7 141.6 141.9 141.8 141.8z" fill="currentColor" class="octo-body"/></svg></a><noscript><div class=noscript-warning>Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class=post-block><article itemscope itemtype=http://schema.org/Article class=post-content lang><link itemprop=mainEntityOfPage href=/post/dep18/><span hidden itemprop=author itemscope itemtype=http://schema.org/Person><meta itemprop=image content="/imgs/dandan_avatar.jpg"><meta itemprop=name content="蛋疼的蛋蛋"></span><span hidden itemprop=publisher itemscope itemtype=http://schema.org/Organization><meta itemprop=name content="蛋疼的蛋蛋"><meta itemprop=description content="一直在蛋疼，从未休止过"></span><span hidden itemprop=post itemscope itemtype=http://schema.org/CreativeWork><meta itemprop=name content="DEP-18（草稿）打包方式"><meta itemprop=description content="自用笔记，很多内容都还不清楚，仅供参考。"></span><header class=post-header><h1 class=post-title itemprop="name headline">DEP-18（草稿）打包方式
+<a href=https://github.com/sd44/hugonext/tree/main/content/post/dep18/index.md rel="noopener external nofollow noreferrer" target=_blank class="exturl post-edit-link" title=编辑><i class="fa fa-pen-nib"></i></a></h1><div class=post-meta-container><div class=post-meta-items><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-calendar"></i>
+</span><span class=post-meta-item-text title=发表于>发表于：
+</span><time title="创建时间：2026年01月25日 10:58:17 CST" itemprop="dateCreated datePublished" datetime="2026-01-25 10:58:17 +0800 CST">2026年01月25日
+</time></span><span class=post-meta-item><span class=post-meta-item-icon><i class="fas fa-solid fa-folder-open"></i>
+</span><span class=post-meta-item-text title=分类于>分类于：
+</span><span itemprop=about itemscope itemtype=http://schema.org/Thing><a href=/categories/%E7%BC%96%E7%A8%8B/ itemprop=url rel=index><span itemprop=name>编程</span></a></span></span></div><div class=post-meta-items><span class=post-meta-item title=字数><span class=post-meta-item-icon><i class="fas fa-solid fa-file-word"></i>
+</span><span class=post-meta-item-text>字数：</span>
+<span>1771</span>
+</span><span class=post-meta-item title=阅读><span class=post-meta-item-icon><i class="fas fa-solid fa-clock"></i>
+</span><span class=post-meta-item-text>阅读：&ap;</span>
+<span>4分钟</span>
+</span><span class=post-meta-item title=浏览><span class=post-meta-item-icon><i class="fas fa-solid fa-eye"></i>
+</span><span class=post-meta-item-text>浏览：
+</span><span id=pageview-count data-path=/post/dep18/><i class="fa fa-sync fa-spin"></i>
+</span></span><span class=post-meta-item title><span class=post-meta-item-icon><i class="fas fa-solid fa-comments"></i>
+</span><span class=post-meta-item-text title=评论>评论：
+</span><span id=comments-count data-path=/post/dep18/><i class="fa fa-sync fa-spin"></i></span></span></div></div></header><div class="post-body autonumber" itemprop=articleBody><p>自用笔记，很多内容都还不清楚，仅供参考。</p><a id=more></a><h2 id=参考文档>参考文档
+<a class=header-anchor href=#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3></a></h2><ul><li><a href=https://wiki.debian.org/PackagingWithGit title=https://wiki.debian.org/PackagingWithGit rel="noopener external nofollow noreferrer" target=_blank class=exturl>https://wiki.debian.org/PackagingWithGit
+<i class="fa fa-external-link-alt"></i></a></li><li><a href=https://optimizedbyotto.com/post/debian-packaging-from-git/ title=https://optimizedbyotto.com/post/debian-packaging-from-git/ rel="noopener external nofollow noreferrer" target=_blank class=exturl>https://optimizedbyotto.com/post/debian-packaging-from-git/
+<i class="fa fa-external-link-alt"></i></a></li><li><a href=https://optimizedbyotto.com/post/debian-source-package-git/ title=https://optimizedbyotto.com/post/debian-source-package-git/ rel="noopener external nofollow noreferrer" target=_blank class=exturl>https://optimizedbyotto.com/post/debian-source-package-git/
+<i class="fa fa-external-link-alt"></i></a></li><li><a href=https://dep-team.pages.debian.net/deps/dep18/ title=DEP-18 rel="noopener external nofollow noreferrer" target=_blank class=exturl>DEP-18
+<i class="fa fa-external-link-alt"></i></a></li><li><a href=https://salsa.debian.org/debian/entr title="DEP-18 示例库 entr" rel="noopener external nofollow noreferrer" target=_blank class=exturl>DEP-18 示例库 entr
+<i class="fa fa-external-link-alt"></i></a></li></ul><h2 id=salsa>Salsa
+<a class=header-anchor href=#salsa></a></h2><ul><li>避免将官方 Debian 仓库作为源代码版本控制系统使用。改用 git 仓库进行频繁操作。</li><li>建议使用 git-buildpackage 作为维护 Debian 源码包的最广泛工具，且 <code>gbp.conf</code> 应当放置在 <code>repo/debian</code> 目录中。</li><li>使用 <strong>gbp pq</strong> 以便维护和测试上游补丁。</li><li>如果软件包有自定义工具或流程，请将其记录在 <code>README.source(.md)</code>,以便于他人协作和维护。</li><li>DEP-18 示例：
+<a href=https://salsa.debian.org/debian/entr title="Entr repo" rel="noopener external nofollow noreferrer" target=_blank class=exturl>Entr repo
+<i class="fa fa-external-link-alt"></i>
+</a>注意 <code>debian/README.source.md</code> 文件，</li><li><a href=https://salsa.debian.org/salsa-ci-team/pipeline title="Salsa CI 详解" rel="noopener external nofollow noreferrer" target=_blank class=exturl>Salsa CI 详解
+<i class="fa fa-external-link-alt"></i></a></li></ul><h2 id=准备工作>准备工作
+<a class=header-anchor href=#%e5%87%86%e5%a4%87%e5%b7%a5%e4%bd%9c></a></h2><p>以下默认使用 sbuild</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>sudo</span> <span class=nf>apt</span> update <span class=na>-q</span> <span class=o>&amp;&amp;</span> <span class=nf>sudo</span> <span class=nf>apt</span> install <span class=na>-q</span> <span class=na>--yes</span> sbuild mmdebstrap uidmap piuparts git-buildpackage dpkg-dev dh-make  apt-cacher-ng</span></span></code></pre></td></tr></table></div></div><p>设置变量 fish shell 用户， <code>~/.config/fish/conf.d/debian-dev.fish</code></p><div class="highlight fish" tangle=~/.config/fish/conf.d/debian-dev.fish><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1> 1</a>
+</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2> 2</a>
+</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3> 3</a>
+</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4> 4</a>
+</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5> 5</a>
+</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6> 6</a>
+</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7> 7</a>
+</span><span class=lnt id=hl-1-8><a class=lnlinks href=#hl-1-8> 8</a>
+</span><span class=lnt id=hl-1-9><a class=lnlinks href=#hl-1-9> 9</a>
+</span><span class=lnt id=hl-1-10><a class=lnlinks href=#hl-1-10>10</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>set -gx DEBEMAIL &#34;sd44sd44@yeah.net&#34;
+</span></span><span class=line><span class=cl>set -gx DEBFULLNAME &#34;Hoho Sd44&#34;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>function fish_command_not_found
+</span></span><span class=line><span class=cl>    /usr/bin/command-not-found $argv[1]
+</span></span><span class=line><span class=cl>end
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>set -gx DEBUILD_DPKG_BUILDPACKAGE_OPTS &#34;-i -I -us -uc&#34;
+</span></span><span class=line><span class=cl>set -gx DEBUILD_LINTIAN_OPTS &#34;-i -I --show-overrides&#34;
+</span></span><span class=line><span class=cl>set -gx DEBSIGN_KEYID &#34;DBBF53F41DF90D31A0C0D0134F4D76C33BA3B42D&#34;</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1>1</a>
+</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>mkdir</span> <span class=na>-p</span> ~/.cache/sbuild
+</span></span><span class=line><span class=cl><span class=nf>mmdebstrap</span> <span class=na>--skip</span><span class=o>=</span>output/dev <span class=na>--variant</span><span class=o>=</span>buildd <span class=na>--include</span><span class=o>=</span>eatmydata <span class=nf>unstable</span> ~/.cache/sbuild/unstable-amd64.tar.zst http://ftp.cn.debian.org/debian <span class=na>--aptopt</span><span class=o>=</span><span class=s1>&#39;Acquire::http { Proxy &#34;http://127.0.0.1:3142&#34;; }&#39;</span></span></span></code></pre></td></tr></table></div></div><p><code>~/.gbp.conf</code> 示例</p><div class="highlight conf" tangle=~/.gbp.conf><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1> 1</a>
+</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2> 2</a>
+</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3> 3</a>
+</span><span class=lnt id=hl-3-4><a class=lnlinks href=#hl-3-4> 4</a>
+</span><span class=lnt id=hl-3-5><a class=lnlinks href=#hl-3-5> 5</a>
+</span><span class=lnt id=hl-3-6><a class=lnlinks href=#hl-3-6> 6</a>
+</span><span class=lnt id=hl-3-7><a class=lnlinks href=#hl-3-7> 7</a>
+</span><span class=lnt id=hl-3-8><a class=lnlinks href=#hl-3-8> 8</a>
+</span><span class=lnt id=hl-3-9><a class=lnlinks href=#hl-3-9> 9</a>
+</span><span class=lnt id=hl-3-10><a class=lnlinks href=#hl-3-10>10</a>
+</span><span class=lnt id=hl-3-11><a class=lnlinks href=#hl-3-11>11</a>
+</span><span class=lnt id=hl-3-12><a class=lnlinks href=#hl-3-12>12</a>
+</span><span class=lnt id=hl-3-13><a class=lnlinks href=#hl-3-13>13</a>
+</span><span class=lnt id=hl-3-14><a class=lnlinks href=#hl-3-14>14</a>
+</span><span class=lnt id=hl-3-15><a class=lnlinks href=#hl-3-15>15</a>
+</span><span class=lnt id=hl-3-16><a class=lnlinks href=#hl-3-16>16</a>
+</span><span class=lnt id=hl-3-17><a class=lnlinks href=#hl-3-17>17</a>
+</span><span class=lnt id=hl-3-18><a class=lnlinks href=#hl-3-18>18</a>
+</span><span class=lnt id=hl-3-19><a class=lnlinks href=#hl-3-19>19</a>
+</span><span class=lnt id=hl-3-20><a class=lnlinks href=#hl-3-20>20</a>
+</span><span class=lnt id=hl-3-21><a class=lnlinks href=#hl-3-21>21</a>
+</span><span class=lnt id=hl-3-22><a class=lnlinks href=#hl-3-22>22</a>
+</span><span class=lnt id=hl-3-23><a class=lnlinks href=#hl-3-23>23</a>
+</span><span class=lnt id=hl-3-24><a class=lnlinks href=#hl-3-24>24</a>
+</span><span class=lnt id=hl-3-25><a class=lnlinks href=#hl-3-25>25</a>
+</span><span class=lnt id=hl-3-26><a class=lnlinks href=#hl-3-26>26</a>
+</span><span class=lnt id=hl-3-27><a class=lnlinks href=#hl-3-27>27</a>
+</span><span class=lnt id=hl-3-28><a class=lnlinks href=#hl-3-28>28</a>
+</span><span class=lnt id=hl-3-29><a class=lnlinks href=#hl-3-29>29</a>
+</span><span class=lnt id=hl-3-30><a class=lnlinks href=#hl-3-30>30</a>
+</span><span class=lnt id=hl-3-31><a class=lnlinks href=#hl-3-31>31</a>
+</span><span class=lnt id=hl-3-32><a class=lnlinks href=#hl-3-32>32</a>
+</span><span class=lnt id=hl-3-33><a class=lnlinks href=#hl-3-33>33</a>
+</span><span class=lnt id=hl-3-34><a class=lnlinks href=#hl-3-34>34</a>
+</span><span class=lnt id=hl-3-35><a class=lnlinks href=#hl-3-35>35</a>
+</span><span class=lnt id=hl-3-36><a class=lnlinks href=#hl-3-36>36</a>
+</span><span class=lnt id=hl-3-37><a class=lnlinks href=#hl-3-37>37</a>
+</span><span class=lnt id=hl-3-38><a class=lnlinks href=#hl-3-38>38</a>
+</span><span class=lnt id=hl-3-39><a class=lnlinks href=#hl-3-39>39</a>
+</span><span class=lnt id=hl-3-40><a class=lnlinks href=#hl-3-40>40</a>
+</span><span class=lnt id=hl-3-41><a class=lnlinks href=#hl-3-41>41</a>
+</span><span class=lnt id=hl-3-42><a class=lnlinks href=#hl-3-42>42</a>
+</span><span class=lnt id=hl-3-43><a class=lnlinks href=#hl-3-43>43</a>
+</span><span class=lnt id=hl-3-44><a class=lnlinks href=#hl-3-44>44</a>
+</span><span class=lnt id=hl-3-45><a class=lnlinks href=#hl-3-45>45</a>
+</span><span class=lnt id=hl-3-46><a class=lnlinks href=#hl-3-46>46</a>
+</span><span class=lnt id=hl-3-47><a class=lnlinks href=#hl-3-47>47</a>
+</span><span class=lnt id=hl-3-48><a class=lnlinks href=#hl-3-48>48</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Configuration</span><span class=w> </span><span class=nx>file</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=nx>gbp</span><span class=w> </span><span class=p>&lt;</span><span class=nx>command</span><span class=p>&gt;</span><span class=w>  </span><span class=nx>gbp</span><span class=p>.</span><span class=nx>conf</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>https</span><span class=p>:</span><span class=cp>//salsa.debian.org/debian/entr/-/blob/debian/latest/debian/gbp.conf</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=p>[</span><span class=nx>DEFAULT</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Manage</span><span class=w> </span><span class=nx>a</span><span class=w> </span><span class=s>&#34;pristine-tar&#34;</span><span class=w> </span><span class=nx>branch</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>pristine</span><span class=o>-</span><span class=nx>tar</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>True</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>pristine</span><span class=o>-</span><span class=nx>tar</span><span class=o>-</span><span class=nx>commit</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>True</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Use</span><span class=w> </span><span class=nx>Debian</span><span class=o>-</span><span class=nx>style</span><span class=w> </span><span class=nx>DEP</span><span class=o>-</span><span class=mi>14</span><span class=w> </span><span class=nx>branch</span><span class=w> </span><span class=nx>names</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>upstream</span><span class=o>-</span><span class=nx>branch</span><span class=p>=</span><span class=nx>upstream</span><span class=o>/</span><span class=nx>latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>debian</span><span class=o>-</span><span class=nx>branch</span><span class=p>=</span><span class=nx>debian</span><span class=o>/</span><span class=nx>latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Lax</span><span class=w> </span><span class=nx>requirement</span><span class=w> </span><span class=nx>to</span><span class=w> </span><span class=nx>use</span><span class=w> </span><span class=nx>branch</span><span class=w> </span><span class=nx>name</span><span class=w> </span><span class=err>&#39;</span><span class=nx>debian</span><span class=o>/</span><span class=nx>latest</span><span class=err>&#39;</span><span class=w> </span><span class=nx>so</span><span class=w> </span><span class=nx>that</span><span class=w> </span><span class=nx>git</span><span class=o>-</span><span class=nx>buildpackage</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>will</span><span class=w> </span><span class=nx>always</span><span class=w> </span><span class=nx>build</span><span class=w> </span><span class=nx>using</span><span class=w> </span><span class=nx>the</span><span class=w> </span><span class=nx>currently</span><span class=w> </span><span class=nx>checked</span><span class=w> </span><span class=nx>out</span><span class=w> </span><span class=nx>branch</span><span class=w> </span><span class=nx>as</span><span class=w> </span><span class=nx>the</span><span class=w> </span><span class=nx>Debian</span><span class=w> </span><span class=nx>branch</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>This</span><span class=w> </span><span class=nx>makes</span><span class=w> </span><span class=nx>it</span><span class=w> </span><span class=nx>easier</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=nx>contributors</span><span class=w> </span><span class=nx>to</span><span class=w> </span><span class=nx>work</span><span class=w> </span><span class=nx>with</span><span class=w> </span><span class=nx>feature</span><span class=w> </span><span class=nx>and</span><span class=w> </span><span class=nx>bugfix</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>branches</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>ignore</span><span class=o>-</span><span class=nx>branch</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>True</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Build</span><span class=w> </span><span class=nx>packages</span><span class=w> </span><span class=nx>with</span><span class=w> </span><span class=nx>pbuilder</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>pbuilder</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>True</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Or</span><span class=w> </span><span class=nx>use</span><span class=w> </span><span class=nx>sbuild</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>builder</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>sbuild</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Sign</span><span class=w> </span><span class=nf>tags</span><span class=w> </span><span class=p>(</span><span class=nx>optional</span><span class=p>):</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>sign</span><span class=o>-</span><span class=nx>tags</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>True</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>keyid</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>DBBF53F41DF90D31A0C0D0134F4D76C33BA3B42D</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Ease</span><span class=w> </span><span class=nx>dropping</span><span class=w> </span><span class=o>/</span><span class=w> </span><span class=nx>adding</span><span class=w> </span><span class=nx>patches</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>patch</span><span class=o>-</span><span class=nx>numbers</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>False</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Ensure</span><span class=w> </span><span class=nx>a</span><span class=w> </span><span class=nx>human</span><span class=w> </span><span class=nx>always</span><span class=w> </span><span class=nx>reviews</span><span class=w> </span><span class=nx>all</span><span class=w> </span><span class=nx>the</span><span class=w> </span><span class=nx>debian</span><span class=o>/</span><span class=nx>changelog</span><span class=w> </span><span class=nx>entries</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>spawn</span><span class=o>-</span><span class=nx>editor</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>always</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>No</span><span class=w> </span><span class=nx>need</span><span class=w> </span><span class=nx>to</span><span class=w> </span><span class=nx>confirm</span><span class=w> </span><span class=kn>package</span><span class=w> </span><span class=nx>name</span><span class=w> </span><span class=nx>or</span><span class=w> </span><span class=nx>version</span><span class=w> </span><span class=nx>at</span><span class=w> </span><span class=kt>any</span><span class=w> </span><span class=nx>time</span><span class=p>,</span><span class=w> </span><span class=nx>git</span><span class=o>-</span><span class=nx>buildpackage</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>always</span><span class=w> </span><span class=nx>gets</span><span class=w> </span><span class=nx>it</span><span class=w> </span><span class=nx>right</span><span class=p>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>interactive</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>False</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>Ensure</span><span class=w> </span><span class=nx>we</span><span class=w> </span><span class=nx>always</span><span class=w> </span><span class=nx>target</span><span class=w> </span><span class=nx>Debian</span><span class=w> </span><span class=nx>on</span><span class=w> </span><span class=nx>Debian</span><span class=w> </span><span class=nx>branches</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nx>dch</span><span class=o>-</span><span class=nx>opt</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=o>--</span><span class=nx>vendor</span><span class=p>=</span><span class=nx>debian</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>If</span><span class=w> </span><span class=nx>this</span><span class=w> </span><span class=kn>package</span><span class=w> </span><span class=nx>ever</span><span class=w> </span><span class=nx>needs</span><span class=w> </span><span class=nx>to</span><span class=w> </span><span class=nx>be</span><span class=w> </span><span class=nx>maintained</span><span class=w> </span><span class=k>for</span><span class=w> </span><span class=nx>Ubuntu</span><span class=p>,</span><span class=w> </span><span class=nx>remember</span><span class=w> </span><span class=nx>to</span><span class=w> </span><span class=nx>override</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=w> </span><span class=nx>the</span><span class=w> </span><span class=nx>branch</span><span class=p>,</span><span class=w> </span><span class=nx>tag</span><span class=w> </span><span class=nx>and</span><span class=w> </span><span class=nx>commit</span><span class=w> </span><span class=nx>messages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=nx>debian</span><span class=o>-</span><span class=nx>branch</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>ubuntu</span><span class=o>/</span><span class=mf>24.04</span><span class=o>-</span><span class=nx>noble</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=nx>debian</span><span class=o>-</span><span class=nx>tag</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>ubuntu</span><span class=o>/%</span><span class=p>(</span><span class=nx>version</span><span class=p>)</span><span class=nx>s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=nx>debian</span><span class=o>-</span><span class=nx>tag</span><span class=o>-</span><span class=nx>msg</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=o>%</span><span class=p>(</span><span class=nx>pkg</span><span class=p>)</span><span class=nx>s</span><span class=w> </span><span class=nx>Ubuntu</span><span class=w> </span><span class=nx>release</span><span class=w> </span><span class=o>%</span><span class=p>(</span><span class=nx>version</span><span class=p>)</span><span class=nx>s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=err>#</span><span class=nx>dch</span><span class=o>-</span><span class=nx>opt</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=o>--</span><span class=nx>vendor</span><span class=p>=</span><span class=nx>ubuntu</span></span></span></code></pre></td></tr></table></div></div><p>我使用的是 sbuild,配置文件 <code>~/.config/sbuild/config.pl</code></p><div class="highlight perl" tangle=~/.config/sbuild/config.pl><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1> 1</a>
+</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2> 2</a>
+</span><span class=lnt id=hl-4-3><a class=lnlinks href=#hl-4-3> 3</a>
+</span><span class=lnt id=hl-4-4><a class=lnlinks href=#hl-4-4> 4</a>
+</span><span class=lnt id=hl-4-5><a class=lnlinks href=#hl-4-5> 5</a>
+</span><span class=lnt id=hl-4-6><a class=lnlinks href=#hl-4-6> 6</a>
+</span><span class=lnt id=hl-4-7><a class=lnlinks href=#hl-4-7> 7</a>
+</span><span class=lnt id=hl-4-8><a class=lnlinks href=#hl-4-8> 8</a>
+</span><span class=lnt id=hl-4-9><a class=lnlinks href=#hl-4-9> 9</a>
+</span><span class=lnt id=hl-4-10><a class=lnlinks href=#hl-4-10>10</a>
+</span><span class=lnt id=hl-4-11><a class=lnlinks href=#hl-4-11>11</a>
+</span><span class=lnt id=hl-4-12><a class=lnlinks href=#hl-4-12>12</a>
+</span><span class=lnt id=hl-4-13><a class=lnlinks href=#hl-4-13>13</a>
+</span><span class=lnt id=hl-4-14><a class=lnlinks href=#hl-4-14>14</a>
+</span><span class=lnt id=hl-4-15><a class=lnlinks href=#hl-4-15>15</a>
+</span><span class=lnt id=hl-4-16><a class=lnlinks href=#hl-4-16>16</a>
+</span><span class=lnt id=hl-4-17><a class=lnlinks href=#hl-4-17>17</a>
+</span><span class=lnt id=hl-4-18><a class=lnlinks href=#hl-4-18>18</a>
+</span><span class=lnt id=hl-4-19><a class=lnlinks href=#hl-4-19>19</a>
+</span><span class=lnt id=hl-4-20><a class=lnlinks href=#hl-4-20>20</a>
+</span><span class=lnt id=hl-4-21><a class=lnlinks href=#hl-4-21>21</a>
+</span><span class=lnt id=hl-4-22><a class=lnlinks href=#hl-4-22>22</a>
+</span><span class=lnt id=hl-4-23><a class=lnlinks href=#hl-4-23>23</a>
+</span><span class=lnt id=hl-4-24><a class=lnlinks href=#hl-4-24>24</a>
+</span><span class=lnt id=hl-4-25><a class=lnlinks href=#hl-4-25>25</a>
+</span><span class=lnt id=hl-4-26><a class=lnlinks href=#hl-4-26>26</a>
+</span><span class=lnt id=hl-4-27><a class=lnlinks href=#hl-4-27>27</a>
+</span><span class=lnt id=hl-4-28><a class=lnlinks href=#hl-4-28>28</a>
+</span><span class=lnt id=hl-4-29><a class=lnlinks href=#hl-4-29>29</a>
+</span><span class=lnt id=hl-4-30><a class=lnlinks href=#hl-4-30>30</a>
+</span><span class=lnt id=hl-4-31><a class=lnlinks href=#hl-4-31>31</a>
+</span><span class=lnt id=hl-4-32><a class=lnlinks href=#hl-4-32>32</a>
+</span><span class=lnt id=hl-4-33><a class=lnlinks href=#hl-4-33>33</a>
+</span><span class=lnt id=hl-4-34><a class=lnlinks href=#hl-4-34>34</a>
+</span><span class=lnt id=hl-4-35><a class=lnlinks href=#hl-4-35>35</a>
+</span><span class=lnt id=hl-4-36><a class=lnlinks href=#hl-4-36>36</a>
+</span><span class=lnt id=hl-4-37><a class=lnlinks href=#hl-4-37>37</a>
+</span><span class=lnt id=hl-4-38><a class=lnlinks href=#hl-4-38>38</a>
+</span><span class=lnt id=hl-4-39><a class=lnlinks href=#hl-4-39>39</a>
+</span><span class=lnt id=hl-4-40><a class=lnlinks href=#hl-4-40>40</a>
+</span><span class=lnt id=hl-4-41><a class=lnlinks href=#hl-4-41>41</a>
+</span><span class=lnt id=hl-4-42><a class=lnlinks href=#hl-4-42>42</a>
+</span><span class=lnt id=hl-4-43><a class=lnlinks href=#hl-4-43>43</a>
+</span><span class=lnt id=hl-4-44><a class=lnlinks href=#hl-4-44>44</a>
+</span><span class=lnt id=hl-4-45><a class=lnlinks href=#hl-4-45>45</a>
+</span><span class=lnt id=hl-4-46><a class=lnlinks href=#hl-4-46>46</a>
+</span><span class=lnt id=hl-4-47><a class=lnlinks href=#hl-4-47>47</a>
+</span><span class=lnt id=hl-4-48><a class=lnlinks href=#hl-4-48>48</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1>##############################################################################</span>
+</span></span><span class=line><span class=cl><span class=c1># PACKAGE BUILD RELATED (source-only-upload as default)</span>
+</span></span><span class=line><span class=cl><span class=c1>##############################################################################</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1># 使用 unshare 后端，无需 sudo</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>chroot_mode</span> <span class=o>=</span> <span class=s1>&#39;unshare&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 失败时进入 Shell（非常有用，省去重新构建来排错的时间）</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>external_commands</span> <span class=o>=</span> <span class=p>{</span> <span class=s2>&#34;build-failed-commands&#34;</span> <span class=o>=&gt;</span> <span class=p>[</span> <span class=p>[</span> <span class=s1>&#39;%SBUILD_SHELL&#39;</span> <span class=p>]</span> <span class=p>]</span> <span class=p>};</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># -d</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>distribution</span> <span class=o>=</span> <span class=s1>&#39;unstable&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># -A</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>build_arch_all</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># -s</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>build_source</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Produce a source.changes file suitable for a source-only upload;</span>
+</span></span><span class=line><span class=cl><span class=c1># this is the same as passing `--source-only-changes` to sbuild.</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>source_only_changes</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 自动清理生成的临时文件</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>purge_build_deps</span> <span class=o>=</span> <span class=s1>&#39;successful&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>purge_build_directory</span> <span class=o>=</span> <span class=s1>&#39;successful&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 统计构建时间</span>
+</span></span><span class=line><span class=cl><span class=c1># $stats_dir = &#34;$homedir/log/sbuild/stats&#34;;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># -v</span>
+</span></span><span class=line><span class=cl><span class=c1>#$verbose = 1;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>##############################################################################</span>
+</span></span><span class=line><span class=cl><span class=c1># POST-BUILD RELATED (turn off functionality by setting variables to 0)</span>
+</span></span><span class=line><span class=cl><span class=c1>##############################################################################</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>run_lintian</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>lintian_opts</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;--display-info&#39;</span><span class=p>,</span> <span class=s1>&#39;--verbose&#39;</span><span class=p>,</span> <span class=s1>&#39;--fail-on&#39;</span><span class=p>,</span> <span class=s1>&#39;error,warning&#39;</span><span class=p>,</span> <span class=s1>&#39;--info&#39;</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>run_autopkgtest</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Run piuparts after every build (in a new, temporary, chroot); use --no-run-piuparts to override.</span>
+</span></span><span class=line><span class=cl><span class=c1># this does not work in bookworm</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>run_piuparts</span> <span class=o>=</span> <span class=mi>1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=c1># Build a temporary chroot.</span>
+</span></span><span class=line><span class=cl><span class=c1># $piuparts_opts = [&#39;--no-eatmydata&#39;, &#39;--distribution=%r&#39;, &#39;--fake-essential-packages=systemd-sysv&#39;];</span>
+</span></span><span class=line><span class=cl><span class=c1># Build a temporary chroot that uses apt-cacher-ng as a proxy to save bandwidth and time and doesn&#39;t disable eatmydata to speed up processing.</span>
+</span></span><span class=line><span class=cl><span class=o>$</span><span class=n>piuparts_opts</span> <span class=o>=</span> <span class=p>[</span><span class=s1>&#39;--distribution=</span><span class=si>%r</span><span class=s1>&#39;</span><span class=p>,</span> <span class=s1>&#39;--bootstrapcmd=mmdebstrap --skip=check/empty --variant=minbase --aptopt=&#34;Acquire::http { Proxy </span><span class=se>\\</span><span class=s1>&#34;http://127.0.0.1:3142</span><span class=se>\\</span><span class=s1>&#34;; }&#34;&#39;</span><span class=p>];</span></span></span></code></pre></td></tr></table></div></div><h2 id=导入仓库>导入仓库
+<a class=header-anchor href=#%e5%af%bc%e5%85%a5%e4%bb%93%e5%ba%93></a></h2><h3 id=获取已在-debian-仓库中的软件包源代码>获取已在 Debian 仓库中的软件包源代码
+<a class=header-anchor href=#%e8%8e%b7%e5%8f%96%e5%b7%b2%e5%9c%a8-debian-%e4%bb%93%e5%ba%93%e4%b8%ad%e7%9a%84%e8%bd%af%e4%bb%b6%e5%8c%85%e6%ba%90%e4%bb%a3%e7%a0%81></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-5-1><a class=lnlinks href=#hl-5-1>1</a>
+</span><span class=lnt id=hl-5-2><a class=lnlinks href=#hl-5-2>2</a>
+</span><span class=lnt id=hl-5-3><a class=lnlinks href=#hl-5-3>3</a>
+</span><span class=lnt id=hl-5-4><a class=lnlinks href=#hl-5-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>gbp</span> clone vcs-git:some-project <span class=na>--add-upstream-vcs</span>
+</span></span><span class=line><span class=cl><span class=c># 或者，运行此程序来定义一个需要跟踪的上游分支：
+</span></span></span><span class=line><span class=cl><span class=nf>gbp</span> clone vcs-git:some-project <span class=se>\
+</span></span></span><span class=line><span class=cl>    <span class=na>--postclone</span><span class=o>=</span><span class=s2>&#34;git remote add -t develop -f upstreamvcs https://github.com/eradman/entr.git&#34;</span></span></span></code></pre></td></tr></table></div></div><h3 id=import-from-tarballs>Import from tarballs
+<a class=header-anchor href=#import-from-tarballs></a></h3><p>如果上游有 tarballs, 推荐</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-6-1><a class=lnlinks href=#hl-6-1>1</a>
+</span><span class=lnt id=hl-6-2><a class=lnlinks href=#hl-6-2>2</a>
+</span><span class=lnt id=hl-6-3><a class=lnlinks href=#hl-6-3>3</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>git</span> init <span class=na>--initial-branch</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$(</span><span class=s2>gbp config DEFAULT.debian-branch)&#34;</span> some-project.git
+</span></span><span class=line><span class=cl><span class=k>cd</span> some-project.git
+</span></span><span class=line><span class=cl><span class=nf>gbp</span> import-orig https://some-project.example.com/releases/some-project_1.<span class=m>0</span>.tar.gz</span></span></code></pre></td></tr></table></div></div><p>这会把 tarball 拉到你在 <code>~/.gbp.conf</code> 中指定的上游和 Debian 分支，创建新 <code>upstream/1.0</code> 标签，并更新分支 <code>pristine-tar</code> （如果你设置了这个选项）。</p><p>你还应该创建一个 debian/watch 文件来说明 git-buildpackage 如何拉新的 tarballs。详情请参见
+<a href=https://wiki.debian.org/debian/watch title=debian/watch rel="noopener external nofollow noreferrer" target=_blank class=exturl>debian/watch
+<i class="fa fa-external-link-alt"></i>
+</a>。</p><h3 id=import-from-an-upstream-git-repository>Import from an upstream git repository
+<a class=header-anchor href=#import-from-an-upstream-git-repository></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-7-1><a class=lnlinks href=#hl-7-1>1</a>
+</span><span class=lnt id=hl-7-2><a class=lnlinks href=#hl-7-2>2</a>
+</span><span class=lnt id=hl-7-3><a class=lnlinks href=#hl-7-3>3</a>
+</span><span class=lnt id=hl-7-4><a class=lnlinks href=#hl-7-4>4</a>
+</span><span class=lnt id=hl-7-5><a class=lnlinks href=#hl-7-5>5</a>
+</span><span class=lnt id=hl-7-6><a class=lnlinks href=#hl-7-6>6</a>
+</span><span class=lnt id=hl-7-7><a class=lnlinks href=#hl-7-7>7</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=c># Clone the upstream repository and `cd` into it:
+</span></span></span><span class=line><span class=cl><span class=nf>git</span> clone https://forge.example.com/some-project.git
+</span></span><span class=line><span class=cl><span class=k>cd</span> project.git
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># Use DEP-14 branch names
+</span></span></span><span class=line><span class=cl><span class=nf>git</span> branch <span class=na>-m</span> upstream/latest
+</span></span><span class=line><span class=cl><span class=nf>git</span> checkout <span class=na>-b</span> debian/latest</span></span></code></pre></td></tr></table></div></div><p>同步上游代码： <code>git pull upstream/latest</code> .</p><h3 id=if-there-is-no-upstream>If there is no upstream
+<a class=header-anchor href=#if-there-is-no-upstream></a></h3><p>有些项目没有上游。例如 Debian 原生专属包，或者上游已消失或无法获取。</p><p>无上游项目通常有一个单一仓库，一个分支是上游代码，另一个分支是 Debian 打包。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-8-1><a class=lnlinks href=#hl-8-1>1</a>
+</span><span class=lnt id=hl-8-2><a class=lnlinks href=#hl-8-2>2</a>
+</span><span class=lnt id=hl-8-3><a class=lnlinks href=#hl-8-3>3</a>
+</span><span class=lnt id=hl-8-4><a class=lnlinks href=#hl-8-4>4</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=c># Set branch name when creating the repo:
+</span></span></span><span class=line><span class=cl><span class=nf>git</span> init <span class=na>--initial-branch</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$(</span><span class=s2>gbp config DEFAULT.upstream-branch)&#34;</span> some-project
+</span></span><span class=line><span class=cl><span class=c># Or rename the branch when you start to Debianise:
+</span></span></span><span class=line><span class=cl><span class=nf>git</span> branch <span class=na>-m</span> master <span class=s2>&#34;</span><span class=nv>$(</span><span class=s2>gbp config DEFAULT.upstream-branch)&#34;</span></span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-9-1><a class=lnlinks href=#hl-9-1>1</a>
+</span><span class=lnt id=hl-9-2><a class=lnlinks href=#hl-9-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>git</span> checkout <span class=na>-b</span> <span class=s2>&#34;</span><span class=nv>$(</span><span class=s2>gbp config DEFAULT.debian-branch)&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    <span class=na>--track</span> <span class=s2>&#34;</span><span class=nv>$(</span><span class=s2>gbp config DEFAULT.upstream-branch)&#34;</span></span></span></code></pre></td></tr></table></div></div><h3 id=初始化-debian-目录>初始化 debian 目录
+<a class=header-anchor href=#%e5%88%9d%e5%a7%8b%e5%8c%96-debian-%e7%9b%ae%e5%bd%95></a></h3><p>如果还没有创建，或删除后重建 debian 目录：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-10-1><a class=lnlinks href=#hl-10-1>1</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>dh_make</span> <span class=na>-c</span> gpl3 <span class=na>-p</span> some-project_version <span class=na>--createorig</span> <span class=na>-sy</span></span></span></code></pre></td></tr></table></div></div><dl><dt>-c</dt><dd>指定 license</dd><dt>-e</dt><dd>email-adress : 在 debian/control 文件的 Maintainer:字段中使用
+email-address 作为电子邮件地址。</dd><dt>&ndash;createorig</dt><dd>创建 orig.tar.xxx 文件</dd><dt>-s</dt><dd>设置软件包类型为 single。主要分为 4 类：single、indep、library、python</dd><dt>-y</dt><dd><p>对于创建过程中的需要确认的信息默认为 yes</p><p>生成的 <code>.ex</code> 文件均为示例模板，可修改后去除 <code>.ex</code> 后缀，修改后成为正式文件（注：<code>gitignore.ex</code> 应改名为 <code>.gitignore</code>）。</p><p>按需修改 <code>gbp.conf</code>, <code>changelog</code>, <code>control</code>, <code>copyright</code>, <code>rules</code>, <code>.gitignore</code> 等，可参照
+<a href=https://www.debian.org/doc/manuals/debmake-doc/ch06.zh-cn.html title="debmake doc" rel="noopener external nofollow noreferrer" target=_blank class=exturl>debmake doc
+<i class="fa fa-external-link-alt"></i>
+</a>,
+<a href=https://wiki.deepin.org/zh/%E5%BE%85%E5%88%86%E7%B1%BB/02_%E6%8C%89%E8%BD%AF%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%88%92%E5%88%86/02_%E5%BC%80%E5%8F%91%E4%BA%BA%E5%91%98%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E4%BB%8B%E7%BB%8D/01_%E7%BC%96%E7%A8%8B%E5%BC%80%E5%8F%91/%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7/%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9/%E5%A6%82%E4%BD%95%E5%9C%A8deepin%E7%A4%BE%E5%8C%BA%E6%9E%84%E5%BB%BAdeb%E6%A0%BC%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%8C%85 title="deeplin 打包说明" rel="noopener external nofollow noreferrer" target=_blank class=exturl>deeplin 打包说明
+<i class="fa fa-external-link-alt"></i>
+</a>.
+修改后：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-11-1><a class=lnlinks href=#hl-11-1>1</a>
+</span><span class=lnt id=hl-11-2><a class=lnlinks href=#hl-11-2>2</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=nf>git</span> add debian/
+</span></span><span class=line><span class=cl><span class=nf>git</span> commit <span class=na>-a</span> <span class=na>-m</span> <span class=s2>&#34;Initial Debian packaging&#34;</span></span></span></code></pre></td></tr></table></div></div></dd></dl><h2 id=补丁和构建>补丁和构建
+<a class=header-anchor href=#%e8%a1%a5%e4%b8%81%e5%92%8c%e6%9e%84%e5%bb%ba></a></h2><p>如果你需要修改源码：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-12-1><a class=lnlinks href=#hl-12-1> 1</a>
+</span><span class=lnt id=hl-12-2><a class=lnlinks href=#hl-12-2> 2</a>
+</span><span class=lnt id=hl-12-3><a class=lnlinks href=#hl-12-3> 3</a>
+</span><span class=lnt id=hl-12-4><a class=lnlinks href=#hl-12-4> 4</a>
+</span><span class=lnt id=hl-12-5><a class=lnlinks href=#hl-12-5> 5</a>
+</span><span class=lnt id=hl-12-6><a class=lnlinks href=#hl-12-6> 6</a>
+</span><span class=lnt id=hl-12-7><a class=lnlinks href=#hl-12-7> 7</a>
+</span><span class=lnt id=hl-12-8><a class=lnlinks href=#hl-12-8> 8</a>
+</span><span class=lnt id=hl-12-9><a class=lnlinks href=#hl-12-9> 9</a>
+</span><span class=lnt id=hl-12-10><a class=lnlinks href=#hl-12-10>10</a>
+</span><span class=lnt id=hl-12-11><a class=lnlinks href=#hl-12-11>11</a>
+</span><span class=lnt id=hl-12-12><a class=lnlinks href=#hl-12-12>12</a>
+</span><span class=lnt id=hl-12-13><a class=lnlinks href=#hl-12-13>13</a>
+</span><span class=lnt id=hl-12-14><a class=lnlinks href=#hl-12-14>14</a>
+</span><span class=lnt id=hl-12-15><a class=lnlinks href=#hl-12-15>15</a>
+</span><span class=lnt id=hl-12-16><a class=lnlinks href=#hl-12-16>16</a>
+</span><span class=lnt id=hl-12-17><a class=lnlinks href=#hl-12-17>17</a>
+</span><span class=lnt id=hl-12-18><a class=lnlinks href=#hl-12-18>18</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=c># 1. 进入/重置补丁队列
+</span></span></span><span class=line><span class=cl><span class=nf>gbp</span> pq import <span class=na>--force</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># --- 在这里进行你的修改、Cherry-pick 等操作 ---
+</span></span></span><span class=line><span class=cl><span class=c># git add .
+</span></span></span><span class=line><span class=cl><span class=c># git commit -m &#34;fix something&#34;
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 2. 导出补丁并自动提交到主分支
+</span></span></span><span class=line><span class=cl><span class=c># --drop 保证主分支干净，--commit 自动 add debian/patches
+</span></span></span><span class=line><span class=cl><span class=nf>gbp</span> pq export <span class=na>--drop</span> <span class=na>--commit</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 3. 润色提交信息 (可选)
+</span></span></span><span class=line><span class=cl><span class=c># 这一步会打开编辑器，让你把 &#34;Update patches&#34; 改成更有意义的信息
+</span></span></span><span class=line><span class=cl><span class=nf>git</span> commit <span class=na>--amend</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 4. 正式构建
+</span></span></span><span class=line><span class=cl><span class=c># 此时你已经回到了 debian/latest 分支，gbp 能找到所有需要的 treeish
+</span></span></span><span class=line><span class=cl><span class=nf>gbp</span> buildpackage</span></span></code></pre></td></tr></table></div></div><h2 id=用-gbp-dch-管理-debianchangelog>用 gbp dch 管理 debian/changelog
+<a class=header-anchor href=#%e7%94%a8-gbp-dch-%e7%ae%a1%e7%90%86-debianchangelog></a></h2><p><code>gbp dch</code> 的核心理念是：<strong>Git Commit Message 即是 Changelog</strong>。</p><h3 id=常用操作流程>常用操作流程
+<a class=header-anchor href=#%e5%b8%b8%e7%94%a8%e6%93%8d%e4%bd%9c%e6%b5%81%e7%a8%8b></a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-13-1><a class=lnlinks href=#hl-13-1>1</a>
+</span><span class=lnt id=hl-13-2><a class=lnlinks href=#hl-13-2>2</a>
+</span><span class=lnt id=hl-13-3><a class=lnlinks href=#hl-13-3>3</a>
+</span><span class=lnt id=hl-13-4><a class=lnlinks href=#hl-13-4>4</a>
+</span><span class=lnt id=hl-13-5><a class=lnlinks href=#hl-13-5>5</a>
+</span><span class=lnt id=hl-13-6><a class=lnlinks href=#hl-13-6>6</a>
+</span><span class=lnt id=hl-13-7><a class=lnlinks href=#hl-13-7>7</a>
+</span><span class=lnt id=hl-13-8><a class=lnlinks href=#hl-13-8>8</a>
+</span><span class=lnt id=hl-13-9><a class=lnlinks href=#hl-13-9>9</a>
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fish data-lang=fish><span class=line><span class=cl><span class=c># 1. 根据上一个 tag 至今的所有 commit 自动生成临时 changelog
+</span></span></span><span class=line><span class=cl><span class=nf>gbp</span> dch <span class=na>--auto</span> <span class=na>--snapshot</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 2. 如果准备发布新版本（例如 5.7-1）
+</span></span></span><span class=line><span class=cl><span class=c># 这会移除 &#34;snapshot&#34; 标记，更新版本号，并标记为已释放（unreleased -&gt; unstable）
+</span></span></span><span class=line><span class=cl><span class=nf>gbp</span> dch <span class=na>--auto</span> <span class=na>--release</span> <span class=na>--new-version</span><span class=o>=</span><span class=m>5</span>.<span class=m>7</span>-<span class=m>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 3. 检查并手动润色（如有必要）
+</span></span></span><span class=line><span class=cl><span class=nf>git</span> commit <span class=na>-m</span> <span class=s2>&#34;Update changelog for 5.7-1&#34;</span> debian/changelog</span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><div class=post-tags><a href=/tags/linux/>linux
+</a><a href=/tags/debian/>debian</a></div><div class=post-share-tools><div class=post-share-loading><i class="fa-solid fa-ellipsis fa-spin"></i></div><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class=a2a_dd href=https://www.addtoany.com/share></a><a class=a2a_button_wechat></a><a class=a2a_button_qzone></a><a class=a2a_button_sina_weibo></a><a class=a2a_button_douban></a><a class=a2a_button_facebook></a><a class=a2a_button_x></a><a class=a2a_button_email></a><a class=a2a_button_printfriendly></a></div></div><hr><div class=reward-container><div><i class="fa-solid fa-mug-hot"></i>请我喝杯咖啡吧 ヾ(^▽^*)))</div><button>
+赞赏</button><div class=post-reward><div class=post-reward-item><img src=/imgs/img-lazy-loading.gif data-src=/imgs/ali-pay.png alt="蛋疼的蛋蛋 - 支付宝">
+<span>支付宝</span></div><div class=post-reward-item><img src=/imgs/img-lazy-loading.gif data-src=/imgs/wechat-pay.png alt="蛋疼的蛋蛋 - 微信">
+<span>微信</span></div></div></div><div class=post-copyright><img src=/imgs/cc/cc.svg class=cc-icon width=75 height=75 align=right alt=共享知识 title=共享知识><ul><li class=post-copyright-title><strong>文章标题：</strong>
+DEP-18（草稿）打包方式</li><li class=post-copyright-author><strong>本文作者： </strong>蛋疼的蛋蛋</li><li class=post-copyright-link><strong>本文链接：</strong>
+<a id=post-cr-link href=/post/dep18/ title=DEP-18（草稿）打包方式>/post/dep18/</a></li><li class=post-copyright-license><strong>版权声明： </strong>本作品采用 <i class="fab fa-fw fa-creative-commons"></i><a target=_blank href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans>BY-NC-SA</a> 许可协议。转载请注明出处！</li><li><div class=license-icons><a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans target=_blank><img src=/imgs/cc/big/by_nc_sa.svg alt=BY-NC-SA title=BY-NC-SA>
+</a><a href=https://notbyai.fyi target=_blank><img src=/imgs/notbyai/zh-hans/white.svg title="Not By AI"></a></div></li></ul></div><div class=followme><span>欢迎关注我的其它发布渠道</span><div class=social-list><div class=social-item><a target=_blank class=social-link href=/atom.xml><span class=icon><i class="fa fa-rss"></i>
+</span><span class=label>RSS</span></a></div></div></div><div class=post-nav><div class="post-nav-next post-nav-item"><a href=/post/xiaobo1/ rel=next title=我所认知的王小波（一）小波印象><i class="fa fa-chevron-left"></i> 我所认知的王小波（一）小波印象</a></div><div class="post-nav-prev post-nav-item"><a href=/post/wanguifei/ rel=prev title=明宪宗朱见深与万贵妃万贞儿>明宪宗朱见深与万贵妃万贞儿
+<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div id=comments class=post-comments><div class=comment-head><div class=comment-headline><i class="fas fa-comments fa-fw"></i>
+<span>评论交流</span></div></div><div class=comment-wrap><div><div class=comment-loading><i class="fa fa-sync fa-spin"></i></div><div class=waline3-container></div></div></div></div></div></main><footer class=footer><div class=footer-inner><div class=copyright>&copy;
+<span itemprop=copyrightYear>2026
+</span><span class=with-love><i class="fa fa-heart"></i>
+</span><span class=author itemprop=copyrightHolder>蛋疼的蛋蛋</span></div><div class=powered-by>由 <a href=https://gohugo.io title=0.159.1 target=_blank>Hugo</a> & <a href=https://github.com/hugo-next/hugo-theme-next title=4.8.3 target=_blank>Hugo NexT.Gemini</a> 强力驱动</div></div></footer><script class=next-config data-name=page type=application/json>{"clipboard":{"js":{"alias":"clipboard","file":"dist/clipboard.min.js","name":"clipboard.js","version":"2.0.11"}},"comments":true,"expired":false,"isHome":false,"isPage":true,"path":"dep18","permalink":"/post/dep18/","title":"DEP-18（草稿）打包方式","toc":true,"waline3":{"commentcnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/comment.js","name":"comment","version":"3.5.7"},"pagecnt":{"alias":"@waline/client","alias_name":"waline","file":"dist/pageview.js","name":"pageview","version":"3.5.7"}}}</script><script type=text/javascript src=https://cdn.staticfile.net/animejs/3.2.2/anime.min.js crossorigin=anonymous defer></script><script type=text/javascript src=https://cdn.staticfile.net/viewerjs/1.11.6/viewer.min.js crossorigin=anonymous defer></script><script class=next-config data-name=main type=application/json>{"bookmark":{"color":"#222","enable":true,"save":"manual"},"copybtn":true,"darkmode":false,"giscus":{"cfg":{"category":"Comments","categoryid":null,"emit":false,"inputposition":"top","mapping":"title","reactions":false,"repo":"username/repo-name","repoid":null,"theme":"preferred_color_scheme"},"js":"https://giscus.app/client.js"},"hostname":"/","i18n":{"ds_day":" 天前","ds_days":" 天 ","ds_hour":" 小时前","ds_hours":" 小时 ","ds_just":"刚刚","ds_min":" 分钟前","ds_mins":" 分钟","ds_month":" 个月前","ds_years":" 年 ","empty":"没有找到任何搜索结果：${query}","hits":"找到 ${hits} 个搜索结果","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","placeholder":"搜索..."},"isMultiLang":false,"lang":"zh-CN","lazyload":true,"localSearch":{"enable":true,"limit":1e3,"path":"/searchindexes.xml","preload":false,"topnperarticle":-1,"trigger":"auto","unescape":false},"motion":{"async":true,"enable":true,"transition":{"collheader":"fadeInLeft","postblock":"fadeIn","postbody":"fadeInDown","postheader":"fadeInDown","sidebar":"fadeInUp"}},"postmeta":{"comments":{"enable":true,"plugin":"waline3"},"views":{"enable":true,"plugin":"waline3"}},"root":"/","scheme":"Gemini","share":{"addtoany":{"js":"https://static.addtoany.com/menu/page.js","locale":"zh-CN","num":8},"enable":true},"sidebar":{"display":"post","offset":12,"padding":18,"position":"left","width":256},"vendor":{"plugins":"staticfile","router":{"home":"https://staticfile.net/","logo":"https://www.staticfile.net/images/logo.png","name":"staticfile","type":"modern","url":"https://cdn.staticfile.net"}},"version":"4.8.3","waline3":{"cfg":{"emoji":false,"imguploader":false,"placeholder":"请文明发言哟 ヾ(≧▽≦*)o 可用快捷键选取表情符号：😀😄😁🥳👻👽👀🚄 (Window系统：Win+.，Mac系统：Control+Command+Space)","reaction":true,"reactiontext":["点赞","踩一下","得意","不屑","尴尬","睡觉"],"reactiontitle":"你认为这篇文章怎么样？","requiredmeta":["nick","mail"],"search":true,"serverurl":"https://comment.lixin6.com","sofa":"快来发表你的意见吧 (≧∀≦)ゞ","wordlimit":200},"css":{"alias":"@waline/client","file":"dist/waline.css","name":"waline","version":"3.5.7"},"js":{"alias":"@waline/client","file":"dist/waline.js","name":"waline","version":"3.5.7"}}}</script><script type=text/javascript src="/js/main.js?=1774972105" defer></script><script type=text/javascript src="/js/clipboard.min.js?=1774972105" defer></script></body></html>

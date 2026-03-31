@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程 on 蛋疼的蛋蛋的老窝</title><link>/categories/%E7%BC%96%E7%A8%8B/</link><description>Recent content in 编程 on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 25 Jan 2026 10:58:17 +0800</lastBuildDate><atom:link href="/categories/%E7%BC%96%E7%A8%8B/atom.xml" rel="self" type="application/rss+xml"/><item><title>DEP-18（草稿）打包方式</title><link>/post/dep18/</link><pubDate>Sun, 25 Jan 2026 10:58:17 +0800</pubDate><guid>/post/dep18/</guid><description>&lt;p&gt;自用笔记，很多内容都还不清楚，仅供参考。&lt;/p&gt;</description></item><item><title>Taro React + graphql Codegen + urql 客户端实例</title><link>/post/tarojs-graphql/</link><pubDate>Mon, 01 Sep 2025 14:01:53 +0800</pubDate><guid>/post/tarojs-graphql/</guid><description>&lt;p&gt;&lt;code&gt;Tarojs&lt;/code&gt;支持 react/vue, 因此配置 &lt;code&gt;graphql&lt;/code&gt;较为简单，以下以 &lt;code&gt;urql&lt;/code&gt; 客户端为例&lt;/p&gt;
+&lt;p&gt;本文涉及的配置文件清单：&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;文件路径&lt;/th&gt;
+ &lt;th&gt;说明&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;codegen.ts&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;GraphQL Codegen 配置文件&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;package.json&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;项目依赖和脚本配置&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;src/app.tsx&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;Taro 应用入口，配置 urql Provider&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;config/dev.ts&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;开发环境配置，GraphQL 代理服务器&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;src/schema/home.ts&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;GraphQL 查询语句和类型化 hooks&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="参考文档"&gt;参考文档
+&lt;a class="header-anchor" href="#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;a href="https://nearform.com/open-source/urql/docs/basics/react-preact/" title="https://nearform.com/open-source/urql/docs/basics/react-preact/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ https://nearform.com/open-source/urql/docs/basics/react-preact/
+ 
+ &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://nearform.com/open-source/urql/docs/basics/typescript-integration/" title="https://nearform.com/open-source/urql/docs/basics/typescript-integration/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ https://nearform.com/open-source/urql/docs/basics/typescript-integration/
+ 
+ &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="安装"&gt;安装
+&lt;a class="header-anchor" href="#%e5%ae%89%e8%a3%85"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;h3 id="精简命令"&gt;精简命令
+&lt;a class="header-anchor" href="#%e7%b2%be%e7%ae%80%e5%91%bd%e4%bb%a4"&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install --save urql
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -D graphql typescript @graphql-codegen/cli @graphql-codegen/client-preset&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item><item><title>Django Allauth/Ninja 后端 搭配 Tanstack 前端的避坑Tips</title><link>/post/allauth-and-tanstack/</link><pubDate>Thu, 31 Jul 2025 23:04:38 +0800</pubDate><guid>/post/allauth-and-tanstack/</guid><description>&lt;p&gt;在这篇文章中，我想与大家分享我使用 &lt;code&gt;Django Allauth&lt;/code&gt; 无头（&lt;code&gt;Headless&lt;/code&gt;）后端认证，与 &lt;code&gt;TanStack Start&lt;/code&gt;前端结合使用的经验和心得。我今年才刚刚学习Web编程，定有不少错漏，还望读者指正。&lt;/p&gt;
+&lt;h2 id="演示项目代码库"&gt;演示项目代码库
+&lt;a class="header-anchor" href="#%e6%bc%94%e7%a4%ba%e9%a1%b9%e7%9b%ae%e4%bb%a3%e7%a0%81%e5%ba%93"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;
+&lt;a href="https://github.com/sd44/ninja-allauth-fullstack" title="sd44/ninja-allauth-fullstack" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ sd44/ninja-allauth-fullstack
+ 
+ &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
+ 
+&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="项目背景"&gt;项目背景
+&lt;a class="header-anchor" href="#%e9%a1%b9%e7%9b%ae%e8%83%8c%e6%99%af"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+ &lt;blockquote&gt;
+ &lt;p&gt;Life is short, you need Python&lt;/p&gt;
+
+ &lt;/blockquote&gt;
+&lt;p&gt;虽然目前前后端分离架构正被 &lt;code&gt;TypeScript&lt;/code&gt; 一体化框架（如&lt;code&gt;Next.js&lt;/code&gt;/&lt;code&gt;Tanstack Start&lt;/code&gt;等）冲击，特别是在要求全栈协作、类型一致性、小团队敏捷项目上，但我仍爱Python Django的简洁清晰、快速开发和易于维护。本文无意也无力讨论架构的优劣，就此打住吧。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Django Allauth&lt;/code&gt; 与 &lt;code&gt;NextAuth.js&lt;/code&gt;, &lt;code&gt;Better Auth&lt;/code&gt;都提供多种认证方式（如手机号码、邮箱、通行密钥、数十种社交账户认证等）。但官方 &lt;code&gt;Allauth Headless&lt;/code&gt; + &lt;code&gt;React SPA&lt;/code&gt;示例仍然是JS，而非TS代码；网络上也缺乏&lt;code&gt;Allauth&lt;/code&gt; 对接 &lt;code&gt;Tanstack/Next SSR&lt;/code&gt;前端的教程。本文便由此而生，但限于篇幅，只提出个别避坑指南，并不完整。&lt;/p&gt;</description></item></channel></rss>

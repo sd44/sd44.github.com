@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程 on 蛋疼的蛋蛋的老窝</title><link>/tags/%E7%BC%96%E7%A8%8B/</link><description>Recent content in 编程 on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Thu, 31 Jul 2025 23:04:38 +0800</lastBuildDate><atom:link href="/tags/%E7%BC%96%E7%A8%8B/atom.xml" rel="self" type="application/rss+xml"/><item><title>Django Allauth/Ninja 后端 搭配 Tanstack 前端的避坑Tips</title><link>/post/allauth-and-tanstack/</link><pubDate>Thu, 31 Jul 2025 23:04:38 +0800</pubDate><guid>/post/allauth-and-tanstack/</guid><description>&lt;p&gt;在这篇文章中，我想与大家分享我使用 &lt;code&gt;Django Allauth&lt;/code&gt; 无头（&lt;code&gt;Headless&lt;/code&gt;）后端认证，与 &lt;code&gt;TanStack Start&lt;/code&gt;前端结合使用的经验和心得。我今年才刚刚学习Web编程，定有不少错漏，还望读者指正。&lt;/p&gt;
+&lt;h2 id="演示项目代码库"&gt;演示项目代码库
+&lt;a class="header-anchor" href="#%e6%bc%94%e7%a4%ba%e9%a1%b9%e7%9b%ae%e4%bb%a3%e7%a0%81%e5%ba%93"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;
+&lt;a href="https://github.com/sd44/ninja-allauth-fullstack" title="sd44/ninja-allauth-fullstack" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ sd44/ninja-allauth-fullstack
+ 
+ &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
+ 
+&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="项目背景"&gt;项目背景
+&lt;a class="header-anchor" href="#%e9%a1%b9%e7%9b%ae%e8%83%8c%e6%99%af"&gt;&lt;/a&gt;
+&lt;/h2&gt;
+ &lt;blockquote&gt;
+ &lt;p&gt;Life is short, you need Python&lt;/p&gt;
+
+ &lt;/blockquote&gt;
+&lt;p&gt;虽然目前前后端分离架构正被 &lt;code&gt;TypeScript&lt;/code&gt; 一体化框架（如&lt;code&gt;Next.js&lt;/code&gt;/&lt;code&gt;Tanstack Start&lt;/code&gt;等）冲击，特别是在要求全栈协作、类型一致性、小团队敏捷项目上，但我仍爱Python Django的简洁清晰、快速开发和易于维护。本文无意也无力讨论架构的优劣，就此打住吧。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Django Allauth&lt;/code&gt; 与 &lt;code&gt;NextAuth.js&lt;/code&gt;, &lt;code&gt;Better Auth&lt;/code&gt;都提供多种认证方式（如手机号码、邮箱、通行密钥、数十种社交账户认证等）。但官方 &lt;code&gt;Allauth Headless&lt;/code&gt; + &lt;code&gt;React SPA&lt;/code&gt;示例仍然是JS，而非TS代码；网络上也缺乏&lt;code&gt;Allauth&lt;/code&gt; 对接 &lt;code&gt;Tanstack/Next SSR&lt;/code&gt;前端的教程。本文便由此而生，但限于篇幅，只提出个别避坑指南，并不完整。&lt;/p&gt;</description></item></channel></rss>

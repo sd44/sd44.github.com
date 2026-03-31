@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cat1 on 蛋疼的蛋蛋的老窝</title><link>//localhost:1414/categories/cat1/</link><description>Recent content in Cat1 on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 29 Mar 2026 00:00:00 +0000</lastBuildDate><atom:link href="//localhost:1414/categories/cat1/atom.xml" rel="self" type="application/rss+xml"/><item><title>Single Post with YAML front matter</title><link>//localhost:1414/post/ttt/</link><pubDate>Sun, 29 Mar 2026 00:00:00 +0000</pubDate><guid>//localhost:1414/post/ttt/</guid><description>&lt;hr&gt;
+&lt;h2 id="first-heading"&gt;First heading in this post
+&lt;a class="header-anchor" href="#first-heading"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;This is a under first heading.&lt;/p&gt;
+&lt;h2 id="second-heading-in-this-post"&gt;Second heading in this post
+&lt;a class="header-anchor" href="#second-heading-in-this-post"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;p&gt;This is a under second heading.&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>React on 蛋疼的蛋蛋的老窝</title><link>/tags/react/</link><description>Recent content in React on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Mon, 01 Sep 2025 14:01:53 +0800</lastBuildDate><atom:link href="/tags/react/atom.xml" rel="self" type="application/rss+xml"/><item><title>Taro React + graphql Codegen + urql 客户端实例</title><link>/post/tarojs-graphql/</link><pubDate>Mon, 01 Sep 2025 14:01:53 +0800</pubDate><guid>/post/tarojs-graphql/</guid><description>&lt;p&gt;&lt;code&gt;Tarojs&lt;/code&gt;支持 react/vue, 因此配置 &lt;code&gt;graphql&lt;/code&gt;较为简单，以下以 &lt;code&gt;urql&lt;/code&gt; 客户端为例&lt;/p&gt;
+&lt;p&gt;本文涉及的配置文件清单：&lt;/p&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+ &lt;tr&gt;
+ &lt;th&gt;文件路径&lt;/th&gt;
+ &lt;th&gt;说明&lt;/th&gt;
+ &lt;/tr&gt;
+ &lt;/thead&gt;
+ &lt;tbody&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;codegen.ts&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;GraphQL Codegen 配置文件&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;package.json&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;项目依赖和脚本配置&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;src/app.tsx&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;Taro 应用入口，配置 urql Provider&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;config/dev.ts&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;开发环境配置，GraphQL 代理服务器&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;src/schema/home.ts&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;GraphQL 查询语句和类型化 hooks&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="参考文档"&gt;参考文档
+&lt;a class="header-anchor" href="#%e5%8f%82%e8%80%83%e6%96%87%e6%a1%a3"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;a href="https://nearform.com/open-source/urql/docs/basics/react-preact/" title="https://nearform.com/open-source/urql/docs/basics/react-preact/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ https://nearform.com/open-source/urql/docs/basics/react-preact/
+ 
+ &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="https://nearform.com/open-source/urql/docs/basics/typescript-integration/" title="https://nearform.com/open-source/urql/docs/basics/typescript-integration/" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
+ https://nearform.com/open-source/urql/docs/basics/typescript-integration/
+ 
+ &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
+ 
+&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="安装"&gt;安装
+&lt;a class="header-anchor" href="#%e5%ae%89%e8%a3%85"&gt;&lt;/a&gt;
+&lt;/h2&gt;&lt;h3 id="精简命令"&gt;精简命令
+&lt;a class="header-anchor" href="#%e7%b2%be%e7%ae%80%e5%91%bd%e4%bb%a4"&gt;&lt;/a&gt;
+&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt;1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt;2&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install --save urql
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm install -D graphql typescript @graphql-codegen/cli @graphql-codegen/client-preset&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description></item></channel></rss>

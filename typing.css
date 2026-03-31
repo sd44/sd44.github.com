@@ -1,0 +1,14 @@
+/* 中文段落首行缩进两字符 */
+.mypage p {
+  text-indent: 2em;
+}
+
+/* 各级标题也进行缩进 */
+.mypage h1,
+.mypage h2,
+.mypage h3,
+.mypage h4,
+.mypage h5,
+.mypage h6 {
+  text-indent: 2em;
+}
