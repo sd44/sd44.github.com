@@ -1278,7 +1278,6 @@ NexT.boot.refresh = function() {
     background: 'var(--content-bg-color)'
   });*/
   // NexT.CONFIG.lazyload && window.lozad('.post-body img').observe();
-  // NexT.CONFIG.pangu && window.pangu.spacingPage();
   /*NexT.utils.registerTabsTag();
   NexT.utils.registerActiveMenuItem();
   NexT.utils.registerLangSelect();
@@ -1717,3 +1716,18 @@ NexT.plugins.comments.giscus = function() {
     NexT.utils.hiddeLodingCmp(element);
   });      
 }
+;
+/* Pangu.js - Chinese-English spacing plugin */
+NexT.plugins.others.pangu = function() {
+  if (!NexT.CONFIG.pangu) {
+    return;
+  }
+
+  const panguJS = NexT.utils.getCDNResource(NexT.CONFIG.pangu.js);
+  
+  NexT.utils.getScript(panguJS, function() {
+    if (window.pangu) {
+      window.pangu.spacingPage();
+    }
+  });
+};

@@ -1,4 +1,7 @@
 /** Custom style defined file **/
+:root {
+  text-autospace: normal;
+}
 
 .posts-expand .post-title {
   font-weight: bold !important;
