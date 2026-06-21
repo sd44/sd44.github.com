@@ -1,4 +1,44 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程 on 蛋疼的蛋蛋的老窝</title><link>/categories/%E7%BC%96%E7%A8%8B/</link><description>Recent content in 编程 on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 25 Jan 2026 10:58:17 +0800</lastBuildDate><atom:link href="/categories/%E7%BC%96%E7%A8%8B/atom.xml" rel="self" type="application/rss+xml"/><item><title>DEP-18（草稿）打包方式</title><link>/post/dep18/</link><pubDate>Sun, 25 Jan 2026 10:58:17 +0800</pubDate><guid>/post/dep18/</guid><description>&lt;p&gt;自用笔记，很多内容都还不清楚，仅供参考。&lt;/p&gt;</description></item><item><title>Taro React + graphql Codegen + urql 客户端实例</title><link>/post/tarojs-graphql/</link><pubDate>Mon, 01 Sep 2025 14:01:53 +0800</pubDate><guid>/post/tarojs-graphql/</guid><description>&lt;p&gt;&lt;code&gt;Tarojs&lt;/code&gt;支持 react/vue, 因此配置 &lt;code&gt;graphql&lt;/code&gt;较为简单，以下以 &lt;code&gt;urql&lt;/code&gt; 客户端为例&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编程 on 蛋疼的蛋蛋的老窝</title><link>/categories/%E7%BC%96%E7%A8%8B/</link><description>Recent content in 编程 on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 10 May 2026 00:59:19 +0800</lastBuildDate><atom:link href="/categories/%E7%BC%96%E7%A8%8B/atom.xml" rel="self" type="application/rss+xml"/><item><title>Debian Gnu/Linux 下 Android Sdk 和 Flutter 简易安装</title><link>/post/flutter/</link><pubDate>Sun, 10 May 2026 00:59:19 +0800</pubDate><guid>/post/flutter/</guid><description>&lt;p&gt;Debian 官方包仓库中有现成的 sdkmanager, 我们可以直接借用。
+以下以 fish shell 为例，不适用 Bash（可自行修改）。&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-6"&gt;&lt;a class="lnlinks" href="#hl-0-6"&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-7"&gt;&lt;a class="lnlinks" href="#hl-0-7"&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-8"&gt;&lt;a class="lnlinks" href="#hl-0-8"&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-9"&gt;&lt;a class="lnlinks" href="#hl-0-9"&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-10"&gt;&lt;a class="lnlinks" href="#hl-0-10"&gt;10&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-11"&gt;&lt;a class="lnlinks" href="#hl-0-11"&gt;11&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-12"&gt;&lt;a class="lnlinks" href="#hl-0-12"&gt;12&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-13"&gt;&lt;a class="lnlinks" href="#hl-0-13"&gt;13&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-14"&gt;&lt;a class="lnlinks" href="#hl-0-14"&gt;14&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-15"&gt;&lt;a class="lnlinks" href="#hl-0-15"&gt;15&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fish" data-lang="fish"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;sudo&lt;/span&gt; &lt;span class="nf"&gt;apt&lt;/span&gt; install sdkmanager default-jdk
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="na"&gt;-gx&lt;/span&gt; &lt;span class="nv"&gt;ANDROID_HOME&lt;/span&gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/Android/Sdk &lt;span class="c"&gt;# Linux 通常使用这个路径
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;sdkmanager&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;build-tools;36.0.0&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;cmdline-tools;latest&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;emulator&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;platform-tools&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;platforms;android-36&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;system-images;android-36;google_apis;x86_64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;avdmanager&lt;/span&gt; create avd &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-n&lt;/span&gt; flutter_emu &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-k&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;system-images;android-36;google_apis;x86_64&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-d&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;pixel_6&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 &lt;code&gt;~/.config/fish/conf.d&lt;/code&gt; 下新建 &lt;code&gt;flutter.fish&lt;/code&gt; ,包括以下内容：&lt;/p&gt;</description></item><item><title>DEP-18（草稿）打包方式</title><link>/post/dep18/</link><pubDate>Sun, 25 Jan 2026 10:58:17 +0800</pubDate><guid>/post/dep18/</guid><description>&lt;p&gt;自用笔记，很多内容都还不清楚，仅供参考。&lt;/p&gt;</description></item><item><title>Taro React + graphql Codegen + urql 客户端实例</title><link>/post/tarojs-graphql/</link><pubDate>Mon, 01 Sep 2025 14:01:53 +0800</pubDate><guid>/post/tarojs-graphql/</guid><description>&lt;p&gt;&lt;code&gt;Tarojs&lt;/code&gt;支持 react/vue, 因此配置 &lt;code&gt;graphql&lt;/code&gt;较为简单，以下以 &lt;code&gt;urql&lt;/code&gt; 客户端为例&lt;/p&gt;
 &lt;p&gt;本文涉及的配置文件清单：&lt;/p&gt;
 &lt;table&gt;
  &lt;thead&gt;

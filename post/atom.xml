@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 蛋疼的蛋蛋的老窝</title><link>/post/</link><description>Recent content in Posts on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Apr 2026 00:55:21 +0800</lastBuildDate><atom:link href="/post/atom.xml" rel="self" type="application/rss+xml"/><item><title>我的书《梦园呓语——我的三观独白》</title><link>/post/%E6%88%91%E7%9A%84%E4%B9%A6%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD/</link><pubDate>Sun, 19 Oct 2025 18:58:23 +0800</pubDate><guid>/post/%E6%88%91%E7%9A%84%E4%B9%A6%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD/</guid><description>&lt;p&gt;PDF（强烈推荐）： 
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 蛋疼的蛋蛋的老窝</title><link>/post/</link><description>Recent content in Posts on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 10 May 2026 00:59:19 +0800</lastBuildDate><atom:link href="/post/atom.xml" rel="self" type="application/rss+xml"/><item><title>我的书《梦园呓语——我的三观独白》</title><link>/post/%E6%88%91%E7%9A%84%E4%B9%A6%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD/</link><pubDate>Sun, 19 Oct 2025 18:58:23 +0800</pubDate><guid>/post/%E6%88%91%E7%9A%84%E4%B9%A6%E6%A2%A6%E5%9B%AD%E5%91%93%E8%AF%AD%E6%88%91%E7%9A%84%E4%B8%89%E8%A7%82%E7%8B%AC%E7%99%BD/</guid><description>&lt;p&gt;PDF（强烈推荐）： 
 &lt;a href="/pdf/%e6%a2%a6%e5%9b%ad%e5%91%93%e8%af%ad%e2%80%94%e2%80%94%e6%88%91%e7%9a%84%e4%b8%89%e8%a7%82%e7%8b%ac%e7%99%bd%20%e5%be%81%e6%b1%82%e6%84%8f%e8%a7%81%e7%a8%bf20240627.pdf" title="点击下载" &gt;
  点击下载
  
@@ -14,7 +14,47 @@
  
  &lt;i class="fa fa-external-link-alt"&gt;&lt;/i&gt;
  
-&lt;/a&gt; 含 $\LaTeX$ 源码&lt;/p&gt;</description></item><item><title>《格列佛游记》——“他去了，狂野的怒火再不会烧伤他的心”</title><link>/post/geliefo/</link><pubDate>Fri, 03 Apr 2026 00:55:21 +0800</pubDate><guid>/post/geliefo/</guid><description>&lt;p&gt;原文发表于 
+&lt;/a&gt; 含 $\LaTeX$ 源码&lt;/p&gt;</description></item><item><title>Debian Gnu/Linux 下 Android Sdk 和 Flutter 简易安装</title><link>/post/flutter/</link><pubDate>Sun, 10 May 2026 00:59:19 +0800</pubDate><guid>/post/flutter/</guid><description>&lt;p&gt;Debian 官方包仓库中有现成的 sdkmanager, 我们可以直接借用。
+以下以 fish shell 为例，不适用 Bash（可自行修改）。&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-6"&gt;&lt;a class="lnlinks" href="#hl-0-6"&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-7"&gt;&lt;a class="lnlinks" href="#hl-0-7"&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-8"&gt;&lt;a class="lnlinks" href="#hl-0-8"&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-9"&gt;&lt;a class="lnlinks" href="#hl-0-9"&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-10"&gt;&lt;a class="lnlinks" href="#hl-0-10"&gt;10&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-11"&gt;&lt;a class="lnlinks" href="#hl-0-11"&gt;11&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-12"&gt;&lt;a class="lnlinks" href="#hl-0-12"&gt;12&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-13"&gt;&lt;a class="lnlinks" href="#hl-0-13"&gt;13&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-14"&gt;&lt;a class="lnlinks" href="#hl-0-14"&gt;14&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-15"&gt;&lt;a class="lnlinks" href="#hl-0-15"&gt;15&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fish" data-lang="fish"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;sudo&lt;/span&gt; &lt;span class="nf"&gt;apt&lt;/span&gt; install sdkmanager default-jdk
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="na"&gt;-gx&lt;/span&gt; &lt;span class="nv"&gt;ANDROID_HOME&lt;/span&gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/Android/Sdk &lt;span class="c"&gt;# Linux 通常使用这个路径
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;sdkmanager&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;build-tools;36.0.0&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;cmdline-tools;latest&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;emulator&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;platform-tools&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;platforms;android-36&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;system-images;android-36;google_apis;x86_64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;avdmanager&lt;/span&gt; create avd &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-n&lt;/span&gt; flutter_emu &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-k&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;system-images;android-36;google_apis;x86_64&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-d&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;pixel_6&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 &lt;code&gt;~/.config/fish/conf.d&lt;/code&gt; 下新建 &lt;code&gt;flutter.fish&lt;/code&gt; ,包括以下内容：&lt;/p&gt;</description></item><item><title>《格列佛游记》——“他去了，狂野的怒火再不会烧伤他的心”</title><link>/post/geliefo/</link><pubDate>Fri, 03 Apr 2026 00:55:21 +0800</pubDate><guid>/post/geliefo/</guid><description>&lt;p&gt;原文发表于 
 &lt;a href="https://zhuanlan.zhihu.com/p/51306650" title="知乎" rel="noopener external nofollow noreferrer" target="_blank" class=" exturl"&gt;
  知乎
  

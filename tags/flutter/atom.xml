@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Flutter on 蛋疼的蛋蛋的老窝</title><link>/tags/flutter/</link><description>Recent content in Flutter on 蛋疼的蛋蛋的老窝</description><generator>Hugo</generator><language>zh-CN</language><lastBuildDate>Sun, 10 May 2026 00:59:19 +0800</lastBuildDate><atom:link href="/tags/flutter/atom.xml" rel="self" type="application/rss+xml"/><item><title>Debian Gnu/Linux 下 Android Sdk 和 Flutter 简易安装</title><link>/post/flutter/</link><pubDate>Sun, 10 May 2026 00:59:19 +0800</pubDate><guid>/post/flutter/</guid><description>&lt;p&gt;Debian 官方包仓库中有现成的 sdkmanager, 我们可以直接借用。
+以下以 fish shell 为例，不适用 Bash（可自行修改）。&lt;/p&gt;
+
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt" id="hl-0-1"&gt;&lt;a class="lnlinks" href="#hl-0-1"&gt; 1&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-2"&gt;&lt;a class="lnlinks" href="#hl-0-2"&gt; 2&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-3"&gt;&lt;a class="lnlinks" href="#hl-0-3"&gt; 3&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-4"&gt;&lt;a class="lnlinks" href="#hl-0-4"&gt; 4&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-5"&gt;&lt;a class="lnlinks" href="#hl-0-5"&gt; 5&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-6"&gt;&lt;a class="lnlinks" href="#hl-0-6"&gt; 6&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-7"&gt;&lt;a class="lnlinks" href="#hl-0-7"&gt; 7&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-8"&gt;&lt;a class="lnlinks" href="#hl-0-8"&gt; 8&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-9"&gt;&lt;a class="lnlinks" href="#hl-0-9"&gt; 9&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-10"&gt;&lt;a class="lnlinks" href="#hl-0-10"&gt;10&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-11"&gt;&lt;a class="lnlinks" href="#hl-0-11"&gt;11&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-12"&gt;&lt;a class="lnlinks" href="#hl-0-12"&gt;12&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-13"&gt;&lt;a class="lnlinks" href="#hl-0-13"&gt;13&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-14"&gt;&lt;a class="lnlinks" href="#hl-0-14"&gt;14&lt;/a&gt;
+&lt;/span&gt;&lt;span class="lnt" id="hl-0-15"&gt;&lt;a class="lnlinks" href="#hl-0-15"&gt;15&lt;/a&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fish" data-lang="fish"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;sudo&lt;/span&gt; &lt;span class="nf"&gt;apt&lt;/span&gt; install sdkmanager default-jdk
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;set&lt;/span&gt; &lt;span class="na"&gt;-gx&lt;/span&gt; &lt;span class="nv"&gt;ANDROID_HOME&lt;/span&gt; &lt;span class="nv"&gt;$HOME&lt;/span&gt;/Android/Sdk &lt;span class="c"&gt;# Linux 通常使用这个路径
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;sdkmanager&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;build-tools;36.0.0&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;cmdline-tools;latest&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;emulator&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;platform-tools&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;platforms;android-36&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;system-images;android-36;google_apis;x86_64&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;avdmanager&lt;/span&gt; create avd &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-n&lt;/span&gt; flutter_emu &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-k&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;system-images;android-36;google_apis;x86_64&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;-d&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;pixel_6&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 &lt;code&gt;~/.config/fish/conf.d&lt;/code&gt; 下新建 &lt;code&gt;flutter.fish&lt;/code&gt; ,包括以下内容：&lt;/p&gt;</description></item></channel></rss>
